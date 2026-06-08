@@ -1,0 +1,55 @@
+'use client'
+
+import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+
+interface CookieBannerProps {
+  enable?: boolean | null
+  text?: string | null
+  policyUrl?: string | null
+}
+
+export default function CookieBanner({ config }: { config: CookieBannerProps }) {
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    if (config.enable === false) return
+    const consent = localStorage.getItem('boilerplate_cookie_consent')
+    if (!consent) {
+      setShow(true)
+    }
+  }, [config])
+
+  const accept = () => {
+    localStorage.setItem('boilerplate_cookie_consent', 'accepted')
+    setShow(false)
+  }
+
+  const decline = () => {
+    localStorage.setItem('boilerplate_cookie_consent', 'declined')
+    setShow(false)
+  }
+
+  if (!show) return null
+
+  return (
+    <div className="fixed bottom-0 inset-x-0 p-4 bg-surface-2 border-t border-border z-50 flex flex-col md:flex-row items-center justify-between gap-4 shadow-lg">
+      <p className="text-sm text-text flex-1">
+        {config.text || 'We use cookies to ensure you get the best experience on our website.'}
+        {config.policyUrl && (
+          <Link href={config.policyUrl} className="ms-2 font-medium text-accent hover:underline">
+            Learn more
+          </Link>
+        )}
+      </p>
+      <div className="flex items-center gap-3">
+        <button onClick={decline} className="px-4 py-2 text-sm text-muted hover:text-text font-medium transition-colors">
+          Decline
+        </button>
+        <button onClick={accept} className="px-4 py-2 text-sm bg-primary text-bg rounded font-semibold hover:bg-primary/90 transition-colors">
+          Accept
+        </button>
+      </div>
+    </div>
+  )
+}
