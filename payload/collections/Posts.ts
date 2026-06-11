@@ -11,14 +11,30 @@ import {
 } from '@payloadcms/richtext-lexical'
 import { CTABlock } from '../blocks/CTABlock'
 
-const generatePreviewUrl = (doc: any, req: any) => {
+import { revalidatePath } from 'next/cache'
+
+const generatePreviewUrl = (doc: Record<string, unknown>, req: { locale?: string | null }) => {
   const locale = req?.locale || 'en'
   const slug = doc?.slug || ''
   return `http://localhost:3000/${locale}/posts/${slug}`
 }
 
+const locales = ['en', 'fa', 'ar']
+const revalidateHook = ({ doc }: { doc: { slug?: string; _status?: string } }) => {
+  if (doc._status === 'published' || !('_status' in doc)) {
+    const slug = doc.slug || ''
+    locales.forEach((locale) => {
+      revalidatePath(`/${locale}/posts/${slug}`, 'page')
+    })
+  }
+  return doc
+}
+
 export const Posts: CollectionConfig = {
   slug: 'posts',
+  hooks: {
+    afterChange: [revalidateHook],
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'author', 'publishedAt', 'status'],
@@ -28,7 +44,10 @@ export const Posts: CollectionConfig = {
     },
   },
   versions: {
-    drafts: true,
+    maxPerDoc: 50,
+    drafts: {
+      autosave: true,
+    },
   },
   fields: [
     {
@@ -79,6 +98,25 @@ export const Posts: CollectionConfig = {
       name: 'author',
       type: 'relationship',
       relationTo: 'users',
+      hasMany: false,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'categories',
+      type: 'relationship',
+      relationTo: 'categories',
+      hasMany: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'tags',
+      type: 'relationship',
+      relationTo: 'tags',
+      hasMany: true,
       admin: {
         position: 'sidebar',
       },
@@ -114,6 +152,32 @@ export const Posts: CollectionConfig = {
                   localized: true,
                 },
               ],
+            },
+          ],
+        },
+        {
+          label: 'Access Control',
+          fields: [
+            {
+              name: 'requiresAuth',
+              type: 'checkbox',
+              defaultValue: false,
+              admin: {
+                description: 'If true, this page is locked behind a login wall for VIP/Partner users only.',
+              },
+            },
+            {
+              name: 'allowedRoles',
+              type: 'select',
+              options: [
+                { label: 'Admin', value: 'admin' },
+                { label: 'Partner', value: 'partner' },
+                { label: 'Customer', value: 'customer' },
+              ],
+              hasMany: true,
+              admin: {
+                condition: (data) => data.requiresAuth === true,
+              },
             },
           ],
         },

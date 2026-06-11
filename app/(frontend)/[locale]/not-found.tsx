@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 export default function LocalizedNotFound() {
   return (
@@ -9,12 +10,12 @@ export default function LocalizedNotFound() {
         <div className="w-16 h-1 bg-primary mx-auto mb-8 opacity-80" />
         <h2 className="text-2xl font-medium text-text mb-4 uppercase tracking-widest">Document Not Found</h2>
         <p className="text-muted mb-12 text-lg">The requested record or resource could not be located in the current database.</p>
-        <a
+        <Link
           href="/"
           className="inline-flex items-center justify-center px-8 py-4 text-sm font-semibold bg-primary text-bg rounded transition-all hover:bg-accent-hover hover:scale-[1.02] uppercase tracking-widest"
         >
           Return to Homepage
-        </a>
+        </Link>
       </div>
     </div>
   )

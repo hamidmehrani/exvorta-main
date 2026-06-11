@@ -41,7 +41,13 @@ export const cloudinaryStorage = (options: CloudinaryStorageOptions): Plugin => 
               const file = req.file
               if (!file) return data
 
-              const fileWithBuffer = file as any
+              const fileWithBuffer = file as { 
+                buffer?: Buffer; 
+                arrayBuffer?: () => Promise<ArrayBuffer>; 
+                type?: string; 
+                mimetype?: string; 
+                mimeType?: string 
+              }
               const fileBuffer = fileWithBuffer.buffer || (typeof fileWithBuffer.arrayBuffer === 'function' ? Buffer.from(await fileWithBuffer.arrayBuffer()) : null)
               if (!fileBuffer) return data
 

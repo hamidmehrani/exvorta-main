@@ -1,7 +1,27 @@
 import { MetadataRoute } from 'next'
+import { getPayloadClient } from '@/lib/payload'
 
-export default function robots(): MetadataRoute.Robots {
+export default async function robots(): Promise<MetadataRoute.Robots> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+  
+  const payload = await getPayloadClient()
+  let maintenanceMode = false
+  
+  try {
+    const siteSettings = await payload.findGlobal({
+      slug: 'site-settings',
+    })
+    maintenanceMode = siteSettings?.maintenanceMode || false
+  } catch {}
+
+  if (maintenanceMode) {
+    return {
+      rules: {
+        userAgent: '*',
+        disallow: '/',
+      },
+    }
+  }
 
   return {
     rules: {

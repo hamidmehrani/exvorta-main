@@ -42,6 +42,7 @@ export const Leads: CollectionConfig = {
       options: [
         { label: 'New', value: 'new' },
         { label: 'Contacted', value: 'contacted' },
+        { label: 'Qualified', value: 'qualified' },
         { label: 'Closed', value: 'closed' },
       ],
       admin: {

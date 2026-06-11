@@ -8,7 +8,7 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
   },
   access: {
-    read: () => true, // Anyone logged in (or adapt if you want only specific reads)
+    read: ({ req: { user } }) => Boolean(user),
     create: isAdmin,
     update: isAdminOrSelf,
     delete: isAdmin,

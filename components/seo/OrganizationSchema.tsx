@@ -4,8 +4,8 @@ import { getPayloadClient } from '@/lib/payload'
 export default async function OrganizationSchema() {
   const payload = await getPayloadClient()
 
-  let siteSettings: any = null
-  let socialLinks: any = null
+  let siteSettings: Record<string, unknown> | null = null
+  let socialLinks: { links?: { url?: string }[] } | null = null
 
   try {
     siteSettings = await payload.findGlobal({
@@ -21,11 +21,11 @@ export default async function OrganizationSchema() {
   const siteName = siteSettings?.siteName || 'Agency Boilerplate'
   let logoUrl = ''
 
-  if (siteSettings?.logo && typeof siteSettings.logo === 'object' && siteSettings.logo.url) {
-    logoUrl = siteSettings.logo.url
+  if (siteSettings?.logo && typeof siteSettings.logo === 'object' && (siteSettings.logo as Record<string, unknown>).url) {
+    logoUrl = (siteSettings.logo as Record<string, unknown>).url as string
   }
 
-  const sameAs = socialLinks?.links?.map((link: any) => link.url) || []
+  const sameAs = socialLinks?.links?.map((link: { url?: string }) => link.url) || []
 
   const schema = {
     '@context': 'https://schema.org',

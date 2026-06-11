@@ -195,24 +195,19 @@ When you see these:
 ## Design Tokens (from UI-UX-GUIDELINES.md — critical)
 
 ```
-Never use hardcoded hex values. Map Stitch colors to Tailwind tokens:
+Never use hardcoded hex values. Map Stitch colors to Tailwind semantic tokens:
 
 Stitch          → Tailwind token
-#FCFAF8         → bg-warm-cream
-#0A0A0A / black → bg-obsidian / text-obsidian
-white           → bg-surface-white
-#1A1A1A         → bg-zinc-elevated
-#059669         → text-emerald / bg-emerald
+#FCFAF8 / white → bg-text / text-text
+#0A0A0A / black → bg-bg / text-bg
+#1A1A1A         → bg-surface / bg-surface-2
+#059669         → text-teal / bg-teal
+#D4A843         → text-primary / bg-primary
 rgba(0,0,0,0.X) → black/X  (keep as-is, Tailwind supports this)
 rgba(255,255,255,0.X) → white/X (keep as-is)
 ```
 
-Font mapping:
-```
-font-serif  → already correct (maps to Playfair Display in tailwind.config)
-font-sans   → already correct (maps to Inter)
-font-mono   → already correct
-```
+Typography & Font Files are INTENTIONALLY excluded from this boilerplate. They must be injected into `/public/fonts` and mapped in `globals.css` on a per-project basis during deployment.
 
 ---
 

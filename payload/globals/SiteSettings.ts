@@ -15,6 +15,12 @@ export const SiteSettings: GlobalConfig = {
           label: 'General',
           fields: [
             {
+              name: 'maintenanceMode',
+              type: 'checkbox',
+              defaultValue: false,
+              admin: { description: 'Enable to put the entire site into maintenance mode.' },
+            },
+            {
               name: 'siteName',
               type: 'text',
               required: true,

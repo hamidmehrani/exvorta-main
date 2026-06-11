@@ -2,11 +2,13 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { setCookieConsent } from '@/actions/setCookieConsent'
 
 interface CookieBannerProps {
   enable?: boolean | null
   text?: string | null
   policyUrl?: string | null
+  hasResponded?: boolean
 }
 
 export default function CookieBanner({ config }: { config: CookieBannerProps }) {
@@ -14,19 +16,18 @@ export default function CookieBanner({ config }: { config: CookieBannerProps }) 
 
   useEffect(() => {
     if (config.enable === false) return
-    const consent = localStorage.getItem('boilerplate_cookie_consent')
-    if (!consent) {
+    if (!config.hasResponded) {
       setShow(true)
     }
   }, [config])
 
-  const accept = () => {
-    localStorage.setItem('boilerplate_cookie_consent', 'accepted')
+  const accept = async () => {
+    await setCookieConsent('accepted')
     setShow(false)
   }
 
-  const decline = () => {
-    localStorage.setItem('boilerplate_cookie_consent', 'declined')
+  const decline = async () => {
+    await setCookieConsent('declined')
     setShow(false)
   }
 

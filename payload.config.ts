@@ -16,6 +16,9 @@ import Services from './payload/collections/Services'
 import Testimonials from './payload/collections/Testimonials'
 import Team from './payload/collections/Team'
 import Certificates from './payload/collections/Certificates'
+import Categories from './payload/collections/Categories'
+import Tags from './payload/collections/Tags'
+import Redirects from './payload/collections/Redirects'
 
 // Globals
 import SiteSettings from './payload/globals/SiteSettings'
@@ -24,26 +27,34 @@ import Footer from './payload/globals/Footer'
 import SEODefaults from './payload/globals/SEODefaults'
 import SocialLinks from './payload/globals/SocialLinks'
 import WhatsAppConfig from './payload/globals/WhatsAppConfig'
+import CookieConsent from './payload/globals/CookieConsent'
+import GlobalPromos from './payload/globals/GlobalPromos'
+import Analytics from './payload/globals/Analytics'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+  console.warn('⚠️ CLOUDINARY ENVS MISSING: Media uploads will fail.');
+}
 
 export default buildConfig({
   admin: {
     user: Users.slug,
     meta: {
-      titleSuffix: '- Agency Engine CMS',
+      titleSuffix: '- Exvorta Agency Engine',
     },
     components: {
       graphics: {
-        Logo: '@/components/admin/WhiteLabelLogo',
-        Icon: '@/components/admin/WhiteLabelLogo',
+        Logo: '@/components/admin/AgencyLogo',
+        Icon: '@/components/admin/AgencyLogo',
       },
     },
     importMap: {
       baseDir: path.resolve(dirname),
     },
     livePreview: {
+      url: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
       collections: ['pages', 'posts'],
       breakpoints: [
         { label: 'Mobile', name: 'mobile', width: 375, height: 667 },
@@ -63,6 +74,9 @@ export default buildConfig({
     Testimonials,
     Team,
     Certificates,
+    Categories,
+    Tags,
+    Redirects,
   ],
   globals: [
     SiteSettings,
@@ -71,12 +85,15 @@ export default buildConfig({
     SEODefaults,
     SocialLinks,
     WhatsAppConfig,
+    CookieConsent,
+    GlobalPromos,
+    Analytics,
   ],
   editor: lexicalEditor({}),
-  secret: process.env.PAYLOAD_SECRET || 'fallback-secret-for-local-development-1234567890',
+  secret: process.env.PAYLOAD_SECRET || (() => { throw new Error('PAYLOAD_SECRET is required') })(),
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: process.env.DATABASE_URI ?? (() => { throw new Error('DATABASE_URI is required') })(),
     },
   }),
   plugins: [

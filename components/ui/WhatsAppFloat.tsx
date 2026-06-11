@@ -3,13 +3,13 @@ import { getPayloadClient } from '@/lib/payload'
 
 export default async function WhatsAppFloat() {
   const payload = await getPayloadClient()
-  let config: any = null
+  let config: { phoneNumber?: string; enableWidget?: boolean; defaultMessage?: string } | null = null
 
   try {
     config = await payload.findGlobal({
       slug: 'whatsapp-config',
     })
-  } catch (error) {}
+  } catch {}
 
   if (!config?.enableWidget || !config?.phoneNumber) {
     return null

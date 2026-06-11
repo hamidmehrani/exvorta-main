@@ -27,12 +27,28 @@ export const sendLeadEmails: CollectionAfterChangeHook = async ({ doc, operation
       await resend.emails.send({
         from: 'System <system@yourdomain.com>', // Update with verified domain later
         to: adminEmail,
-        subject: 'New Lead Received',
-        html: `<p><strong>New Lead Details:</strong></p>
-               <p>Name: ${doc.name}</p>
-               <p>Email: ${doc.email}</p>
-               <p>Phone: ${doc.phone || 'N/A'}</p>
-               <p>Message: ${doc.message}</p>`,
+        subject: `New B2B Lead Captured: ${doc.name}`,
+        html: `
+          <h2>New Lead Captured</h2>
+          <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;">
+            <tr>
+              <th style="text-align: left; background-color: #f8f9fa;">Name</th>
+              <td>${doc.name}</td>
+            </tr>
+            <tr>
+              <th style="text-align: left; background-color: #f8f9fa;">Email</th>
+              <td><a href="mailto:${doc.email}">${doc.email}</a></td>
+            </tr>
+            <tr>
+              <th style="text-align: left; background-color: #f8f9fa;">Phone</th>
+              <td>${doc.phone || 'N/A'}</td>
+            </tr>
+            <tr>
+              <th style="text-align: left; background-color: #f8f9fa; vertical-align: top;">Message</th>
+              <td>${doc.message || 'No message provided.'}</td>
+            </tr>
+          </table>
+        `,
       })
     } catch (err) {
       console.error('Failed to send lead emails:', err)

@@ -1,10 +1,23 @@
 import React from 'react'
 import Link from 'next/link'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
+import { getPayloadClient } from '@/lib/payload'
+import { Footer as FooterType } from '@/payload-types'
 
-export const Footer: React.FC = () => {
+export const Footer = async () => {
   const currentYear = new Date().getFullYear()
-  const t = useTranslations('Footer')
+  const t = await getTranslations('Footer')
+  
+  const payload = await getPayloadClient()
+  let footerData: FooterType | null = null
+  
+  try {
+    footerData = await payload.findGlobal({
+      slug: 'footer',
+    }) as FooterType
+  } catch (error) {
+    console.error('Error fetching footer data', error)
+  }
 
   return (
     <footer className="w-full border-t border-border bg-surface py-16 transition-all duration-300">
@@ -23,51 +36,56 @@ export const Footer: React.FC = () => {
           </p>
         </div>
 
-        <div>
-          <h4 className="text-xs font-semibold uppercase tracking-wider text-muted mb-4">
-            {t('resources')}
-          </h4>
-          <ul className="flex flex-col gap-3">
-            <li>
-              <a href="#" className="text-sm text-muted hover:text-text transition-colors duration-200">
-                {t('documentation')}
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-sm text-muted hover:text-text transition-colors duration-200">
-                {t('guides')}
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-sm text-muted hover:text-text transition-colors duration-200">
-                {t('apiReference')}
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="text-xs font-semibold uppercase tracking-wider text-muted mb-4">
-            {t('system')}
-          </h4>
-          <ul className="flex flex-col gap-3">
-            <li>
-              <Link href="/admin" className="text-sm text-muted hover:text-text transition-colors duration-200">
-                {t('cmsAdmin')}
-              </Link>
-            </li>
-            <li>
-              <Link href="/api/pages" className="text-sm text-muted hover:text-text transition-colors duration-200">
-                {t('restApi')}
-              </Link>
-            </li>
-          </ul>
-        </div>
+        {footerData?.columns?.map((column, colIndex) => (
+          <div key={column.id || colIndex}>
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-muted mb-4">
+              {column.title}
+            </h4>
+            <ul className="flex flex-col gap-3">
+              {column.links?.map((link, linkIndex) => (
+                <li key={link.id || linkIndex}>
+                  <Link href={link.url} className="text-sm text-muted hover:text-text transition-colors duration-200">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        
+        {(!footerData?.columns || footerData.columns.length === 0) && (
+          <>
+            <div>
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-muted mb-4">
+                {t('resources')}
+              </h4>
+              <ul className="flex flex-col gap-3">
+                <li>
+                  <Link href="#" className="text-sm text-muted hover:text-text transition-colors duration-200">
+                    {t('documentation')}
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-muted mb-4">
+                {t('system')}
+              </h4>
+              <ul className="flex flex-col gap-3">
+                <li>
+                  <Link href="/admin" className="text-sm text-muted hover:text-text transition-colors duration-200">
+                    {t('cmsAdmin')}
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </>
+        )}
       </div>
 
       <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
         <span className="text-xs text-muted">
-          &copy; {currentYear} {t('rights')}
+          &copy; {currentYear} {footerData?.copyrightText || t('rights')}
         </span>
         <span className="text-xs text-muted flex items-center gap-1">
           {t('designed')}

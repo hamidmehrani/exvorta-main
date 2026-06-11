@@ -1,9 +1,11 @@
 import { MetadataRoute } from 'next'
 import { getPayloadClient } from '@/lib/payload'
+import { routing } from '@/i18n/routing'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayloadClient()
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+  const locales = routing.locales || ['en', 'ar', 'fa']
 
   const sitemapEntries: MetadataRoute.Sitemap = []
 
@@ -14,29 +16,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: number
   ) => {
     try {
-      // For sitemaps, we usually fetch the default locale or all locales. 
-      // Next.js App Router alternates handle localized URLs better, 
-      // but here we just list the default English routes, and the alternates 
-      // in metadata will tell search engines about /ar and /fa.
       const { docs } = await payload.find({
         collection,
         limit: 1000,
         depth: 0,
-        // If versions/drafts were fully enabled with a 'status' field, 
-        // we'd filter by _status: 'published' here. Assuming all are published.
       })
 
-      docs.forEach((doc: any) => {
+      docs.forEach((doc: Record<string, unknown>) => {
         const slug = doc.slug === 'home' ? '' : doc.slug
         const fullPath = slug ? `${pathPrefix}/${slug}` : pathPrefix
-        // Fix double slashes
-        const url = `${baseUrl}${fullPath}`.replace(/([^:]\/)\/+/g, '$1')
+        
+        const languages: Record<string, string> = {}
+        locales.forEach((loc) => {
+          languages[loc] = `${baseUrl}/${loc}${fullPath}`.replace(/([^:]\/)\/+/g, '$1')
+        })
+
+        const url = languages['en'] || Object.values(languages)[0]
 
         sitemapEntries.push({
           url,
-          lastModified: doc.updatedAt ? new Date(doc.updatedAt) : new Date(),
+          lastModified: doc.updatedAt ? new Date(doc.updatedAt as string) : new Date(),
           changeFrequency: collection === 'pages' ? 'weekly' : 'monthly',
           priority: slug === '' ? 1.0 : priority,
+          alternates: {
+            languages,
+          },
         })
       })
     } catch (error) {
@@ -50,5 +54,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     fetchAndMapCollection('portfolio', '/portfolio', 0.7),
   ])
 
-  return sitemapEntries
+  let redirectFromPaths = new Set<string>()
+  try {
+    const { docs: redirects } = await payload.find({ collection: 'redirects', limit: 1000, depth: 0 })
+    redirectFromPaths = new Set(redirects.map((r: Record<string, unknown>) => r.from as string))
+  } catch (error) {
+    console.error('Failed to fetch redirects for sitemap', error)
+  }
+
+  return sitemapEntries.filter((entry) => {
+    try {
+      const pathname = new URL(entry.url).pathname
+      const pathnameWithoutLocale = pathname.replace(/^\/(en|ar|fa)/, '') || '/'
+      return !redirectFromPaths.has(pathname) && !redirectFromPaths.has(pathnameWithoutLocale)
+    } catch {
+      return true
+    }
+  })
 }

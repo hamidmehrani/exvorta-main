@@ -26,9 +26,9 @@ export const PageWrapper: React.FC<PageWrapperProps> = ({
       />
       
       {/* Content Container */}
-      <div className="relative z-10 flex-1 flex flex-col w-full">
+      <main id="main-content" className="relative z-10 flex-1 flex flex-col w-full">
         {children}
-      </div>
+      </main>
     </div>
   )
 }

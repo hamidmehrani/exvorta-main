@@ -1,8 +1,30 @@
 'use server'
 
 import { getPayloadClient } from '@/lib/payload'
+import { headers } from 'next/headers'
 
-export async function submitLeadAction(prevState: any, formData: FormData) {
+const rateLimitMap = new Map<string, { count: number; timestamp: number }>()
+const RATE_LIMIT = 3
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
+
+export async function submitLeadAction(prevState: unknown, formData: FormData) {
+  const ip = (await headers()).get('x-forwarded-for') || 'unknown'
+  const now = Date.now()
+  const record = rateLimitMap.get(ip)
+
+  if (record) {
+    if (now - record.timestamp < RATE_LIMIT_WINDOW_MS) {
+      if (record.count >= RATE_LIMIT) {
+        return { success: false, error: 'Too many submissions. Please try again later.' }
+      }
+      record.count++
+    } else {
+      rateLimitMap.set(ip, { count: 1, timestamp: now })
+    }
+  } else {
+    rateLimitMap.set(ip, { count: 1, timestamp: now })
+  }
+
   // 1. Honeypot Check
   const honeypot = formData.get('bot-field')
   if (honeypot) {

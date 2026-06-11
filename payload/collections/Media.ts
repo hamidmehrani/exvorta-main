@@ -11,6 +11,12 @@ export const Media: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      name: 'caption',
+      type: 'textarea',
+      localized: true,
+      required: false,
+    },
   ],
 }
 
