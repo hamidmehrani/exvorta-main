@@ -1,9 +1,23 @@
+/**
+ * Boilerplate Configuration
+ * -------------------------
+ * This project uses a modular architecture.
+ * To enable the Export Trade module (Origins, Certifications, and B2B fields for Products),
+ * set `exportTrade: true` in `boilerplate.config.ts` located at the project root.
+ *
+ * Locales:
+ * Currently active: 'en', 'ar', 'fa'
+ * To enable 'tr' and 'es', uncomment them in the localization.locales array below
+ * and ensure their translation files exist in the `/translations` folder.
+ */
+
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { cloudinaryStorage } from '@payloadcms/storage-cloudinary'
+import { cloudinaryStorage } from './payload/storage-cloudinary'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { boilerplateConfig } from './boilerplate.config'
 
 // Collections
 import Users from './payload/collections/Users'
@@ -11,14 +25,13 @@ import Pages from './payload/collections/Pages'
 import Posts from './payload/collections/Posts'
 import Media from './payload/collections/Media'
 import Leads from './payload/collections/Leads'
-import Portfolio from './payload/collections/Portfolio'
-import Services from './payload/collections/Services'
 import Testimonials from './payload/collections/Testimonials'
-import Team from './payload/collections/Team'
-import Certificates from './payload/collections/Certificates'
-import Categories from './payload/collections/Categories'
 import Tags from './payload/collections/Tags'
 import Redirects from './payload/collections/Redirects'
+import Products from './payload/collections/Products'
+import Categories from './payload/collections/Categories'
+import Origins from './payload/collections/modules/export-trade/Origins'
+import Certifications from './payload/collections/modules/export-trade/Certifications'
 
 // Globals
 import SiteSettings from './payload/globals/SiteSettings'
@@ -42,12 +55,11 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     meta: {
-      titleSuffix: '- Exvorta Agency Engine',
+      titleSuffix: process.env.NEXT_PUBLIC_ADMIN_TITLE_SUFFIX || '- Admin',
     },
     components: {
       graphics: {
         Logo: '@/components/admin/AgencyLogo',
-        Icon: '@/components/admin/AgencyLogo',
       },
     },
     importMap: {
@@ -69,14 +81,12 @@ export default buildConfig({
     Posts,
     Media,
     Leads,
-    Portfolio,
-    Services,
     Testimonials,
-    Team,
-    Certificates,
-    Categories,
     Tags,
     Redirects,
+    Products,
+    Categories,
+    ...(boilerplateConfig.modules.exportTrade ? [Origins, Certifications] : []),
   ],
   globals: [
     SiteSettings,
@@ -94,7 +104,10 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI ?? (() => { throw new Error('DATABASE_URI is required') })(),
+      max: 20,
+      idleTimeoutMillis: 10000,
     },
+    push: false,
   }),
   plugins: [
     cloudinaryStorage({
@@ -110,7 +123,13 @@ export default buildConfig({
     }),
   ],
   localization: {
-    locales: ['en', 'ar', 'fa'],
+    locales: [
+      'en',
+      'ar',
+      'fa',
+      // 'tr', // Uncomment to enable Turkish
+      // 'es', // Uncomment to enable Spanish
+    ],
     defaultLocale: 'en',
     fallback: true,
   },

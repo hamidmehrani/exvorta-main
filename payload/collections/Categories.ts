@@ -1,15 +1,21 @@
 import { CollectionConfig } from 'payload'
+import { isAdmin } from '../access/isAdmin'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
   admin: {
-    useAsTitle: 'title',
-    description: 'Used to group content into broad topics.',
-    // hidden: ({ user }) => !siteSettings.features.blog // Example to hide dynamically if needed
+    group: 'Data',
+    useAsTitle: 'name',
+  },
+  access: {
+    read: () => true,
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
   },
   fields: [
     {
-      name: 'title',
+      name: 'name',
       type: 'text',
       required: true,
       localized: true,
@@ -20,13 +26,17 @@ export const Categories: CollectionConfig = {
       required: true,
       unique: true,
       admin: {
-        position: 'sidebar',
+        description: 'Used for URL filtering',
       },
     },
     {
-      name: 'description',
-      type: 'textarea',
-      localized: true,
+      name: 'parent',
+      type: 'relationship',
+      relationTo: 'categories',
+      admin: {
+        position: 'sidebar',
+        description: 'Parent category for nesting',
+      },
     },
   ],
 }
