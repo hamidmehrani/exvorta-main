@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Helper to fetch and map documents
   const fetchAndMapCollection = async (
-    collection: 'pages' | 'posts' | 'portfolio',
+    collection: 'pages' | 'posts',
     pathPrefix: string,
     priority: number
   ) => {
@@ -51,7 +51,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   await Promise.all([
     fetchAndMapCollection('pages', '/', 0.8),
     fetchAndMapCollection('posts', '/posts', 0.6),
-    fetchAndMapCollection('portfolio', '/portfolio', 0.7),
   ])
 
   let redirectFromPaths = new Set<string>()
