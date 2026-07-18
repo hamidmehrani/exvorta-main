@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { CollectionConfig, Plugin } from 'payload'
 import { v2 as cloudinary } from 'cloudinary'
 import { UploadApiOptions } from 'cloudinary'
@@ -16,12 +18,20 @@ export interface CloudinaryStorageOptions {
 }
 
 export const cloudinaryStorage = (options: CloudinaryStorageOptions): Plugin => {
-  // Configure Cloudinary SDK
-  cloudinary.config({
+  const proxyUrl = process.env.https_proxy || process.env.HTTPS_PROXY
+  const cloudinaryConfig: any = {
     cloud_name: options.config.cloud_name,
     api_key: options.config.api_key,
     api_secret: options.config.api_secret,
-  })
+    timeout: 600000, // 10 minutes global timeout!
+  }
+  
+  if (proxyUrl) {
+    cloudinaryConfig.api_proxy = proxyUrl
+  }
+
+  // Configure Cloudinary SDK
+  cloudinary.config(cloudinaryConfig)
 
   return (incomingConfig) => {
     const collections = incomingConfig.collections?.map((collection) => {
@@ -42,44 +52,65 @@ export const cloudinaryStorage = (options: CloudinaryStorageOptions): Plugin => 
               if (!file) return data
 
               const fileWithBuffer = file as { 
-                buffer?: Buffer; 
+                buffer?: Buffer;
+                data?: Buffer;
                 arrayBuffer?: () => Promise<ArrayBuffer>; 
                 type?: string; 
                 mimetype?: string; 
                 mimeType?: string 
               }
-              const fileBuffer = fileWithBuffer.buffer || (typeof fileWithBuffer.arrayBuffer === 'function' ? Buffer.from(await fileWithBuffer.arrayBuffer()) : null)
+              const fileBuffer = fileWithBuffer.data || fileWithBuffer.buffer || (typeof fileWithBuffer.arrayBuffer === 'function' ? Buffer.from(await fileWithBuffer.arrayBuffer()) : null)
               if (!fileBuffer) return data
 
-              // Upload to Cloudinary using standard stream upload
+              const base64Data = fileBuffer.toString('base64')
+              const dataUri = `data:${fileWithBuffer.type || fileWithBuffer.mimetype || fileWithBuffer.mimeType || 'image/webp'};base64,${base64Data}`
+
+              // Upload to Cloudinary using standard base64 upload
               const uploadOptions: UploadApiOptions = {
                 folder: folder || 'payload-media',
                 public_id: file.name.split('.').slice(0, -1).join('.'),
                 resource_type: 'auto',
+                timeout: 60000, // 60 seconds hard timeout per file!
               }
 
-              return new Promise((resolve, reject) => {
-                const uploadStream = cloudinary.uploader.upload_stream(
-                  uploadOptions,
-                  (error, result) => {
-                    if (error) {
-                      req.payload.logger.error(error, 'Cloudinary upload error')
-                      return reject(error)
-                    }
-                    if (result) {
-                      // Map Cloudinary results back to Payload's file schema
-                      data.url = result.secure_url
-                      data.filename = result.public_id
-                      data.filesize = result.bytes
-                      data.width = result.width
-                      data.height = result.height
-                      data.mimeType = fileWithBuffer.type || fileWithBuffer.mimetype || fileWithBuffer.mimeType
-                      resolve(data)
-                    }
+              let proxyAgent = null
+              const proxyUrl = process.env.https_proxy || process.env.HTTPS_PROXY
+              if (proxyUrl) {
+                try {
+                  const { HttpsProxyAgent } = require('https-proxy-agent')
+                  proxyAgent = new HttpsProxyAgent(proxyUrl)
+                  ;(uploadOptions as any).agent = proxyAgent
+                } catch (e) {
+                  req.payload.logger.error('Failed to load https-proxy-agent')
+                }
+              }
+
+              const maxRetries = 3
+              const retryDelays = [2000, 5000, 10000]
+              
+              for (let attempt = 0; attempt <= maxRetries; attempt++) {
+                try {
+                  const result = await cloudinary.uploader.upload(dataUri, uploadOptions)
+                  data.url = result.secure_url
+                  data.filename = result.public_id
+                  data.filesize = result.bytes
+                  data.width = result.width
+                  data.height = result.height
+                  data.mimeType = fileWithBuffer.type || fileWithBuffer.mimetype || fileWithBuffer.mimeType
+                  return data
+                } catch (error: any) {
+                  const isTransient = error?.http_code >= 500 || error?.name === 'TimeoutError' || error?.message?.includes('Timeout') || error?.code === 'ECONNRESET' || error?.code === 'ETIMEDOUT'
+                  
+                  if (isTransient && attempt < maxRetries) {
+                    req.payload.logger.warn(`Cloudinary upload transient error (attempt ${attempt + 1}/${maxRetries}): ${error.message}. Retrying in ${retryDelays[attempt]}ms...`)
+                    await new Promise(resolve => setTimeout(resolve, retryDelays[attempt]))
+                    continue
                   }
-                )
-                uploadStream.end(fileBuffer)
-              })
+                  
+                  req.payload.logger.error(error, `Cloudinary upload failed permanently after ${attempt} retries`)
+                  throw error
+                }
+              }
             },
           ],
           afterDelete: [
@@ -93,6 +124,22 @@ export const cloudinaryStorage = (options: CloudinaryStorageOptions): Plugin => 
                 }
               }
             },
+          ],
+          afterRead: [
+            ...(collection.hooks?.afterRead || []),
+            ({ doc }) => {
+              if (doc.filename) {
+                let ext = ''
+                if (doc.mimeType === 'image/webp') ext = '.webp'
+                else if (doc.mimeType === 'image/jpeg' || doc.mimeType === 'image/jpg') ext = '.jpg'
+                else if (doc.mimeType === 'image/png') ext = '.png'
+                else if (doc.mimeType === 'image/svg+xml') ext = '.svg'
+                else if (doc.mimeType === 'image/gif') ext = '.gif'
+                
+                doc.url = `https://res.cloudinary.com/${options.config.cloud_name}/image/upload/f_auto,q_auto/${doc.filename}${ext}`
+              }
+              return doc
+            }
           ],
         },
         upload: typeof collection.upload === 'object' ? {
