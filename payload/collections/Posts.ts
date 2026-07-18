@@ -38,6 +38,7 @@ export const Posts: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'author', 'publishedAt', 'status'],
+    group: 'Content',
     preview: (doc, { req }) => generatePreviewUrl(doc, req),
     livePreview: {
       url: ({ data, req }) => generatePreviewUrl(data, req),

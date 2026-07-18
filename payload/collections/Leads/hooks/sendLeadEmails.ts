@@ -3,8 +3,14 @@ import { Resend } from 'resend'
 
 export const sendLeadEmails: CollectionAfterChangeHook = async ({ doc, operation }) => {
   if (operation === 'create') {
+    if (process.env.ENABLE_LEAD_EMAILS !== 'true') {
+      return doc
+    }
+
     const apiKey = process.env.RESEND_API_KEY
     if (!apiKey) {
+      // NOTE: This is OPTIONAL scaffolding for projects that need email automation.
+      // If RESEND_API_KEY is not set, this gracefully skips execution without errors.
       console.warn('RESEND_API_KEY is missing. Skipping email automation.')
       return doc
     }

@@ -3,6 +3,7 @@ import { HeroBlock } from '../blocks/HeroBlock'
 import { FeatureGridBlock } from '../blocks/FeatureGridBlock'
 import { RichTextBlock } from '../blocks/RichTextBlock'
 import { CTABlock } from '../blocks/CTABlock'
+import { CTABannerBlock } from '../blocks/CTABannerBlock'
 import { PricingBlock } from '../blocks/PricingBlock'
 import { FAQBlock } from '../blocks/FAQBlock'
 import { TestimonialBlock } from '../blocks/TestimonialBlock'
@@ -41,6 +42,8 @@ export const Pages: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
+    defaultColumns: ['title', 'slug', 'updatedAt'],
+    group: 'Content',
     preview: (doc, { req }) => generatePreviewUrl(doc, req),
     livePreview: {
       url: ({ data, req }) => generatePreviewUrl(data, req),
@@ -81,6 +84,7 @@ export const Pages: CollectionConfig = {
                 FeatureGridBlock,
                 RichTextBlock,
                 CTABlock,
+                CTABannerBlock,
                 PricingBlock,
                 FAQBlock,
                 TestimonialBlock,

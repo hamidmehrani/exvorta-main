@@ -2,6 +2,9 @@ import { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  admin: {
+    group: 'Media',
+  },
   upload: {
     disableLocalStorage: true, // we are using cloudinary
   },

@@ -5,7 +5,8 @@ export const Leads: CollectionConfig = {
   slug: 'leads',
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'email', 'status', 'createdAt'],
+    defaultColumns: ['name', 'email', 'createdAt'],
+    group: 'Content',
   },
   access: {
     create: () => true, // Allow unauthenticated submissions

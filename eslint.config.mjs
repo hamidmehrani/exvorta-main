@@ -13,6 +13,14 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  {
+    ignores: [
+      "payload-types.ts",
+      "scripts/**/*",
+      "migrations/**/*",
+      ".next/**/*"
+    ]
+  },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 ];
 

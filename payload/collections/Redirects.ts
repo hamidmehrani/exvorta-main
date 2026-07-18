@@ -4,6 +4,7 @@ export const Redirects: CollectionConfig = {
   slug: 'redirects',
   admin: {
     useAsTitle: 'from',
+    group: 'Global Settings',
   },
   fields: [
     {

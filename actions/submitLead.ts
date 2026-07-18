@@ -31,13 +31,16 @@ export async function submitLeadAction(prevState: unknown, formData: FormData) {
     return { success: false, error: 'Spam detected' }
   }
 
-  // 2. Turnstile Validation
-  const token = formData.get('cf-turnstile-response') as string
-  if (!token) {
-    return { success: false, error: 'Security verification failed.' }
-  }
+  const skipTurnstile = process.env.NODE_ENV !== 'production' && process.env.SKIP_TURNSTILE_IN_DEV === 'true'
 
-  const secret = process.env.TURNSTILE_SECRET_KEY || ''
+  if (!skipTurnstile) {
+    // 2. Turnstile Validation
+    const token = formData.get('cf-turnstile-response') as string
+    if (!token) {
+      return { success: false, error: 'Security verification failed.' }
+    }
+
+    const secret = process.env.TURNSTILE_SECRET_KEY || ''
   try {
     const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
@@ -49,9 +52,10 @@ export async function submitLeadAction(prevState: unknown, formData: FormData) {
     if (!verifyData.success) {
       return { success: false, error: 'Invalid security token.' }
     }
-  } catch (err) {
-    console.error('Turnstile verification failed:', err)
-    return { success: false, error: 'Security check failed.' }
+    } catch (err) {
+      console.error('Turnstile verification failed:', err)
+      return { success: false, error: 'Security check failed.' }
+    }
   }
 
   // 3. Payload Insertion

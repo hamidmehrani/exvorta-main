@@ -4,6 +4,8 @@ export const Tags: CollectionConfig = {
   slug: 'tags',
   admin: {
     useAsTitle: 'title',
+    defaultColumns: ['title', 'slug', 'updatedAt'],
+    group: 'Content',
     description: 'Used for specific keywords.',
     // hidden: ({ user }) => !siteSettings.features.blog // Example to hide dynamically if needed
   },

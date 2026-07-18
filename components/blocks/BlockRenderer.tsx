@@ -4,6 +4,7 @@ import PricingBlock from './PricingBlock'
 import ContactFormBlock from './ContactFormBlock'
 import FeatureGridBlock from './FeatureGridBlock'
 import CTABlock from './CTABlock'
+import CTABannerBlock from './CTABannerBlock'
 import FAQBlock from './FAQBlock'
 import MarqueeBlock from './MarqueeBlock'
 import ProcessBlock from './ProcessBlock'
@@ -40,6 +41,8 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ blocks }) => {
             return <FeatureGridBlock key={key} {...block} />
           case 'cta':
             return <CTABlock key={key} {...block} />
+          case 'ctaBanner':
+            return <CTABannerBlock key={key} {...block} />
           case 'faq':
             return <FAQBlock key={key} {...block} />
           case 'marquee':
@@ -50,7 +53,7 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ blocks }) => {
             return <RichTextBlock key={key} {...block} />
           case 'stats':
             return <StatsBlock key={key} {...block} />
-          case 'testimonial':
+          case 'testimonialBlock':
             return <TestimonialBlock key={key} {...block} />
           case 'video':
             return <VideoBlock key={key} {...block} />
