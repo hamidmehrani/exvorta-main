@@ -1,0 +1,322 @@
+{
+  "title": "Spicevo Ana Sayfası",
+  "slug": "home",
+  "blocks": [
+    {
+      "label": "01 — ORGANİK BİTKİ VE BAHARAT İHRACATÇISI",
+      "headline": "Organik Bitkiler & Baharatlar.\nTürk Çiftliklerinden\nKonteynerinize.",
+      "subheadline": "Spicevo, yıllık 480+ metrik ton sertifikalı organik bitki ve baharatı 28 ülkeye ihraç etmektedir. AB Organik, USDA NOP ve ISO 22000 sertifikalıdır. Tarladan sevkiyata tam izlenebilirlik.",
+      "trustLine": "AB Organik Sertifikalı · ISO 22000 · USDA NOP",
+      "image": null,
+      "imageLabelLine1": "EGE BÖLGESİ, TÜRKİYE / ORIGANUM VULGARE",
+      "imageLabelLine2": "Kuru Kekik — Bütün Yaprak",
+      "blockName": null,
+      "blockType": "homeHero",
+      "primaryCTA": {
+        "label": "FİYAT TEKLİFİ İSTE (RFQ)",
+        "url": "#"
+      },
+      "secondaryCTA": {
+        "label": "ÜRÜNLERİ İNCELE",
+        "url": "#"
+      }
+    },
+    {
+      "label": "AKTİF\nSERTİFİKALAR",
+      "blockName": null,
+      "certifications": [
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"16\" stroke=\"rgba(255,255,255,0.6)\" strokeWidth=\"1.5\" viewBox=\"0 0 16 16\" width=\"16\"><path d=\"M8 14 C8 14 2 10 2 5 C2 2 5 1 8 3 C11 1 14 2 14 5 C14 10 8 14 8 14Z\"><line x1=\"8\" x2=\"8\" y1=\"14\" y2=\"6\">",
+          "title": "AB ORGANİK",
+          "subtitle": "EC 834/2007"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"16\" stroke=\"rgba(255,255,255,0.6)\" strokeWidth=\"1.5\" viewBox=\"0 0 16 16\" width=\"16\"><path d=\"M8 1 L14 4 L14 8 C14 12 8 15 8 15 C8 15 2 12 2 8 L2 4 Z\">",
+          "title": "USDA NOP",
+          "subtitle": "Organik Sertifikalı"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"16\" stroke=\"rgba(255,255,255,0.6)\" strokeWidth=\"1.5\" viewBox=\"0 0 16 16\" width=\"16\"><circle cx=\"8\" cy=\"8\" r=\"6\"><polyline points=\"5,8 7,10 11,6\">",
+          "title": "ISO 22000",
+          "subtitle": "Gıda Güvenliği"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"16\" stroke=\"rgba(255,255,255,0.6)\" strokeWidth=\"1.5\" viewBox=\"0 0 16 16\" width=\"16\"><polygon points=\"8,1 15,8 8,15 1,8\">",
+          "title": "HACCP",
+          "subtitle": "Sertifikalı"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"16\" stroke=\"rgba(255,255,255,0.6)\" strokeWidth=\"1.5\" viewBox=\"0 0 16 16\" width=\"16\"><line x1=\"8\" x2=\"8\" y1=\"1\" y2=\"15\"><line x1=\"1\" x2=\"15\" y1=\"4.5\" y2=\"11.5\"><line x1=\"1\" x2=\"15\" y1=\"11.5\" y2=\"4.5\">",
+          "title": "HELAL",
+          "subtitle": "Sertifikalı"
+        }
+      ],
+      "blockType": "trustBar"
+    },
+    {
+      "sectionLabel": "02 — ÜRÜN YELPAZESİ",
+      "headline": "Kategoriye Göre Tedarik",
+      "description": "6 ürün ailesinde 40+ sertifikalı organik SKU. Hepsi tam dokümantasyon ile mevcuttur.",
+      "subDescription": "Her kategori bağımsız olarak sertifikalandırılmıştır — talep üzerine tam CoA ve izlenebilirlik dokümantasyonu mevcuttur.",
+      "blockName": null,
+      "categories": [
+        {
+          "image": null,
+          "region": "EGE BÖLGESİ, TÜRKİYE",
+          "title": "Bitkiler (Bütün & Ovulmuş)",
+          "description": "Doğrudan organik çiftlik ağımızdan tedarik edilen üstün kalite kekik, defne yaprağı ve adaçayı.",
+          "linkText": "YELPAZEYİ KEŞFET",
+          "linkUrl": null
+        },
+        {
+          "image": null,
+          "region": "EGE BÖLGESİ, TÜRKİYE",
+          "title": "Uçucu Yağlar (Buhar Distile)",
+          "description": "İlaç ve gıda uygulamaları için kekik, defne ve adaçayından saf buhar distile yağlar.",
+          "linkText": "YELPAZEYİ KEŞFET",
+          "linkUrl": null
+        },
+        {
+          "image": null,
+          "region": "EGE BÖLGESİ, TÜRKİYE",
+          "title": "Baharatlar (Tohum & Toz)",
+          "description": "Uçucu yağ içeriğini korumak için işlenmiş, yüksek saflıkta kimyon, anason ve rezene tohumları.",
+          "linkText": "YELPAZEYİ KEŞFET",
+          "linkUrl": null
+        },
+        {
+          "image": null,
+          "region": "EGE BÖLGESİ, TÜRKİYE",
+          "title": "Bitkisel Ürünler (Çiçekler & Kökler)",
+          "description": "Papatya ve meyan kökü dahil olmak üzere, maksimum etki döneminde hasat edilmiş kurutulmuş çiçek ve kökler.",
+          "linkText": "YELPAZEYİ KEŞFET",
+          "linkUrl": null
+        },
+        {
+          "image": null,
+          "region": "EGE BÖLGESİ, TÜRKİYE",
+          "title": "Karışımlar (Özel Formülasyonlar)",
+          "description": "Endüstriyel gıda üreticileri için geliştirilmiş özel baharat karışımları ve kişiye özel çeşni profilleri.",
+          "linkText": "YELPAZEYİ KEŞFET",
+          "linkUrl": null
+        }
+      ],
+      "blockType": "productCategories",
+      "customProcessing": {
+        "image": null,
+        "region": "EGE BÖLGESİ, TÜRKİYE",
+        "title": "Özel İşleme (Temizleme & Öğütme)",
+        "description": "Belirli partikül boyutu gereksinimlerine göre uyarlanmış gelişmiş temizleme, ayıklama ve öğütme hizmetleri.",
+        "linkText": "YELPAZEYİ KEŞFET",
+        "linkUrl": null
+      }
+    },
+    {
+      "sectionLabel": "03 — NEDEN SPICEVO",
+      "headline": "Hata Payı Olmayan Alıcılar İçin İnşa Edildi.",
+      "description": "Spicevo'daki her sistem tek bir prensip etrafında tasarlanmıştır: ithalat süreciniz, işinizin en az stresli parçası olmalıdır.",
+      "blockName": null,
+      "features": [
+        {
+          "label": "GÜVENİLİRLİK",
+          "title": "Zamanında Kalkan Sevkiyatlar",
+          "description": "Konteyner rezervasyonları sipariş anında onaylanır. Kargo yüklenmeden önce konşimento taslağını alırsınız."
+        },
+        {
+          "label": "UYUMLULUK",
+          "title": "Siz Sormadan Hazır Her Sertifika",
+          "description": "AB Organik, USDA NOP, ISO 22000, HACCP ve Helal sertifikaları orijinal veya noter tasdikli olarak mevcuttur."
+        },
+        {
+          "label": "İLETİŞİM",
+          "title": "Tek İletişim. Tam Sorumluluk.",
+          "description": "Hesabınıza atanmış özel ihracat koordinatörü. Tüm teknik ve ticari sorulara maksimum 48 saat yanıt süresi."
+        }
+      ],
+      "blockType": "whySpicevo",
+      "traceability": {
+        "label": "İZLENEBİLİRLİK",
+        "percentage": "100%",
+        "title": "Tarladan Konteynere İzlenebilirlik",
+        "description": "Her parti, kökenindeki kooperatife kadar izlenebilir. Parti numaraları, hasat tarihleri ve üçüncü taraf laboratuvar sonuçları, satın alma siparişini vermeden önce elinizdedir.",
+        "certifiedSince": "2009",
+        "labReports": "Parti Başına"
+      }
+    },
+    {
+      "label": "RAKAMLARLA",
+      "blockName": null,
+      "stats": [
+        {
+          "value": "480 MT",
+          "label": "Yıllık İhracat Hacmi"
+        },
+        {
+          "value": "28",
+          "label": "Tedarik Edilen Ülke"
+        },
+        {
+          "value": "6",
+          "label": "Aktif Sertifika"
+        },
+        {
+          "value": "15+",
+          "label": "Yıllık Operasyon"
+        }
+      ],
+      "blockType": "statsStrip"
+    },
+    {
+      "image": null,
+      "location": "EGE SERBEST BÖLGESİ, TÜRKİYE",
+      "established": "KURULUŞ 2009",
+      "sectionLabel": "04 — TESİS & UYUMLULUK",
+      "headline": "ISO Sertifikalı İşleme.\nYıllık Denetimli.",
+      "description": "4.200 m²lik işleme tesisimiz sürekli üçüncü taraf denetimi altında çalışır. Çapraz kontaminasyonu önlemek için her üretim hattı ürün ailesine özel olarak ayrılmıştır.",
+      "footnote": "Tüm sertifikalar talep üzerine orijinal belge veya noter tasdikli kopya olarak mevcuttur.",
+      "blockName": null,
+      "certifications": [
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"28\" stroke=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth=\"2\" className=\"text-secondary mb-3\" viewBox=\"0 0 24 24\" width=\"28\"><path d=\"M11 20A7 7 0 0 1 4 13V9a7 7 0 0 1 7 7v4zm0-11a3 3 0 0 1 3-3h1m-4 4a3 3 0 0 0-3-3h-1\">",
+          "title": "AB Organik",
+          "issuer": "Control Union"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"28\" stroke=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth=\"2\" className=\"text-secondary mb-3\" viewBox=\"0 0 24 24\" width=\"28\"><circle cx=\"12\" cy=\"12\" r=\"10\"><path d=\"m9 12 2 2 4-4\">",
+          "title": "USDA NOP",
+          "issuer": "CCOF Sertifikalı"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"28\" stroke=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth=\"2\" className=\"text-secondary mb-3\" viewBox=\"0 0 24 24\" width=\"28\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\">",
+          "title": "ISO 22000",
+          "issuer": "Bureau Veritas"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"28\" viewBox=\"0 0 28 28\" width=\"28\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M14 2L3 7v8c0 6.1 4.7 11.8 11 13 6.3-1.2 11-6.9 11-13V7L14 2z\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\"><path d=\"M9 14l3.5 3.5L19 11\" stroke=\"currentColor\" strokeLinecap=\"round\" strokeWidth=\"1.5\">",
+          "title": "HACCP",
+          "issuer": "SGS Sertifikalı"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"28\" viewBox=\"0 0 28 28\" width=\"28\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"14\" cy=\"14\" fill=\"none\" r=\"11\" stroke=\"currentColor\" strokeWidth=\"1.5\"><path d=\"M14 6a8 8 0 0 0 0 16A8 8 0 0 1 14 6z\" fill=\"currentColor\" opacity=\"0.15\"><circle cx=\"18\" cy=\"8\" fill=\"currentColor\" r=\"2\">",
+          "title": "Helal",
+          "issuer": "GIMDES"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"32\" stroke=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth=\"1.5\" viewBox=\"0 0 24 24\" width=\"32\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\">",
+          "title": "Koşer",
+          "issuer": "KOF-K"
+        }
+      ],
+      "blockType": "facilityHighlight"
+    },
+    {
+      "sectionLabel": "05 — MÜŞTERİ REFERANSLARI",
+      "headline": "4 Kıtadaki İthalatçılar Tarafından Güvenilen.",
+      "description": "Aktif tedarik ilişkilerinden doğrulanmış hesaplar.",
+      "footnote": "Referanslar ve ticaret dokümantasyonu talep üzerine mevcuttur.",
+      "blockName": null,
+      "testimonials": [
+        {
+          "countryCode": "DE",
+          "company": "Naturkost Handel GmbH",
+          "category": "AB ORGANİK BİTKİLER",
+          "quote": "Spicevo'dan dört sezon üst üste sertifikalı kekik ve defne tedarik ettik. Dokümantasyon gemi kalkmadan önce ulaşır. Bu güvenilirlik, ölçeğimizde tartışılamaz bir değerdir.",
+          "author": "Marcus Bauer",
+          "role": "Satın Alma Müdürü",
+          "volume": "120 MT / yıl"
+        },
+        {
+          "countryCode": "AE",
+          "company": "Gulf Spice Trading LLC",
+          "category": "BAHARATLAR & KARIŞIMLAR",
+          "quote": "Spicevo, önceki tedarikçimizle yaşadığımız tutarlı kalite varyasyonu sorununu ilk sevkiyatta çözdü. Sevkiyat öncesi laboratuvar raporları, Kalite Kontrol ekibimize tam güven verdi.",
+          "author": "Fatima Al Rashidi",
+          "role": "Operasyon Direktörü",
+          "volume": "85 MT / yıl"
+        },
+        {
+          "countryCode": "JP",
+          "company": "Yamamoto Shokuhin Co.",
+          "category": "UÇUCU YAĞLAR",
+          "quote": "İlaç sınıfı buhar distilasyon süreci, sıkı Japon ithalat özelliklerimizi karşılıyor. Analiz Sertifikaları, uçucu yağ içeriği eşiğinin sürekli olarak üzerinde.",
+          "author": "Kenji Yamamoto",
+          "role": "İthalat Müdürü",
+          "volume": "40 MT / yıl"
+        }
+      ],
+      "blockType": "clientReferences"
+    },
+    {
+      "sectionLabel": "06 — SERTİFİKALAR",
+      "headline": "Her Sertifika. Orijinal Yayın.",
+      "description": "Tüm belgeler akredite üçüncü taraf sertifikasyon kuruluşları tarafından düzenlenmiştir. Sevkiyat öncesinde orijinal veya noter tasdikli olarak mevcuttur.",
+      "footnote": "HACCP · Helal · Koşer sertifikaları talep üzerine mevcuttur.",
+      "blockName": null,
+      "certifications": [
+        {
+          "initials": "CU",
+          "title": "AB Organik Sertifikasyonu",
+          "issuer": "Control Union Certifications",
+          "standard": "EC 834/2007 & EC 889/2008",
+          "scope": "Bitkiler, Baharatlar & Uçucu Yağlar",
+          "auditCycle": "Yıllık — Saha + Tesis",
+          "validThrough": "2026",
+          "certificateNo": "CU-TR-2847691"
+        },
+        {
+          "initials": "CC",
+          "title": "USDA NOP Sertifikasyonu",
+          "issuer": "CCOF Certification Services",
+          "standard": "USDA 7 CFR Part 205",
+          "scope": "Kuru Bitkiler & Baharat Tozları",
+          "auditCycle": "Yıllık — Dokümantasyon",
+          "validThrough": "2026",
+          "certificateNo": "CCOF-2024-08841"
+        },
+        {
+          "initials": "BV",
+          "title": "ISO 22000:2018",
+          "issuer": "Bureau Veritas Certification",
+          "standard": "ISO 22000:2018 FSMS",
+          "scope": "İşleme, Paketleme & İhracat",
+          "auditCycle": "Yıllık + Gözetim",
+          "validThrough": "2026",
+          "certificateNo": "BV-TR-ISO-334821"
+        }
+      ],
+      "blockType": "certificationsPreview"
+    },
+    {
+      "label": "ORGANİK TEDARİĞE HAZIR MISINIZ?",
+      "headline": "Tedarik gereksinimlerinizi konuşalım.",
+      "description": "Ürün özelliklerinizi ve hedef hacminizi bize gönderin. Fiyat, uygunluk ve örnek dokümantasyon paketi ile 48 saat içinde yanıt vereceğiz.",
+      "blockName": null,
+      "guarantees": [
+        {
+          "text": "48 Saat Yanıt Garantisi"
+        },
+        {
+          "text": "Numune Dokümantasyon Dahil"
+        },
+        {
+          "text": "İlk Taleplerde MOQ Yok"
+        }
+      ],
+      "blockType": "ctaBanner",
+      "primaryCTA": {
+        "label": "FİYAT TEKLİFİ İSTE (RFQ)",
+        "url": "#"
+      },
+      "secondaryCTA": {
+        "label": "DOKÜMANTASYON İSTE",
+        "url": "#"
+      }
+    }
+  ],
+  "meta": {
+    "title": "Spicevo Ana Sayfası | Tam Montaj",
+    "description": "Spicevo, yıllık 480+ metrik ton sertifikalı organik bitki ve baharatı 28 ülkeye ihraç etmektedir."
+  },
+  "requiresAuth": false,
+  "allowedRoles": []
+}

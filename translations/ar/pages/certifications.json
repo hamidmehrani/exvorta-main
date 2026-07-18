@@ -1,0 +1,198 @@
+{
+"title": "الشهادات",
+"slug": "certifications",
+"blocks": [
+{
+"preheading": "الشهادات والامتثال",
+"heading": "ست شهادات مستقلة. بدون أي تنازلات.",
+"description": "تم إصدار كل شهادة من قبل جهة خارجية معتمدة. الأصول متاحة قبل تأكيد طلب الشراء الخاص بك.",
+"highlightNumber": "6",
+"highlightLabel": "شهادات سارية",
+"blockName": null,
+"certifications": [
+{
+"label": "عضوي من الاتحاد الأوروبي (EU ORGANIC)"
+},
+{
+"label": "عضوي من وزارة الزراعة الأمريكية (USDA NOP)"
+},
+{
+"label": "آيزو 22000 (ISO 22000)"
+},
+{
+"label": "الهاسب (HACCP)"
+},
+{
+"label": "حلال (HALAL)"
+},
+{
+"label": "كوشير (KOSHER)"
+}
+],
+"blockType": "CertsHeroBlock"
+},
+{
+"preheading": "02 — الوثائق",
+"heading": "كل الشهادات. إصدارات أصلية.",
+"blockName": null,
+"certificates": [
+{
+"image": null,
+"title": "عضوي من الاتحاد الأوروبي (EU Organic)",
+"status": "سارية · صالحة حتى عام 2025"
+},
+{
+"image": null,
+"title": "عضوي من وزارة الزراعة الأمريكية (USDA NOP)",
+"status": "سارية · صالحة حتى عام 2025"
+},
+{
+"image": null,
+"title": "آيزو 22000 (ISO 22000)",
+"status": "سارية · صالحة حتى عام 2026"
+},
+{
+"image": null,
+"title": "الهاسب (HACCP)",
+"status": "سارية · تجديد سنوي"
+},
+{
+"image": null,
+"title": "حلال (Halal)",
+"status": "سارية · صالحة حتى عام 2025"
+},
+{
+"image": null,
+"title": "كوشير (Kosher)",
+"status": "سارية · تجديد سنوي"
+}
+],
+"blockType": "CertsGalleryBlock"
+},
+{
+"preheading": "03 — مسار الامتثال",
+"heading": "عملية التدقيق السنوي.",
+"description": "تخضع منشآتنا لتقييمات صارمة ومفاجئة من قبل مدققين مستقلين لضمان عدم وجود أي انحراف عن المعايير الدولية.",
+"blockName": null,
+"phases": [
+{
+"phaseNumber": "المرحلة 01",
+"title": "تحليل ما قبل التدقيق",
+"description": "تدقيق كامل لتتبع جميع مدخلات المواد الخام وسجلات المعالجة.",
+"icon": "ClipboardList"
+},
+{
+"phaseNumber": "المرحلة 02",
+"title": "تفتيش المنشأة",
+"description": "تحقق فعلي من معايير النظافة وظروف التخزين.",
+"icon": "Factory"
+},
+{
+"phaseNumber": "المرحلة 03",
+"title": "التحليل المخبري",
+"description": "أخذ عينات عشوائية واختبارات متعددة الرواسب في مختبرات معتمدة.",
+"icon": "TestTube"
+}
+],
+"blockType": "CertsProcessBlock"
+},
+{
+"leftPreheading": "نطاق الاعتماد",
+"leftHeading": "المنتجات المشمولة",
+"rightPreheading": "الأنشطة المعتمدة",
+"rightHeading": "الأنشطة المشمولة",
+"blockName": null,
+"products": [
+{
+"category": "الأوريجانو — أوراق كاملة",
+"euOrg": true,
+"usda": true,
+"iso": true
+},
+{
+"category": "أوراق الغار — كاملة",
+"euOrg": true,
+"usda": false,
+"iso": true
+},
+{
+"category": "المريمية — مفروكة (Rubbed)",
+"euOrg": true,
+"usda": true,
+"iso": false
+},
+{
+"category": "بذور الكمون",
+"euOrg": true,
+"usda": false,
+"iso": true
+},
+{
+"category": "بذور اليانسون",
+"euOrg": false,
+"usda": true,
+"iso": true
+},
+{
+"category": "الزيوت العطرية",
+"euOrg": true,
+"usda": false,
+"iso": false
+},
+{
+"category": "النباتات الطبية",
+"euOrg": false,
+"usda": true,
+"iso": true
+},
+{
+"category": "خلطات التوابل",
+"euOrg": false,
+"usda": true,
+"iso": true
+}
+],
+"activities": [
+{
+"title": "الزراعة الحقلية والحصاد",
+"subtitle": "(يشمل تفتيش المزارع التعاونية)"
+},
+{
+"title": "المناولة ما بعد الحصاد",
+"subtitle": "(التجفيف، التنظيف، والفرز النهائي)"
+},
+{
+"title": "المعالجة والطحن",
+"subtitle": "(تقليل حجم الجسيمات والغربلة)"
+},
+{
+"title": "التعبئة والتغليف ووضع الملصقات",
+"subtitle": "(التغليف الأولي والثانوي)"
+},
+{
+"title": "التخزين والمستودعات",
+"subtitle": "(تحكم في درجة الحرارة والرطوبة)"
+},
+{
+"title": "وثائق التصدير",
+"subtitle": "(إصدار الشهادات لكل شحنة)"
+}
+],
+"blockType": "CertsScopeBlock"
+},
+{
+"preheading": "طلب الوثائق",
+"heading": "احصل على الشهادات الست بالكامل.\nقبل أن تلتزم.",
+"primaryButtonLabel": "طلب جميع الشهادات",
+"secondaryButtonLabel": "تحدث إلى فريق الامتثال لدينا",
+"blockName": null,
+"blockType": "CertsCTABlock"
+}
+],
+"meta": {
+"title": null,
+"description": null
+},
+"requiresAuth": false,
+"allowedRoles": []
+}

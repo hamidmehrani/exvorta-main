@@ -93,3 +93,29 @@ html[dir="rtl"] body {
     print-color-adjust: exact;
   }
 }
+
+/* ─── Locale-aware font-sans overrides ────────────────────────────────────── */
+
+/* Farsi: IRANSansX variable font */
+.font-locale-fa {
+  --font-sans: var(--font-iran-sans-x), Tahoma, Arial, sans-serif;
+  --font-serif: var(--font-iran-sans-x), Tahoma, serif;
+  --font-display: var(--font-iran-sans-x), Tahoma, serif;
+  --font-body: var(--font-iran-sans-x), Tahoma, sans-serif;
+}
+
+/* Arabic: Cairo */
+.font-locale-ar {
+  --font-sans: var(--font-cairo), Tahoma, Arial, sans-serif;
+  --font-serif: var(--font-cairo), Tahoma, serif;
+  --font-display: var(--font-cairo), Tahoma, serif;
+  --font-body: var(--font-cairo), Tahoma, sans-serif;
+}
+
+/* All other locales: Inter */
+.font-locale-default {
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-display: var(--font-playfair), Georgia, serif;
+  --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
+}

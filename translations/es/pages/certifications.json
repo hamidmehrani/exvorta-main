@@ -1,0 +1,198 @@
+{
+"title": "Certificaciones",
+"slug": "certifications",
+"blocks": [
+{
+"preheading": "Certificaciones y Cumplimiento",
+"heading": "Seis Certificaciones Independientes. Cero Concesiones.",
+"description": "Cada certificado es emitido por un organismo externo acreditado. Originales disponibles antes de confirmar su orden de compra.",
+"highlightNumber": "6",
+"highlightLabel": "Certificaciones Activas",
+"blockName": null,
+"certifications": [
+{
+"label": "ORGÁNICO DE LA UE"
+},
+{
+"label": "USDA NOP"
+},
+{
+"label": "ISO 22000"
+},
+{
+"label": "HACCP"
+},
+{
+"label": "HALAL"
+},
+{
+"label": "KOSHER"
+}
+],
+"blockType": "CertsHeroBlock"
+},
+{
+"preheading": "02 — Documentación",
+"heading": "Todos los Certificados. Emisión Original.",
+"blockName": null,
+"certificates": [
+{
+"image": null,
+"title": "Orgánico de la UE",
+"status": "Activo · Válido hasta 2025"
+},
+{
+"image": null,
+"title": "USDA NOP",
+"status": "Activo · Válido hasta 2025"
+},
+{
+"image": null,
+"title": "ISO 22000",
+"status": "Activo · Válido hasta 2026"
+},
+{
+"image": null,
+"title": "HACCP",
+"status": "Activo · Renovación anual"
+},
+{
+"image": null,
+"title": "Halal",
+"status": "Activo · Válido hasta 2025"
+},
+{
+"image": null,
+"title": "Kosher",
+"status": "Activo · Renovación anual"
+}
+],
+"blockType": "CertsGalleryBlock"
+},
+{
+"preheading": "03 — Ruta de Cumplimiento",
+"heading": "El Proceso de Auditoría Anual.",
+"description": "Nuestras instalaciones se someten a evaluaciones rigurosas y sin previo aviso por parte de auditores independientes para garantizar cero desviaciones de los estándares internacionales.",
+"blockName": null,
+"phases": [
+{
+"phaseNumber": "Fase 01",
+"title": "Análisis Previo a la Auditoría",
+"description": "Auditoría de trazabilidad total de todos los insumos de materias primas y registros de procesamiento.",
+"icon": "ClipboardList"
+},
+{
+"phaseNumber": "Fase 02",
+"title": "Inspección de las Instalaciones",
+"description": "Verificación física de los estándares de higiene y las condiciones de almacenamiento.",
+"icon": "Factory"
+},
+{
+"phaseNumber": "Fase 03",
+"title": "Análisis de Laboratorio",
+"description": "Muestreo aleatorio y pruebas de múltiples residuos en laboratorios acreditados.",
+"icon": "TestTube"
+}
+],
+"blockType": "CertsProcessBlock"
+},
+{
+"leftPreheading": "Alcance de la Certificación",
+"leftHeading": "Productos Cubiertos",
+"rightPreheading": "Actividades Certificadas",
+"rightHeading": "Actividades Cubiertas",
+"blockName": null,
+"products": [
+{
+"category": "Orégano — Hoja Entera",
+"euOrg": true,
+"usda": true,
+"iso": true
+},
+{
+"category": "Hojas de Laurel — Enteras",
+"euOrg": true,
+"usda": false,
+"iso": true
+},
+{
+"category": "Salvia — Frotada",
+"euOrg": true,
+"usda": true,
+"iso": false
+},
+{
+"category": "Semillas de Comino",
+"euOrg": true,
+"usda": false,
+"iso": true
+},
+{
+"category": "Semillas de Anís",
+"euOrg": false,
+"usda": true,
+"iso": true
+},
+{
+"category": "Aceites Esenciales",
+"euOrg": true,
+"usda": false,
+"iso": false
+},
+{
+"category": "Ingredientes Botánicos",
+"euOrg": false,
+"usda": true,
+"iso": true
+},
+{
+"category": "Mezclas de Especias",
+"euOrg": false,
+"usda": true,
+"iso": true
+}
+],
+"activities": [
+{
+"title": "Cultivo y Cosecha en el Campo",
+"subtitle": "(Incluye inspección de granjas cooperativas)"
+},
+{
+"title": "Manejo Poscosecha",
+"subtitle": "(Secado, limpieza y clasificación final)"
+},
+{
+"title": "Procesamiento y Molienda",
+"subtitle": "(Reducción de partículas y tamizado)"
+},
+{
+"title": "Envasado y Etiquetado",
+"subtitle": "(Envasado primario y secundario)"
+},
+{
+"title": "Almacenamiento y Depósito",
+"subtitle": "(Temperatura y humedad controladas)"
+},
+{
+"title": "Documentación de Exportación",
+"subtitle": "(Emisión de certificados por envío)"
+}
+],
+"blockType": "CertsScopeBlock"
+},
+{
+"preheading": "Solicitar Documentación",
+"heading": "Obtenga los Seis Certificados.\nAntes de Comprometerse.",
+"primaryButtonLabel": "Solicitar Todos los Certificados",
+"secondaryButtonLabel": "Hablar con Nuestro Equipo de Cumplimiento",
+"blockName": null,
+"blockType": "CertsCTABlock"
+}
+],
+"meta": {
+"title": null,
+"description": null
+},
+"requiresAuth": false,
+"allowedRoles": []
+}

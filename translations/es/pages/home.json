@@ -1,0 +1,322 @@
+{
+  "title": "Página de inicio de Spicevo",
+  "slug": "home",
+  "blocks": [
+    {
+      "label": "01 — EXPORTADOR DE HIERBAS Y ESPECIAS ORGÁNICAS",
+      "headline": "Hierbas y especias orgánicas.\nDe las granjas turcas\na su contenedor.",
+      "subheadline": "Spicevo exporta anualmente más de 480 toneladas métricas de hierbas y especias orgánicas certificadas a 28 países. Certificación Orgánica de la UE, USDA NOP e ISO 22000. Trazabilidad total desde la granja hasta el transporte.",
+      "trustLine": "Certificado Orgánico de la UE · ISO 22000 · USDA NOP",
+      "image": null,
+      "imageLabelLine1": "REGIÓN DEL EGEO, TURQUÍA / ORIGANUM VULGARE",
+      "imageLabelLine2": "Orégano seco — Hoja entera",
+      "blockName": null,
+      "blockType": "homeHero",
+      "primaryCTA": {
+        "label": "ENVIAR UNA RFQ",
+        "url": "#"
+      },
+      "secondaryCTA": {
+        "label": "VER PRODUCTOS",
+        "url": "#"
+      }
+    },
+    {
+      "label": "CERTIFICACIONES\nACTIVAS",
+      "blockName": null,
+      "certifications": [
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"16\" stroke=\"rgba(255,255,255,0.6)\" strokeWidth=\"1.5\" viewBox=\"0 0 16 16\" width=\"16\"><path d=\"M8 14 C8 14 2 10 2 5 C2 2 5 1 8 3 C11 1 14 2 14 5 C14 10 8 14 8 14Z\"><line x1=\"8\" x2=\"8\" y1=\"14\" y2=\"6\">",
+          "title": "ORGÁNICO DE LA UE",
+          "subtitle": "EC 834/2007"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"16\" stroke=\"rgba(255,255,255,0.6)\" strokeWidth=\"1.5\" viewBox=\"0 0 16 16\" width=\"16\"><path d=\"M8 1 L14 4 L14 8 C14 12 8 15 8 15 C8 15 2 12 2 8 L2 4 Z\">",
+          "title": "USDA NOP",
+          "subtitle": "Certificado Orgánico"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"16\" stroke=\"rgba(255,255,255,0.6)\" strokeWidth=\"1.5\" viewBox=\"0 0 16 16\" width=\"16\"><circle cx=\"8\" cy=\"8\" r=\"6\"><polyline points=\"5,8 7,10 11,6\">",
+          "title": "ISO 22000",
+          "subtitle": "Inocuidad Alimentaria"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"16\" stroke=\"rgba(255,255,255,0.6)\" strokeWidth=\"1.5\" viewBox=\"0 0 16 16\" width=\"16\"><polygon points=\"8,1 15,8 8,15 1,8\">",
+          "title": "HACCP",
+          "subtitle": "Certificado"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"16\" stroke=\"rgba(255,255,255,0.6)\" strokeWidth=\"1.5\" viewBox=\"0 0 16 16\" width=\"16\"><line x1=\"8\" x2=\"8\" y1=\"1\" y2=\"15\"><line x1=\"1\" x2=\"15\" y1=\"4.5\" y2=\"11.5\"><line x1=\"1\" x2=\"15\" y1=\"11.5\" y2=\"4.5\">",
+          "title": "HALAL",
+          "subtitle": "Certificado"
+        }
+      ],
+      "blockType": "trustBar"
+    },
+    {
+      "sectionLabel": "02 — GAMA DE PRODUCTOS",
+      "headline": "Abastecimiento por categoría",
+      "description": "Más de 40 SKU orgánicos certificados en 6 familias de productos. Todos disponibles con documentación completa.",
+      "subDescription": "Cada categoría está certificada de forma independiente: certificado de análisis (CoA) completo y documentación de trazabilidad disponibles bajo petición.",
+      "blockName": null,
+      "categories": [
+        {
+          "image": null,
+          "region": "REGIÓN DEL EGEO, TURQUÍA",
+          "title": "Hierbas (enteras y frotadas)",
+          "description": "Orégano, hojas de laurel y salvia de primera calidad obtenidos directamente de nuestra red de granjas orgánicas.",
+          "linkText": "EXPLORAR GAMA",
+          "linkUrl": null
+        },
+        {
+          "image": null,
+          "region": "REGIÓN DEL EGEO, TURQUÍA",
+          "title": "Aceites esenciales (destilados al vapor)",
+          "description": "Aceites puros destilados al vapor de orégano, laurel y salvia para aplicaciones farmacéuticas y alimentarias.",
+          "linkText": "EXPLORAR GAMA",
+          "linkUrl": null
+        },
+        {
+          "image": null,
+          "region": "REGIÓN DEL EGEO, TURQUÍA",
+          "title": "Especias (semillas y en polvo)",
+          "description": "Semillas de comino, anís e hinojo de alta pureza, procesadas para mantener el contenido de aceites volátiles.",
+          "linkText": "EXPLORAR GAMA",
+          "linkUrl": null
+        },
+        {
+          "image": null,
+          "region": "REGIÓN DEL EGEO, TURQUÍA",
+          "title": "Ingredientes botánicos (flores y raíces)",
+          "description": "Flores y raíces secas, incluyendo manzanilla y regaliz, cosechadas en su punto de máxima potencia.",
+          "linkText": "EXPLORAR GAMA",
+          "linkUrl": null
+        },
+        {
+          "image": null,
+          "region": "REGIÓN DEL EGEO, TURQUÍA",
+          "title": "Mezclas (formulaciones a medida)",
+          "description": "Mezclas de especias exclusivas y perfiles de condimentos personalizados, desarrollados para procesadores industriales de alimentos.",
+          "linkText": "EXPLORAR GAMA",
+          "linkUrl": null
+        }
+      ],
+      "blockType": "productCategories",
+      "customProcessing": {
+        "image": null,
+        "region": "REGIÓN DEL EGEO, TURQUÍA",
+        "title": "Procesamiento personalizado (limpieza y molienda)",
+        "description": "Servicios avanzados de limpieza, clasificación y molienda adaptados a requisitos específicos de tamaño de partícula.",
+        "linkText": "EXPLORAR GAMA",
+        "linkUrl": null
+      }
+    },
+    {
+      "sectionLabel": "03 — POR QUÉ SPICEVO",
+      "headline": "Creado para compradores que no pueden permitirse errores.",
+      "description": "Cada sistema en Spicevo está diseñado en torno a un principio: su proceso de importación debería ser la parte menos estresante de su negocio.",
+      "blockName": null,
+      "features": [
+        {
+          "label": "FIABILIDAD",
+          "title": "Envíos que parten a tiempo",
+          "description": "Reservas de contenedores confirmadas al realizar el pedido. Recibirá el borrador del conocimiento de embarque antes de la carga de la mercancía."
+        },
+        {
+          "label": "CUMPLIMIENTO",
+          "title": "Cada certificado, listo antes de que lo pida",
+          "description": "Certificados Orgánico de la UE, USDA NOP, ISO 22000, HACCP y Halal disponibles como originales o copias notariadas."
+        },
+        {
+          "label": "COMUNICACIÓN",
+          "title": "Un solo contacto. Responsabilidad total.",
+          "description": "Coordinador de exportación dedicado asignado a su cuenta. Respuesta máxima de 48 horas en todas las consultas técnicas y comerciales."
+        }
+      ],
+      "blockType": "whySpicevo",
+      "traceability": {
+        "label": "TRAZABILIDAD",
+        "percentage": "100%",
+        "title": "Trazabilidad de la granja al contenedor",
+        "description": "Cada lote es rastreable hasta su cooperativa de origen. Los números de lote, las fechas de cosecha y los resultados de laboratorios externos están disponibles antes de que emita una orden de compra.",
+        "certifiedSince": "2009",
+        "labReports": "Por lote"
+      }
+    },
+    {
+      "label": "EN CIFRAS",
+      "blockName": null,
+      "stats": [
+        {
+          "value": "480 TM",
+          "label": "Volumen anual de exportación"
+        },
+        {
+          "value": "28",
+          "label": "Países abastecidos"
+        },
+        {
+          "value": "6",
+          "label": "Certificaciones activas"
+        },
+        {
+          "value": "+15",
+          "label": "Años en operación"
+        }
+      ],
+      "blockType": "statsStrip"
+    },
+    {
+      "image": null,
+      "location": "ZONA FRANCA DEL EGEO, TURQUÍA",
+      "established": "FUNDADA EN 2009",
+      "sectionLabel": "04 — INSTALACIONES Y CUMPLIMIENTO",
+      "headline": "Procesamiento con certificación ISO.\nAuditado anualmente.",
+      "description": "Nuestras instalaciones de procesamiento de 4.200 m² operan bajo auditoría continua de terceros. Cada línea de producción está dedicada por familia de productos para evitar la contaminación cruzada.",
+      "footnote": "Todos los certificados están disponibles como documentos originales o copias notariadas bajo petición.",
+      "blockName": null,
+      "certifications": [
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"28\" stroke=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth=\"2\" className=\"text-secondary mb-3\" viewBox=\"0 0 24 24\" width=\"28\"><path d=\"M11 20A7 7 0 0 1 4 13V9a7 7 0 0 1 7 7v4zm0-11a3 3 0 0 1 3-3h1m-4 4a3 3 0 0 0-3-3h-1\">",
+          "title": "Orgánico de la UE",
+          "issuer": "Control Union"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"28\" stroke=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth=\"2\" className=\"text-secondary mb-3\" viewBox=\"0 0 24 24\" width=\"28\"><circle cx=\"12\" cy=\"12\" r=\"10\"><path d=\"m9 12 2 2 4-4\">",
+          "title": "USDA NOP",
+          "issuer": "Certificado por CCOF"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"28\" stroke=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth=\"2\" className=\"text-secondary mb-3\" viewBox=\"0 0 24 24\" width=\"28\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\">",
+          "title": "ISO 22000",
+          "issuer": "Bureau Veritas"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"28\" viewBox=\"0 0 28 28\" width=\"28\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M14 2L3 7v8c0 6.1 4.7 11.8 11 13 6.3-1.2 11-6.9 11-13V7L14 2z\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\"><path d=\"M9 14l3.5 3.5L19 11\" stroke=\"currentColor\" strokeLinecap=\"round\" strokeWidth=\"1.5\">",
+          "title": "HACCP",
+          "issuer": "Certificado por SGS"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"28\" viewBox=\"0 0 28 28\" width=\"28\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"14\" cy=\"14\" fill=\"none\" r=\"11\" stroke=\"currentColor\" strokeWidth=\"1.5\"><path d=\"M14 6a8 8 0 0 0 0 16A8 8 0 0 1 14 6z\" fill=\"currentColor\" opacity=\"0.15\"><circle cx=\"18\" cy=\"8\" fill=\"currentColor\" r=\"2\">",
+          "title": "Halal",
+          "issuer": "GIMDES"
+        },
+        {
+          "iconSvg": "<svg fill=\"none\" height=\"32\" stroke=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth=\"1.5\" viewBox=\"0 0 24 24\" width=\"32\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\">",
+          "title": "Kosher",
+          "issuer": "KOF-K"
+        }
+      ],
+      "blockType": "facilityHighlight"
+    },
+    {
+      "sectionLabel": "05 — REFERENCIAS DE CLIENTES",
+      "headline": "Cuentan con la confianza de importadores de 4 continentes.",
+      "description": "Cuentas verificadas de relaciones de adquisición activas.",
+      "footnote": "Referencias y documentación comercial disponibles bajo petición.",
+      "blockName": null,
+      "testimonials": [
+        {
+          "countryCode": "DE",
+          "company": "Naturkost Handel GmbH",
+          "category": "HIERBAS ORGÁNICAS DE LA UE",
+          "quote": "Hemos adquirido orégano y laurel certificados de Spicevo durante cuatro temporadas consecutivas. La documentación llega antes de que parta el barco. Esa fiabilidad es innegociable a nuestra escala.",
+          "author": "Marcus Bauer",
+          "role": "Jefe de Compras",
+          "volume": "120 TM / año"
+        },
+        {
+          "countryCode": "AE",
+          "company": "Gulf Spice Trading LLC",
+          "category": "ESPECIAS Y MEZCLAS",
+          "quote": "Spicevo resolvió un problema constante de variación de calidad que teníamos con nuestro proveedor anterior desde el primer envío. Sus informes de laboratorio previos al envío le dieron a nuestro equipo de control de calidad total confianza.",
+          "author": "Fatima Al Rashidi",
+          "role": "Directora de Operaciones",
+          "volume": "85 TM / año"
+        },
+        {
+          "countryCode": "JP",
+          "company": "Yamamoto Shokuhin Co.",
+          "category": "ACEITES ESENCIALES",
+          "quote": "El proceso de destilación al vapor de grado farmacéutico cumple con nuestras estrictas especificaciones de importación japonesas. Los certificados de análisis están sistemáticamente por encima del umbral mínimo de contenido de aceites esenciales.",
+          "author": "Kenji Yamamoto",
+          "role": "Gerente de Importación",
+          "volume": "40 TM / año"
+        }
+      ],
+      "blockType": "clientReferences"
+    },
+    {
+      "sectionLabel": "06 — CERTIFICACIONES",
+      "headline": "Todos los certificados. Emisión original.",
+      "description": "Todos los documentos son emitidos por organismos de certificación externos acreditados. Disponibles como originales o copias notariadas antes del envío.",
+      "footnote": "Certificaciones HACCP · Halal · Kosher disponibles bajo petición.",
+      "blockName": null,
+      "certifications": [
+        {
+          "initials": "CU",
+          "title": "Certificación Orgánica de la UE",
+          "issuer": "Control Union Certifications",
+          "standard": "EC 834/2007 y EC 889/2008",
+          "scope": "Hierbas, especias y aceites esenciales",
+          "auditCycle": "Anual — Campo e instalaciones",
+          "validThrough": "2026",
+          "certificateNo": "CU-TR-2847691"
+        },
+        {
+          "initials": "CC",
+          "title": "Certificación USDA NOP",
+          "issuer": "CCOF Certification Services",
+          "standard": "USDA 7 CFR Part 205",
+          "scope": "Hierbas secas y especias en polvo",
+          "auditCycle": "Anual — Documental",
+          "validThrough": "2026",
+          "certificateNo": "CCOF-2024-08841"
+        },
+        {
+          "initials": "BV",
+          "title": "ISO 22000:2018",
+          "issuer": "Bureau Veritas Certification",
+          "standard": "ISO 22000:2018 FSMS",
+          "scope": "Procesamiento, envasado y exportación",
+          "auditCycle": "Anual + Vigilancia",
+          "validThrough": "2026",
+          "certificateNo": "BV-TR-ISO-334821"
+        }
+      ],
+      "blockType": "certificationsPreview"
+    },
+    {
+      "label": "¿LISTO PARA ABASTECERSE DE PRODUCTOS ORGÁNICOS?",
+      "headline": "Hablemos de sus requisitos de abastecimiento.",
+      "description": "Envíenos las especificaciones de sus productos y el volumen objetivo. Le responderemos con precios, disponibilidad y un paquete de documentación de muestra en un plazo de 48 horas.",
+      "blockName": null,
+      "guarantees": [
+        {
+          "text": "Respuesta garantizada en 48 horas"
+        },
+        {
+          "text": "Documentación de muestra incluida"
+        },
+        {
+          "text": "Sin cantidad mínima de pedido (MOQ) en la primera consulta"
+        }
+      ],
+      "blockType": "ctaBanner",
+      "primaryCTA": {
+        "label": "ENVIAR UNA RFQ",
+        "url": "#"
+      },
+      "secondaryCTA": {
+        "label": "SOLICITAR DOCUMENTACIÓN",
+        "url": "#"
+      }
+    }
+  ],
+  "meta": {
+    "title": "Página de inicio de Spicevo | Ensamblaje completo",
+    "description": "Spicevo exporta anualmente más de 480 toneladas métricas de hierbas y especias orgánicas certificadas a 28 países."
+  },
+  "requiresAuth": false,
+  "allowedRoles": []
+}

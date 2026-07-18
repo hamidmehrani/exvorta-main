@@ -1,0 +1,198 @@
+{
+  "title": "Certifications",
+  "slug": "certifications",
+  "blocks": [
+    {
+      "preheading": "Certifications & Compliance",
+      "heading": "Six Independent Certifications. Zero Compromises.",
+      "description": "Every certificate issued by an accredited third-party body. Originals available before your purchase order is confirmed.",
+      "highlightNumber": "6",
+      "highlightLabel": "Active Certifications",
+      "blockName": null,
+      "certifications": [
+        {
+          "label": "EU ORGANIC"
+        },
+        {
+          "label": "USDA NOP"
+        },
+        {
+          "label": "ISO 22000"
+        },
+        {
+          "label": "HACCP"
+        },
+        {
+          "label": "HALAL"
+        },
+        {
+          "label": "KOSHER"
+        }
+      ],
+      "blockType": "CertsHeroBlock"
+    },
+    {
+      "preheading": "02 — Documentation",
+      "heading": "Every Certificate. Original Issue.",
+      "blockName": null,
+      "certificates": [
+        {
+          "image": null,
+          "title": "EU Organic",
+          "status": "Active · Valid until 2025"
+        },
+        {
+          "image": null,
+          "title": "USDA NOP",
+          "status": "Active · Valid until 2025"
+        },
+        {
+          "image": null,
+          "title": "ISO 22000",
+          "status": "Active · Valid until 2026"
+        },
+        {
+          "image": null,
+          "title": "HACCP",
+          "status": "Active · Annual Renewal"
+        },
+        {
+          "image": null,
+          "title": "Halal",
+          "status": "Active · Valid until 2025"
+        },
+        {
+          "image": null,
+          "title": "Kosher",
+          "status": "Active · Annual Renewal"
+        }
+      ],
+      "blockType": "CertsGalleryBlock"
+    },
+    {
+      "preheading": "03 — Compliance Pathway",
+      "heading": "The Annual Audit Process.",
+      "description": "Our facilities undergo rigorous, unannounced evaluations by independent auditors to ensure zero deviation from international standards.",
+      "blockName": null,
+      "phases": [
+        {
+          "phaseNumber": "Phase 01",
+          "title": "Pre-Audit Analysis",
+          "description": "Full traceability audit of all raw material inputs and processing logs.",
+          "icon": "ClipboardList"
+        },
+        {
+          "phaseNumber": "Phase 02",
+          "title": "Facility Inspection",
+          "description": "Physical verification of hygiene standards and storage conditions.",
+          "icon": "Factory"
+        },
+        {
+          "phaseNumber": "Phase 03",
+          "title": "Lab Analysis",
+          "description": "Random sampling and multi-residue testing in accredited labs.",
+          "icon": "TestTube"
+        }
+      ],
+      "blockType": "CertsProcessBlock"
+    },
+    {
+      "leftPreheading": "Certification Scope",
+      "leftHeading": "Products Covered",
+      "rightPreheading": "Certified Activities",
+      "rightHeading": "Activities Covered",
+      "blockName": null,
+      "products": [
+        {
+          "category": "Oregano — Whole Leaf",
+          "euOrg": true,
+          "usda": true,
+          "iso": true
+        },
+        {
+          "category": "Laurel Leaves — Whole",
+          "euOrg": true,
+          "usda": false,
+          "iso": true
+        },
+        {
+          "category": "Sage — Rubbed",
+          "euOrg": true,
+          "usda": true,
+          "iso": false
+        },
+        {
+          "category": "Cumin Seeds",
+          "euOrg": true,
+          "usda": false,
+          "iso": true
+        },
+        {
+          "category": "Anise Seeds",
+          "euOrg": false,
+          "usda": true,
+          "iso": true
+        },
+        {
+          "category": "Essential Oils",
+          "euOrg": true,
+          "usda": false,
+          "iso": false
+        },
+        {
+          "category": "Botanicals",
+          "euOrg": false,
+          "usda": true,
+          "iso": true
+        },
+        {
+          "category": "Spice Blends",
+          "euOrg": false,
+          "usda": true,
+          "iso": true
+        }
+      ],
+      "activities": [
+        {
+          "title": "Field Cultivation & Harvesting",
+          "subtitle": "(Cooperative farm inspection included)"
+        },
+        {
+          "title": "Post-Harvest Handling",
+          "subtitle": "(Drying, cleaning, and final sorting)"
+        },
+        {
+          "title": "Processing & Milling",
+          "subtitle": "(Particle reduction and sieving)"
+        },
+        {
+          "title": "Packaging & Labeling",
+          "subtitle": "(Primary and secondary packaging)"
+        },
+        {
+          "title": "Storage & Warehousing",
+          "subtitle": "(Temperature and humidity controlled)"
+        },
+        {
+          "title": "Export Documentation",
+          "subtitle": "(Certificate issuance per shipment)"
+        }
+      ],
+      "blockType": "CertsScopeBlock"
+    },
+    {
+      "preheading": "Request Documentation",
+      "heading": "Get All Six Certificates.\nBefore You Commit.",
+      "primaryButtonLabel": "Request All Certificates",
+      "secondaryButtonLabel": "Speak to Our Compliance Team",
+      "blockName": null,
+      "blockType": "CertsCTABlock"
+    }
+  ],
+  "meta": {
+    "title": null,
+    "description": null
+  },
+  "requiresAuth": false,
+  "allowedRoles": []
+}

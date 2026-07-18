@@ -1,0 +1,147 @@
+{
+"title": "Hakkımızda",
+"slug": "about",
+"blocks": [
+{
+"preheading": "01 — HAKKIMIZDA",
+"heading": "Ege'den Kaynaklı. Küresel Ticaret İçin Üretildi.",
+"subheading": "Spicevo, Avrupa, Kuzey Amerika ve Körfez bölgesindeki ithalatçılara tedarik sağlayan Türk organik şifalı bitki ve baharat ihracatçısıdır.",
+"image": null,
+"blockName": null,
+"blockType": "AboutHeroBlock"
+},
+{
+"preheading": "02 — KÖKEN HİKAYESİ",
+"heading": "Ege'de Kuruldu. İhracat İçin Yetiştirildi.",
+"content": "Spicevo, Türkiye'nin dünya standartlarındaki organik çiftlikleri ile tam izlenebilirlik talep eden uluslararası alıcılar arasındaki boşluğu doldurmak için kuruldu. Her ilişki çiftlikte başlar.",
+"image": null,
+"blockName": null,
+"blockType": "AboutStoryBlock"
+},
+{
+"image": null,
+"preheading": "03 — TESİSİMİZ",
+"heading": "ISO Sertifikalı İşleme. Ege Serbest Bölgesi.",
+"blockName": null,
+"features": [
+{
+"title": "TEMİZLEME & AYIKLAMA",
+"description": "Maksimum saflık için optik ve manuel ayıklama hatları."
+},
+{
+"title": "ÖĞÜTME & KİMYON",
+"description": "Bütün yapraktan ince 60-mesh toza kadar özel partikül boyutu küçültme."
+},
+{
+"title": "PAKETLEME",
+"description": "Perakende paketler, dökme kraft torbalar ve özel etiket formatları için otomatik dolum."
+}
+],
+"blockType": "AboutFacilityBlock"
+},
+{
+"preheading": "04 — TEDARİK FELSEFESİ",
+"heading": "Her Çiftliği İsmiyle Tanıyoruz.",
+"blockName": null,
+"pillars": [
+{
+"title": "DOĞRUDAN ORTAKLIKLAR",
+"description": "Ege bölgesindeki kooperatif çiftlikleriyle doğrudan çalışıyoruz. Aracı yok."
+},
+{
+"title": "MEVSİMSEL HASAT",
+"description": "Tüm ürünler en verimli hasat döneminde tedarik edilir. Parti numaraları çiftliğe ve tarihe bağlıdır."
+},
+{
+"title": "TAM İZLENEBİLİRLİK",
+"description": "Her stok kodu (SKU) tarladan konteynere kadar izlenebilir. CoA istek üzerine mevcuttur."
+}
+],
+"blockType": "AboutPhilosophyBlock"
+},
+{
+"preheading": "05 — RAKAMLARLA",
+"blockName": null,
+"stats": [
+{
+"value": "15+",
+"label": "Yıllık İhracat Deneyimi"
+},
+{
+"value": "480 MT",
+"label": "Yıllık İhracat Hacmi"
+},
+{
+"value": "40+",
+"label": "Sertifikalı SKU"
+},
+{
+"value": "4",
+"label": "Tedarik Edilen Kıta"
+}
+],
+"blockType": "AboutStatsBlock"
+},
+{
+"preheading": "06 — SERTİFİKALAR",
+"description": "Tüm sertifikalar bağımsız olarak düzenlenmiştir. İstek üzerine asılları mevcuttur.",
+"blockName": null,
+"certifications": [
+{
+"label": "AB ORGANİK"
+},
+{
+"label": "USDA NOP"
+},
+{
+"label": "ISO 22000"
+},
+{
+"label": "HACCP"
+},
+{
+"label": "HELAL"
+},
+{
+"label": "KOŞER"
+}
+],
+"blockType": "AboutCertificationsBlock"
+},
+{
+"preheading": "07 — EKİBİMİZ",
+"heading": "Her Sevkiyatın Arkasındaki İnsanlar.",
+"blockName": null,
+"members": [
+{
+"image": null,
+"name": "ALİ KEMAL KESKİN",
+"role": "KURUCU & İHRACAT DİREKTÖRÜ",
+"bio": "2009'dan beri küresel ihracat lojistiğini ve kurumsal ortaklıkları yönetmektedir."
+},
+{
+"image": null,
+"name": "FATMA ERDOĞAN",
+"role": "TEDARİK & KALİTE MÜDÜRÜ",
+"bio": "Çiftlik kooperatifi ilişkilerini ve HACCP uyum standartlarını yönetmektedir."
+}
+],
+"blockType": "AboutTeamBlock"
+},
+{
+"preheading": "TEDARİK YOLCULUĞUNUZU BAŞLATIN",
+"heading": "Gereksinimlerinizi Tartışmaya Hazır mısınız?",
+"subheading": "Ürün özelliklerinizi bize gönderin. 48 saat içinde fiyat ve uygunluk bilgisiyle yanıt veriyoruz.",
+"primaryButtonLabel": "FİYAT TEKLİFİ İSTE",
+"secondaryButtonLabel": "ÜRÜN KATALOĞU İSTE",
+"blockName": null,
+"blockType": "AboutCTABlock"
+}
+],
+"meta": {
+"title": null,
+"description": null
+},
+"requiresAuth": false,
+"allowedRoles": []
+}

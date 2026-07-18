@@ -1,0 +1,159 @@
+{
+  "title": "Sourcing & Quality",
+  "slug": "sourcing",
+  "blocks": [
+    {
+      "title": "From RFQ to Container. Six Steps.",
+      "subtitle": "A transparent, documented process for every order. No surprises between inquiry and delivery.",
+      "image": null,
+      "blockName": null,
+      "stats": [
+        {
+          "value": "48H",
+          "label": "First Response"
+        },
+        {
+          "value": "6",
+          "label": "Process Steps"
+        },
+        {
+          "value": "100%",
+          "label": "Documented"
+        }
+      ],
+      "blockType": "SourcingHeroBlock"
+    },
+    {
+      "kicker": "THE PROCESS",
+      "title": "Every Step. Fully Documented.",
+      "blockName": null,
+      "steps": [
+        {
+          "number": "01",
+          "kicker": "INQUIRY SUBMISSION",
+          "title": "Send Your RFQ",
+          "description": "Submit your product requirements, target volume, destination, and required certifications via our contact form or direct email.",
+          "timeframe": "Day 0"
+        },
+        {
+          "number": "02",
+          "kicker": "REVIEW & MATCHING",
+          "title": "We Review Your Requirements",
+          "description": "Our sourcing team matches your specifications against current harvest availability, certification status, and logistics capacity.",
+          "timeframe": "Within 24 Hours"
+        },
+        {
+          "number": "03",
+          "kicker": "QUOTATION",
+          "title": "Receive a Detailed Proposal",
+          "description": "You receive a formal quotation including unit pricing, MOQ, lead time, available certifications, and a sample documentation package.",
+          "timeframe": "Within 48 Hours"
+        },
+        {
+          "number": "04",
+          "kicker": "SAMPLE & APPROVAL",
+          "title": "Sample Dispatch & Lab Verification",
+          "description": "Upon agreement, we dispatch a product sample with full Certificate of Analysis. You verify quality before issuing a purchase order.",
+          "timeframe": "5–7 Business Days"
+        },
+        {
+          "number": "05",
+          "kicker": "PRODUCTION & PROCESSING",
+          "title": "Order Processing & Certification",
+          "description": "Your order enters our certified processing facility. All production records, batch numbers, and traceability logs are maintained throughout.",
+          "timeframe": "10–15 Business Days"
+        },
+        {
+          "number": "06",
+          "kicker": "EXPORT & DELIVERY",
+          "title": "Shipment & Documentation Package",
+          "description": "Cargo is loaded and sealed. You receive the full export documentation package: Bill of Lading, CoA, Phytosanitary Certificate, and all relevant certifications.",
+          "timeframe": "Per Agreed Incoterm"
+        }
+      ],
+      "blockType": "SourcingTimelineBlock"
+    },
+    {
+      "leftKicker": "WHAT WE NEED FROM YOU",
+      "rightKicker": "WITH EVERY ORDER",
+      "blockName": null,
+      "leftItems": [
+        {
+          "title": "Target Product & Botanical Variety",
+          "description": "Specify species and form: whole, rubbed, powder"
+        },
+        {
+          "title": "Estimated Annual Volume",
+          "description": "In metric tons — approximate is acceptable"
+        },
+        {
+          "title": "Destination Country & Port",
+          "description": "For logistics and documentation planning"
+        }
+      ],
+      "rightItems": [
+        {
+          "title": "Certificate of Analysis (CoA)",
+          "description": "Per batch, from accredited laboratory"
+        },
+        {
+          "title": "All Active Certifications",
+          "description": "Originals or notarized copies"
+        },
+        {
+          "title": "Phytosanitary Certificate",
+          "description": "Issued by Turkish Ministry"
+        }
+      ],
+      "blockType": "SourcingRequirementsBlock"
+    },
+    {
+      "kicker": "FREQUENTLY ASKED",
+      "title": "Common Sourcing Questions.",
+      "blockName": null,
+      "faqs": [
+        {
+          "category": "LOGISTICS",
+          "question": "What is your minimum order quantity?",
+          "answer": "Our standard MOQ is 500kg per SKU for stocked products. For custom processing or blending, minimum is 1,000kg. First-time buyers may request a sample order of 25–50kg with full documentation."
+        },
+        {
+          "category": "TIMELINE",
+          "question": "How long does it take from order to shipment?",
+          "answer": ""
+        },
+        {
+          "category": "QUALITY",
+          "question": "Can you provide organic certification for all products?",
+          "answer": ""
+        },
+        {
+          "category": "SHIPPING",
+          "question": "Which Incoterms do you support for export?",
+          "answer": ""
+        },
+        {
+          "category": "DOCUMENTATION",
+          "question": "What documents are included in the export package?",
+          "answer": ""
+        }
+      ],
+      "blockType": "SourcingFAQBlock"
+    },
+    {
+      "kicker": "START YOUR SOURCING JOURNEY",
+      "title": "Ready to Place Your First Order?",
+      "subtitle": "Send us your specifications. We respond within 48 hours.",
+      "primaryButtonText": "SEND AN RFQ",
+      "secondaryButtonText": "DOWNLOAD PROCESS GUIDE",
+      "blockName": null,
+      "blockType": "SourcingCTABlock"
+    }
+  ],
+  "meta": {
+    "title": null,
+    "description": null
+  },
+  "requiresAuth": false,
+  "allowedRoles": []
+}
