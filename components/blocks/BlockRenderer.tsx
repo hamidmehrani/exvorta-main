@@ -35,9 +35,9 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ blocks }) => {
             return <HeroBlock key={key} {...block} />
           case 'pricing':
             return <PricingBlock key={key} {...block} />
-          case 'contact-form':
+          case 'contactForm':
             return <ContactFormBlock key={key} {...block} />
-          case 'feature-grid':
+          case 'featureGrid':
             return <FeatureGridBlock key={key} {...block} />
           case 'cta':
             return <CTABlock key={key} {...block} />
@@ -49,7 +49,7 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ blocks }) => {
             return <MarqueeBlock key={key} {...block} />
           case 'process':
             return <ProcessBlock key={key} {...block} />
-          case 'rich-text':
+          case 'richText':
             return <RichTextBlock key={key} {...block} />
           case 'stats':
             return <StatsBlock key={key} {...block} />

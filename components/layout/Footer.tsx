@@ -14,6 +14,7 @@ export const Footer = async () => {
   try {
     footerData = await payload.findGlobal({
       slug: 'footer',
+      depth: 2,
     }) as FooterType
   } catch (error) {
     console.error('Error fetching footer data', error)
@@ -43,10 +44,15 @@ export const Footer = async () => {
             </h4>
             <ul className="flex flex-col gap-3">
               {column.links?.map((rawItem, linkIndex) => {
+                // The 'links' array type in payload-types is stale (depth=0 shape);
+                // at depth=2 reference.value is a populated Page object.
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const item = rawItem as any
-                const isRef = item.link?.type === 'reference' && item.link?.reference?.value
-                const href = isRef ? `/${typeof item.link?.reference!.value === 'string' ? item.link?.reference!.value : item.link?.reference!.value.slug}` : (item.link?.url || '#')
+                const refValue = item.link?.reference?.value
+                const isRef = item.link?.type === 'reference' && refValue
+                const href = isRef
+                  ? `/${typeof refValue === 'string' ? refValue : (refValue?.slug || refValue?.id || '')}`
+                  : (item.link?.url || '#')
                 const isExternal = item.link?.type === 'custom' && item.link?.openInNewTab
                 return (
                   <li key={item.id || linkIndex}>

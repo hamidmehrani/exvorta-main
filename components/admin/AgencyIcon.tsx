@@ -9,8 +9,8 @@ export const AgencyIcon: React.FC = () => {
           width: '32px', 
           height: '32px', 
           borderRadius: '6px', 
-          backgroundColor: 'var(--ex-accent)', 
-          color: 'var(--ex-bg)',
+          backgroundColor: 'var(--color-accent)', 
+          color: 'var(--color-bg)',
           fontSize: '20px'
         }}
       >

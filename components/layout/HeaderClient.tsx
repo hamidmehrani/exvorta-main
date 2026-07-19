@@ -49,8 +49,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, t }) => {
 
         <nav className="hidden md:flex items-center gap-6">
           {navLinks.map((item, idx) => {
-            const isRef = item.link.type === 'reference' && item.link.reference?.value
-            const href = isRef ? `/${typeof item.link.reference!.value === 'string' ? item.link.reference!.value : item.link.reference!.value.slug}` : (item.link.url || '#')
+            const refValue = item.link.reference?.value
+            const isRef = item.link.type === 'reference' && refValue
+            const href = isRef
+              ? `/${typeof refValue === 'string' ? refValue : (refValue as Record<string, unknown>).slug || ''}`
+              : (item.link.url || '#')
             const isExternal = item.link.type === 'custom' && item.link.openInNewTab
             return (
               <Link 
@@ -88,8 +91,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, t }) => {
         <div className="md:hidden border-t border-border bg-bg shadow-lg absolute top-full left-0 w-full z-40 animate-in slide-in-from-top-2">
           <nav className="flex flex-col p-6 gap-4">
             {navLinks.map((item, idx) => {
-              const isRef = item.link.type === 'reference' && item.link.reference?.value
-              const href = isRef ? `/${typeof item.link.reference!.value === 'string' ? item.link.reference!.value : item.link.reference!.value.slug}` : (item.link.url || '#')
+              const refValue = item.link.reference?.value
+              const isRef = item.link.type === 'reference' && refValue
+              const href = isRef
+                ? `/${typeof refValue === 'string' ? refValue : (refValue as Record<string, unknown>).slug || ''}`
+                : (item.link.url || '#')
               const isExternal = item.link.type === 'custom' && item.link.openInNewTab
               return (
                 <Link 

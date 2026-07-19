@@ -9,8 +9,8 @@ export const AgencyLogo: React.FC = () => {
           width: '32px', 
           height: '32px', 
           borderRadius: '6px', 
-          backgroundColor: 'var(--ex-accent)', 
-          color: 'var(--ex-bg)',
+          backgroundColor: 'var(--color-accent)', 
+          color: 'var(--color-bg)',
           fontSize: '20px'
         }}
       >
@@ -20,7 +20,7 @@ export const AgencyLogo: React.FC = () => {
         className="font-bold tracking-tight"
         style={{ 
           fontSize: '20px', 
-          color: 'var(--ex-text)',
+          color: 'var(--color-text)',
           fontFamily: 'Inter, sans-serif'
         }}
       >

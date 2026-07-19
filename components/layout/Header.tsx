@@ -12,6 +12,7 @@ export const Header = async () => {
   try {
     navData = await payload.findGlobal({
       slug: 'navigation',
+      depth: 2,
     }) as Navigation
   } catch (error) {
     console.error('Error fetching navigation data', error)
