@@ -6,10 +6,16 @@ import { RefreshRouteOnSave } from '@payloadcms/live-preview-react'
 
 export default function LivePreviewListener() {
   const router = useRouter()
+  
+  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
+  if (!serverUrl) {
+    console.warn('WARNING: NEXT_PUBLIC_SERVER_URL is not set.')
+  }
+
   return (
     <RefreshRouteOnSave
-      refresh={router.refresh}
-      serverURL={process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}
+      refresh={() => router.refresh()}
+      serverURL={serverUrl || ''}
     />
   )
 }

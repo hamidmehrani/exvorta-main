@@ -32,7 +32,7 @@ export default async function middleware(req: NextRequest) {
     if (match && match.to) {
       return NextResponse.redirect(new URL(match.to, req.url), { status: parseInt(String(match.statusCode)) || 301 });
     }
-  } catch (err) {
+  } catch {
     // Ignore errors
   }
 

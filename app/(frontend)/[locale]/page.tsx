@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import type { Metadata } from 'next'
 import { getPayloadClient } from '@/lib/payload'
 import { getTranslations } from 'next-intl/server'

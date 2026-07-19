@@ -43,7 +43,7 @@ export async function generateMetadata({
     ogImageUrl = seoDefaults.defaultOgImage.url
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
 
   return {
     metadataBase: new URL(baseUrl),

@@ -3,6 +3,7 @@
 import { getPayloadClient } from '@/lib/payload'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { routing } from '@/i18n/routing'
 
 export type LoginState = { success: boolean; error: string | null }
 
@@ -33,9 +34,10 @@ export async function loginAction(prevState: LoginState, formData: FormData): Pr
     } else {
       return { success: false, error: 'Authentication failed' }
     }
-  } catch (err) {
+  } catch {
     return { success: false, error: 'Invalid credentials' }
   }
 
-  redirect(`/${locale}`)
+  const safeLocale = (routing.locales as readonly string[]).includes(locale) ? locale : routing.defaultLocale
+  redirect(`/${safeLocale}`)
 }

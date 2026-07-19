@@ -4,7 +4,7 @@ import { routing } from '@/i18n/routing'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayloadClient()
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
   const locales = routing.locales || ['en', 'ar', 'fa']
 
   const sitemapEntries: MetadataRoute.Sitemap = []

@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-require-imports */
 import { CollectionConfig, Plugin } from 'payload'
 import { v2 as cloudinary } from 'cloudinary'
-import { UploadApiOptions } from 'cloudinary'
+import { UploadApiOptions, ConfigOptions } from 'cloudinary'
 
 export interface CloudinaryStorageOptions {
   config: {
@@ -19,7 +18,7 @@ export interface CloudinaryStorageOptions {
 
 export const cloudinaryStorage = (options: CloudinaryStorageOptions): Plugin => {
   const proxyUrl = process.env.https_proxy || process.env.HTTPS_PROXY
-  const cloudinaryConfig: any = {
+  const cloudinaryConfig: ConfigOptions & { timeout?: number, api_proxy?: string } = {
     cloud_name: options.config.cloud_name,
     api_key: options.config.api_key,
     api_secret: options.config.api_secret,
@@ -79,8 +78,8 @@ export const cloudinaryStorage = (options: CloudinaryStorageOptions): Plugin => 
                 try {
                   const { HttpsProxyAgent } = require('https-proxy-agent')
                   proxyAgent = new HttpsProxyAgent(proxyUrl)
-                  ;(uploadOptions as any).agent = proxyAgent
-                } catch (e) {
+                  Object.assign(uploadOptions, { agent: proxyAgent })
+                } catch {
                   req.payload.logger.error('Failed to load https-proxy-agent')
                 }
               }
@@ -98,11 +97,12 @@ export const cloudinaryStorage = (options: CloudinaryStorageOptions): Plugin => 
                   data.height = result.height
                   data.mimeType = fileWithBuffer.type || fileWithBuffer.mimetype || fileWithBuffer.mimeType
                   return data
-                } catch (error: any) {
-                  const isTransient = error?.http_code >= 500 || error?.name === 'TimeoutError' || error?.message?.includes('Timeout') || error?.code === 'ECONNRESET' || error?.code === 'ETIMEDOUT'
+                } catch (error: unknown) {
+                  const err = error as { http_code?: number, name?: string, message?: string, code?: string }
+                  const isTransient = (err?.http_code ?? 0) >= 500 || err?.name === 'TimeoutError' || err?.message?.includes('Timeout') || err?.code === 'ECONNRESET' || err?.code === 'ETIMEDOUT'
                   
                   if (isTransient && attempt < maxRetries) {
-                    req.payload.logger.warn(`Cloudinary upload transient error (attempt ${attempt + 1}/${maxRetries}): ${error.message}. Retrying in ${retryDelays[attempt]}ms...`)
+                    req.payload.logger.warn(`Cloudinary upload transient error (attempt ${attempt + 1}/${maxRetries}): ${err.message}. Retrying in ${retryDelays[attempt]}ms...`)
                     await new Promise(resolve => setTimeout(resolve, retryDelays[attempt]))
                     continue
                   }

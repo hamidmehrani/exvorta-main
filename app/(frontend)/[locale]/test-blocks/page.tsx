@@ -1,10 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React from 'react'
 import { BlockRenderer } from '@/components/blocks/BlockRenderer'
+import type { Page } from '@/payload-types'
 
 export default function TestBlocksPage() {
-  const mockBlocks = [
+  const mockBlocks: Page['blocks'] = [
     {
+      id: 'mock-1',
       blockType: 'ctaBanner',
       label: 'Get Started Today',
       headline: 'Ready to Transform Your Business?',
@@ -18,9 +20,9 @@ export default function TestBlocksPage() {
         url: '/contact'
       },
       guarantees: [
-        { text: 'No credit card required' },
-        { text: '14-day free trial' },
-        { text: 'Cancel anytime' }
+        { id: 'g1', text: 'No credit card required' },
+        { id: 'g2', text: '14-day free trial' },
+        { id: 'g3', text: 'Cancel anytime' }
       ]
     }
   ]
@@ -28,7 +30,7 @@ export default function TestBlocksPage() {
   return (
     <div className="min-h-screen bg-bg flex flex-col">
       <main className="flex-1">
-        <BlockRenderer blocks={mockBlocks as any} />
+        <BlockRenderer blocks={mockBlocks} />
       </main>
     </div>
   )

@@ -1,12 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-
 
 import React from 'react'
 import { Reveal, StaggerContainer, StaggerItem } from '../ui/Reveal'
 import { Link } from '@/i18n/routing'
+import type { Page } from '@/payload-types'
 
-export default function CTABannerBlock(props: any) {
+type CTABannerProps = Extract<NonNullable<Page['blocks']>[0], { blockType: 'ctaBanner' }>
+type GuaranteeType = NonNullable<CTABannerProps['guarantees']>[0]
+
+export default function CTABannerBlock(props: CTABannerProps) {
   const { label, headline, description, primaryCTA, secondaryCTA, guarantees } = props
 
   return (
@@ -20,7 +22,7 @@ export default function CTABannerBlock(props: any) {
           {secondaryCTA?.label && <Link href={(secondaryCTA.url === '#' || !secondaryCTA.url) ? '/contact' : secondaryCTA.url} className="w-full md:w-auto text-center bg-transparent border border-surface/30 text-surface font-sans font-semibold text-[12px] uppercase tracking-[0.14em] px-[40px] py-[18px] rounded-[2px] transition-all hover:border-surface hover:-translate-y-[2px]">{secondaryCTA.label}</Link>}
         </div>
         <StaggerContainer delayChildren={0.2} staggerChildren={0.1} className="mt-[48px] flex flex-col md:flex-row justify-center gap-[24px] md:gap-[48px]">
-          {guarantees?.map((guarantee: any, i: number) => (
+          {guarantees?.map((guarantee: GuaranteeType, i: number) => (
             <StaggerItem key={i} className="flex items-center gap-[12px] justify-center">
               <div className="w-[4px] h-[4px] rounded-full bg-primary"></div>
               <span className="font-sans font-light text-[14px] md:text-[13px] text-surface/50 tracking-[0.04em] whitespace-nowrap">{guarantee.text}</span>

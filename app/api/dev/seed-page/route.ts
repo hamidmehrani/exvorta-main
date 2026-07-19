@@ -11,6 +11,14 @@ export async function POST(req: Request) {
     )
   }
 
+  const secret = req.headers.get('x-seed-secret')
+  if (!secret || secret !== process.env.SEED_API_SECRET) {
+    return NextResponse.json(
+      { error: 'Unauthorized: Invalid or missing seed secret.' },
+      { status: 401 }
+    )
+  }
+
   try {
     const body = await req.json()
     const { title, slug, blocks } = body as {
