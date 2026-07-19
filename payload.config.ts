@@ -40,8 +40,8 @@ import Footer from './payload/globals/Footer'
 import SEODefaults from './payload/globals/SEODefaults'
 import SocialLinks from './payload/globals/SocialLinks'
 import WhatsAppConfig from './payload/globals/WhatsAppConfig'
-import CookieConsent from './payload/globals/CookieConsent'
-import GlobalPromos from './payload/globals/GlobalPromos'
+
+
 import Analytics from './payload/globals/Analytics'
 
 const filename = fileURLToPath(import.meta.url)
@@ -66,7 +66,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     livePreview: {
-      url: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+      url: process.env.NEXT_PUBLIC_SERVER_URL || '',
       collections: ['pages', 'posts'],
       breakpoints: [
         { label: 'Mobile', name: 'mobile', width: 375, height: 667 },
@@ -95,8 +95,8 @@ export default buildConfig({
     SEODefaults,
     SocialLinks,
     WhatsAppConfig,
-    CookieConsent,
-    GlobalPromos,
+
+
     Analytics,
   ],
   editor: lexicalEditor({}),
