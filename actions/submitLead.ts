@@ -6,11 +6,11 @@ import { headers } from 'next/headers'
 import { sql } from '@payloadcms/db-postgres'
 
 const RATE_LIMIT = 5
-const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000 // 15 minutes
 
 export async function submitLeadAction(prevState: unknown, formData: FormData) {
   const ip = (await headers()).get('x-forwarded-for') || 'unknown'
   const payload = await getPayloadClient()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const db = payload.db as any
   
   // 1. Rate Limiting via Neon (Postgres)
