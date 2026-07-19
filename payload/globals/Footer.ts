@@ -1,5 +1,6 @@
 import { isAdmin } from '../access/isAdmin'
 import { GlobalConfig } from 'payload'
+import { link } from '../fields/link'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
@@ -22,20 +23,7 @@ export const Footer: GlobalConfig = {
         {
           name: 'links',
           type: 'array',
-          fields: [
-            {
-              name: 'label',
-              type: 'text',
-              required: true,
-              localized: true,
-            },
-            {
-              name: 'url',
-              type: 'text',
-              required: true,
-              localized: true,
-            },
-          ],
+          fields: [link],
         },
       ],
     },

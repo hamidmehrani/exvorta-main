@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import { getTranslations } from 'next-intl/server'
 import { getPayloadClient } from '@/lib/payload'
 import { Footer as FooterType } from '@/payload-types'
@@ -42,45 +42,28 @@ export const Footer = async () => {
               {column.title}
             </h4>
             <ul className="flex flex-col gap-3">
-              {column.links?.map((link, linkIndex) => (
-                <li key={link.id || linkIndex}>
-                  <Link href={link.url} className="text-sm text-muted hover:text-text transition-colors duration-200">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              {column.links?.map((rawItem, linkIndex) => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const item = rawItem as any
+                const isRef = item.link?.type === 'reference' && item.link?.reference?.value
+                const href = isRef ? `/${typeof item.link?.reference!.value === 'string' ? item.link?.reference!.value : item.link?.reference!.value.slug}` : (item.link?.url || '#')
+                const isExternal = item.link?.type === 'custom' && item.link?.openInNewTab
+                return (
+                  <li key={item.id || linkIndex}>
+                    <Link 
+                      href={href} 
+                      className="text-sm text-muted hover:text-text transition-colors duration-200"
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
+                    >
+                      {item.link?.label}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         ))}
-        
-        {(!footerData?.columns || footerData.columns.length === 0) && (
-          <>
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-muted mb-4">
-                {t('resources')}
-              </h4>
-              <ul className="flex flex-col gap-3">
-                <li>
-                  <Link href="#" className="text-sm text-muted hover:text-text transition-colors duration-200">
-                    {t('documentation')}
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-muted mb-4">
-                {t('system')}
-              </h4>
-              <ul className="flex flex-col gap-3">
-                <li>
-                  <Link href="/admin" className="text-sm text-muted hover:text-text transition-colors duration-200">
-                    {t('cmsAdmin')}
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </>
-        )}
       </div>
 
       <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">

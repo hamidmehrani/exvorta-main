@@ -24,7 +24,8 @@ export const Header = async () => {
     admin: t('admin'),
   }
 
-  return <HeaderClient navLinks={navData?.links || []} t={translations} />
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return <HeaderClient navLinks={(navData?.links as any) || []} t={translations} />
 }
 
 export default Header

@@ -1,11 +1,25 @@
 'use client'
 
 import React, { useState } from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import LanguageSwitcher from '../ui/LanguageSwitcher'
 
+interface NavLink {
+  id?: string | null
+  link: {
+    type?: 'reference' | 'custom' | null
+    reference?: {
+      relationTo: 'pages'
+      value: string | Record<string, unknown>
+    } | null
+    url?: string | null
+    label: string
+    openInNewTab?: boolean | null
+  }
+}
+
 interface HeaderClientProps {
-  navLinks: Array<{ label: string; url: string; id?: string | null }>
+  navLinks: NavLink[]
   t: {
     features: string
     collections: string
@@ -34,24 +48,22 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, t }) => {
         </div>
 
         <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link, idx) => (
-            <Link key={link.id || idx} href={link.url} className="text-sm font-medium text-muted hover:text-accent transition-colors duration-200">
-              {link.label}
-            </Link>
-          ))}
-          {navLinks.length === 0 && (
-            <>
-              <a href="#" className="text-sm font-medium text-muted hover:text-accent transition-colors duration-200">
-                {t.features}
-              </a>
-              <a href="#" className="text-sm font-medium text-muted hover:text-accent transition-colors duration-200">
-                {t.collections}
-              </a>
-              <a href="#" className="text-sm font-medium text-muted hover:text-accent transition-colors duration-200">
-                {t.docs}
-              </a>
-            </>
-          )}
+          {navLinks.map((item, idx) => {
+            const isRef = item.link.type === 'reference' && item.link.reference?.value
+            const href = isRef ? `/${typeof item.link.reference!.value === 'string' ? item.link.reference!.value : item.link.reference!.value.slug}` : (item.link.url || '#')
+            const isExternal = item.link.type === 'custom' && item.link.openInNewTab
+            return (
+              <Link 
+                key={item.id || idx} 
+                href={href} 
+                className="text-sm font-medium text-muted hover:text-accent transition-colors duration-200"
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+              >
+                {item.link.label}
+              </Link>
+            )
+          })}
           <div className="border-s border-border ps-6 flex items-center gap-4">
             <LanguageSwitcher />
             <Link href="/admin" className="px-4 h-9 inline-flex items-center justify-center rounded-md border border-border text-text hover:bg-surface-2 text-sm font-medium transition-all duration-200">
@@ -75,24 +87,23 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, t }) => {
       {isMobileMenuOpen && (
         <div className="md:hidden border-t border-border bg-bg shadow-lg absolute top-full left-0 w-full z-40 animate-in slide-in-from-top-2">
           <nav className="flex flex-col p-6 gap-4">
-            {navLinks.map((link, idx) => (
-              <Link key={link.id || idx} href={link.url} className="text-base font-medium text-text hover:text-accent transition-colors duration-200" onClick={toggleMenu}>
-                {link.label}
-              </Link>
-            ))}
-            {navLinks.length === 0 && (
-              <>
-                <a href="#" className="text-base font-medium text-text hover:text-accent transition-colors duration-200">
-                  {t.features}
-                </a>
-                <a href="#" className="text-base font-medium text-text hover:text-accent transition-colors duration-200">
-                  {t.collections}
-                </a>
-                <a href="#" className="text-base font-medium text-text hover:text-accent transition-colors duration-200">
-                  {t.docs}
-                </a>
-              </>
-            )}
+            {navLinks.map((item, idx) => {
+              const isRef = item.link.type === 'reference' && item.link.reference?.value
+              const href = isRef ? `/${typeof item.link.reference!.value === 'string' ? item.link.reference!.value : item.link.reference!.value.slug}` : (item.link.url || '#')
+              const isExternal = item.link.type === 'custom' && item.link.openInNewTab
+              return (
+                <Link 
+                  key={item.id || idx} 
+                  href={href} 
+                  className="text-base font-medium text-text hover:text-accent transition-colors duration-200" 
+                  onClick={toggleMenu}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
+                >
+                  {item.link.label}
+                </Link>
+              )
+            })}
             <div className="border-t border-border pt-4 flex flex-col gap-4">
               <LanguageSwitcher />
               <Link href="/admin" className="h-10 inline-flex items-center justify-center rounded-md bg-primary text-bg font-medium transition-all duration-200" onClick={toggleMenu}>

@@ -18,7 +18,8 @@ import { revalidatePath } from 'next/cache'
 const generatePreviewUrl = (doc: Record<string, unknown>, req: { locale?: string | null }) => {
   const locale = req?.locale || 'en'
   const slug = doc?.slug || ''
-  return `http://localhost:3000/${locale}/${slug === 'home' ? '' : slug}`
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || ''
+  return `${baseUrl}/${locale}/${slug === 'home' ? '' : slug}`
 }
 
 const locales = ['en', 'fa', 'ar']
@@ -29,7 +30,11 @@ const revalidateHook = ({ doc }: { doc: { slug?: string; _status?: string } }) =
       const path = slug === 'home' || slug === 'index' 
         ? `/${locale}` 
         : `/${locale}/${slug}`
-      revalidatePath(path, 'page')
+      try {
+        revalidatePath(path, 'page')
+      } catch (err) {
+        // Ignore in standalone scripts
+      }
     })
   }
   return doc
