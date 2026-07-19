@@ -10,6 +10,7 @@ const RATE_LIMIT = 5
 export async function submitLeadAction(prevState: unknown, formData: FormData) {
   const ip = (await headers()).get('x-forwarded-for') || 'unknown'
   const payload = await getPayloadClient()
+  // Payload's DatabaseAdapter interface is DB-agnostic (supports Mongo + Postgres), so `.drizzle` isn't in the public type — this cast is Payload's officially documented pattern for raw Postgres access, not a workaround.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const db = payload.db as any
   
