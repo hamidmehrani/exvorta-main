@@ -3,26 +3,36 @@
 import { getPayloadClient } from '@/lib/payload'
 import { headers } from 'next/headers'
 
-const rateLimitMap = new Map<string, { count: number; timestamp: number }>()
-const RATE_LIMIT = 3
-const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
+import { sql } from '@payloadcms/db-postgres'
+
+const RATE_LIMIT = 5
+const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000 // 15 minutes
 
 export async function submitLeadAction(prevState: unknown, formData: FormData) {
   const ip = (await headers()).get('x-forwarded-for') || 'unknown'
-  const now = Date.now()
-  const record = rateLimitMap.get(ip)
-
-  if (record) {
-    if (now - record.timestamp < RATE_LIMIT_WINDOW_MS) {
-      if (record.count >= RATE_LIMIT) {
-        return { success: false, error: 'Too many submissions. Please try again later.' }
-      }
-      record.count++
-    } else {
-      rateLimitMap.set(ip, { count: 1, timestamp: now })
+  const payload = await getPayloadClient()
+  const db = payload.db as any
+  
+  // 1. Rate Limiting via Neon (Postgres)
+  // Opportunistic cleanup: delete records older than the window
+  await db.drizzle.execute(sql`DELETE FROM "rate_limits" WHERE "window_start" < now() - interval '15 minutes'`)
+  
+  const existingRecord = await db.drizzle.execute(sql`
+    SELECT "attempt_count", "window_start" FROM "rate_limits" WHERE "identifier" = ${ip}
+  `)
+  
+  if (existingRecord.rows && existingRecord.rows.length > 0) {
+    const record = existingRecord.rows[0]
+    if (record.attempt_count >= RATE_LIMIT) {
+      return { success: false, error: 'Too many submissions. Please try again later.' }
     }
+    await db.drizzle.execute(sql`
+      UPDATE "rate_limits" SET "attempt_count" = "attempt_count" + 1 WHERE "identifier" = ${ip}
+    `)
   } else {
-    rateLimitMap.set(ip, { count: 1, timestamp: now })
+    await db.drizzle.execute(sql`
+      INSERT INTO "rate_limits" ("identifier", "attempt_count", "window_start") VALUES (${ip}, 1, now())
+    `)
   }
 
   // 1. Honeypot Check
@@ -60,7 +70,6 @@ export async function submitLeadAction(prevState: unknown, formData: FormData) {
 
   // 3. Payload Insertion
   try {
-    const payload = await getPayloadClient()
     await payload.create({
       collection: 'leads',
       data: {

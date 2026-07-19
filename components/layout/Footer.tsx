@@ -43,11 +43,7 @@ export const Footer = async () => {
               {column.title}
             </h4>
             <ul className="flex flex-col gap-3">
-              {column.links?.map((rawItem, linkIndex) => {
-                // The 'links' array type in payload-types is stale (depth=0 shape);
-                // at depth=2 reference.value is a populated Page object.
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const item = rawItem as any
+              {column.links?.map((item, linkIndex) => {
                 const refValue = item.link?.reference?.value
                 const isRef = item.link?.type === 'reference' && refValue
                 const href = isRef
