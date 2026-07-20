@@ -32,7 +32,7 @@ const revalidateHook = ({ doc }: { doc: { slug?: string; _status?: string } }) =
         : `/${locale}/${slug}`
       try {
         revalidatePath(path, 'page')
-      } catch (err) {
+      } catch {
         // Ignore in standalone scripts
       }
     })

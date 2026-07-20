@@ -22,8 +22,6 @@
  *     npx tsx scripts/run-migration.ts status
  */
 import payload from 'payload'
-import configPromise from '../payload.config'
-
 async function main() {
   const [cmd, ...rest] = process.argv.slice(2)
   if (!cmd || !['create', 'run', 'status', 'down'].includes(cmd)) {
@@ -32,6 +30,17 @@ async function main() {
   }
 
   process.env.PAYLOAD_MIGRATING = 'true'
+
+  // Override DATABASE_URI with the unpooled string for migrations BEFORE importing payload.config.ts
+  if (process.env.DATABASE_URI_UNPOOLED) {
+    process.env.DATABASE_URI = process.env.DATABASE_URI_UNPOOLED
+  }
+
+  console.log('--- DB CONNECTION RESOLUTION ---')
+  console.log(`Using DATABASE_URI for migration: ${process.env.DATABASE_URI}`)
+  console.log('--------------------------------')
+
+  const { default: configPromise } = await import('../payload.config')
   const config = await configPromise
 
   // For `create`, don't connect to the DB (matches CLI behavior).

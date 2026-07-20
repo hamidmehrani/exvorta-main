@@ -4,13 +4,15 @@ import React, { useState } from 'react'
 import { Link } from '@/i18n/routing'
 import LanguageSwitcher from '../ui/LanguageSwitcher'
 
+import type { Page } from '@/payload-types'
+
 interface NavLink {
   id?: string | null
   link: {
     type?: 'reference' | 'custom' | null
     reference?: {
       relationTo: 'pages'
-      value: string | Record<string, unknown>
+      value: string | Page
     } | null
     url?: string | null
     label: string
@@ -52,7 +54,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, t }) => {
             const refValue = item.link.reference?.value
             const isRef = item.link.type === 'reference' && refValue
             const href = isRef
-              ? `/${typeof refValue === 'string' ? refValue : (refValue as Record<string, unknown>).slug || ''}`
+              ? `/${typeof refValue === 'string' ? refValue : refValue.slug || ''}`
               : (item.link.url || '#')
             const isExternal = item.link.type === 'custom' && item.link.openInNewTab
             return (
@@ -94,7 +96,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, t }) => {
               const refValue = item.link.reference?.value
               const isRef = item.link.type === 'reference' && refValue
               const href = isRef
-                ? `/${typeof refValue === 'string' ? refValue : (refValue as Record<string, unknown>).slug || ''}`
+                ? `/${typeof refValue === 'string' ? refValue : refValue.slug || ''}`
                 : (item.link.url || '#')
               const isExternal = item.link.type === 'custom' && item.link.openInNewTab
               return (

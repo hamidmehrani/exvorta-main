@@ -7,7 +7,11 @@ This is the fully scalable, white-label CMS engine designed for B2B export and a
 1. Clone the repository.
 2. Run `npm install` (Note: if you experience dependency tree conflicts with Next.js and Payload CMS, use `--legacy-peer-deps` or ensure `next` is pinned to `15.4.11` as per the known issues below).
 3. Copy `.env.example` to `.env` and configure your credentials.
-4. Start the database (e.g., using `docker run` or your own PostgreSQL instance).
+4. Set up the database (Neon-First approach):
+   - Create a new branch in Neon.
+   - Copy the pooled connection string into `DATABASE_URI`.
+   - Copy the unpooled/direct connection string into `DATABASE_URI_UNPOOLED`.
+   - *(Fallback: You can still use a local Docker Postgres instance if needed).*
 5. Run the initial database migration:
    ```bash
    NODE_OPTIONS="--require ./scripts/next-env-shim.cjs" npx tsx scripts/run-migration.ts run
@@ -17,7 +21,8 @@ This is the fully scalable, white-label CMS engine designed for B2B export and a
 ## Required Environment Variables
 
 Ensure the following critical variables are set in your `.env` file:
-- `DATABASE_URI`: Your PostgreSQL connection string.
+- `DATABASE_URI`: Your Neon POOLED PostgreSQL connection string.
+- `DATABASE_URI_UNPOOLED`: Your Neon DIRECT connection string for migrations.
 - `PAYLOAD_SECRET`: A secure random string for Payload CMS encryption.
 - `TURNSTILE_SECRET_KEY`: Required for contact form security.
 - `SKIP_TURNSTILE_IN_DEV`: Set to `true` to disable CAPTCHA verification in local development (ignored in production).

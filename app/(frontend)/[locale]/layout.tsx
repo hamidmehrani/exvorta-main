@@ -43,10 +43,13 @@ export async function generateMetadata({
     ogImageUrl = seoDefaults.defaultOgImage.url
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL
+  if (!baseUrl) {
+    console.warn('NEXT_PUBLIC_SERVER_URL is not set — metadataBase will be undefined, which can break SEO tags and Open Graph URLs. Set this env var.')
+  }
 
   return {
-    metadataBase: new URL(baseUrl),
+    ...(baseUrl ? { metadataBase: new URL(baseUrl) } : {}),
     title: {
       template: `%s | ${title}`,
       default: title,

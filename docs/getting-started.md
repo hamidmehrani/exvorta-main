@@ -12,8 +12,17 @@ Follow these steps to initialize a new client project:
   - Set a secure `PAYLOAD_SECRET`.
   - Populate the `CLOUDINARY_*` API keys (required for media uploads).
   - Add Turnstile keys if using the Contact Form.
-- [ ] **Start Database**: Run `docker compose up -d` to spin up your local Postgres container.
-- [ ] **Initialize CMS Schema**: Start the development server with `npm run dev`. This will automatically push the schema to your empty local database.
+- [ ] **Database Setup (Neon-First)**:
+  - Create a new Neon branch for your local development environment from the main project.
+  - Copy both the pooled (`DATABASE_URI`) and unpooled (`DATABASE_URI_UNPOOLED`) connection strings from the Neon Connect dialog into your `.env`.
+- [ ] **Initialize CMS Schema**: Run `npm run db:migrate` or use the migration script:
+  `NODE_OPTIONS="--require ./scripts/next-env-shim.cjs" npx tsx scripts/run-migration.ts run`
+- [ ] **Start Development Server**: Run `npm run dev`. This will connect using the pooled database connection.
+
+### Fallback: Local Database via Docker
+If you cannot use Neon or need a strictly offline setup, you can still use Docker:
+- Run `docker compose up -d` to spin up a local Postgres container.
+- Use the local connection string for both `DATABASE_URI` and `DATABASE_URI_UNPOOLED`.
 - [ ] **Branding Update**:
   - Replace `app/icon.svg` with the client's favicon.
   - Update `@/components/admin/AgencyLogo` with the client's logo for the admin panel.

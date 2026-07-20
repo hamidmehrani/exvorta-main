@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { getPayloadClient } from '@/lib/payload'
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || ''
   
   const payload = await getPayloadClient()
   let maintenanceMode = false

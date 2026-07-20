@@ -31,7 +31,7 @@ export default async function OrganizationSchema() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: siteName,
-    url: process.env.NEXT_PUBLIC_SITE_URL || '',
+    url: process.env.NEXT_PUBLIC_SERVER_URL || '',
     logo: logoUrl || undefined,
     sameAs: sameAs.length > 0 ? sameAs : undefined,
   }

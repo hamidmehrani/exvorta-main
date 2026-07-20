@@ -104,7 +104,10 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI ?? (() => { throw new Error('DATABASE_URI is required') })(),
-      max: 20,
+      // Since Neon's pooled endpoint handles heavy connection pooling at the proxy level,
+      // a smaller app-side pool size is more appropriate for serverless deployment
+      // to prevent connection exhaustion across instances.
+      max: 5,
       idleTimeoutMillis: 10000,
     },
     push: false,
