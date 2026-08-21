@@ -2,63 +2,71 @@ import { CollectionAfterChangeHook } from 'payload'
 import { Resend } from 'resend'
 
 export const sendLeadEmails: CollectionAfterChangeHook = async ({ doc, operation }) => {
-  if (operation === 'create') {
-    if (process.env.ENABLE_LEAD_EMAILS !== 'true') {
-      return doc
-    }
+  if (operation !== 'create') return doc
 
-    const apiKey = process.env.RESEND_API_KEY
-    if (!apiKey) {
-      // NOTE: This is OPTIONAL scaffolding for projects that need email automation.
-      // If RESEND_API_KEY is not set, this gracefully skips execution without errors.
-      console.warn('RESEND_API_KEY is missing. Skipping email automation.')
-      return doc
-    }
+  // ── Brutalist OS Notification ────────────────────────────────────────────────
+  const identifier = doc.company ? `${doc.email} / ${doc.company}` : doc.email
+  console.log(`\n╔═══════════════════════════════════════════════════╗`)
+  console.log(`║  🔔 [EXVORTA OS] NEW LEAD CAPTURED                ║`)
+  console.log(`║  Source  : ${String(doc.source).padEnd(39)}║`)
+  console.log(`║  Identity: ${String(identifier).substring(0, 39).padEnd(39)}║`)
+  console.log(`║  Status  : ${String(doc.status).padEnd(39)}║`)
+  console.log(`╚═══════════════════════════════════════════════════╝\n`)
 
-    const resend = new Resend(apiKey)
+  // ── Email Automation (optional — requires ENABLE_LEAD_EMAILS=true + RESEND_API_KEY) ───
+  if (process.env.ENABLE_LEAD_EMAILS !== 'true') {
+    return doc
+  }
 
-    try {
-      // 1. Auto-reply to lead
-      if (doc.email) {
-        await resend.emails.send({
-          from: 'Contact <hello@yourdomain.com>', // Update with verified domain later
-          to: doc.email,
-          subject: 'Thank you for reaching out!',
-          html: `<p>Hi ${doc.name},</p><p>Thank you for contacting us. We have received your message and will get back to you shortly.</p>`,
-        })
-      }
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    console.warn('[EXVORTA OS] RESEND_API_KEY is missing. Skipping email automation.')
+    return doc
+  }
 
-      // 2. Notification to admin
-      const adminEmail = process.env.ADMIN_EMAIL || 'admin@yourdomain.com'
+  const resend = new Resend(apiKey)
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@yourdomain.com'
+  const fromDomain = process.env.EMAIL_FROM_DOMAIN || 'yourdomain.com'
+
+  try {
+    // 1. Auto-reply to lead
+    if (doc.email) {
       await resend.emails.send({
-        from: 'System <system@yourdomain.com>', // Update with verified domain later
-        to: adminEmail,
-        subject: `New B2B Lead Captured: ${doc.name}`,
+        from: `Exvorta <hello@${fromDomain}>`,
+        to: doc.email,
+        subject: 'We have received your inquiry — Exvorta',
         html: `
-          <h2>New Lead Captured</h2>
-          <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;">
-            <tr>
-              <th style="text-align: left; background-color: #f8f9fa;">Name</th>
-              <td>${doc.name}</td>
-            </tr>
-            <tr>
-              <th style="text-align: left; background-color: #f8f9fa;">Email</th>
-              <td><a href="mailto:${doc.email}">${doc.email}</a></td>
-            </tr>
-            <tr>
-              <th style="text-align: left; background-color: #f8f9fa;">Phone</th>
-              <td>${doc.phone || 'N/A'}</td>
-            </tr>
-            <tr>
-              <th style="text-align: left; background-color: #f8f9fa; vertical-align: top;">Message</th>
-              <td>${doc.message || 'No message provided.'}</td>
-            </tr>
-          </table>
+          <p>Thank you for reaching out.</p>
+          <p>Your inquiry has been received and assigned to our team. We operate with discretion and will respond within one business day.</p>
+          <p style="color:#888;font-size:12px;">— Exvorta Operations</p>
         `,
       })
-    } catch (err) {
-      console.error('Failed to send lead emails:', err)
     }
+
+    // 2. Internal admin notification
+    const payloadSummary = doc.payload
+      ? Object.entries(doc.payload as Record<string, string>)
+          .map(([k, v]) => `<tr><th style="text-align:left;background:#f8f9fa;padding:8px">${k}</th><td style="padding:8px">${v}</td></tr>`)
+          .join('')
+      : '<tr><td colspan="2" style="padding:8px">No additional data</td></tr>'
+
+    await resend.emails.send({
+      from: `Exvorta OS <system@${fromDomain}>`,
+      to: adminEmail,
+      subject: `[LEAD] ${doc.source} — ${identifier}`,
+      html: `
+        <h2>New Lead — ${doc.source}</h2>
+        <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%;max-width:600px">
+          <tr><th style="text-align:left;background:#f8f9fa">Email</th><td><a href="mailto:${doc.email}">${doc.email}</a></td></tr>
+          <tr><th style="text-align:left;background:#f8f9fa">Company</th><td>${doc.company || 'N/A'}</td></tr>
+          <tr><th style="text-align:left;background:#f8f9fa">Source</th><td>${doc.source}</td></tr>
+          ${payloadSummary}
+        </table>
+      `,
+    })
+  } catch (err) {
+    console.error('[EXVORTA OS] Failed to send lead emails:', err)
   }
+
   return doc
 }

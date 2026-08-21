@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stonvi Case Study</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:wght@400;600&amp;family=Space+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-fixed-variant": "#005137",
+                        "surface-container-highest": "#e5e2e1",
+                        "warm-cream": "#FAFAF8",
+                        "primary": "#5d5f5d",
+                        "on-secondary-fixed-variant": "#474646",
+                        "on-primary-container": "#727372",
+                        "on-tertiary-fixed": "#002114",
+                        "surface-container-low": "#f6f3f2",
+                        "outline": "#747876",
+                        "surface-white": "#FFFFFF",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#fcf8f8",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-tertiary-container": "#00835b",
+                        "surface-container-high": "#ebe7e6",
+                        "on-surface": "#1c1b1b",
+                        "on-primary-fixed-variant": "#454746",
+                        "on-primary-fixed": "#1a1c1b",
+                        "on-secondary-container": "#656464",
+                        "inverse-primary": "#c6c7c5",
+                        "success-glow": "#00FF66",
+                        "secondary-fixed": "#e5e2e1",
+                        "obsidian": "#0D0D0D",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#313030",
+                        "on-tertiary": "#ffffff",
+                        "zinc-elevated": "#1A1A1A",
+                        "zinc-dark": "#141414",
+                        "tertiary-fixed": "#85f8c4",
+                        "outline-variant": "#c4c7c5",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e5e2e1",
+                        "inverse-on-surface": "#f4f0ef",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#ebfff1",
+                        "on-background": "#1c1b1b",
+                        "surface-container": "#f1edec",
+                        "emerald": "#059669",
+                        "secondary-fixed-dim": "#c9c6c5",
+                        "tertiary-fixed-dim": "#68dba9",
+                        "on-surface-variant": "#444846",
+                        "warning-amber": "#FFB800",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#5d5f5d",
+                        "background": "#fcf8f8",
+                        "tertiary": "#006c4a",
+                        "info-blue": "#0066FF",
+                        "surface-bright": "#fcf8f8",
+                        "primary-fixed": "#e2e3e1",
+                        "secondary-container": "#e5e2e1",
+                        "primary-container": "#fafaf8",
+                        "primary-fixed-dim": "#c6c7c5",
+                        "error-container": "#ffdad6",
+                        "secondary": "#5f5e5e",
+                        "surface-dim": "#ddd9d8",
+                        
+                        // Custom colors from prompt
+                        "canvas": "#F4F6F7",
+                        "ink": "#2C3E50",
+                        "steel": "#5C6E7A",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem",
+                        "none": "0px" // Enforce 0px radius
+                    },
+                    spacing: {
+                        "section-gap-lg": "8rem",
+                        "container-max": "1280px",
+                        "section-gap-md": "6rem",
+                        "ui-padding-dense": "0.875rem 1.25rem",
+                        "dashboard-max": "1440px",
+                        "gutter": "1.5rem"
+                    },
+                    fontFamily: {
+                        "display-hero": ["Playfair Display", "serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "headline-xl": ["Playfair Display", "serif"],
+                        "headline-lg": ["Playfair Display", "serif"],
+                        "display-hero-mobile": ["Playfair Display", "serif"],
+                        "label-caps": ["Inter", "sans-serif"],
+                        "mono-data": ["monospace"],
+                        "mono-terminal": ["monospace"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "space-grotesk": ["Space Grotesk", "sans-serif"] // Custom font
+                    },
+                    fontSize: {
+                        "display-hero": ["84px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "600" }],
+                        "body-md": ["15px", { lineHeight: "1.6", fontWeight: "300" }],
+                        "headline-xl": ["60px", { lineHeight: "1.1", fontWeight: "600" }],
+                        "headline-lg": ["32px", { lineHeight: "1.2", fontWeight: "600" }],
+                        "display-hero-mobile": ["48px", { lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "label-caps": ["11px", { lineHeight: "1", letterSpacing: "0.15em", fontWeight: "500" }],
+                        "mono-data": ["11px", { lineHeight: "1.4", fontWeight: "400" }],
+                        "mono-terminal": ["10px", { lineHeight: "1.2", fontWeight: "400" }],
+                        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "300" }],
+                        
+                        // Custom sizes
+                        "stonvi-headline": ["clamp(60px, 8vw, 120px)", { lineHeight: "1", letterSpacing: "-0.02em", fontWeight: "400" }],
+                        "tech-label": ["12px", { lineHeight: "1.2", letterSpacing: "0.05em", fontWeight: "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #F4F6F7; /* Canvas */
+            color: #2C3E50; /* Ink */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .border-ink {
+            border-color: #2C3E50;
+        }
+        
+        .text-ink {
+            color: #2C3E50;
+        }
+        
+        .text-steel {
+            color: #5C6E7A;
+        }
+        
+        * {
+            border-radius: 0px !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md relative overflow-x-hidden pt-24">
+<!-- TopNavBar (Shared Component) -->
+<nav class="bg-obsidian/95 backdrop-blur-xl fixed top-0 w-full z-50 border-b border-white/5">
+<div class="max-w-dashboard-max mx-auto flex justify-between items-center px-gutter py-4">
+<div class="font-headline-lg text-headline-lg tracking-tighter text-surface-bright font-semibold">
+                EXVORTA
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-label-caps hover:text-emerald transition-colors duration-300" href="#">Solutions</a>
+<a class="text-on-surface-variant font-label-caps hover:text-emerald transition-colors duration-300" href="#">Infrastructure</a>
+<a class="text-on-surface-variant font-label-caps hover:text-emerald transition-colors duration-300" href="#">R&amp;D</a>
+<a class="text-on-surface-variant font-label-caps hover:text-emerald transition-colors duration-300" href="#">About</a>
+</div>
+<button class="bg-surface-bright text-obsidian font-label-caps px-4 py-2 hover:bg-emerald transition-colors duration-300 hidden md:block">
+                START_PROPOSAL
+            </button>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-surface-bright">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col max-w-dashboard-max mx-auto w-full border-x border-ink/20">
+<!-- Top Bar: Back to Index -->
+<div class="w-full border-b border-ink px-6 py-4 flex items-center bg-canvas">
+<a class="font-space-grotesk text-tech-label text-steel uppercase flex items-center gap-2 hover:text-ink transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+                BACK TO INDEX
+            </a>
+</div>
+<!-- Hero Grid Section -->
+<div class="flex flex-col lg:flex-row w-full flex-grow border-b-2 border-ink">
+<!-- Left Column: Content (40%) -->
+<div class="w-full lg:w-[40%] flex flex-col border-r border-ink lg:border-b-0 border-b">
+<!-- Headline & Subtitle Area -->
+<div class="p-8 lg:p-12 flex-grow flex flex-col justify-center">
+<h1 class="font-display-hero text-stonvi-headline text-ink mb-4">Stonvi</h1>
+<p class="font-body-md text-ink text-xl font-light">Ceramic &amp; Building Materials Exporter.</p>
+</div>
+<!-- Technical Table (4 Rows) -->
+<div class="w-full border-t border-ink flex flex-col">
+<!-- Row 1 -->
+<div class="flex border-b border-ink">
+<div class="w-1/3 border-r border-ink p-4 font-space-grotesk text-tech-label text-steel flex items-center uppercase">ESTABLISHED</div>
+<div class="w-2/3 p-4 font-mono-data text-ink flex items-center">1998</div>
+</div>
+<!-- Row 2 -->
+<div class="flex border-b border-ink bg-canvas/50">
+<div class="w-1/3 border-r border-ink p-4 font-space-grotesk text-tech-label text-steel flex items-center uppercase">VOLUME</div>
+<div class="w-2/3 p-4 font-mono-data text-ink flex items-center">2.4M SQM/YR</div>
+</div>
+<!-- Row 3 -->
+<div class="flex border-b border-ink">
+<div class="w-1/3 border-r border-ink p-4 font-space-grotesk text-tech-label text-steel flex items-center uppercase">CERTIFICATIONS</div>
+<div class="w-2/3 p-4 font-mono-data text-ink flex items-center">ISO 9001, CE, LEED</div>
+</div>
+<!-- Row 4 -->
+<div class="flex">
+<div class="w-1/3 border-r border-ink p-4 font-space-grotesk text-tech-label text-steel flex items-center uppercase">DELIVERABLES</div>
+<div class="w-2/3 p-4 font-mono-data text-ink flex items-center">PROCUREMENT PLATFORM</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Image (60%) -->
+<div class="w-full lg:w-[60%] h-[512px] lg:h-auto min-h-[500px] relative">
+<!-- Using placeholder for data-alt as requested, though no {{DATA:IMAGE...}} was provided in prompt. Assuming placeholder is meant. -->
+<div class="absolute inset-0 bg-cover bg-center grayscale contrast-125 mix-blend-multiply opacity-80" data-alt="A wide-angle, industrial photograph of a vast stone manufacturing floor. Massive slabs of raw grey marble and ceramic are stacked precisely in geometric rows. Overhead, harsh fluorescent grid lighting casts sharp architectural shadows across the concrete floor. Industrial cutting machinery is visible in the background. The aesthetic is raw, technical, and monochromatic, emphasizing scale and precision." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC1fBGp_Q-oYaZ_77-Dl_o0yav-sbdcaXdvuZurZ6Xw_cFmzia2dVyoWlkeHktMpOx-uPNV1RZh1higeAS7Cefvwm-QJaB6nIvs5wwou5LOSJFBWXQAJlgxKQ1VKjkvbDlgruwshK21vYvyIIdaaoE8_CRLUExVLK_itwzJbc0NpEk7ZQU-sGCu96gv237wss-RqkVV4dCDyf37XJ7-ZIY9MEd79b4aps2VhT9qwb6uym6ca-TBxbC6')">
+</div>
+<!-- Crosshair overlay for architectural feel -->
+<div class="absolute inset-0 pointer-events-none">
+<div class="absolute top-4 left-4 w-4 h-4 border-t border-l border-ink/50"></div>
+<div class="absolute top-4 right-4 w-4 h-4 border-t border-r border-ink/50"></div>
+<div class="absolute bottom-4 left-4 w-4 h-4 border-b border-l border-ink/50"></div>
+<div class="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-ink/50"></div>
+</div>
+</div>
+</div><section class="w-full bg-canvas border-t border-ink py-[120px] px-gutter relative" style="background-image: radial-gradient(#2C3E50 0.5px, transparent 0.5px); background-size: 20px 20px;">
+<div class="max-w-dashboard-max mx-auto">
+<!-- TOP PART: Positioning Statement -->
+<div class="mb-12">
+<div class="font-space-grotesk text-tech-label text-steel uppercase mb-6">[ BRAND POSITIONING ]</div>
+<blockquote class="font-display-hero text-[48px] italic text-ink max-w-[800px] leading-tight mb-12">
+                "The ceramic and building materials exporter that developers trust — because we understand a project timeline, not just a purchase order."
+            </blockquote>
+<div class="w-full h-px bg-ink"></div>
+</div>
+<!-- BOTTOM PART: 2-Column Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-[60%_40%] border-t border-ink">
+<!-- LEFT COLUMN: Material Palette -->
+<div class="p-8 lg:p-12 border-r border-ink">
+<div class="font-space-grotesk text-tech-label text-steel uppercase mb-8">[ MATERIAL PALETTE ]</div>
+<div class="flex gap-4">
+<div class="flex-1 aspect-square border border-ink flex flex-col justify-end p-4 bg-[#F4F6F7]">
+<span class="font-mono-terminal text-mono-terminal text-ink uppercase">CANVAS / BASE</span>
+</div>
+<div class="flex-1 aspect-square border border-ink flex flex-col justify-end p-4 bg-[#2C3E50]">
+<span class="font-mono-terminal text-mono-terminal text-surface-bright uppercase">INK / PRIMARY</span>
+</div>
+<div class="flex-1 aspect-square border border-ink flex flex-col justify-end p-4 bg-[#5C6E7A]">
+<span class="font-mono-terminal text-mono-terminal text-surface-bright uppercase">STEEL / ACCENT</span>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Typography Architecture -->
+<div class="p-8 lg:p-12">
+<div class="font-space-grotesk text-tech-label text-steel uppercase mb-8">[ TYPOGRAPHY ]</div>
+<div class="space-y-8">
+<div>
+<div class="font-display-hero text-4xl text-ink mb-1">Playfair Display</div>
+<div class="font-space-grotesk text-tech-label text-steel uppercase">Headings / Architectural Authority</div>
+</div>
+<div>
+<div class="font-space-grotesk text-2xl text-ink mb-1">Space Grotesk</div>
+<div class="font-space-grotesk text-tech-label text-steel uppercase">Metadata &amp; Specs / Precision</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section class="w-full bg-ink py-[120px] px-gutter border-t border-canvas/20">
+<div class="max-w-dashboard-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-[40%_60%] border border-canvas/20">
+<!-- Left Column -->
+<div class="p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-canvas/20 flex flex-col gap-8">
+<div class="font-space-grotesk text-tech-label text-steel uppercase">[ SYSTEM ARCHITECTURE ]</div>
+<div class="space-y-6">
+<h2 class="font-display-hero text-[64px] text-canvas leading-none">Centralized PIM.</h2>
+<p class="font-body-md text-lg text-canvas/80 font-light max-w-md">
+            Managing over 800 ceramic SKUs requires institutional-grade infrastructure. We deployed a headless Payload CMS architecture to dynamically control technical specifications, BIM files, and ISO certifications across 35 countries.
+          </p>
+</div>
+</div>
+<!-- Right Column -->
+<div class="p-8 lg:p-12 bg-ink flex items-center justify-center">
+<div class="w-full border border-canvas/40 p-6 font-space-grotesk text-canvas">
+<div class="grid grid-cols-4 border-b border-canvas/40 pb-4 mb-4 text-tech-label opacity-60">
+<div>SKU</div>
+<div>PRODUCT</div>
+<div>THICKNESS</div>
+<div class="text-right">BIM FILE</div>
+</div>
+<div class="space-y-4">
+<div class="grid grid-cols-4 items-center text-[13px] border-b border-canvas/10 pb-4">
+<div class="font-mono-data">BG-800</div>
+<div class="uppercase">BASALTINA GRIGIO</div>
+<div>12.5 MM</div>
+<div class="text-right text-steel">[ READY ]</div>
+</div>
+<div class="grid grid-cols-4 items-center text-[13px]">
+<div class="font-mono-data">CB-120</div>
+<div class="uppercase">CARRARA BIANCO</div>
+<div>6.0 MM</div>
+<div class="text-right text-steel">[ READY ]</div>
+</div>
+</div>
+<!-- Structural Grid Lines -->
+<div class="mt-8 pt-4 border-t border-canvas/40 flex justify-between">
+<div class="w-px h-4 bg-canvas/40"></div>
+<div class="w-px h-4 bg-canvas/40"></div>
+<div class="w-px h-4 bg-canvas/40"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section class="w-full bg-canvas border-t border-ink py-[120px] px-gutter relative" style="background-image: radial-gradient(#2C3E50 0.5px, transparent 0.5px); background-size: 20px 20px;">
+<div class="max-w-dashboard-max mx-auto text-center flex flex-col items-center">
+<div class="font-space-grotesk text-tech-label text-steel uppercase mb-6">[ DIGITAL PRESENCE ]</div>
+<h2 class="font-display-hero text-[80px] text-ink leading-none mb-8 tracking-tighter">Specify with confidence.</h2>
+<p class="font-body-md text-xl text-ink font-light mb-12 max-w-md">Experience the live Stonvi architectural specification platform.</p>
+<a class="bg-[#5C6E7A] text-white font-space-grotesk font-semibold uppercase px-12 py-6 transition-all hover:bg-ink" href="#">
+      VIEW LIVE PROJECT ↗
+    </a>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-obsidian w-full py-12 border-t border-white/5">
+<div class="max-w-dashboard-max mx-auto flex flex-col md:flex-row justify-between items-center px-gutter gap-6">
+<div class="font-headline-lg text-headline-lg text-surface-bright">
+                EXVORTA
+            </div>
+<div class="flex gap-6">
+<a class="text-on-surface-variant font-mono-terminal text-mono-terminal hover:text-emerald transition-all" href="#">Legal Compliance</a>
+<a class="text-on-surface-variant font-mono-terminal text-mono-terminal hover:text-emerald transition-all" href="#">Privacy Protocol</a>
+<a class="text-on-surface-variant font-mono-terminal text-mono-terminal hover:text-emerald transition-all" href="#">Data Security</a>
+</div>
+<div class="font-mono-terminal text-mono-terminal text-on-surface-variant text-center md:text-right">
+                © 2024 EXVORTA INSTITUTIONAL. ALL RIGHTS RESERVED. [ SYS_VER_2.4 ]
+            </div>
+</div>
+</footer>
+</body></html>

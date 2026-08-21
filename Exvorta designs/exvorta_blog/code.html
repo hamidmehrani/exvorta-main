@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Insights / Trade Intelligence | EXVORTA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:wght@600&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-container": "#e5e2e1",
+                      "tertiary": "#006c4a",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed-dim": "#68dba9",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-bright": "#fcf8f8",
+                      "on-tertiary-fixed-variant": "#005137",
+                      "error-container": "#ffdad6",
+                      "on-error-container": "#93000a",
+                      "background": "#fcf8f8",
+                      "on-primary-fixed-variant": "#454746",
+                      "on-primary-container": "#727372",
+                      "emerald": "#059669",
+                      "tertiary-container": "#ebfff1",
+                      "surface": "#fcf8f8",
+                      "success-glow": "#00FF66",
+                      "warm-cream": "#FAFAF8",
+                      "primary-container": "#fafaf8",
+                      "on-tertiary": "#ffffff",
+                      "secondary": "#5f5e5e",
+                      "inverse-surface": "#313030",
+                      "outline": "#747876",
+                      "zinc-elevated": "#1A1A1A",
+                      "surface-white": "#FFFFFF",
+                      "inverse-on-surface": "#f4f0ef",
+                      "primary-fixed": "#e2e3e1",
+                      "on-surface-variant": "#444846",
+                      "error": "#ba1a1a",
+                      "surface-container-low": "#f6f3f2",
+                      "surface-container-highest": "#e5e2e1",
+                      "on-background": "#1c1b1b",
+                      "on-primary-fixed": "#1a1c1b",
+                      "zinc-dark": "#141414",
+                      "on-error": "#ffffff",
+                      "outline-variant": "#c4c7c5",
+                      "surface-variant": "#e5e2e1",
+                      "surface-dim": "#ddd9d8",
+                      "secondary-fixed-dim": "#c9c6c5",
+                      "primary": "#5d5f5d",
+                      "obsidian": "#0D0D0D",
+                      "inverse-primary": "#c6c7c5",
+                      "surface-container-high": "#ebe7e6",
+                      "surface-container": "#f1edec",
+                      "tertiary-fixed": "#85f8c4",
+                      "on-secondary-container": "#656464",
+                      "on-secondary-fixed-variant": "#474646",
+                      "on-surface": "#1c1b1b",
+                      "secondary-fixed": "#e5e2e1",
+                      "on-tertiary-fixed": "#002114",
+                      "info-blue": "#0066FF",
+                      "primary-fixed-dim": "#c6c7c5",
+                      "on-secondary": "#ffffff",
+                      "warning-amber": "#FFB800",
+                      "surface-tint": "#5d5f5d",
+                      "on-tertiary-container": "#00835b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0px",
+                      "lg": "0px",
+                      "xl": "0px",
+                      "full": "0px"
+              },
+              "spacing": {
+                      "section-gap-md": "6rem",
+                      "container-max": "1280px",
+                      "section-gap-lg": "8rem",
+                      "gutter": "1.5rem",
+                      "ui-padding-dense": "0.875rem 1.25rem",
+                      "dashboard-max": "1440px"
+              },
+              "fontFamily": {
+                      "mono-data": [
+                              "Space Mono", "monospace"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "mono-terminal": [
+                              "Space Mono", "monospace"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Playfair Display"
+                      ],
+                      "display-hero": [
+                              "Playfair Display"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-xl": [
+                              "Playfair Display"
+                      ],
+                      "display-hero-mobile": [
+                              "Playfair Display"
+                      ]
+              },
+              "fontSize": {
+                      "mono-data": [
+                              "11px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "300"
+                              }
+                      ],
+                      "mono-terminal": [
+                              "10px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.15em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-hero": [
+                              "84px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "15px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "300"
+                              }
+                      ],
+                      "headline-xl": [
+                              "60px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-hero-mobile": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .noise-bg {
+            /* background-image removed as requested not to output data uris */
+            background-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            border-bottom: 1px solid #0D0D0D;
+        }
+        * {
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<body class="bg-white text-obsidian antialiased relative min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 glass-panel" data-purpose="site-header">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<!-- Logo -->
+<div class="flex-shrink-0">
+<a class="font-serif text-2xl font-semibold tracking-wide text-obsidian uppercase" href="#">EXVORTA</a>
+</div>
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex items-center space-x-12 text-[11px] font-medium tracking-widest text-obsidian/60 uppercase"><a class="hover:text-obsidian transition-colors" href="#"></a><a class="text-[10px] tracking-[0.2em] font-medium text-black/70 hover:text-black uppercase transition-all duration-300" href="#">Exvorta web</a>
+<a class="hover:text-obsidian transition-colors" href="#">PORTFOLIO</a>
+<a class="hover:text-obsidian transition-colors" href="#">ECOSYSTEM</a>
+<a class="hover:text-obsidian transition-colors" href="#">THE FIRM</a></nav>
+<!-- CTA -->
+<div class="hidden md:block">
+<a class="mr-6 text-[10px] tracking-[0.2em] font-mono text-black/70 hover:text-black uppercase transition-all" href="#">CLIENT LOGIN</a><a class="bg-black text-white px-6 py-3 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-[#1a1a1a] border border-black transition-colors" href="#">[ REQUEST PROPOSAL ]</a>
+</div>
+<!-- Mobile menu button -->
+<div class="md:hidden flex items-center">
+<button class="text-obsidian hover:text-gray-500 focus:outline-none" type="button">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-grow pt-20 z-10 relative">
+<!-- 01. [HERO] - Purpose: Trade Intelligence Identity -->
+<section class="w-full bg-[#0A0A0A] pt-40 pb-20 px-6 border-b border-[#333] relative overflow-hidden" id="blog-hero"><div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none z-0"></div><div class="max-w-7xl mx-auto w-full relative z-10 flex flex-col items-center text-center"><span class="text-[10px] font-mono tracking-[0.3em] text-white/40 uppercase mb-8 block">[ INSTITUTIONAL INTELLIGENCE ARCHIVE ]</span><h1 class="text-5xl md:text-7xl lg:text-[6rem] font-serif font-bold text-white leading-[1.0] tracking-tight mb-8">Trade Intelligence.<br/><span class="text-white/40 italic">Every week.</span></h1><p class="max-w-2xl text-lg md:text-xl text-white/50 font-sans leading-relaxed mb-16">Institutional-grade analysis, regulatory compliance updates, and architectural blueprints for global commodities trading.</p><div class="w-full max-w-4xl border-t border-[#333] pt-8 flex flex-wrap justify-center gap-3 md:gap-4"><button class="px-5 py-2.5 bg-white text-black text-[10px] font-mono uppercase tracking-widest hover:bg-gray-200 transition-colors border border-white"> [ ALL INSIGHTS ] </button><button class="px-5 py-2.5 bg-transparent border border-[#333] text-white/60 text-[10px] font-mono uppercase tracking-widest hover:bg-white/10 hover:text-white transition-colors"> MARKET INTEL </button><button class="px-5 py-2.5 bg-transparent border border-[#333] text-white/60 text-[10px] font-mono uppercase tracking-widest hover:bg-white/10 hover:text-white transition-colors"> COMPLIANCE </button><button class="px-5 py-2.5 bg-transparent border border-[#333] text-white/60 text-[10px] font-mono uppercase tracking-widest hover:bg-white/10 hover:text-white transition-colors"> DOCUMENTS </button><button class="px-5 py-2.5 bg-transparent border border-[#333] text-white/60 text-[10px] font-mono uppercase tracking-widest hover:bg-white/10 hover:text-white transition-colors"> ARCHITECTURE </button></div></div></section>
+<!-- 02. [FEATURED POST] - Purpose: High-priority insight -->
+<section class="w-full bg-white py-24 px-6 border-b border-[#0D0D0D]" id="blog-featured">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="w-full aspect-[16/10] bg-[#f4f4f4] border border-[#0D0D0D] flex items-center justify-center animate-pulse">
+<span class="text-[10px] font-mono text-black/40 uppercase tracking-widest">[ DATA COMPILING ]</span>
+</div>
+<div class="flex flex-col">
+<div class="w-20 h-4 bg-black/[0.05] mb-6 animate-pulse border border-[#0D0D0D]/10"></div>
+<div class="w-full h-12 bg-black/[0.06] mb-4 animate-pulse border border-[#0D0D0D]/10"></div>
+<div class="w-3/4 h-12 bg-black/[0.06] mb-8 animate-pulse border border-[#0D0D0D]/10"></div>
+<div class="w-full h-4 bg-black/[0.03] mb-3 animate-pulse border border-[#0D0D0D]/10"></div>
+<div class="w-5/6 h-4 bg-black/[0.03] mb-10 animate-pulse border border-[#0D0D0D]/10"></div>
+<div class="w-40 h-12 bg-black/[0.05] animate-pulse border border-[#0D0D0D]/10"></div>
+</div>
+</div>
+</section>
+<!-- 03. [ARTICLE GRID] - Purpose: News and reports index -->
+<section class="w-full bg-white pb-32 pt-32 px-6" id="blog-grid">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="w-full flex flex-col border border-[#0D0D0D] p-4">
+<div class="w-full aspect-[4/3] bg-[#f4f4f4] mb-6 border border-[#0D0D0D] animate-pulse"></div>
+<div class="flex items-center justify-between mb-4 font-mono text-[10px] text-black/60 uppercase tracking-wider">
+<span>DATE: UNKNOWN</span>
+<span>CAT: UNKNOWN</span>
+</div>
+<div class="w-full h-6 bg-black/[0.06] mb-2 animate-pulse border border-[#0D0D0D]/10"></div>
+<div class="w-2/3 h-6 bg-black/[0.06] animate-pulse border border-[#0D0D0D]/10"></div>
+</div>
+<div class="w-full flex flex-col border border-[#0D0D0D] p-4">
+<div class="w-full aspect-[4/3] bg-[#f4f4f4] mb-6 border border-[#0D0D0D] animate-pulse"></div>
+<div class="flex items-center justify-between mb-4 font-mono text-[10px] text-black/60 uppercase tracking-wider">
+<span>DATE: UNKNOWN</span>
+<span>CAT: UNKNOWN</span>
+</div>
+<div class="w-full h-6 bg-black/[0.06] mb-2 animate-pulse border border-[#0D0D0D]/10"></div>
+<div class="w-2/2 h-6 bg-black/[0.06] animate-pulse border border-[#0D0D0D]/10"></div>
+</div>
+<div class="w-full flex flex-col border border-[#0D0D0D] p-4">
+<div class="w-full aspect-[4/3] bg-[#f4f4f4] mb-6 border border-[#0D0D0D] animate-pulse"></div>
+<div class="flex items-center justify-between mb-4 font-mono text-[10px] text-black/60 uppercase tracking-wider">
+<span>DATE: UNKNOWN</span>
+<span>CAT: UNKNOWN</span>
+</div>
+<div class="w-full h-6 bg-black/[0.06] mb-2 animate-pulse border border-[#0D0D0D]/10"></div>
+<div class="w-2/3 h-6 bg-black/[0.06] animate-pulse border border-[#0D0D0D]/10"></div>
+</div>
+<div class="w-full flex flex-col border border-[#0D0D0D] p-4">
+<div class="w-full aspect-[4/3] bg-[#f4f4f4] mb-6 border border-[#0D0D0D] animate-pulse"></div>
+<div class="flex items-center justify-between mb-4 font-mono text-[10px] text-black/60 uppercase tracking-wider">
+<span>DATE: UNKNOWN</span>
+<span>CAT: UNKNOWN</span>
+</div>
+<div class="w-full h-6 bg-black/[0.06] mb-2 animate-pulse border border-[#0D0D0D]/10"></div>
+<div class="w-2/3 h-6 bg-black/[0.06] animate-pulse border border-[#0D0D0D]/10"></div>
+</div>
+<div class="w-full flex flex-col border border-[#0D0D0D] p-4">
+<div class="w-full aspect-[4/3] bg-[#f4f4f4] mb-6 border border-[#0D0D0D] animate-pulse"></div>
+<div class="flex items-center justify-between mb-4 font-mono text-[10px] text-black/60 uppercase tracking-wider">
+<span>DATE: UNKNOWN</span>
+<span>CAT: UNKNOWN</span>
+</div>
+<div class="w-full h-6 bg-black/[0.06] mb-2 animate-pulse border border-[#0D0D0D]/10"></div>
+<div class="w-2/3 h-6 bg-black/[0.06] animate-pulse border border-[#0D0D0D]/10"></div>
+</div>
+<div class="w-full flex flex-col border border-[#0D0D0D] p-4">
+<div class="w-full aspect-[4/3] bg-[#f4f4f4] mb-6 border border-[#0D0D0D] animate-pulse"></div>
+<div class="flex items-center justify-between mb-4 font-mono text-[10px] text-black/60 uppercase tracking-wider">
+<span>DATE: UNKNOWN</span>
+<span>CAT: UNKNOWN</span>
+</div>
+<div class="w-full h-6 bg-black/[0.06] mb-2 animate-pulse border border-[#0D0D0D]/10"></div>
+<div class="w-2/3 h-6 bg-black/[0.06] animate-pulse border border-[#0D0D0D]/10"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- 04. [NEWSLETTER] - Purpose: Retention -->
+<section class="w-full bg-[#000000] py-32 px-6 border-y border-[#333]" id="blog-newsletter">
+<div class="max-w-3xl mx-auto flex flex-col items-center text-center">
+<span class="text-[10px] font-mono tracking-[0.3em] text-white/40 uppercase mb-6 block">[ WEEKLY BRIEFING ]</span>
+<h2 class="text-4xl md:text-5xl font-serif text-white mb-6">Get weekly trade insights.</h2>
+<p class="text-white/50 mb-12">Actionable data delivered straight to your executive inbox.</p>
+<form class="w-full flex flex-col sm:flex-row gap-0 max-w-2xl">
+<input class="flex-grow bg-black border border-white px-6 py-5 text-white placeholder:text-white/30 font-mono text-xs tracking-widest outline-none focus:border-white text-center sm:text-left" placeholder="CORPORATE EMAIL ADDRESS..." type="email"/>
+<button class="bg-white text-black border border-white px-8 py-5 text-[11px] uppercase tracking-[0.2em] font-mono hover:bg-gray-200" type="submit"> [ SUBSCRIBE ] </button>
+</form>
+</div>
+</section>
+<!-- 05. [TOPICS] - Purpose: Taxonomy & SEO -->
+<section class="w-full bg-white py-24 px-6 border-b border-[#0D0D0D]" id="blog-topics">
+<div class="max-w-5xl mx-auto flex flex-col items-center text-center">
+<span class="text-[10px] font-mono tracking-[0.3em] text-black/40 uppercase mb-10 block">[ EXPLORE ARCHIVES ]</span>
+<div class="flex flex-wrap justify-center gap-3">
+<span class="px-5 py-3 border border-[#0D0D0D] text-black text-[10px] font-mono uppercase tracking-widest hover:bg-black hover:text-white transition-colors cursor-pointer bg-white">Trade Compliance</span>
+<span class="px-5 py-3 border border-[#0D0D0D] text-black text-[10px] font-mono uppercase tracking-widest hover:bg-black hover:text-white transition-colors cursor-pointer bg-white">HS Codes</span>
+<span class="px-5 py-3 border border-[#0D0D0D] text-black text-[10px] font-mono uppercase tracking-widest hover:bg-black hover:text-white transition-colors cursor-pointer bg-white">Shipping</span>
+<span class="px-5 py-3 border border-[#0D0D0D] text-black text-[10px] font-mono uppercase tracking-widest hover:bg-black hover:text-white transition-colors cursor-pointer bg-white">Market Intel</span>
+<span class="px-5 py-3 border border-[#0D0D0D] text-black text-[10px] font-mono uppercase tracking-widest hover:bg-black hover:text-white transition-colors cursor-pointer bg-white">UAE Trade</span>
+</div>
+</div>
+</section>
+<!-- 06. [PROMO] - Purpose: Product pipeline awareness -->
+<section class="w-full bg-[#000000] border-b border-[#333]" id="blog-promo">
+<div class="max-w-7xl mx-auto w-full p-12 md:p-24 flex flex-col md:flex-row items-center justify-between gap-8 border-x border-[#333]">
+<div class="flex flex-col text-center md:text-left">
+<h3 class="text-2xl md:text-4xl font-serif text-white mb-4">Looking for the tools behind the insights?</h3>
+<p class="text-white/50 font-sans md:text-lg">Explore Exvorta Docs and Track for enterprise trade management.</p>
+</div>
+<a class="bg-transparent border border-white text-white px-8 py-5 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-colors whitespace-nowrap" href="/ecosystem"> [ VIEW ECOSYSTEM ] </a>
+</div>
+</section>
+<!-- 07. [FINAL CTA] - Purpose: Lead generation -->
+<section class="w-full bg-[#0A0A0A] py-40 px-6 border-b border-[#333]" id="blog-cta">
+<div class="max-w-4xl mx-auto text-center flex flex-col items-center">
+<span class="text-[10px] font-mono tracking-[0.3em] text-white/40 uppercase mb-8 block">[ INITIATE PARTNERSHIP ]</span>
+<h2 class="text-4xl md:text-6xl font-serif text-white mb-12">Ready to automate your trade operations?</h2>
+<a class="bg-white text-black border border-white px-12 py-6 text-[11px] uppercase tracking-[0.2em] font-mono hover:bg-gray-200 transition-colors" href="/proposal"> [ REQUEST PROPOSAL ] </a>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#FAFAF8] border-t border-[#0D0D0D] py-24 px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12 mb-24">
+<!-- Brand -->
+<div class="col-span-2 md:col-span-1">
+<a class="font-serif text-xl font-semibold tracking-wide text-obsidian uppercase mb-6 block" href="#">EXVORTA</a>
+<p class="text-xs text-obsidian/40 leading-relaxed font-light max-w-xs">The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE.</p>
+</div>
+<!-- Solutions -->
+<div>
+<h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">THE ECOSYSTEM</h4>
+<ul class="space-y-4 text-[11px] text-obsidian/60"><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Web</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Docs</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Track</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta CRM</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Intel</a></li></ul>
+</div>
+<!-- Company -->
+<div>
+<h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">COMPANY</h4>
+<ul class="space-y-4 text-[11px] text-obsidian/60"><li class=""><a class="hover:text-obsidian transition-colors" href="#">Our Vision</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Design Blueprints</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Market Insights</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Contact Us</a></li></ul>
+</div>
+<!-- Legal -->
+<div>
+<h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">LEGAL &amp; ACCESS</h4>
+<ul class="space-y-4 text-[11px] text-obsidian/60"><li class=""><a class="hover:text-obsidian transition-colors" href="#">Request Proposal</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Privacy Policy</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Terms of Service</a></li></ul>
+</div>
+</div>
+<div class="border-t border-black/5 pt-12 text-center">
+<p class="text-[10px] tracking-widest text-obsidian/30 uppercase">© 2026 Exvorta. All rights reserved.</p>
+</div>
+</div>
+</footer>
+</body></html>

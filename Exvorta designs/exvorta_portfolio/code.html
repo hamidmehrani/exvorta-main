@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Exvorta | Selected Infrastructure</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500&amp;family=Playfair+Display:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed": "#1a1c1b",
+                      "zinc-dark": "#141414",
+                      "error-container": "#ffdad6",
+                      "zinc-elevated": "#1A1A1A",
+                      "tertiary-fixed": "#85f8c4",
+                      "surface-container": "#f1edec",
+                      "inverse-primary": "#c6c7c5",
+                      "outline": "#747876",
+                      "surface-container-low": "#f6f3f2",
+                      "surface-variant": "#e5e2e1",
+                      "on-surface": "#1c1b1b",
+                      "info-blue": "#0066FF",
+                      "surface-bright": "#fcf8f8",
+                      "warm-cream": "#FAFAF8",
+                      "secondary-fixed": "#e5e2e1",
+                      "on-primary-fixed-variant": "#454746",
+                      "secondary": "#5f5e5e",
+                      "on-background": "#1c1b1b",
+                      "emerald": "#059669",
+                      "obsidian": "#0D0D0D",
+                      "primary": "#5d5f5d",
+                      "warning-amber": "#FFB800",
+                      "inverse-on-surface": "#f4f0ef",
+                      "on-primary-container": "#727372",
+                      "on-surface-variant": "#444846",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "success-glow": "#00FF66",
+                      "on-secondary-container": "#656464",
+                      "primary-fixed": "#e2e3e1",
+                      "primary-container": "#fafaf8",
+                      "inverse-surface": "#313030",
+                      "secondary-fixed-dim": "#c9c6c5",
+                      "surface-tint": "#5d5f5d",
+                      "on-tertiary-fixed": "#002114",
+                      "error": "#ba1a1a",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-highest": "#e5e2e1",
+                      "on-tertiary-fixed-variant": "#005137",
+                      "surface": "#fcf8f8",
+                      "tertiary-container": "#ebfff1",
+                      "on-error-container": "#93000a",
+                      "surface-container-high": "#ebe7e6",
+                      "on-error": "#ffffff",
+                      "on-tertiary-container": "#00835b",
+                      "tertiary-fixed-dim": "#68dba9",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-fixed-variant": "#474646",
+                      "on-secondary": "#ffffff",
+                      "primary-fixed-dim": "#c6c7c5",
+                      "tertiary": "#006c4a",
+                      "surface-white": "#FFFFFF",
+                      "outline-variant": "#c4c7c5",
+                      "background": "#fcf8f8",
+                      "on-primary": "#ffffff",
+                      "surface-dim": "#ddd9d8",
+                      "secondary-container": "#e5e2e1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0px",
+                      "lg": "0px",
+                      "xl": "0px",
+                      "full": "0px"
+              },
+              "spacing": {
+                      "dashboard-max": "1440px",
+                      "ui-padding-dense": "0.875rem 1.25rem",
+                      "gutter": "1.5rem",
+                      "section-gap-lg": "8rem",
+                      "section-gap-md": "6rem",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "headline-xl": [
+                              "Playfair Display"
+                      ],
+                      "display-hero-mobile": [
+                              "Playfair Display"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Playfair Display"
+                      ],
+                      "mono-data": [
+                              "monospace"
+                      ],
+                      "display-hero": [
+                              "Playfair Display"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "mono-terminal": [
+                              "monospace"
+                      ]
+              },
+              "fontSize": {
+                      "headline-xl": [
+                              "60px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-hero-mobile": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "300"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "mono-data": [
+                              "11px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-hero": [
+                              "120px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "15px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "300"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.15em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "mono-terminal": [
+                              "10px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-warm-cream text-obsidian antialiased selection:bg-emerald selection:text-white">
+<!-- TopNavBar -->
+<nav class="bg-warm-cream dark:bg-obsidian w-full top-0 left-0 border-b border-outline/10 dark:border-white/5 z-50">
+<div class="flex justify-between items-center w-full px-gutter py-6 max-w-dashboard-max mx-auto">
+<a class="font-headline-lg text-headline-lg font-bold tracking-tighter text-obsidian dark:text-warm-cream" href="#">
+                AGENCY_INDEX
+            </a>
+<div class="hidden md:flex space-x-8">
+<a class="font-label-caps text-label-caps uppercase tracking-[0.15em] text-obsidian dark:text-warm-cream border-b-2 border-obsidian dark:border-warm-cream pb-1" href="#">Solutions</a>
+<a class="font-label-caps text-label-caps uppercase tracking-[0.15em] text-secondary dark:text-secondary-fixed-dim pb-1 hover:text-obsidian dark:hover:text-warm-cream transition-colors duration-300" href="#">Infrastructure</a>
+<a class="font-label-caps text-label-caps uppercase tracking-[0.15em] text-secondary dark:text-secondary-fixed-dim pb-1 hover:text-obsidian dark:hover:text-warm-cream transition-colors duration-300" href="#">R&amp;D</a>
+<a class="font-label-caps text-label-caps uppercase tracking-[0.15em] text-secondary dark:text-secondary-fixed-dim pb-1 hover:text-obsidian dark:hover:text-warm-cream transition-colors duration-300" href="#">About</a>
+</div>
+<a class="hidden md:inline-flex items-center justify-center font-label-caps text-label-caps uppercase tracking-[0.15em] text-white bg-obsidian px-6 py-3 hover:bg-zinc-elevated transition-colors duration-300" href="#">
+                Connect
+            </a>
+<button class="md:hidden text-obsidian">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+</div>
+</nav>
+<main class="w-full">
+<!-- Hero Section -->
+<section class="w-full bg-warm-cream text-obsidian pt-32 pb-24 px-gutter max-w-dashboard-max mx-auto">
+<div class="max-w-5xl"><div class="font-mono-terminal text-emerald mb-6 tracking-widest">[ SELECTED WORKS ]</div><h1 class="font-display-hero text-display-hero text-obsidian mb-8 leading-none">Latest Web Design Works.</h1><p class="font-body-lg text-2xl text-secondary max-w-2xl">Premium websites and CMS platforms engineered for global exporters.</p></div>
+</section>
+<div class="w-full border-b-2 border-obsidian"></div>
+<!-- Project Blocks -->
+<section class="w-full flex flex-col bg-warm-cream">
+<!-- Row 1: Spicevo -->
+<article class="w-full border-b border-obsidian px-gutter py-24 max-w-dashboard-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-10 gap-12 lg:gap-8 items-center">
+<div class="lg:col-span-4 flex flex-col space-y-12">
+<div>
+<h2 class="font-headline-xl text-obsidian mb-4" style="font-size: 80px;">Spicevo</h2>
+<div class="font-mono-terminal text-secondary uppercase tracking-widest">
+            INDUSTRY: Organic Herbs | STACK: Next.js 15, Payload CMS
+          </div>
+</div>
+<div><div class="flex flex-row gap-4">
+<a class="inline-flex items-center justify-center bg-emerald text-white font-mono-terminal uppercase tracking-widest px-8 py-4 hover:bg-tertiary transition-colors" href="#">
+    READ CASE STUDY <span class="ml-2">→</span>
+</a>
+<a class="inline-flex items-center justify-center bg-transparent border border-obsidian text-obsidian font-mono-terminal uppercase tracking-widest px-8 py-4 hover:bg-obsidian hover:text-white transition-colors" href="#">
+    VIEW LIVE PROJECT <span class="ml-2">↗</span>
+</a>
+</div></div>
+</div>
+<div class="lg:col-span-6 w-full aspect-[16/9] bg-surface-container overflow-hidden">
+<img alt="Spicevo Project Visual" class="object-cover w-full h-full grayscale hover:grayscale-0 transition-all duration-700 ease-in-out" src="https://lh3.googleusercontent.com/aida/AP1WRLsluHrudtzDaG50aSD36NdRzN58w6vb8tMpFOdnfIZFgY1dBgREUPWYQlTjj9EbRdLgnplkZYewTF9sMmaeJSXAK3oto-ygLUZfgwWyy7yWx7KwCDhAFMeuV49Vhkho1reIvl0I9GKNryk-9aFBdjJS583MJmCtZCneN1ZtU54xdaArh6k8eLfsYFLn5M0d_X1KdW11WwN2Sz8g_rTEjmd88-HJHGcuK3mzWuDZmmpB05aQ3niGkBjgHbc"/>
+</div>
+</div>
+</article>
+<!-- Row 2: Nutave -->
+<article class="w-full border-b border-obsidian px-gutter py-24 max-w-dashboard-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-10 gap-12 lg:gap-8 items-center">
+<div class="lg:col-span-4 flex flex-col space-y-12">
+<div>
+<h2 class="font-headline-xl text-obsidian mb-4" style="font-size: 80px;">Nutave</h2>
+<div class="font-mono-terminal text-secondary uppercase tracking-widest">
+            INDUSTRY: Premium Nuts | STACK: Next.js 15, Payload CMS
+          </div>
+</div>
+<div><div class="flex flex-row gap-4">
+<a class="inline-flex items-center justify-center bg-emerald text-white font-mono-terminal uppercase tracking-widest px-8 py-4 hover:bg-tertiary transition-colors" href="#">
+    READ CASE STUDY <span class="ml-2">→</span>
+</a>
+<a class="inline-flex items-center justify-center bg-transparent border border-obsidian text-obsidian font-mono-terminal uppercase tracking-widest px-8 py-4 hover:bg-obsidian hover:text-white transition-colors" href="#">
+    VIEW LIVE PROJECT <span class="ml-2">↗</span>
+</a>
+</div></div>
+</div>
+<div class="lg:col-span-6 w-full aspect-[16/9] bg-surface-container overflow-hidden">
+<img alt="Nutave Project Visual" class="object-cover w-full h-full grayscale hover:grayscale-0 transition-all duration-700 ease-in-out" src="https://lh3.googleusercontent.com/aida/AP1WRLu8-HNcmaGLnw2_KpZEj7jBld8fDlt0SdaiSex0wQyclFjJr3_pfzfGiS-UJwjSRGSqNl_XvglFmgNXkjVq7PbaYEfBg2fL6LPYB90N4aqXLpgb5ySkEzz9x0nGed182i___J7x-3lr4QbBY6YPjoZN5Llfc5QRBvPN7Xzt7ND8VcGxX7cmAEfda-xXA8TrxumBKPGKzSQ0LW1LKyfwkmcKjhHXelxyyoy6sPGbvGog1EtVoXTLmwkdW0c"/>
+</div>
+</div>
+</article>
+<!-- Row 3: Stonvi -->
+<article class="w-full border-b border-obsidian px-gutter py-24 max-w-dashboard-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-10 gap-12 lg:gap-8 items-center">
+<div class="lg:col-span-4 flex flex-col space-y-12">
+<div>
+<h2 class="font-headline-xl text-obsidian mb-4" style="font-size: 80px;">Stonvi</h2>
+<div class="font-mono-terminal text-secondary uppercase tracking-widest">
+          INDUSTRY: Ceramics | STACK: Next.js 15, Payload CMS
+        </div>
+</div>
+<div class="flex flex-row gap-4">
+<a class="inline-flex items-center justify-center bg-emerald text-white font-mono-terminal uppercase tracking-widest px-8 py-4 hover:bg-tertiary transition-colors" href="#">
+          READ CASE STUDY <span class="ml-2">→</span>
+</a>
+<a class="inline-flex items-center justify-center bg-transparent border border-obsidian text-obsidian font-mono-terminal uppercase tracking-widest px-8 py-4 hover:bg-obsidian hover:text-white transition-colors" href="#">
+          VIEW LIVE PROJECT <span class="ml-2">↗</span>
+</a>
+</div>
+</div>
+<div class="lg:col-span-6 w-full aspect-[16/9] bg-surface-container overflow-hidden">
+<img alt="Stonvi Project Visual" class="object-cover w-full h-full grayscale hover:grayscale-0 transition-all duration-700 ease-in-out" src="https://lh3.googleusercontent.com/aida/AP1WRLu2S7JLA2CjBYFpiSTcthdBBImg8NlO3gtp4silpS9I1v5xotd5HAg8Ahc2NhLGqufRvXBAZ5pivolwV24QdbIQ-8hKG-kOVJFkvs3ob81hCSG0Wt1yZ_o1LIN_s0_i37HHWHnnV_z8Jwb82qyWOkodIAJa85QJB8NCmNnHegI9LeTFsAaQBSi7Zjh6PT1YR-kCYbMsx7wjTR5d2RZYF-ebc-TMhnaVA6nQy0ztdzS6II91HHsgpZYiuw8"/>
+</div>
+</div>
+</article>
+</section>
+</main>
+<!-- Footer -->
+<section class="bg-obsidian text-warm-cream py-32 px-gutter border-t border-white/5">
+<div class="max-w-dashboard-max mx-auto">
+<div class="max-w-5xl mb-12">
+<div class="font-mono-terminal text-emerald mb-6 tracking-widest uppercase">[ SYSTEM ARCHITECTURE ]</div>
+<h2 class="font-headline-xl text-6xl md:text-7xl mb-8 leading-tight">Institutional-Grade Infrastructure.</h2>
+<p class="font-body-lg text-secondary-fixed-dim max-w-2xl">We don't use templates. We engineer scalable, dynamic, and secure web applications built on modern enterprise stacks.</p>
+</div>
+<div class="w-full border-b border-white/10 mb-12"></div>
+<div class="grid grid-cols-1 md:grid-cols-3">
+<div class="p-12 border-b md:border-b-0 md:border-r border-white/10">
+<div class="text-emerald font-mono-terminal mb-6">01</div>
+<h3 class="font-headline-lg mb-4">Next.js 15 Architecture</h3>
+<p class="font-body-md text-secondary-fixed-dim">Server-side rendering and static site generation for sub-second page loads.</p>
+</div>
+<div class="p-12 border-b md:border-b-0 md:border-r border-white/10">
+<div class="text-emerald font-mono-terminal mb-6">02</div>
+<h3 class="font-headline-lg mb-4">Payload CMS 3.0</h3>
+<p class="font-body-md text-secondary-fixed-dim">A fully dynamic, headless content engine. Total client control over products and forms.</p>
+</div>
+<div class="p-12">
+<div class="text-emerald font-mono-terminal mb-6">03</div>
+<h3 class="font-headline-lg mb-4">Cloud Native Database</h3>
+<p class="font-body-md text-secondary-fixed-dim">Powered by Neon PostgreSQL. Highly available, secure database infrastructure.</p>
+</div>
+</div>
+</div>
+</section><section class="w-full bg-warm-cream text-obsidian py-32 px-gutter border-t border-obsidian">
+<div class="max-w-dashboard-max mx-auto flex flex-col items-center text-center">
+<div class="font-mono-terminal text-emerald mb-8 tracking-widest uppercase">[ NEXT STEPS ]</div>
+<h2 class="font-display-hero text-obsidian mb-8 leading-none" style="font-size: 96px;">Initiate a Project.</h2>
+<p class="font-body-lg text-secondary max-w-2xl mb-12 mx-auto">
+      We partner with a limited number of global exporters each quarter to ensure institutional-grade delivery. Let's discuss your digital infrastructure.
+    </p>
+<a class="inline-flex items-center justify-center bg-emerald text-white font-mono-terminal uppercase tracking-widest px-12 py-6 hover:bg-tertiary transition-colors duration-300" href="#">
+      REQUEST A CONSULTATION <span class="ml-2">→</span>
+</a>
+</div>
+</section><footer class="bg-warm-cream dark:bg-obsidian w-full bottom-0 border-t border-outline/10 dark:border-white/5">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-gutter py-12 max-w-dashboard-max mx-auto gap-4">
+<p class="font-mono-terminal text-mono-terminal uppercase tracking-widest text-secondary dark:text-secondary-fixed-dim">
+                © 2024 INSTITUTIONAL ELITE. ALL RIGHTS RESERVED. [ SYS_VER_2.4 ]
+            </p>
+<div class="flex space-x-6">
+<a class="font-mono-terminal text-mono-terminal uppercase tracking-widest text-secondary dark:text-secondary-fixed-dim hover:text-emerald dark:hover:text-success-glow transition-colors" href="#">Legal</a>
+<a class="font-mono-terminal text-mono-terminal uppercase tracking-widest text-secondary dark:text-secondary-fixed-dim hover:text-emerald dark:hover:text-success-glow transition-colors" href="#">Privacy</a>
+<a class="font-mono-terminal text-mono-terminal uppercase tracking-widest text-secondary dark:text-secondary-fixed-dim hover:text-emerald dark:hover:text-success-glow transition-colors" href="#">Terms</a>
+</div>
+<div class="font-label-caps text-label-caps text-obsidian dark:text-warm-cream">
+                AGENCY_INDEX
+            </div>
+</div>
+</footer>
+</body></html>

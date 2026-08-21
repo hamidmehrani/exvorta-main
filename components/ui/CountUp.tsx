@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState, useRef } from 'react'
-import { motion, useInView, useSpring, useTransform } from 'framer-motion'
+import { m, useInView, useSpring, useTransform } from 'framer-motion'
 
 interface CountUpProps {
   value: string | number
@@ -39,8 +39,9 @@ export function CountUp({ value, duration = 2, className = '' }: CountUpProps) {
   })
 
   return (
-    <motion.span ref={ref} className={className}>
+    <m.span ref={ref} className={className}>
       {displayValue}
-    </motion.span>
+    </m.span>
   )
 }
+

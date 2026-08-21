@@ -1,11 +1,9 @@
 import React from 'react'
-import { getTranslations } from 'next-intl/server'
 import { getPayloadClient } from '@/lib/payload'
 import { Navigation } from '@/payload-types'
 import HeaderClient from './HeaderClient'
 
 export const Header = async () => {
-  const t = await getTranslations('Header')
   const payload = await getPayloadClient()
   
   let navData: Navigation | null = null
@@ -19,10 +17,10 @@ export const Header = async () => {
   }
 
   const translations = {
-    features: t('features'),
-    collections: t('collections'),
-    docs: t('docs'),
-    admin: t('admin'),
+    features: 'Features',
+    collections: 'Collections',
+    docs: 'Docs',
+    admin: 'Admin',
   }
 
   return <HeaderClient navLinks={navData?.links || []} t={translations} />

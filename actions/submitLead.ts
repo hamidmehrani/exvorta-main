@@ -2,88 +2,130 @@
 
 import { getPayloadClient } from '@/lib/payload'
 import { headers } from 'next/headers'
-
-import { sql } from '@payloadcms/db-postgres'
+import { sql } from '@payloadcms/db-vercel-postgres'
 
 const RATE_LIMIT = 5
 
-export async function submitLeadAction(prevState: unknown, formData: FormData) {
+export interface LeadSubmission {
+  source: 'Waitlist' | 'RFQ'
+  email: string
+  company?: string
+  payload?: Record<string, unknown>
+  turnstileToken?: string
+  botField?: string
+  collection?: 'leads' | 'waitlist'
+}
+
+export async function submitLead(data: LeadSubmission) {
   const ip = (await headers()).get('x-forwarded-for') || 'unknown'
-  const payload = await getPayloadClient()
-  // Payload's DatabaseAdapter interface is DB-agnostic (supports Mongo + Postgres), so `.drizzle` isn't in the public type — this cast is Payload's officially documented pattern for raw Postgres access, not a workaround.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const db = payload.db as any
-  
-  // 1. Rate Limiting via Neon (Postgres)
-  // Opportunistic cleanup: delete records older than the window
-  await db.drizzle.execute(sql`DELETE FROM "rate_limits" WHERE "window_start" < now() - interval '15 minutes'`)
-  
-  const existingRecord = await db.drizzle.execute(sql`
-    SELECT "attempt_count", "window_start" FROM "rate_limits" WHERE "identifier" = ${ip}
-  `)
-  
-  if (existingRecord.rows && existingRecord.rows.length > 0) {
-    const record = existingRecord.rows[0]
-    if (record.attempt_count >= RATE_LIMIT) {
+  const payloadClient = await getPayloadClient()
+  const db = payloadClient.db as { drizzle: { execute: (query: unknown) => Promise<{ rows: { attempt_count: number }[] }> } }
+
+  // ── 1. Rate Limiting ────────────────────────────────────────────────────────
+  await db.drizzle.execute(
+    sql`DELETE FROM "rate_limits" WHERE "window_start" < now() - interval '15 minutes'`
+  )
+
+  const existingRecord = await db.drizzle.execute(
+    sql`SELECT "attempt_count" FROM "rate_limits" WHERE "identifier" = ${ip}`
+  )
+
+  if (existingRecord.rows?.length > 0) {
+    if (existingRecord.rows[0].attempt_count >= RATE_LIMIT) {
       return { success: false, error: 'Too many submissions. Please try again later.' }
     }
-    await db.drizzle.execute(sql`
-      UPDATE "rate_limits" SET "attempt_count" = "attempt_count" + 1 WHERE "identifier" = ${ip}
-    `)
+    await db.drizzle.execute(
+      sql`UPDATE "rate_limits" SET "attempt_count" = "attempt_count" + 1 WHERE "identifier" = ${ip}`
+    )
   } else {
-    await db.drizzle.execute(sql`
-      INSERT INTO "rate_limits" ("identifier", "attempt_count", "window_start") VALUES (${ip}, 1, now())
-    `)
+    await db.drizzle.execute(
+      sql`INSERT INTO "rate_limits" ("identifier", "attempt_count", "window_start") VALUES (${ip}, 1, now())`
+    )
   }
 
-  // 1. Honeypot Check
-  const honeypot = formData.get('bot-field')
-  if (honeypot) {
-    return { success: false, error: 'Spam detected' }
+  // ── 2. Honeypot ─────────────────────────────────────────────────────────────
+  if (data.botField) {
+    return { success: false, error: 'Spam detected.' }
   }
 
-  const skipTurnstile = process.env.NODE_ENV !== 'production' && process.env.SKIP_TURNSTILE_IN_DEV === 'true'
+  // ── 3. Cloudflare Turnstile ─────────────────────────────────────────────────
+  const skipTurnstile =
+    process.env.NODE_ENV !== 'production' && process.env.SKIP_TURNSTILE_IN_DEV === 'true'
 
   if (!skipTurnstile) {
-    // 2. Turnstile Validation
-    const token = formData.get('cf-turnstile-response') as string
+    const token = data.turnstileToken
     if (!token) {
       return { success: false, error: 'Security verification failed.' }
     }
-
-    const secret = process.env.TURNSTILE_SECRET_KEY || ''
-  try {
-    const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      body: `secret=${encodeURIComponent(secret)}&response=${encodeURIComponent(token)}`,
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    })
-    const verifyData = await verifyRes.json()
-
-    if (!verifyData.success) {
-      return { success: false, error: 'Invalid security token.' }
-    }
+    try {
+      const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        method: 'POST',
+        body: `secret=${encodeURIComponent(process.env.TURNSTILE_SECRET_KEY || '')}&response=${encodeURIComponent(token)}`,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      })
+      const verifyData = await verifyRes.json()
+      if (!verifyData.success) {
+        return { success: false, error: 'Invalid security token.' }
+      }
     } catch (err) {
-      console.error('Turnstile verification failed:', err)
+      console.error('[EXVORTA OS] Turnstile verification failed:', err)
       return { success: false, error: 'Security check failed.' }
     }
   }
 
-  // 3. Payload Insertion
+  // ── 4. Extract & Validate Core Fields ───────────────────────────────────────
+  if (!data.email || typeof data.email !== 'string') {
+    return { success: false, error: 'Email is required.' }
+  }
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(data.email) || data.email.length > 254) {
+    return { success: false, error: 'Invalid email address.' }
+  }
+
+  if (data.company && data.company.length > 100) {
+    return { success: false, error: 'Company name is too long.' }
+  }
+
+  if (!data.source || !['Waitlist', 'RFQ'].includes(data.source)) {
+    return { success: false, error: 'Invalid lead source.' }
+  }
+
+  // ── 5. Persist via Payload Local API ─────────────────────────────────────────
   try {
-    await payload.create({
-      collection: 'leads',
+    await payloadClient.create({
+      collection: (data.collection || 'leads') as 'leads' | 'waitlist',
       data: {
-        name: formData.get('name') as string,
-        email: formData.get('email') as string,
-        phone: formData.get('phone') as string,
-        message: formData.get('message') as string,
-        status: 'new',
+        source: data.source,
+        email: data.email,
+        company: data.company,
+        payload: data.payload,
+        status: 'New',
       },
     })
     return { success: true, error: null }
   } catch (err) {
-    console.error('Lead creation error:', err)
-    return { success: false, error: 'Failed to submit the form.' }
+    console.error('[EXVORTA OS] Lead creation error:', err)
+    return { success: false, error: 'Failed to submit the form. Please try again.' }
   }
+}
+
+export async function submitLeadAction(prevState: unknown, formData: FormData) {
+  const source = formData.get('source') as 'Waitlist' | 'RFQ'
+  const email = formData.get('email') as string
+  const company = formData.get('company') as string | undefined
+  const botField = formData.get('bot-field') as string | undefined
+  const turnstileToken = formData.get('cf-turnstile-response') as string | undefined
+
+  const entries = Array.from(formData.entries())
+  const extraData: Record<string, string> = {}
+  for (const [key, value] of entries) {
+    if (!['source', 'email', 'company', 'bot-field', 'cf-turnstile-response'].includes(key)) {
+      extraData[key] = value.toString()
+    }
+  }
+
+  const payload = Object.keys(extraData).length > 0 ? extraData : undefined
+
+  return submitLead({ source, email, company, botField, turnstileToken, payload })
 }

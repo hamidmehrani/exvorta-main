@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en" style=""><head></head><body class="antialiased font-sans flex flex-col min-h-screen bg-noise relative overflow-x-hidden">```html
+
+
+
+
+
+
+
+
+
+
+
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Exvorta | Digital Infrastructure for Global Traders</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FAFAF8',
+                        obsidian: '#0D0D0D',
+                        surface: '#FFFFFF',
+                        border: 'rgba(0,0,0,0.05)',
+                        'border-dark': 'rgba(255,255,255,0.1)',
+                        dashboard: '#0D0D0D',
+                        sidebar: '#141414',
+                        card: '#1A1A1A',
+                        success: '#00FF66',
+                        'success-bg': 'rgba(0, 255, 102, 0.1)',
+                        warning: '#FFB800',
+                        'warning-bg': 'rgba(255, 184, 0, 0.1)',
+                        info: '#0066FF',
+                        'info-bg': 'rgba(0, 102, 255, 0.1)'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px rgba(0, 0, 0, 0.03)',
+                        'glow': '0 0 40px rgba(0,0,0,0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+<style data-purpose="custom-utilities">
+        body {
+            background-color: theme('colors.cream');
+            color: theme('colors.obsidian');
+        }
+        
+        .bg-noise {
+            position: relative;
+        }
+        .bg-noise::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        /* 3D Parallax Viewport Styles */
+        .parallax-viewport {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            background: linear-gradient(135deg, #050B08 0%, #030604 100%);
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 20px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            pointer-events: none;
+            will-change: transform;
+        }
+        
+        .parallax-element {
+            position: absolute;
+            will-change: transform, filter;
+        }
+        
+        /* Glassmorphic elements inside parallax */
+        .pg-glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+        
+        /* Chrome effects */
+        .chrome-text {
+            background: linear-gradient(to bottom, #fff 0%, #a0a0a0 50%, #404040 51%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        
+        /* Animated light leaks */
+        @keyframes lightLeak {
+            0% { opacity: 0.2; transform: scale(1) translate(0, 0); }
+            50% { opacity: 0.5; transform: scale(1.5) translate(10%, -10%); }
+            100% { opacity: 0.2; transform: scale(1) translate(0, 0); }
+        }
+        
+        .light-leak {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: lightLeak 10s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+    </style>
+<!-- BEGIN: MainHeader -->
+<header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-black/5" data-purpose="site-header">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<!-- Logo -->
+<div class="flex-shrink-0">
+<a class="font-serif text-2xl font-semibold tracking-wide text-obsidian uppercase" href="#">EXVORTA</a>
+</div>
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex items-center space-x-12 text-[11px] font-medium tracking-widest text-obsidian/60 uppercase"><a class="hover:text-obsidian transition-colors" href="#"></a><a class="text-[10px] tracking-[0.2em] font-medium text-black/70 hover:text-black uppercase transition-all duration-300" href="https://app-companion-430619.appspot.com/projects/8161356021902701395?usegapi=1&amp;jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.ch0Jz-JlMrQ.O%2Fd%3D1%2Frs%3DAHpOoo_YD4KoV8fTh_kLhktsiThAm3yJ5A%2Fm%3D__features__#" style='--tw-scale-x: 1; --tw-scale-y: 1; --tw-pan-x: ; --tw-pan-y: ; --tw-pinch-zoom: ; --tw-scroll-snap-strictness: proximity; --tw-gradient-from-position: ; --tw-gradient-via-position: ; --tw-gradient-to-position: ; --tw-ordinal: ; --tw-slashed-zero: ; --tw-numeric-figure: ; --tw-numeric-spacing: ; --tw-numeric-fraction: ; --tw-ring-inset: ; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: rgb(59 130 246 / 0.5); --tw-ring-offset-shadow: 0 0 #0000; --tw-ring-shadow: 0 0 #0000; --tw-shadow: 0 0 #0000; --tw-shadow-colored: 0 0 #0000; --tw-blur: ; --tw-brightness: ; --tw-contrast: ; --tw-grayscale: ; --tw-hue-rotate: ; --tw-invert: ; --tw-saturate: ; --tw-sepia: ; --tw-drop-shadow: ; --tw-backdrop-blur: ; --tw-backdrop-brightness: ; --tw-backdrop-contrast: ; --tw-backdrop-grayscale: ; --tw-backdrop-hue-rotate: ; --tw-backdrop-invert: ; --tw-backdrop-opacity: ; --tw-backdrop-saturate: ; --tw-backdrop-sepia: ; --tw-contain-size: ; --tw-contain-layout: ; --tw-contain-paint: ; --tw-contain-style: ; font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; background-color: rgb(252, 250, 248); outline: none !important; box-shadow: none !important;'>Exvorta web</a>
+<a class="hover:text-obsidian transition-colors" href="#">PORTFOLIO</a>
+<a class="hover:text-obsidian transition-colors" href="#">ECOSYSTEM</a>
+<a class="hover:text-obsidian transition-colors" href="#">THE FIRM</a></nav>
+<!-- CTA -->
+<div class="hidden md:block">
+<a class="mr-6 text-[10px] tracking-[0.2em] font-mono text-black/70 hover:text-black uppercase transition-all" href="#">CLIENT LOGIN</a><a class="bg-black text-white px-6 py-3 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-[#1a1a1a] transition-colors" href="#">[ REQUEST PROPOSAL ]</a>
+</div>
+<!-- Mobile menu button -->
+<div class="md:hidden flex items-center">
+<button class="text-obsidian hover:text-gray-500 focus:outline-none" type="button">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<main class="flex-grow pt-20 relative z-10">
+<!-- BEGIN: Hero Section -->
+<section class="relative pt-32 pb-40 overflow-hidden" data-purpose="hero-section">
+<div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative">
+<!-- Hero Content -->
+<div class="text-center max-w-4xl mx-auto mb-20">
+<div class="inline-flex items-center justify-center px-3 py-1 mb-8 rounded-full border border-black/10 bg-white/50 text-[10px] tracking-widest uppercase text-obsidian/60"><span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-2"></span> [ ENGINE V1.0 LIVE ]</div>
+<h1 class="text-5xl md:text-7xl lg:text-[84px] leading-[1.1] font-serif font-semibold text-obsidian mb-8 tracking-tight">
+                        Digital Infrastructure<br/>for Global Traders
+                    </h1>
+<p class="text-base md:text-lg text-obsidian/60 max-w-2xl mx-auto mb-12 font-light">The definitive digital foundation for elite importers and exporters. Precision-engineered web presence and automated compliance.</p>
+<a class="inline-flex items-center justify-center px-8 py-4 bg-obsidian text-white text-xs font-medium tracking-widest uppercase shadow-[0_0_15px_rgba(0,102,255,0.5)] hover:bg-black/80 transition-all" href="#">[ REQUEST PROPOSAL ]</a>
+</div>
+<!-- Dashboard Preview -->
+<div class="relative w-full max-w-[1400px] mx-auto rounded-xl shadow-2xl overflow-hidden bg-dashboard border border-border-dark flex flex-col mt-20" style="height: 700px;"><!-- Dashboard Header -->
+<div class="h-12 border-b border-border-dark flex items-center px-4 justify-between bg-black/40">
+<div class="flex items-center space-x-2 w-32">
+<div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
+</div>
+<div class="text-[10px] text-white/40 tracking-widest uppercase">Exvorta OS</div>
+<div class="w-32 flex justify-end">
+<div class="text-[9px] text-success font-mono border border-success/20 bg-success/5 px-2 py-1 rounded">SYS_ONLINE</div>
+</div>
+</div>
+<!-- Dashboard Body -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar Rail -->
+<div class="w-16 border-r border-border-dark bg-sidebar flex flex-col items-center py-6 space-y-6 shrink-0 relative z-10">
+<div class="w-8 h-8 rounded bg-white/10 flex items-center justify-center text-white mb-4 shadow-[0_0_10px_rgba(255,255,255,0.1)] cursor-pointer">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="w-8 h-8 rounded flex items-center justify-center text-white/20 hover:text-white/80 cursor-pointer transition-colors">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="w-8 h-8 rounded flex items-center justify-center text-white/20 hover:text-white/80 cursor-pointer transition-colors">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="w-8 h-8 rounded flex items-center justify-center text-white/20 hover:text-white/80 cursor-pointer transition-colors relative">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<div class="absolute top-1 right-1 w-1.5 h-1.5 bg-info rounded-full"></div>
+</div>
+<div class="w-8 h-8 rounded flex items-center justify-center text-white/20 hover:text-white/80 cursor-pointer transition-colors">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="w-8 h-8 rounded flex items-center justify-center text-white/20 hover:text-white/80 cursor-pointer transition-colors mt-auto">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 bg-dashboard text-white flex flex-col overflow-hidden relative">
+<!-- Top Bar -->
+<div class="h-14 border-b border-border-dark flex items-center justify-between px-6 bg-black/20 shrink-0">
+<div class="flex items-center space-x-2 text-[10px] uppercase tracking-widest font-mono">
+<span class="text-white/40">Workspace</span>
+<span class="text-white/20">/</span>
+<span class="text-white/40">Global Routing</span>
+<span class="text-white/20">/</span>
+<span class="text-white">Active</span>
+</div>
+<div class="flex items-center space-x-6">
+<div class="relative">
+<svg class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-white/20" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<input class="bg-black/40 border border-white/5 rounded pl-9 pr-4 py-1.5 text-xs text-white placeholder-white/20 focus:outline-none focus:border-white/20 w-64 transition-colors" placeholder="Search BOL, Client, or Location..." type="text"/>
+</div>
+<div class="flex items-center space-x-3 border-l border-white/10 pl-6 cursor-pointer">
+<div class="text-right">
+<div class="text-xs font-medium">A. Mercer</div>
+<div class="text-[9px] text-white/40 uppercase tracking-wider">Admin</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 border border-white/10 flex items-center justify-center text-xs">AM</div>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-hidden flex">
+<!-- Left Panel: Metrics & Table -->
+<div class="flex-1 p-6 overflow-y-auto flex flex-col">
+<!-- Top Metrics -->
+<div class="grid grid-cols-3 gap-6 mb-6 shrink-0">
+<div class="bg-card border border-border-dark p-6 rounded-lg">
+<div class="text-[10px] text-white/40 tracking-widest uppercase mb-2">Total Volume (TEU)</div>
+<div class="text-3xl font-light mb-4">34,290</div>
+<div class="h-8 flex items-end space-x-1 opacity-50">
+<div class="w-full bg-white/20 h-[30%] hover:bg-white/40 transition-colors"></div>
+<div class="w-full bg-white/20 h-[50%] hover:bg-white/40 transition-colors"></div>
+<div class="w-full bg-white/20 h-[40%] hover:bg-white/40 transition-colors"></div>
+<div class="w-full bg-white/20 h-[70%] hover:bg-white/40 transition-colors"></div>
+<div class="w-full bg-white/20 h-[60%] hover:bg-white/40 transition-colors"></div>
+<div class="w-full bg-white/80 h-[90%] hover:bg-white transition-colors"></div>
+<div class="w-full bg-white/40 h-[50%] hover:bg-white/60 transition-colors"></div>
+</div>
+</div>
+<div class="bg-card border border-border-dark p-6 rounded-lg flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 w-32 h-32 bg-[radial-gradient(circle,rgba(0,102,255,0.1)_0,transparent_70%)]"></div>
+<div class="relative z-10">
+<div class="text-[10px] text-white/40 tracking-widest uppercase mb-2">Active Clearances</div>
+<div class="text-3xl font-light text-white">142</div>
+<div class="text-[10px] text-white/40 mt-1 flex items-center"><span class="w-1.5 h-1.5 bg-info rounded-full mr-1.5"></span> ACROSS 14 JURISDICTIONS</div>
+</div>
+</div>
+<div class="bg-card border border-border-dark p-6 rounded-lg">
+<div class="text-[10px] text-white/40 tracking-widest uppercase mb-4">Compliance Health</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center border-b border-white/5 pb-2">
+<span class="text-xs text-white/60">Export Controls</span>
+<span class="text-[10px] text-success bg-success-bg px-2 py-0.5 rounded border border-success/20">CLEAR</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-white/60">Sanctions Screen</span>
+<span class="text-[10px] text-success bg-success-bg px-2 py-0.5 rounded border border-success/20">CLEAR</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Ledger Table -->
+<div class="flex-1 bg-card border border-border-dark rounded-lg flex flex-col overflow-hidden min-h-[300px]">
+<div class="p-4 border-b border-border-dark flex justify-between items-center bg-black/20 shrink-0">
+<div class="text-[10px] text-white/40 tracking-widest uppercase font-mono">LIVE CLEARANCE LEDGER</div>
+<button class="text-[9px] text-white/60 hover:text-white uppercase tracking-widest border border-white/10 px-3 py-1 rounded transition-colors">Export CSV</button>
+</div>
+<div class="flex-1 overflow-auto">
+<table class="w-full text-left text-xs whitespace-nowrap">
+<thead class="text-[9px] text-white/30 uppercase tracking-widest bg-[#141414] sticky top-0 z-10">
+<tr>
+<th class="px-5 py-3 font-normal border-b border-white/5">BOL #</th>
+<th class="px-5 py-3 font-normal border-b border-white/5">CONSIGNEE</th>
+<th class="px-5 py-3 font-normal border-b border-white/5">HS CODE</th>
+<th class="px-5 py-3 font-normal border-b border-white/5">ORIGIN</th>
+<th class="px-5 py-3 font-normal border-b border-white/5">DESTINATION</th>
+<th class="px-5 py-3 font-normal border-b border-white/5 text-right">EST. VALUE ($)</th>
+<th class="px-5 py-3 font-normal border-b border-white/5 text-right">STATUS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5 text-white/70 font-mono text-[11px]">
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-5 py-3.5 text-white">TRK-9821-X</td>
+<td class="px-5 py-3.5">Atlas Mfg Corp.</td>
+<td class="px-5 py-3.5 text-white/40">8411.82</td>
+<td class="px-5 py-3.5">Rotterdam (NLRTM)</td>
+<td class="px-5 py-3.5">Dubai (AEDXB)</td>
+<td class="px-5 py-3.5 text-right">1,240,500</td>
+<td class="px-5 py-3.5 text-right"><span class="text-[9px] text-success bg-success-bg px-2 py-1 rounded border border-success/20">CLEARED</span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-5 py-3.5 text-white">TRK-3302-B</td>
+<td class="px-5 py-3.5">Zeta Logistics</td>
+<td class="px-5 py-3.5 text-white/40">8544.49</td>
+<td class="px-5 py-3.5">Shanghai (CNSHA)</td>
+<td class="px-5 py-3.5">Hamburg (DEHAM)</td>
+<td class="px-5 py-3.5 text-right">89,200</td>
+<td class="px-5 py-3.5 text-right"><span class="text-[9px] text-info bg-info-bg px-2 py-1 rounded border border-info/20">IN TRANSIT</span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-5 py-3.5 text-white">TRK-4491-C</td>
+<td class="px-5 py-3.5">Novus Energy</td>
+<td class="px-5 py-3.5 text-white/40">2710.12</td>
+<td class="px-5 py-3.5">Houston (USHOU)</td>
+<td class="px-5 py-3.5">Singapore (SGSIN)</td>
+<td class="px-5 py-3.5 text-right">4,500,000</td>
+<td class="px-5 py-3.5 text-right"><span class="text-[9px] text-warning bg-warning-bg px-2 py-1 rounded border border-warning/20">PENDING KYC</span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-5 py-3.5 text-white">TRK-1005-D</td>
+<td class="px-5 py-3.5">OmniTech Ltd.</td>
+<td class="px-5 py-3.5 text-white/40">8542.31</td>
+<td class="px-5 py-3.5">Taipei (TWTPE)</td>
+<td class="px-5 py-3.5">London (GBHRW)</td>
+<td class="px-5 py-3.5 text-right">2,150,000</td>
+<td class="px-5 py-3.5 text-right"><span class="text-[9px] text-success bg-success-bg px-2 py-1 rounded border border-success/20">CLEARED</span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-5 py-3.5 text-white">TRK-9912-A</td>
+<td class="px-5 py-3.5">Nexus Materials</td>
+<td class="px-5 py-3.5 text-white/40">7208.39</td>
+<td class="px-5 py-3.5">Mumbai (INBOM)</td>
+<td class="px-5 py-3.5">Antwerp (BEANR)</td>
+<td class="px-5 py-3.5 text-right">310,000</td>
+<td class="px-5 py-3.5 text-right"><span class="text-[9px] text-info bg-info-bg px-2 py-1 rounded border border-info/20">CUSTOMS HOLD</span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-5 py-3.5 text-white">TRK-2044-F</td>
+<td class="px-5 py-3.5">Aegis Trading</td>
+<td class="px-5 py-3.5 text-white/40">8421.29</td>
+<td class="px-5 py-3.5">Los Angeles (USLAX)</td>
+<td class="px-5 py-3.5">Tokyo (JPTYO)</td>
+<td class="px-5 py-3.5 text-right">545,000</td>
+<td class="px-5 py-3.5 text-right"><span class="text-[9px] text-success bg-success-bg px-2 py-1 rounded border border-success/20">CLEARED</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Panel: Live Terminal Log -->
+<div class="w-80 border-l border-border-dark bg-[#111111] flex flex-col shrink-0">
+<div class="h-12 border-b border-white/5 flex items-center px-4 justify-between bg-black/20 shrink-0">
+<div class="text-[10px] text-white/40 tracking-widest uppercase font-mono flex items-center">
+<span class="w-1.5 h-1.5 bg-success rounded-full mr-2 animate-pulse"></span>
+                        Live Terminal Log
+                    </div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4 font-mono text-[10px]">
+<!-- Log Entry -->
+<div class="border-l-2 border-success/30 pl-3">
+<div class="text-white/30 mb-1">[14:02:11 UTC]</div>
+<div class="text-white/80">Customs cleared at <span class="text-white">AE-DXB</span></div>
+<div class="text-success/70 mt-0.5">REF: TRK-9821-X</div>
+</div>
+<!-- Log Entry -->
+<div class="border-l-2 border-info/30 pl-3">
+<div class="text-white/30 mb-1">[13:58:44 UTC]</div>
+<div class="text-white/80">Vessel arrived at berth <span class="text-white">BE-ANR</span></div>
+<div class="text-info/70 mt-0.5">REF: TRK-9912-A</div>
+</div>
+<!-- Log Entry -->
+<div class="border-l-2 border-warning/30 pl-3">
+<div class="text-white/30 mb-1">[13:45:09 UTC]</div>
+<div class="text-white/80">KYC verification requested <span class="text-white">US-HOU</span></div>
+<div class="text-warning/70 mt-0.5">REF: TRK-4491-C</div>
+</div>
+<!-- Log Entry -->
+<div class="border-l-2 border-white/10 pl-3">
+<div class="text-white/30 mb-1">[13:12:30 UTC]</div>
+<div class="text-white/60">Automated commercial invoice generated.</div>
+<div class="text-white/40 mt-0.5">SYS_DOC_ENGINE</div>
+</div>
+<!-- Log Entry -->
+<div class="border-l-2 border-success/30 pl-3">
+<div class="text-white/30 mb-1">[12:44:05 UTC]</div>
+<div class="text-white/80">Sanctions screen passed <span class="text-white">GLOBAL</span></div>
+<div class="text-success/70 mt-0.5">REF: TRK-1005-D</div>
+</div>
+<!-- Log Entry -->
+<div class="border-l-2 border-white/10 pl-3">
+<div class="text-white/30 mb-1">[12:30:00 UTC]</div>
+<div class="text-white/60">Daily route optimization complete.</div>
+<div class="text-white/40 mt-0.5">SYS_ROUTE_ENGINE</div>
+</div>
+<!-- Log Entry -->
+<div class="border-l-2 border-info/30 pl-3 opacity-70">
+<div class="text-white/30 mb-1">[11:15:22 UTC]</div>
+<div class="text-white/80">Departed origin port <span class="text-white">CN-SHA</span></div>
+<div class="text-info/70 mt-0.5">REF: TRK-3302-B</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</div></section><div class="py-12 flex justify-center" data-purpose="social-proof-anchor"><p class="text-[11px] font-sans text-obsidian/40 uppercase tracking-[0.2em] text-center max-w-xl leading-relaxed">Elevating digital infrastructure for modern trading firms across the GCC and Europe.</p></div>
+<!-- END: Hero Section -->
+<!-- BEGIN: Architecture Manifesto -->
+<section class="py-24 border-t border-black/5" data-purpose="manifesto">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<div class="text-[10px] tracking-widest uppercase text-obsidian/40 mb-4">Architecture Manifesto</div>
+<h2 class="text-3xl md:text-4xl font-serif text-obsidian">Built for How Traders Actually Work</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface p-8 border border-black/5 rounded-sm hover:shadow-soft transition-shadow relative border-t-2 border-transparent hover:border-black transition-all duration-300"><span class="text-gray-200 text-4xl font-serif leading-none absolute top-6 right-8 opacity-50">01</span>
+<h3 class="text-lg font-serif mb-3 text-black font-semibold" data-stitch-orig-opacity="0">Rapid Bespoke Deployment</h3>
+<p class="text-sm text-obsidian/60 leading-relaxed font-light text-gray-600" data-stitch-orig-opacity="0">High-performance websites delivered in just 2–4 weeks. We leverage advanced coding frameworks and agile team structures to move at the speed of global trade, without ever compromising institutional prestige.</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface p-8 border border-black/5 rounded-sm hover:shadow-soft transition-shadow relative border-t-2 border-transparent hover:border-black transition-all duration-300"><span class="text-gray-200 text-4xl font-serif leading-none absolute top-6 right-8 opacity-50">02</span>
+<h3 class="text-lg font-serif mb-3 text-black font-semibold" data-stitch-orig-opacity="0">Headless Architecture</h3>
+<p class="text-sm text-obsidian/60 leading-relaxed font-light text-gray-600" data-stitch-orig-opacity="0">Built on modern, scalable infrastructure (Next.js &amp; Edge compute). API-ready designs ensuring your web presence is fast, secure, and globally accessible without legacy constraints.</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface p-8 border border-black/5 rounded-sm hover:shadow-soft transition-shadow relative border-t-2 border-transparent hover:border-black transition-all duration-300"><span class="text-gray-200 text-4xl font-serif leading-none absolute top-6 right-8 opacity-50">03</span>
+<h3 class="text-lg font-serif mb-3 text-black font-semibold" data-stitch-orig-opacity="0">Absolute Data Sovereignty</h3>
+<p class="text-sm text-obsidian/60 leading-relaxed font-light text-gray-600" data-stitch-orig-opacity="0">Enterprise-grade security protocols standard in every build. We ensure your corporate presence and proprietary intelligence remain strictly confidential and protected.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Architecture Manifesto -->
+<!-- BEGIN: The Pitch -->
+<section class="py-32" data-purpose="the-pitch">
+<div class="max-w-4xl mx-auto px-4 text-center">
+<h2 class="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-obsidian mb-8 leading-tight">Deals are won before the first meeting.</h2>
+<p class="text-base md:text-lg text-obsidian/60 leading-relaxed font-light max-w-2xl mx-auto text-center">Without a credible digital presence, you are losing deals before the first conversation. Exvorta fixes this.</p>
+</div>
+</section>
+<!-- END: The Pitch -->
+<!-- BEGIN: Exvorta Web -->
+<section class="py-32 bg-[#FAFAF8] border-t border-black/5" data-purpose="portfolio-index"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- Section Header -->
+<div class="mb-20">
+<div class="font-mono text-[11px] tracking-[0.25em] text-gray-500 uppercase mb-4">[ OUR INFRASTRUCTURE WORK ]</div>
+<h2 class="text-7xl md:text-8xl lg:text-[120px] font-serif text-[#0D0D0D] tracking-tighter leading-none mb-8">Proof of Execution.</h2>
+<div class="w-full h-[1px] bg-black"></div>
+</div>
+<!-- Project Rows -->
+<div class="flex flex-col">
+<!-- Row 1: Spicevo -->
+<div class="grid grid-cols-1 md:grid-cols-[45%_55%] gap-20 py-24 border-b border-black items-center">
+<div class="flex flex-col">
+<h3 class="text-6xl md:text-7xl lg:text-8xl font-serif text-black mb-6">Spicevo</h3>
+<p class="text-lg font-light text-black/60 leading-relaxed mb-10">Certified organic herbs supply chain for European premium markets.</p>
+<div class="space-y-4 font-mono text-[10px] uppercase tracking-widest mb-12">
+<div class="flex justify-between border-b border-black/5 pb-2">
+<span class="text-gray-500">INDUSTRY</span>
+<span class="text-black font-medium">ORGANIC HERBS</span>
+</div>
+<div class="flex justify-between border-b border-black/5 pb-2">
+<span class="text-gray-500">VOLUME</span>
+<span class="text-black font-medium">480 MT/YR</span>
+</div>
+<div class="flex justify-between border-b border-black/5 pb-2">
+<span class="text-gray-500">SERVICE</span>
+<span class="text-black font-medium">WEB DESIGN &amp; CMS</span>
+</div>
+</div>
+<a class="inline-block border border-black rounded-none px-8 py-4 text-[10px] font-mono text-center hover:bg-black hover:text-white transition-colors w-fit" href="#">VIEW CASE STUDY ↗</a>
+</div>
+<div class="aspect-video overflow-hidden rounded-none">
+<img alt="Spicevo Facility" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida/AP1WRLsluHrudtzDaG50aSD36NdRzN58w6vb8tMpFOdnfIZFgY1dBgREUPWYQlTjj9EbRdLgnplkZYewTF9sMmaeJSXAK3oto-ygLUZfgwWyy7yWx7KwCDhAFMeuV49Vhkho1reIvl0I9GKNryk-9aFBdjJS583MJmCtZCneN1ZtU54xdaArh6k8eLfsYFLn5M0d_X1KdW11WwN2Sz8g_rTEjmd88-HJHGcuK3mzWuDZmmpB05aQ3niGkBjgHbc"/>
+</div>
+</div>
+<!-- Row 2: Nutave -->
+<div class="grid grid-cols-1 md:grid-cols-[45%_55%] gap-20 py-24 border-b border-black items-center">
+<div class="flex flex-col">
+<h3 class="text-6xl md:text-7xl lg:text-8xl font-serif text-black mb-6">Nutave</h3>
+<p class="text-lg font-light text-black/60 leading-relaxed mb-10">Precision nut processing and distribution for global wholesale partners.</p>
+<div class="space-y-4 font-mono text-[10px] uppercase tracking-widest mb-12">
+<div class="flex justify-between border-b border-black/5 pb-2">
+<span class="text-gray-500">INDUSTRY</span>
+<span class="text-black font-medium">PREMIUM NUTS</span>
+</div>
+<div class="flex justify-between border-b border-black/5 pb-2">
+<span class="text-gray-500">VOLUME</span>
+<span class="text-black font-medium">650 MT/YR</span>
+</div>
+<div class="flex justify-between border-b border-black/5 pb-2">
+<span class="text-gray-500">SERVICE</span>
+<span class="text-black font-medium">B2B WEB DEVELOPMENT</span>
+</div>
+</div>
+<a class="inline-block border border-black rounded-none px-8 py-4 text-[10px] font-mono text-center hover:bg-black hover:text-white transition-colors w-fit" href="#">VIEW CASE STUDY ↗</a>
+</div>
+<div class="aspect-video overflow-hidden rounded-none">
+<img alt="Nutave Warehouse" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida/AP1WRLu8-HNcmaGLnw2_KpZEj7jBld8fDlt0SdaiSex0wQyclFjJr3_pfzfGiS-UJwjSRGSqNl_XvglFmgNXkjVq7PbaYEfBg2fL6LPYB90N4aqXLpgb5ySkEzz9x0nGed182i___J7x-3lr4QbBY6YPjoZN5Llfc5QRBvPN7Xzt7ND8VcGxX7cmAEfda-xXA8TrxumBKPGKzSQ0LW1LKyfwkmcKjhHXelxyyoy6sPGbvGog1EtVoXTLmwkdW0c"/>
+</div>
+</div>
+<!-- Row 3: Stonvi -->
+<div class="grid grid-cols-1 md:grid-cols-[45%_55%] gap-20 py-24 border-b border-black items-center">
+<div class="flex flex-col">
+<h3 class="text-6xl md:text-7xl lg:text-8xl font-serif text-black mb-6">Stonvi</h3>
+<p class="text-lg font-light text-black/60 leading-relaxed mb-10">High-end ceramic and stone materials for international architectural projects.</p>
+<div class="space-y-4 font-mono text-[10px] uppercase tracking-widest mb-12">
+<div class="flex justify-between border-b border-black/5 pb-2">
+<span class="text-gray-500">INDUSTRY</span>
+<span class="text-black font-medium">CERAMICS</span>
+</div>
+<div class="flex justify-between border-b border-black/5 pb-2">
+<span class="text-gray-500">VOLUME</span>
+<span class="text-black font-medium">2.4M SQM/YR</span>
+</div>
+<div class="flex justify-between border-b border-black/5 pb-2">
+<span class="text-gray-500">SERVICE</span>
+<span class="text-black font-medium">CORPORATE WEBSITE &amp; CMS</span>
+</div>
+</div>
+<a class="inline-block border border-black rounded-none px-8 py-4 text-[10px] font-mono text-center hover:bg-black hover:text-white transition-colors w-fit" href="#">VIEW CASE STUDY ↗</a>
+</div>
+<div class="aspect-video overflow-hidden rounded-none">
+<img alt="Stonvi Manufacturing" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida/AP1WRLu2S7JLA2CjBYFpiSTcthdBBImg8NlO3gtp4silpS9I1v5xotd5HAg8Ahc2NhLGqufRvXBAZ5pivolwV24QdbIQ-8hKG-kOVJFkvs3ob81hCSG0Wt1yZ_o1LIN_s0_i37HHWHnnV_z8Jwb82qyWOkodIAJa85QJB8NCmNnHegI9LeTFsAaQBSi7Zjh6PT1YR-kCYbMsx7wjTR5d2RZYF-ebc-TMhnaVA6nQy0ztdzS6II91HHsgpZYiuw8"/>
+</div>
+</div>
+</div>
+<!-- Section Footer -->
+<div class="py-32 flex justify-center">
+<button class="bg-[#0D0D0D] text-white px-16 py-6 text-sm font-medium tracking-[0.2em] uppercase rounded-none hover:bg-black transition-all">
+        EXPLORE FULL PORTFOLIO ↗
+      </button>
+</div>
+</div></section>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const layers = document.querySelectorAll('.parallax-layer');
+        let scrollY = window.scrollY;
+        let ticking = false;
+
+        function updateParallax() {
+            layers.forEach(layer => {
+                const depth = parseFloat(layer.getAttribute('data-depth'));
+                // The deeper the layer (lower depth value), the slower it moves
+                const movement = -(scrollY * depth * 0.5);
+                
+                // Calculate bokeh blur based on depth and scroll
+                // Foreground layers (depth > 0.5) start blurry and get sharper
+                // Background layers (depth < 0.5) start sharp and get blurrier
+                let blurAmount = 0;
+                
+                if (depth > 0.5) {
+                    // Foreground elements: Start blurry, become sharp on scroll down
+                    blurAmount = Math.max(0, 10 - (scrollY * 0.02));
+                } else if (depth < 0.5 && depth > 0) {
+                     // Background elements: increase blur slightly on scroll
+                     blurAmount = Math.min(5, (scrollY * 0.01));
+                }
+                
+                // Apply transform and filter to inner elements for better performance
+                const elements = layer.querySelectorAll('.parallax-element');
+                elements.forEach(el => {
+                     el.style.transform = `translate3d(0, ${movement}px, 0)`;
+                     if (depth > 0.5 || depth < 0.5) {
+                        el.style.filter = `blur(${blurAmount}px)`;
+                     }
+                });
+                
+                // If it's the main layer without parallax-elements, apply to the layer itself
+                if (elements.length === 0) {
+                     layer.style.transform = `translate3d(0, ${movement}px, 0)`;
+                }
+            });
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            scrollY = window.scrollY;
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateParallax();
+                });
+                ticking = true;
+            }
+        });
+        
+        // Initial setup
+        updateParallax();
+    });
+</script>
+<!-- END: Exvorta Web -->
+<!-- BEGIN: Selected Works -->
+<!-- BEGIN: Exvorta Docs Section -->
+<section class="py-32 bg-[#FAFAF8] border-t border-black/5 relative overflow-hidden" data-purpose="exvorta-docs"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<!-- Left Column: SaaS UI -->
+<div class="order-2 lg:order-1">
+<div class="bg-[#0D0D0D] rounded-2xl shadow-2xl border border-white/10 overflow-hidden flex flex-col h-[640px]">
+<!-- UI Header -->
+<div class="h-10 border-b border-white/5 bg-white/5 flex items-center px-4 shrink-0">
+<div class="flex space-x-1.5">
+<div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+</div>
+<div class="mx-auto text-[9px] text-white/30 tracking-[0.2em] font-mono uppercase">EXVORTA_DOCUMENT_WORKFLOW_v4</div>
+</div>
+<div class="flex flex-1 overflow-hidden">
+<!-- UI Sidebar -->
+<div class="w-[30%] border-r border-white/5 bg-[#111111] p-6 flex flex-col">
+<div class="mb-8">
+<label class="text-[9px] text-white/40 uppercase tracking-widest block mb-2">Select Template</label>
+<div class="bg-white/5 border border-white/10 rounded px-3 py-2 text-[10px] text-white/80 flex justify-between items-center">
+<span class="">Bill of Lading</span>
+<svg class="w-3 h-3 text-white/40" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+<div class="space-y-4 mb-auto"><div class="space-y-4">
+<div class="space-y-1.5">
+<label class="text-[8px] text-white/40 uppercase tracking-widest block">INCOTERMS</label>
+<div class="bg-white/5 border border-white/10 rounded px-2 py-1.5 text-[10px] text-white/60">CIF (Cost, Insurance &amp; Freight)</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-[8px] text-white/40 uppercase tracking-widest block">HS CODE</label>
+<div class="bg-white/5 border border-white/10 rounded px-2 py-1.5 text-[10px] text-white/60">2901.21.00</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-[8px] text-white/40 uppercase tracking-widest block">PORT OF ORIGIN</label>
+<div class="bg-white/5 border border-white/10 rounded px-2 py-1.5 text-[10px] text-white/60">AE JEA (JEBEL ALI)</div>
+</div>
+</div></div>
+<button class="mt-8 w-full bg-black border border-gray-700 py-3 rounded text-[10px] font-bold text-white uppercase tracking-widest shadow-[0_0_15px_rgba(5,150,105,0.2)] hover:border-emerald-500/50 transition-all">Generate Document</button>
+</div>
+<!-- UI Preview Area -->
+<div class="flex-1 bg-[#1a1a1a] p-8 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(white 0.5px, transparent 0.5px); background-size: 20px 20px;"></div>
+<div class="relative bg-white w-full h-full shadow-2xl p-6 flex flex-col"><!-- Header -->
+<div class="flex justify-between items-start mb-4 pb-2 border-b border-black/10">
+<div class="flex gap-[1px] h-6 items-end">
+<div class="w-[1px] h-full bg-black"></div><div class="w-[2px] h-full bg-black"></div><div class="w-[1px] h-full bg-black"></div><div class="w-[1px] h-full bg-black"></div><div class="w-[3px] h-full bg-black"></div><div class="w-[1px] h-full bg-black"></div><div class="w-[2px] h-full bg-black"></div><div class="w-[1px] h-full bg-black"></div><div class="w-[1px] h-full bg-black"></div><div class="w-[3px] h-full bg-black"></div><div class="w-[1px] h-full bg-black"></div><div class="w-[2px] h-full bg-black"></div><div class="w-[1px] h-full bg-black"></div><div class="w-[1px] h-full bg-black"></div><div class="w-[2px] h-full bg-black"></div><div class="w-[1px] h-full bg-black"></div><div class="w-[1px] h-full bg-black"></div><div class="w-[3px] h-full bg-black"></div><div class="w-[1px] h-full bg-black"></div><div class="w-[2px] h-full bg-black"></div>
+</div>
+<div class="text-right">
+<div class="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">Document Reference</div>
+<div class="text-[9px] font-normal font-mono text-black">REF: EXV-8829-DXB</div>
+</div>
+</div>
+<!-- Grid Row 1: Partners -->
+<div class="grid grid-cols-2 border-b border-gray-300">
+<div class="border-r p-1.5 border-gray-300">
+<div class="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium mb-0.5">1. SHIPPER</div>
+<div class="text-[9px] text-black leading-tight font-light">
+      Global Petrochem LLC<br/>
+      Jafza One, Dubai, UAE
+    </div>
+</div>
+<div class="p-1.5">
+<div class="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium mb-0.5">2. CONSIGNEE</div>
+<div class="text-[9px] text-black leading-tight font-light">
+      Vanguard Resources<br/>
+      Botlek, Rotterdam, Netherlands
+    </div>
+</div>
+</div>
+<!-- Grid Row 2: Logistics Info -->
+<div class="grid grid-cols-4 border-b bg-gray-50/50 border-gray-300">
+<div class="p-1.5 border-r border-gray-300">
+<div class="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">VESSEL</div>
+<div class="text-[9px] font-normal">MSC Isabella</div>
+</div>
+<div class="p-1.5 border-r border-gray-300">
+<div class="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">VOYAGE</div>
+<div class="text-[9px] font-normal">V-092A</div>
+</div>
+<div class="p-1.5 border-r border-gray-300">
+<div class="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">POL</div>
+<div class="text-[9px] font-normal">AE JEA</div>
+</div>
+<div class="p-1.5">
+<div class="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">POD</div>
+<div class="text-[9px] font-normal">NL RTM</div>
+</div>
+</div>
+<!-- Main Data: Description -->
+<div class="pt-3 mb-auto">
+<div class="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium mb-1.5">7. DESCRIPTION OF GOODS AND SERVICES</div>
+<div class="space-y-2">
+<p class="text-[10px] text-black leading-relaxed font-light">Petrochemical Raw Materials in ISO Tank Containers.</p>
+<div class="grid grid-cols-2 gap-2 text-[9px] text-gray-600 border-t border-black/5 pt-1.5">
+<div class="font-light">TOTAL GROSS WEIGHT: <span class="text-black font-normal">24,500.00 KGS</span></div>
+<div class="font-light text-right">HS CODE: <span class="text-black font-normal">2901.21.00</span></div>
+</div>
+</div>
+</div>
+<!-- Footer: Signature -->
+<div class="flex justify-between items-end mt-6 border-t border-black/10 pt-3">
+<div class="w-10 h-10 border border-black/5 p-0.5">
+<div class="grid grid-cols-6 gap-[1px] w-6 h-6 bg-white">
+<div class="bg-black"></div><div class="bg-white"></div><div class="bg-black"></div><div class="bg-black"></div><div class="bg-white"></div><div class="bg-black"></div>
+<div class="bg-black"></div><div class="bg-black"></div><div class="bg-white"></div><div class="bg-white"></div><div class="bg-black"></div><div class="bg-black"></div>
+<div class="bg-white"></div><div class="bg-black"></div><div class="bg-black"></div><div class="bg-black"></div><div class="bg-white"></div><div class="bg-white"></div>
+<div class="bg-black"></div><div class="bg-white"></div><div class="bg-white"></div><div class="bg-black"></div><div class="bg-black"></div><div class="bg-black"></div>
+<div class="bg-black"></div><div class="bg-black"></div><div class="bg-black"></div><div class="bg-white"></div><div class="bg-white"></div><div class="bg-black"></div>
+<div class="bg-white"></div><div class="bg-black"></div><div class="bg-white"></div><div class="bg-black"></div><div class="bg-black"></div><div class="bg-black"></div>
+</div>
+</div>
+<div class="text-right min-w-[100px]">
+<div class="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium mb-0.5">Digital Signature</div>
+<div class="font-serif italic text-blue-900/90 text-sm font-semibold transform -rotate-2 origin-right leading-none">Alex Mercer</div>
+</div>
+</div>
+<!-- Trust Badge -->
+<div class="absolute -bottom-2 -right-2 bg-[#059669] text-white text-[8px] uppercase tracking-widest font-bold px-3 py-1.5 shadow-xl rounded-sm border border-emerald-400/50 z-10">
+    ✓ COMPLIANCE VERIFIED
+</div></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Marketing -->
+<div class="order-1 lg:order-2">
+<div class="text-[10px] tracking-widest uppercase text-obsidian/40 mb-6">Document Automation</div>
+<h2 class="text-4xl md:text-5xl lg:text-6xl font-serif text-obsidian mb-8 leading-[1.1]">Trade Documents,<br/>Automated &amp; Perfected.</h2>
+<p class="text-base md:text-lg text-obsidian/60 mb-10 font-light leading-relaxed">Stop wasting hours on manual paperwork. Instantly generate, digitally sign, and manage strictly compliant global trade documents from official templates.</p>
+<ul class="space-y-6">
+<li class="flex items-center space-x-4">
+<span class="text-[#059669]">✓</span>
+<span class="text-sm text-obsidian font-medium tracking-tight">Intelligent Template Memory</span>
+</li>
+<li class="flex items-center space-x-4">
+<span class="text-[#059669]">✓</span>
+<span class="text-sm text-obsidian font-medium tracking-tight">Digital Signatures</span>
+</li>
+<li class="flex items-center space-x-4">
+<span class="text-[#059669]">✓</span>
+<span class="text-sm text-obsidian font-medium tracking-tight">Bank-Grade Compliance &amp; API Ready</span>
+</li>
+</ul><div class="mt-8"><a class="inline-flex items-center text-[11px] font-bold tracking-widest uppercase border-b border-black pb-1 hover:text-emerald-700 hover:border-emerald-700 transition-colors duration-300" href="#">Explore Exvorta Docs <span class="ml-2">→</span></a></div>
+</div>
+</div>
+</div></section><section class="py-24 bg-[#FAFAF8] text-black border-t border-black/5" data-purpose="roadmap">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<h2 class="text-4xl md:text-5xl font-serif font-semibold text-obsidian tracking-tight mb-4">The Master Plan: Exvorta Ecosystem</h2>
+<p class="text-base md:text-lg text-black/60 max-w-2xl mx-auto font-light leading-relaxed">
+        We are actively building the definitive, unified operating system for global trade.
+      </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+<!-- Phase 1: Track -->
+<div class="bg-[#0A0A0A] border border-white/10 rounded-2xl p-8 hover:border-white/20 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)]">
+<div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#ffffff 0.5px, transparent 0.5px); background-size: 10px 10px;"></div>
+<div class="relative z-10 text-left">
+<div class="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ PHASE 1 ]</div>
+<h3 class="text-xl font-serif mb-4 text-white">Exvorta Track</h3>
+<p class="text-xs text-gray-400 leading-relaxed font-light">End-to-end multimodal logistics telemetry and predictive freight visibility.</p>
+</div>
+</div>
+<!-- Phase 2: CRM -->
+<div class="bg-[#0A0A0A] border border-white/10 rounded-2xl p-8 hover:border-white/20 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)]">
+<div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#ffffff 0.5px, transparent 0.5px); background-size: 10px 10px;"></div>
+<div class="relative z-10 text-left">
+<div class="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ PHASE 2 ]</div>
+<h3 class="text-xl font-serif mb-4 text-white">Exvorta CRM</h3>
+<p class="text-xs text-gray-400 leading-relaxed font-light">Trade-specific counterparty risk management and global vendor intelligence.</p>
+</div>
+</div>
+<!-- Phase 3: Intel -->
+<div class="bg-[#0A0A0A] border border-white/10 rounded-2xl p-8 hover:border-white/20 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)]">
+<div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#ffffff 0.5px, transparent 0.5px); background-size: 10px 10px;"></div>
+<div class="relative z-10 text-left">
+<div class="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ PHASE 3 ]</div>
+<h3 class="text-xl font-serif mb-4 text-white">Exvorta Intel</h3>
+<p class="text-xs text-gray-400 leading-relaxed font-light">Proprietary market data, trade flows, and real-time commodities pricing benchmarks.</p>
+</div>
+</div>
+<!-- The Vision: Suite -->
+<div class="md:col-span-3 bg-[#0A0A0A] border border-white/10 rounded-2xl p-8 md:p-12 hover:border-white/20 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)]">
+<div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#ffffff 0.5px, transparent 0.5px); background-size: 10px 10px;"></div>
+<div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
+<div class="w-full md:w-2/3 text-left">
+<div class="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ THE VISION ]</div>
+<h3 class="text-xl md:text-3xl font-serif mb-6 text-white">Exvorta Suite</h3>
+<p class="text-xs md:text-sm text-gray-400 leading-relaxed font-light">
+              The ultimate convergence. A singular, unified digital infrastructure seamlessly integrating your web presence, automated compliance, logistics, and intelligence into one trade OS.
+            </p>
+</div>
+<div class="w-full md:w-1/3 flex items-center justify-center">
+<div class="relative w-48 h-48 flex items-center justify-center">
+<div class="absolute w-full h-full border border-white/5 rounded-full animate-[spin_20s_linear_infinite]"></div>
+<div class="absolute w-2/3 h-2/3 border border-white/10 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-4 h-4 bg-amber-400 rounded-full shadow-[0_0_20px_rgba(251,191,36,0.6)] z-20"></div>
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-white/40 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.3)]"></div>
+<div class="absolute bottom-1/4 right-0 w-2 h-2 bg-amber-500/60 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.3)]"></div>
+<div class="absolute top-1/4 left-0 w-1.5 h-1.5 bg-white/30 rounded-full"></div>
+<svg class="absolute inset-0 w-full h-full opacity-20" viewbox="0 0 100 100">
+<path d="M50 50 L50 0 M50 50 L100 75 M50 50 L0 75" fill="none" stroke="white" stroke-dasharray="2,2" stroke-width="0.5"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Waitlist UI -->
+<div class="max-w-[115%] w-full max-w-xl mx-auto text-center">
+<div class="flex flex-col sm:flex-row gap-4">
+<input class="flex-1 bg-transparent border-t-0 border-x-0 border-b border-black/20 focus:ring-0 focus:border-black text-sm py-3 placeholder:text-black/50" placeholder="Enter official corporate email..." type="email"/>
+<button class="px-10 py-4 bg-[#0D0D0D] text-white text-[11px] font-medium tracking-widest uppercase hover:bg-black/80 transition-all shadow-[0_0_15px_rgba(255,255,255,0.05)] whitespace-nowrap">
+          [ REQUEST EARLY ACCESS ]
+        </button>
+</div>
+</div>
+</div>
+</section></main><footer class="bg-[#FAFAF8] border-t border-black/10 py-24 px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12 mb-24">
+<!-- Brand -->
+<div class="col-span-2 md:col-span-1">
+<a class="font-serif text-xl font-semibold tracking-wide text-obsidian uppercase mb-6 block" href="#">EXVORTA</a>
+<p class="text-xs text-obsidian/40 leading-relaxed font-light max-w-xs">The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE.</p>
+</div>
+<!-- Solutions -->
+<div>
+<h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">THE ECOSYSTEM</h4>
+<ul class="space-y-4 text-[11px] text-obsidian/60"><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Web</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Docs</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Track</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta CRM</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Intel</a></li></ul>
+</div>
+<!-- Company -->
+<div>
+<h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">COMPANY</h4>
+<ul class="space-y-4 text-[11px] text-obsidian/60"><li class=""><a class="hover:text-obsidian transition-colors" href="#">Our Vision</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Design Blueprints</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Market Insights</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Contact Us</a></li></ul>
+</div>
+<!-- Legal -->
+<div>
+<h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">LEGAL &amp; ACCESS</h4>
+<ul class="space-y-4 text-[11px] text-obsidian/60"><li class=""><a class="hover:text-obsidian transition-colors" href="#">Request Proposal</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Privacy Policy</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Terms of Service</a></li></ul>
+</div>
+</div>
+<div class="border-t border-black/5 pt-12 text-center">
+<p class="text-[10px] tracking-widest text-obsidian/30 uppercase">© 2026 Exvorta. All rights reserved.</p>
+</div>
+</div>
+</footer>
+</body></html>

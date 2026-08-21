@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Exvorta | Web Service Architecture Blueprint</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { background-color: #FCFAF8; }
+        .skeleton-zone { 
+            min-height: 400px; 
+            border: 1px dashed rgba(0,0,0,0.1); 
+            background: rgba(0,0,0,0.01);
+            border-radius: 0;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .skeleton-label {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            color: rgba(0,0,0,0.3);
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="antialiased">
+<!-- HEADER: Institutional Elite Synchronized -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#FCFAF8] border-b border-[#E5E5E5]" data-purpose="site-header">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<!-- Logo -->
+<div class="flex-shrink-0">
+<a class="font-serif text-2xl font-semibold tracking-wide text-[#0D0D0D] uppercase" href="#">EXVORTA</a>
+</div>
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex items-center space-x-12 text-[11px] font-medium tracking-widest text-[#0D0D0D]/60 uppercase">
+<a class="text-[10px] tracking-[0.2em] font-medium text-[#0D0D0D] hover:text-black uppercase transition-all duration-300" href="#">Exvorta web</a>
+<a class="hover:text-[#0D0D0D] transition-colors" href="#">PORTFOLIO</a>
+<a class="hover:text-[#0D0D0D] transition-colors" href="#">ECOSYSTEM</a>
+<a class="hover:text-[#0D0D0D] transition-colors" href="#">THE FIRM</a></nav>
+<!-- CTA -->
+<div class="hidden md:block">
+<a class="mr-6 text-[10px] tracking-[0.2em] font-mono text-[#0D0D0D]/70 hover:text-black uppercase transition-all" href="#">CLIENT LOGIN</a><a class="bg-[#0D0D0D] text-white px-6 py-3 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-[#1a1a1a] transition-colors rounded-none" href="#">[ REQUEST PROPOSAL ]</a>
+</div>
+<!-- Mobile menu button -->
+<div class="md:hidden flex items-center">
+<button class="text-[#0D0D0D] hover:text-gray-500 focus:outline-none" type="button">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-grow bg-[#FCFAF8] flex flex-col pt-20">
+<section class="w-full relative py-0">
+<div class="relative w-full max-w-7xl mx-auto px-6 flex flex-col items-center justify-center min-h-[90vh] py-20 text-center">
+<!-- Status Pill -->
+<div class="relative z-10 flex items-center gap-2 bg-black/[0.03] px-4 py-1.5 border border-black/5 mb-10 rounded-none">
+<span class="relative flex h-1.5 w-1.5">
+<span class="relative inline-flex h-1.5 w-1.5 bg-emerald-500 rounded-none"></span>
+</span>
+<span class="text-[9px] font-mono tracking-[0.3em] uppercase text-black/60">[ EXVORTA WEB ]</span>
+</div>
+<!-- Monumental Headline -->
+<h1 class="relative z-10 font-serif text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight mb-8">
+<span class="block text-black">High-Performance Websites.</span>
+<span class="block text-black/80">For Global Traders.</span>
+</h1>
+<!-- Strategic Sub-headline -->
+<p class="relative z-10 max-w-2xl text-sm md:text-base text-black/60 leading-relaxed font-sans mb-12">We build high-performance websites that make global trading companies look like the serious players they are.</p>
+<!-- Dual CTA Buttons -->
+<div class="relative z-10 flex flex-col sm:flex-row items-center gap-4 mb-16">
+<a class="bg-[#0D0D0D] text-white px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-gray-900 transition-all duration-300 rounded-none" href="#">
+            [ REQUEST PROPOSAL ]
+        </a>
+<a class="border text-black/80 px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-black/5 transition-all duration-300 border-black rounded-none" href="#">
+            [ VIEW RECENT PROJECTS ]
+        </a>
+</div>
+<!-- Legal Micro-copy -->
+<div class="absolute bottom-12 left-0 right-0 px-6">
+<div class="max-w-4xl mx-auto flex justify-between items-center text-[10px] tracking-[0.3em] font-mono text-black/40 uppercase">
+<span class="">[ ENGINEERED FOR SPEED ]</span>
+<span class="">[ GLOBAL B2B READY ]</span>
+<span class="">[ ON-TIME DELIVERY ]</span>
+</div>
+</div>
+</div>
+</section>
+<section class="w-full border-t border-b border-[#0D0D0D] py-32 bg-[#0A0A0A]"><div class="max-w-7xl mx-auto px-6 w-full">
+<div class="max-w-3xl mx-auto text-center mb-24">
+<span class="block text-[10px] tracking-[0.3em] uppercase text-white/40 mb-6 font-mono">[ THE CREDIBILITY GAP ]</span>
+<h2 class="text-4xl md:text-5xl font-serif text-white tracking-tight leading-tight">
+            Your business moves millions. Your website looks like a startup.
+        </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+<div class="border-t border-white/20 pt-8">
+<h3 class="text-xs font-bold text-white uppercase tracking-widest mb-4">01. FAILED DUE DILIGENCE</h3>
+<p class="text-sm text-white/60 leading-relaxed font-light">
+                International partners judge your reliability in 3 seconds. A slow, template-based website screams 'high risk' to tier-1 enterprise buyers.
+            </p>
+</div>
+<div class="border-t border-white/20 pt-8">
+<h3 class="text-xs font-bold text-white uppercase tracking-widest mb-4">02. LOST ENTERPRISE LEADS</h3>
+<p class="text-sm text-white/60 leading-relaxed font-light">
+                Big buyers don't fill out broken forms on generic sites. They quietly leave, taking lucrative, multi-year contracts directly to your competitors.
+            </p>
+</div>
+<div class="border-t border-white/20 pt-8">
+<h3 class="text-xs font-bold text-white uppercase tracking-widest mb-4">03. OUTDATED INFRASTRUCTURE</h3>
+<p class="text-sm text-white/60 leading-relaxed font-light">
+                You shouldn't be wasting hours fighting with cheap WordPress plugins or broken mobile layouts when you need to be closing global supply deals.
+            </p>
+</div>
+</div>
+</div></section>
+<section class="w-full bg-white py-32 px-6 border-b border-[#E5E5E5]">
+<div class="max-w-7xl mx-auto w-full">
+<span class="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-16 block">[ THE EXVORTA SOLUTION ]</span>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+<div class="lg:col-span-5 sticky top-32">
+<h2 class="text-5xl md:text-6xl font-serif font-bold leading-tight tracking-tight mb-8 text-black">
+          We don't build brochures. We engineer digital assets.
+        </h2>
+<p class="text-lg text-black/60 leading-relaxed font-sans">
+          Your website shouldn't be a cost center. It should be your most relentless sales executive—working 24/7 to project authority, filter unqualified noise, and close global deals.
+        </p>
+</div>
+<div class="lg:col-span-7 flex flex-col gap-12">
+<div class="border-l border-black/20 pl-8">
+<h3 class="text-2xl font-serif text-black mb-3">Look like a $100M Player.</h3>
+<p class="text-black/60 leading-relaxed">
+            We strip away amateur templates and apply elite, bespoke UI/UX architecture. Your digital presence will instantly match the scale and ambition of your global operations.
+          </p>
+</div>
+<div class="border-l border-black/20 pl-8">
+<h3 class="text-2xl font-serif text-black mb-3">Turn Traffic into Contracts.</h3>
+<p class="text-black/60 leading-relaxed">
+            Beautiful isn't enough. We engineer optimized user flows and secure intake portals that guide high-tier enterprise leads directly into your sales pipeline.
+          </p>
+</div>
+<div class="border-l border-black/20 pl-8">
+<h3 class="text-2xl font-serif text-black mb-3">You Trade. We Handle the Tech.</h3>
+<p class="text-black/60 leading-relaxed">
+            Stop wrestling with broken plugins. We deploy secure, hyper-fast, maintenance-free infrastructures so your team can focus strictly on moving volume.
+          </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="w-full py-24 bg-[#0D0D0D] border-b border-[#0D0D0D]"><div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-16">
+<span class="text-white/40 text-[10px] font-mono tracking-[0.2em] mb-6 block">[ ARCHITECTURAL SPECS ]</span>
+<h2 class="text-4xl md:text-5xl font-serif text-white">Pure Code. Flawless Aesthetics.</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 w-full border border-white/20">
+<!-- Card 1 -->
+<div class="bg-[#0D0D0D] border-b md:border-b-0 md:border-r border-white/20 p-10 flex flex-col justify-between min-h-[340px]">
+<div class="w-8 h-8 border border-white/20 flex items-center justify-center mb-8">
+<div class="w-4 h-4 border border-white/20"></div>
+</div>
+<div>
+<h3 class="text-2xl font-serif text-white mb-3">Bespoke Art Direction. Refined Until Perfect.</h3>
+<p class="text-white/50 text-sm max-w-xl">Custom visual identities designed from scratch. We refine every pixel until we achieve a shared, institutional masterpiece.</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-[#0D0D0D] border-b md:border-b-0 border-white/20 p-10 flex flex-col justify-between min-h-[340px]">
+<div class="w-8 h-8 border border-white/20 flex flex-col mb-8">
+<div class="flex-1 border-b border-white/20"></div>
+<div class="flex-1"></div>
+</div>
+<div>
+<h3 class="text-2xl font-serif text-white mb-3">100% Hardcoded.</h3>
+<p class="text-white/50 text-sm">Built from scratch. No templates, no shortcuts. Elite code for unbreachable security and extreme speed.</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-[#0D0D0D] border-t md:border-t-0 md:border-r border-white/20 p-10 flex flex-col justify-between min-h-[340px]">
+<div class="w-8 h-8 border border-white/20 flex mb-8">
+<div class="flex-1 border-r border-white/20"></div>
+<div class="flex-1"></div>
+</div>
+<div>
+<h3 class="text-2xl font-serif text-white mb-3">High-Performance UX.</h3>
+<p class="text-white/50 text-sm">Fluid animations and instant interaction speeds designed for high-stakes, fast-moving global trade environments.</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-[#0D0D0D] border-t md:border-t-0 border-white/20 p-10 flex flex-col justify-between min-h-[340px]">
+<div class="w-8 h-8 border border-white/20 flex items-center justify-center mb-8">
+<div class="w-2 h-2 bg-white/20"></div>
+</div>
+<div>
+<h3 class="text-2xl font-serif text-white mb-3">Dedicated Ongoing Support.</h3>
+<p class="text-white/50 text-sm max-w-xl">Professional infrastructure handling and unlimited layout updates so your team remains focused on moving trade volume.</p>
+</div>
+</div></div>
+</div></section>
+<section class="w-full bg-[#FCFAF8] py-32 px-6 border-b border-[#E5E5E5]">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-32">
+<span class="text-[10px] font-mono tracking-[0.3em] text-black/40 uppercase mb-6 block">[ THE DEPLOYMENT PIPELINE ]</span>
+<h2 class="text-4xl md:text-5xl font-serif text-black tracking-tight">Zero Friction. Infinite Precision.</h2>
+</div>
+<div class="relative max-w-4xl mx-auto">
+<!-- Vertical Line -->
+<div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-black/20 -translate-x-1/2 hidden md:block"></div>
+<!-- Step 1 -->
+<div class="relative mb-32 group">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-16">
+<div class="w-full md:w-1/2 md:text-right">
+<span class="text-[9px] font-mono tracking-[0.3em] text-emerald-600 uppercase mb-2 block">WEEK 1</span>
+<h3 class="text-2xl font-serif text-black mb-3">Strategic Discovery</h3>
+</div>
+<div class="hidden md:flex w-4 h-4 bg-white border border-black z-10 shrink-0"></div>
+<div class="w-full md:w-1/2">
+<h4 class="text-xs font-bold uppercase tracking-widest mb-3">ARCHITECTURAL BLUEPRINTING</h4>
+<p class="text-sm text-black/60 leading-relaxed max-w-sm">We audit your current digital footprint and map out a bespoke strategy that aligns your technical infrastructure with your global market ambitions.</p>
+</div>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative mb-32 group">
+<div class="flex flex-col md:flex-row-reverse items-start md:items-center gap-8 md:gap-16">
+<div class="w-full md:w-1/2">
+<span class="text-[9px] font-mono tracking-[0.3em] text-emerald-600 uppercase mb-2 block">WEEKS 2-3</span>
+<h3 class="text-2xl font-serif text-black mb-3">The Iterative Canvas</h3>
+</div>
+<div class="hidden md:flex w-4 h-4 bg-white border border-black z-10 shrink-0"></div>
+<div class="w-full md:w-1/2 md:text-right flex justify-end">
+<div>
+<h4 class="text-xs font-bold uppercase tracking-widest mb-3">BESPOKE VISUAL DESIGN</h4>
+<p class="text-sm text-black/60 leading-relaxed max-w-sm">Our art directors create your visual identity from scratch. No UI kits. No shortcuts. Just high-fidelity, institutional-grade aesthetics.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative mb-32 group">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-16">
+<div class="w-full md:w-1/2 md:text-right">
+<span class="text-[9px] font-mono tracking-[0.3em] text-emerald-600 uppercase mb-2 block">WEEKS 4-5</span>
+<h3 class="text-2xl font-serif text-black mb-3">Hardcoded Engineering</h3>
+</div>
+<div class="hidden md:flex w-4 h-4 bg-white border border-black z-10 shrink-0"></div>
+<div class="w-full md:w-1/2">
+<h4 class="text-xs font-bold uppercase tracking-widest mb-3">PURE CODE DEVELOPMENT</h4>
+<p class="text-sm text-black/60 leading-relaxed max-w-sm">Once design is approved, our engineers build the front-end using pure, lightweight code. We optimize for sub-second load times on the global trade floor.</p>
+</div>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="relative group">
+<div class="flex flex-col md:flex-row-reverse items-start md:items-center gap-8 md:gap-16">
+<div class="w-full md:w-1/2">
+<span class="text-[9px] font-mono tracking-[0.3em] text-emerald-600 uppercase mb-2 block">ONGOING</span>
+<h3 class="text-2xl font-serif text-black mb-3">Handover &amp; Concierge</h3>
+</div>
+<div class="hidden md:flex w-4 h-4 bg-white border border-black z-10 shrink-0"></div>
+<div class="w-full md:w-1/2 md:text-right flex justify-end">
+<div>
+<h4 class="text-xs font-bold uppercase tracking-widest mb-3">Deployment &amp; Dedicated Support</h4>
+<p class="text-sm text-black/60 leading-relaxed max-w-sm">We launch your asset to the global edge network. From there, we provide concierge-level support and maintenance for your evolving digital ecosystem.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="w-full py-32 bg-white border-b border-[#E5E5E5]">
+<div class="max-w-7xl mx-auto px-6 w-full">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+<div class="md:col-span-5 flex flex-col items-start">
+<span class="text-xs font-mono tracking-widest text-black/40 uppercase mb-6">[ 06. PORTFOLIO SHOWCASE ]</span>
+<h2 class="text-4xl md:text-5xl font-serif text-black leading-tight mb-6">Proof of Execution.</h2>
+<p class="text-lg text-black/60 mb-10 max-w-md">Our recent deployments for elite trading institutions worldwide. Examine our track record of delivering uncompromised quality.</p>
+<a class="bg-[#0D0D0D] text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-black transition-colors rounded-none" href="#">EXPLORE FULL PORTFOLIO ↗</a>
+</div>
+<div class="md:col-span-7">
+<div class="w-full aspect-video border border-black bg-[#E5E5E5] flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-black/5 mix-blend-multiply"></div>
+<span class="text-xs font-mono text-black/30 tracking-widest uppercase relative z-10">[ CINEMATIC B&amp;W IMAGE PLACEHOLDER ]</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="w-full bg-[#FCFAF8] py-32 px-6 border-b border-[#E5E5E5]">
+<div class="max-w-7xl mx-auto w-full">
+<span class="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-6 block text-center">[ SCOPE OF INVESTMENT ]</span>
+<h2 class="text-4xl md:text-5xl font-serif text-black mb-6 text-center leading-tight">Tailored Architectures.<br/><span class="text-black/50">Scoped to Your Scale.</span></h2>
+<p class="text-lg text-black/50 text-center max-w-2xl mx-auto mb-20">We scope every engagement individually based on your operational complexity and market ambitions.</p>
+<div class="grid grid-cols-1 lg:grid-cols-3 w-full items-stretch border border-black">
+<!-- Card 1: Foundation -->
+<div class="bg-[#FCFAF8] border-b lg:border-b-0 lg:border-r border-black p-10 flex flex-col rounded-none">
+<h3 class="text-2xl font-serif text-black mb-2">01. Foundation</h3>
+<p class="text-[10px] text-black/40 uppercase tracking-widest mb-10 h-10">All packages include: Custom Design, Custom Development &amp; Admin Panel</p>
+<ul class="flex-grow flex flex-col gap-4 mb-12">
+<li class="text-sm text-black/80 flex items-start gap-3 border-t border-black/20 pt-4">+ SEO Foundation Setup</li>
+<li class="text-sm text-black/80 flex items-start gap-3 border-t border-black/20 pt-4">+ Up to 5 Pages</li>
+<li class="text-sm text-black/80 flex items-start gap-3 border-t border-black/20 pt-4">+ Mobile Responsive</li>
+<li class="text-sm text-black/80 flex items-start gap-3 border-t border-black/20 pt-4">+ Contact Form Integration</li>
+<li class="text-sm text-black/80 flex items-start gap-3 border-t border-black/20 pt-4">+ 30-Day Support</li>
+</ul>
+<div class="mt-auto border-t border-black/20 w-full pt-4 text-center text-[10px] uppercase tracking-[0.1em] font-mono text-black/60">Pricing Upon Proposal</div>
+</div>
+<!-- Card 2: Professional (Featured) -->
+<div class="bg-[#0D0D0D] border-b lg:border-b-0 lg:border-r border-black p-10 flex flex-col rounded-none">
+<h3 class="text-2xl font-serif text-white mb-2">02. Professional</h3>
+<p class="text-[10px] text-white/40 uppercase tracking-widest mb-10 h-10">All packages include: Custom Design, Custom Development &amp; Admin Panel</p>
+<ul class="flex-grow flex flex-col gap-4 mb-12">
+<li class="text-sm text-white/80 flex items-start gap-3 border-t border-white/20 pt-4">+ SEO &amp; Performance Optimization</li>
+<li class="text-sm text-white/80 flex items-start gap-3 border-t border-white/20 pt-4">+ Up to 10 Pages</li>
+<li class="text-sm text-white/80 flex items-start gap-3 border-t border-white/20 pt-4">+ Brand Identity &amp; Guidelines</li>
+<li class="text-sm text-white/80 flex items-start gap-3 border-t border-white/20 pt-4">+ Advanced Animations</li>
+<li class="text-sm text-white/80 flex items-start gap-3 border-t border-white/20 pt-4">+ Multilingual Ready</li>
+<li class="text-sm text-white/80 flex items-start gap-3 border-t border-white/20 pt-4">+ 60-Day Support</li>
+</ul>
+<div class="mt-auto border-t border-white/20 w-full pt-4 text-center text-[10px] uppercase tracking-[0.1em] font-mono text-white/80">Pricing Upon Proposal</div>
+</div>
+<!-- Card 3: Premium -->
+<div class="bg-[#FCFAF8] p-10 flex flex-col rounded-none">
+<h3 class="text-2xl font-serif text-black mb-2">03. Premium</h3>
+<p class="text-[10px] text-black/40 uppercase tracking-widest mb-10 h-10">All packages include: Custom Design, Custom Development &amp; Admin Panel</p>
+<ul class="flex-grow flex flex-col gap-4 mb-12">
+<li class="text-sm text-black/80 flex items-start gap-3 border-t border-black/20 pt-4">+ Advanced SEO &amp; Analytics Dashboard</li>
+<li class="text-sm text-black/80 flex items-start gap-3 border-t border-black/20 pt-4">+ Unlimited Pages</li>
+<li class="text-sm text-black/80 flex items-start gap-3 border-t border-black/20 pt-4">+ Full Brand System</li>
+<li class="text-sm text-black/80 flex items-start gap-3 border-t border-black/20 pt-4">+ Admin Panel</li>
+<li class="text-sm text-black/80 flex items-start gap-3 border-t border-black/20 pt-4">+ Priority Delivery</li>
+<li class="text-sm text-black/80 flex items-start gap-3 border-t border-black/20 pt-4">+ 90-Day Support</li>
+</ul>
+<div class="mt-auto border-t border-black/20 w-full pt-4 text-center text-[10px] uppercase tracking-[0.1em] font-mono text-black/60">Pricing Upon Proposal</div>
+</div></div>
+<div class="mt-20 flex justify-center">
+<a class="bg-[#0D0D0D] text-white px-10 py-5 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-black transition-all rounded-none" href="#"> [ REQUEST A CUSTOM SCOPE ] </a>
+</div>
+</div>
+</section>
+<section class="w-full bg-white py-32 px-6 border-b border-[#E5E5E5]">
+<div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
+<!-- Left Column: The Market Proof -->
+<div class="flex flex-col"><span class="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-8 block">[ THE MARKET CONSENSUS ]</span>
+<h3 class="text-4xl md:text-5xl font-serif text-black leading-tight mb-8">75% of people judge a company's credibility based on their website design alone.</h3>
+<div class="flex items-center gap-4">
+<div class="w-8 h-[1px] bg-black"></div>
+<span class="text-xs font-mono tracking-widest text-black/50 uppercase">— Stanford Web Credibility Research, B.J. Fogg</span>
+</div></div>
+<!-- Right Column: The Exvorta Guarantee -->
+<div class="bg-[#FCFAF8] border border-black p-12 md:p-16 rounded-none relative">
+<h4 class="text-2xl font-serif text-black mb-4">The Zero-Risk Standard</h4>
+<p class="text-black/60 leading-relaxed mb-8">
+  Every engagement begins with a clear scope and mutual agreement. We deliver to standard or we iterate until we do. No ambiguity. No surprises.
+</p>
+<div class="font-serif text-black italic text-xl">The Exvorta Partners</div></div>
+</div>
+</section>
+<section class="w-full bg-[#0D0D0D] py-32 px-6 border-b border-[#0D0D0D]">
+<div class="max-w-4xl mx-auto w-full">
+<span class="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase mb-8 block">[ EXECUTIVE BRIEFING ]</span>
+<h2 class="text-4xl md:text-5xl font-serif text-white mb-20 leading-tight">Clarity on Execution.<br/><span class="text-white/50">Addressing Common Friction.</span></h2>
+<div class="flex flex-col border-t border-white/20">
+<!-- Item 1: Time Objection -->
+<details class="group border-b border-white/20 py-8 cursor-pointer [&amp;_summary::-webkit-details-marker]:hidden" open="">
+<summary class="text-xl md:text-2xl font-serif text-white list-none flex justify-between items-center outline-none">
+<span class="">How much of my team's time will this deployment require?</span>
+<span class="relative flex items-center justify-center w-6 h-6 transition-transform duration-500 group-open:-rotate-180">
+<span class="absolute w-full h-[1px] bg-white"></span>
+<span class="absolute h-full w-[1px] bg-white group-open:opacity-0 transition-opacity"></span>
+</span>
+</summary>
+<div class="overflow-hidden transition-all duration-500">
+<p class="mt-6 text-white/60 leading-relaxed font-sans max-w-3xl text-lg">
+                        Virtually none. We require a single 60-minute strategic alignment call. From there, our architects and copywriters handle 100% of the heavy lifting. You simply review and approve the final institutional asset.
+                    </p>
+</div>
+</details>
+<!-- Item 2: Tech Objection -->
+<details class="group border-b border-white/20 py-8 cursor-pointer [&amp;_summary::-webkit-details-marker]:hidden" open="">
+<summary class="text-xl md:text-2xl font-serif text-white list-none flex justify-between items-center outline-none">
+<span class="">We move fast. Do we need internal developers to update the site?</span>
+<span class="relative flex items-center justify-center w-6 h-6 transition-transform duration-500 group-open:-rotate-180">
+<span class="absolute w-full h-[1px] bg-white"></span>
+<span class="absolute h-full w-[1px] bg-white group-open:opacity-0 transition-opacity"></span>
+</span>
+</summary>
+<div class="overflow-hidden transition-all duration-500">
+<p class="mt-6 text-white/60 leading-relaxed font-sans max-w-3xl text-lg">No. Your focus should remain entirely on moving trade volume. Every engagement includes ongoing dedicated support. Any updates, new pages, or adjustments are handled by our team — so you stay focused on your business.</p>
+</div>
+</details>
+<!-- Item 3: Platform Objection -->
+<details class="group border-b border-white/20 py-8 cursor-pointer [&amp;_summary::-webkit-details-marker]:hidden" open="">
+<summary class="text-xl md:text-2xl font-serif text-white list-none flex justify-between items-center outline-none">
+<span class="">Why custom architecture instead of a premium WordPress setup?</span>
+<span class="relative flex items-center justify-center w-6 h-6 transition-transform duration-500 group-open:-rotate-180">
+<span class="absolute w-full h-[1px] bg-white"></span>
+<span class="absolute h-full w-[1px] bg-white group-open:opacity-0 transition-opacity"></span>
+</span>
+</summary>
+<div class="overflow-hidden transition-all duration-500">
+<p class="mt-6 text-white/60 leading-relaxed font-sans max-w-3xl text-lg">WordPress is built for general use. We build specifically for your business — custom architecture, faster load times, and a codebase only you own. No shared templates, no plugin dependencies.</p>
+</div>
+</details>
+</div>
+</div>
+</section>
+<section class="w-full bg-[#0D0D0D] py-32 px-6 flex justify-center items-center rounded-none">
+<div class="max-w-5xl w-full flex flex-col items-center text-center relative overflow-hidden">
+<span class="text-[10px] font-mono tracking-[0.3em] text-white/40 uppercase mb-8 block z-10">[ INITIATE DEPLOYMENT ]</span>
+<h2 class="text-4xl md:text-6xl font-serif text-white mb-8 leading-tight tracking-tight z-10">Secure Your Competitive<br/>Advantage in Global Trade.</h2>
+<p class="text-lg text-white/60 font-sans max-w-2xl mx-auto mb-14 z-10">Your competitors are investing in their digital presence. This is your move.</p>
+<a class="bg-white text-black px-12 py-6 text-[11px] uppercase tracking-[0.25em] font-bold font-mono hover:bg-gray-200 transition-all duration-300 rounded-none z-10" href="#"> [ REQUEST PROPOSAL ] </a>
+<div class="mt-8 text-[9px] font-mono tracking-[0.2em] text-white/30 uppercase z-10">* Strict NDA enforcement. Proposals delivered within 48 hours.</div>
+</div>
+</section>
+</main>
+<!-- FOOTER: Institutional Elite Synchronized -->
+<footer class="bg-[#FCFAF8] border-t border-[#E5E5E5] py-24 px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12 mb-24">
+<!-- Brand -->
+<div class="col-span-2 md:col-span-1">
+<a class="font-serif text-xl font-semibold tracking-wide text-[#0D0D0D] uppercase mb-6 block" href="#">EXVORTA</a>
+<p class="text-xs text-[#0D0D0D]/40 leading-relaxed font-light max-w-xs">The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE.</p>
+</div>
+<!-- Solutions -->
+<div>
+<h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#0D0D0D] mb-6">THE ECOSYSTEM</h4>
+<ul class="space-y-4 text-[11px] text-[#0D0D0D]/60"><li class=""><a class="hover:text-black transition-colors" href="#">Exvorta Web</a></li><li class=""><a class="hover:text-black transition-colors" href="#">Exvorta Docs</a></li><li class=""><a class="hover:text-black transition-colors" href="#">Exvorta Track</a></li><li class=""><a class="hover:text-black transition-colors" href="#">Exvorta CRM</a></li><li class=""><a class="hover:text-black transition-colors" href="#">Exvorta Intel</a></li></ul>
+</div>
+<!-- Company -->
+<div>
+<h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#0D0D0D] mb-6">COMPANY</h4>
+<ul class="space-y-4 text-[11px] text-[#0D0D0D]/60"><li class=""><a class="hover:text-black transition-colors" href="#">Our Vision</a></li><li class=""><a class="hover:text-black transition-colors" href="#">Design Blueprints</a></li><li class=""><a class="hover:text-black transition-colors" href="#">Market Insights</a></li><li class=""><a class="hover:text-black transition-colors" href="#">Contact Us</a></li></ul>
+</div>
+<!-- Legal -->
+<div>
+<h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#0D0D0D] mb-6">LEGAL &amp; ACCESS</h4>
+<ul class="space-y-4 text-[11px] text-[#0D0D0D]/60"><li class=""><a class="hover:text-black transition-colors" href="#">Request Proposal</a></li><li class=""><a class="hover:text-black transition-colors" href="#">Privacy Policy</a></li><li class=""><a class="hover:text-black transition-colors" href="#">Terms of Service</a></li></ul>
+</div>
+</div>
+<div class="border-t border-[#E5E5E5] pt-12 text-center">
+<p class="text-[10px] tracking-widest text-[#0D0D0D]/40 uppercase">© 2026 Exvorta. All rights reserved.</p>
+</div>
+</div>
+</footer>
+</body></html>

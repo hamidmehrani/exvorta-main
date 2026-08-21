@@ -1,59 +1,208 @@
-# Boilerplate Engine
+# Exvorta — Agency Engine
 
-This is the fully scalable, white-label CMS engine designed for B2B export and agency websites.
+> **B2B web design & digital infrastructure platform for UAE/GCC importers, exporters, and high-ticket B2B operators.**
 
-## Setup Instructions
+[![Next.js](https://img.shields.io/badge/Next.js-15.4-black?logo=next.js)](https://nextjs.org/)
+[![Payload CMS](https://img.shields.io/badge/Payload_CMS-3.x-blueviolet)](https://payloadcms.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
 
-1. Clone the repository.
-2. Run `npm install` (Note: if you experience dependency tree conflicts with Next.js and Payload CMS, use `--legacy-peer-deps` or ensure `next` is pinned to `15.4.11` as per the known issues below).
-3. Copy `.env.example` to `.env` and configure your credentials.
-4. Set up the database (Neon-First approach):
-   - Create a new branch in Neon.
-   - Copy the pooled connection string into `DATABASE_URI`.
-   - Copy the unpooled/direct connection string into `DATABASE_URI_UNPOOLED`.
-   - *(Fallback: You can still use a local Docker Postgres instance if needed).*
-5. Run the initial database migration:
-   ```bash
-   NODE_OPTIONS="--require ./scripts/next-env-shim.cjs" npx tsx scripts/run-migration.ts run
-   ```
-6. Start the local server: `npm run dev`
+---
+
+## Tech Stack
+
+| Layer | Technology | Notes |
+|-------|-----------|-------|
+| Framework | **Next.js 15** (App Router) | Server Components + Suspense |
+| CMS | **Payload CMS 3.0** | Embedded in Next.js — no separate API server |
+| Language | **TypeScript 5** (strict mode) | Full end-to-end type safety |
+| Styling | **Tailwind CSS v4** | Logical properties for RTL support |
+| Animations | **GSAP 3** + **Framer Motion 12** + **Lenis** | Scroll + micro-interactions |
+| Database | **Neon PostgreSQL** | Serverless, branch-per-env |
+| Media | **Cloudinary** | Optimised CDN delivery |
+| Email | **Resend** | Transactional + lead notifications |
+| Bot Protection | **Cloudflare Turnstile** | Invisible CAPTCHA on all forms |
+| Analytics | **Umami** (self-hostable) + **Google Analytics** | Privacy-first, consent-gated |
+| Hosting | **Vercel** | Edge-optimised, preview branches |
+| Internationalisation | **next-intl** | en / ar / fa, RTL-aware |
+
+---
+
+## Quick Start (Local Development)
+
+### Prerequisites
+- Node.js 20+
+- Docker + Docker Compose (for local Postgres)
+- A Neon account (or use Docker)
+
+### 1. Clone & Install
+```bash
+git clone <repo-url>
+cd exvorta
+npm install --legacy-peer-deps
+```
+
+> **Note:** `--legacy-peer-deps` is required because Payload CMS pins `next < 15.5.0`.
+> Do not use `npm audit fix --force` — see Known Issues in this README.
+
+### 2. Environment Variables
+```bash
+cp .env.example .env
+# Fill in all required values — see Required Variables below
+```
+
+### 3. Database
+**Option A — Neon (recommended):**
+1. Create a project at [neon.tech](https://neon.tech)
+2. Copy the **pooled** connection string → `DATABASE_URI`
+3. Copy the **direct** connection string → `DATABASE_URI_UNPOOLED`
+
+**Option B — Local Docker:**
+```bash
+npm run db:up
+# DATABASE_URI=postgresql://postgres:postgres@localhost:5432/exvorta
+```
+
+### 4. Run Migrations
+```bash
+NODE_OPTIONS="--require ./scripts/next-env-shim.cjs" npx tsx scripts/run-migration.ts run
+```
+
+### 5. Start Dev Server
+```bash
+npm run dev
+# App:   http://localhost:3000
+# Admin: http://localhost:3000/admin
+```
+
+---
 
 ## Required Environment Variables
 
-Ensure the following critical variables are set in your `.env` file:
-- `DATABASE_URI`: Your Neon POOLED PostgreSQL connection string.
-- `DATABASE_URI_UNPOOLED`: Your Neon DIRECT connection string for migrations.
-- `PAYLOAD_SECRET`: A secure random string for Payload CMS encryption.
-- `TURNSTILE_SECRET_KEY`: Required for contact form security.
-- `SKIP_TURNSTILE_IN_DEV`: Set to `true` to disable CAPTCHA verification in local development (ignored in production).
-- `CLOUDINARY_*`: API keys for media uploads.
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `DATABASE_URI` | ✅ | Neon **pooled** PostgreSQL connection string |
+| `DATABASE_URI_UNPOOLED` | ✅ | Neon **direct** connection (migrations only) |
+| `PAYLOAD_SECRET` | ✅ | 32+ char random secret for Payload encryption |
+| `CLOUDINARY_CLOUD_NAME` | ✅ | Your Cloudinary cloud name |
+| `CLOUDINARY_API_KEY` | ✅ | Cloudinary API key |
+| `CLOUDINARY_API_SECRET` | ✅ | Cloudinary API secret |
+| `RESEND_API_KEY` | ✅ | Resend API key for email notifications |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | ✅ | Cloudflare Turnstile site key |
+| `TURNSTILE_SECRET_KEY` | ✅ | Cloudflare Turnstile secret key |
+| `NEXT_PUBLIC_SERVER_URL` | ✅ | Full public URL (e.g. `https://exvorta.com`) |
+| `ADMIN_EMAIL` | ✅ | Email for lead notifications |
+| `ENABLE_LEAD_EMAILS` | ✅ | `true` to send email on lead submission |
+| `SKIP_TURNSTILE_IN_DEV` | Dev only | `true` to skip CAPTCHA locally |
 
-## Export Module Toggling
+---
 
-To enable the specialized B2B export features (Origins, Certifications, and export-specific product fields like MOQ, Incoterms, etc.):
-1. Open `boilerplate.config.ts`.
-2. Change `exportTrade: true`.
-3. Restart the server. The database schemas and admin panels will automatically adapt.
+## Project Structure
 
-## Adding New Locales
+```
+exvorta/
+├── app/
+│   ├── (frontend)/           # Public-facing pages (Server Components)
+│   │   ├── page.tsx          # Homepage (renders CMS blocks)
+│   │   ├── portfolio/        # Portfolio archive + case studies
+│   │   ├── rfq/              # Request for Quotation form page
+│   │   ├── waitlist/         # Waitlist landing page
+│   │   ├── ecosystem/        # Ecosystem showcase
+│   │   ├── insights/         # Blog/insights archive + articles
+│   │   └── layout.tsx        # Shared header/footer, analytics, GDPR
+│   ├── (payload)/            # Payload admin panel routes (auto-managed)
+│   ├── api/
+│   │   ├── health/           # GET /api/health — uptime check
+│   │   ├── revalidate/       # POST /api/revalidate — ISR revalidation
+│   │   └── dev/              # Dev-only seeding endpoints (blocked in prod)
+│   ├── globals.css           # Design system tokens (Tailwind v4 variables)
+│   ├── sitemap.ts            # Dynamic sitemap generation
+│   └── robots.ts             # robots.txt
+├── components/
+│   ├── blocks/               # CMS block renderers (one per Payload block type)
+│   ├── ui/                   # Reusable primitives (Button, Reveal, etc.)
+│   ├── forms/                # Form components with validation + Turnstile
+│   ├── layout/               # Header, Footer, PageWrapper, DeferredWidgets
+│   ├── providers/            # GSAP, Framer Motion, Lenis context providers
+│   ├── seo/                  # JSON-LD structured data components
+│   ├── admin/                # Payload admin custom components (logo, widget)
+│   └── live-preview/         # Payload live preview listener
+├── lib/
+│   ├── payload.ts            # getPayloadClient singleton
+│   ├── payload-cache.ts      # Cached data fetchers (ISR-aware)
+│   ├── analytics.ts          # Umami event tracking utility
+│   ├── animations.ts         # GSAP animation presets
+│   └── error-reporting.ts    # Error logging abstraction
+├── payload/
+│   ├── collections/          # Payload collection definitions
+│   ├── globals/              # Payload global definitions
+│   ├── blocks/               # Block field definitions (schema)
+│   ├── fields/               # Reusable field groups
+│   ├── access/               # Access control helpers (isAdmin, etc.)
+│   └── storage-cloudinary/   # Custom Cloudinary storage plugin
+├── utils/                    # Pure utility functions (generateMeta, etc.)
+├── i18n/                     # next-intl config
+├── scripts/                  # Dev/ops scripts (seed, migrate, backup, verify)
+├── public/                   # Static assets
+├── payload.config.ts         # Payload CMS configuration
+├── next.config.ts            # Next.js configuration + security headers
+├── vercel.json               # Vercel deployment configuration
+└── tailwind.config.ts        # Tailwind CSS v4 configuration
+```
 
-The boilerplate currently ships with English (`en`), Arabic (`ar`), and Persian (`fa`) enabled by default. To enable more:
-1. Open `payload.config.ts` and uncomment the target locales in the `localization.locales` array.
-2. Ensure you add corresponding translation mappings in the `translations/[locale]/` directory.
-3. Run the sync script to compile the new messages:
-   ```bash
-   NODE_OPTIONS="--require ./scripts/next-env-shim.cjs" npx tsx scripts/sync-locales.ts
-   ```
+---
 
-## Stitch-to-Production Pipeline Expectations
+## Available Scripts
 
-When utilizing the generative AI `Stitch` pipeline to create blocks:
-- Ensure all custom blocks are fully decoupled from layout logic.
-- Avoid rendering core models (Products, Categories) directly within layout-specific blocks. Use utility components or generic blocks for UI rendering.
+| Script | Purpose |
+|--------|---------|
+| `npm run dev` | Start development server |
+| `npm run build` | Production build |
+| `npm run start` | Start production server |
+| `npm run lint` | ESLint check |
+| `npm run db:up` | Start local Docker Postgres |
+| `npm run db:down` | Stop local Docker Postgres |
+| `npm run db:reset` | Wipe and restart local Postgres |
+| `scripts/verify-deployment.sh` | Post-deploy smoke tests |
+| `scripts/backup-db.sh` | Backup Neon database to SQL file |
+| `scripts/take-screenshots.js` | Playwright screenshot capture |
 
-## Known Issues & Ongoing Maintenance
+---
 
-- **Next.js Version Vulnerability:** `npm audit` will currently report a High-severity vulnerability for `next@15.4.11` as well as a Moderate finding for `postcss`. This is a known conflict. Payload CMS strictly restricts Next.js to `<15.5.0` in its peer dependencies, locking us out of the security patch currently only available in `15.5.x`. Do not wildly upgrade `next` past `15.4.11` via `npm install` without `--legacy-peer-deps` or until Payload officially updates `@payloadcms/next` to support React 19 / Next 15.5+. Do not attempt to force-fix this with `npm audit fix --force`. Revisit this periodically.
-- **esbuild Dev-Only Exposure:** `npm audit` reports a moderate vulnerability in `esbuild`. This is a transitive `devDependency` pulled in via `drizzle-kit` (`@esbuild-kit/esm-loader`). It is only used during local development for generating migrations and does not ship in the Next.js production bundle. It is accepted as low-risk.
-- **Payload CLI ESM Bug (`generate:types` and `migrate:create`):** Running `npx payload generate:types` or `npx payload migrate:create` currently fails with `ERR_REQUIRE_ASYNC_MODULE` in this environment. This is a known issue caused by the interaction between Node.js 20.19, Next.js 15.4 (with top-level await in config/Lexical), and the underlying `tsx` runner used by the Payload v3 CLI. Until this is fixed upstream, you must manually patch schema changes into `payload-types.ts` and use raw SQL or standard Next.js scripts for migrations. (Note: A manual patch for `Navigation` and `Footer` types was applied on 2026-07-19; be careful not to blindly overwrite it if the generator is partially run).
-- **dompurify (monaco-editor):** `npm audit` reports a moderate cross-site scripting vulnerability in `dompurify`. This is a transitive dependency of `@monaco-editor/react`, which is required by `@payloadcms/ui` for Payload Admin's code editor fields and core UI components. Because Payload's admin interface runs behind authentication and is restricted to trusted administrators, this exposure is mitigated. We must wait for Payload to bump their internal `monaco-editor` dependencies.
+## Deployment
+
+See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for full step-by-step Vercel deployment guide.
+
+---
+
+## Architecture
+
+See **[ARCHITECTURE.md](./ARCHITECTURE.md)** for deep technical documentation.
+
+---
+
+## Content Management
+
+See **[CMS_ADMIN_GUIDE.md](./CMS_ADMIN_GUIDE.md)** for editor documentation.
+
+---
+
+## Contributing
+
+See **[CONTRIBUTING.md](./CONTRIBUTING.md)** for developer guidelines.
+
+---
+
+## Known Issues & Security Notes
+
+> See inline Known Issues in this README and the full audit in [DEPLOYMENT.md](./DEPLOYMENT.md).
+
+- **Next.js 15.4.x vulnerability:** Payload CMS restricts `next < 15.5.0`. The High-severity audit finding cannot be resolved until Payload updates its peer dep. Do not force-upgrade.
+- **esbuild moderate:** Dev-only transitive dep via `drizzle-kit`. Not in production bundle.
+- **dompurify/monaco-editor:** Admin-only exposure, behind authentication. Mitigation in place.
+
+---
+
+## License
+
+Proprietary — Exvorta Agency Engine. All rights reserved.

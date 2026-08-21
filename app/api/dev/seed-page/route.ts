@@ -21,10 +21,10 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json()
-    const { title, slug, blocks } = body as {
+    const { title, slug, layout } = body as {
       title: string
       slug: string
-      blocks?: NonNullable<Page['blocks']>
+      layout?: NonNullable<Page['layout']>
     }
 
     if (!title || !slug) {
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
         data: {
           title,
           slug,
-          blocks,
+          layout,
         },
       }) as unknown as Page
     } else {
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
         data: {
           title,
           slug,
-          blocks,
+          layout,
         },
       }) as unknown as Page
     }

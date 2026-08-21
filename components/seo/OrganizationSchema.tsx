@@ -1,11 +1,12 @@
 import React from 'react'
 import { getPayloadClient } from '@/lib/payload'
+import type { SiteSetting, SocialLink } from '@/payload-types'
 
 export default async function OrganizationSchema() {
   const payload = await getPayloadClient()
 
-  let siteSettings: Record<string, unknown> | null = null
-  let socialLinks: { links?: { url?: string }[] } | null = null
+  let siteSettings: SiteSetting | null = null
+  let socialLinks: SocialLink | null = null
 
   try {
     siteSettings = await payload.findGlobal({
@@ -21,11 +22,11 @@ export default async function OrganizationSchema() {
   const siteName = siteSettings?.siteName || 'Agency Boilerplate'
   let logoUrl = ''
 
-  if (siteSettings?.logo && typeof siteSettings.logo === 'object' && (siteSettings.logo as Record<string, unknown>).url) {
-    logoUrl = (siteSettings.logo as Record<string, unknown>).url as string
+  if (siteSettings?.logo && typeof siteSettings.logo === 'object' && 'url' in siteSettings.logo) {
+    logoUrl = siteSettings.logo.url as string
   }
 
-  const sameAs = socialLinks?.links?.map((link: { url?: string }) => link.url) || []
+  const sameAs = (socialLinks?.links || []).map(link => link.url).filter(Boolean) as string[]
 
   const schema = {
     '@context': 'https://schema.org',

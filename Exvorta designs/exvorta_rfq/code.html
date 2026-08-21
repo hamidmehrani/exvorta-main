@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en" style=""><head></head><body class="antialiased font-sans flex flex-col min-h-screen bg-noise relative overflow-x-hidden">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Exvorta | Digital Infrastructure for Global Traders</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FAFAF8',
+                        obsidian: '#0D0D0D',
+                        surface: '#FFFFFF',
+                        border: 'rgba(0,0,0,0.05)',
+                        'border-dark': 'rgba(255,255,255,0.1)',
+                        dashboard: '#0D0D0D',
+                        sidebar: '#141414',
+                        card: '#1A1A1A',
+                        success: '#00FF66',
+                        'success-bg': 'rgba(0, 255, 102, 0.1)',
+                        warning: '#FFB800',
+                        'warning-bg': 'rgba(255, 184, 0, 0.1)',
+                        info: '#0066FF',
+                        'info-bg': 'rgba(0, 102, 255, 0.1)'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
+                        grotesk: ['Space Grotesk', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px rgba(0, 0, 0, 0.03)',
+                        'glow': '0 0 40px rgba(0,0,0,0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+<style data-purpose="custom-utilities">
+        body {
+            background-color: theme('colors.cream');
+            color: theme('colors.obsidian');
+        }
+        
+        .bg-noise {
+            position: relative;
+        }
+        .bg-noise::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        /* 3D Parallax Viewport Styles */
+        .parallax-viewport {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            background: linear-gradient(135deg, #050B08 0%, #030604 100%);
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 20px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            pointer-events: none;
+            will-change: transform;
+        }
+        
+        .parallax-element {
+            position: absolute;
+            will-change: transform, filter;
+        }
+        
+        /* Glassmorphic elements inside parallax */
+        .pg-glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+        
+        /* Chrome effects */
+        .chrome-text {
+            background: linear-gradient(to bottom, #fff 0%, #a0a0a0 50%, #404040 51%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        
+        /* Animated light leaks */
+        @keyframes lightLeak {
+            0% { opacity: 0.2; transform: scale(1) translate(0, 0); }
+            50% { opacity: 0.5; transform: scale(1.5) translate(10%, -10%); }
+            100% { opacity: 0.2; transform: scale(1) translate(0, 0); }
+        }
+        
+        .light-leak {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: lightLeak 10s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+    </style>
+<!-- BEGIN: MainHeader -->
+<header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-black/5" data-purpose="site-header"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between"><!-- Logo --><div class="flex-shrink-0"><a class="font-serif text-2xl font-semibold tracking-wide text-obsidian uppercase" href="#">EXVORTA</a></div><!-- Desktop Navigation --><nav class="hidden md:flex items-center space-x-12 text-[11px] font-medium tracking-widest text-obsidian/60 uppercase"><a class="hover:text-obsidian transition-colors" href="#"></a><a class="text-[10px] tracking-[0.2em] font-medium text-black/70 hover:text-black uppercase transition-all duration-300" href="https://app-companion-430619.appspot.com/projects/8161356021902701395?usegapi=1&amp;jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.ch0Jz-JlMrQ.O%2Fd%3D1%2Frs%3DAHpOoo_YD4KoV8fTh_kLhktsiThAm3yJ5A%2Fm%3D__features__#" style='--tw-scale-x: 1; --tw-scale-y: 1; --tw-pan-x: ; --tw-pan-y: ; --tw-pinch-zoom: ; --tw-scroll-snap-strictness: proximity; --tw-gradient-from-position: ; --tw-gradient-via-position: ; --tw-gradient-to-position: ; --tw-ordinal: ; --tw-slashed-zero: ; --tw-numeric-figure: ; --tw-numeric-spacing: ; --tw-numeric-fraction: ; --tw-ring-inset: ; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: rgb(59 130 246 / 0.5); --tw-ring-offset-shadow: 0 0 #0000; --tw-ring-shadow: 0 0 #0000; --tw-shadow: 0 0 #0000; --tw-shadow-colored: 0 0 #0000; --tw-blur: ; --tw-brightness: ; --tw-contrast: ; --tw-grayscale: ; --tw-hue-rotate: ; --tw-invert: ; --tw-saturate: ; --tw-sepia: ; --tw-drop-shadow: ; --tw-backdrop-blur: ; --tw-backdrop-brightness: ; --tw-backdrop-contrast: ; --tw-backdrop-grayscale: ; --tw-backdrop-hue-rotate: ; --tw-backdrop-invert: ; --tw-backdrop-opacity: ; --tw-backdrop-saturate: ; --tw-backdrop-sepia: ; --tw-contain-size: ; --tw-contain-layout: ; --tw-contain-paint: ; --tw-contain-style: ; font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; background-color: rgb(252, 250, 248); outline: none !important; box-shadow: none !important;'>Exvorta web</a><a class="hover:text-obsidian transition-colors" href="#">PORTFOLIO</a><a class="hover:text-obsidian transition-colors" href="#">ECOSYSTEM</a><a class="hover:text-obsidian transition-colors" href="#">THE FIRM</a></nav><!-- CTA --><div class="hidden md:block"><a class="mr-6 text-[10px] tracking-[0.2em] font-mono text-black/70 hover:text-black uppercase transition-all" href="#">CLIENT LOGIN</a><a class="bg-black text-white px-6 py-3 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-[#1a1a1a] transition-colors rounded-none" href="#">[ REQUEST PROPOSAL ]</a></div><!-- Mobile menu button --><div class="md:hidden flex items-center"><button class="text-obsidian hover:text-gray-500 focus:outline-none" type="button"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button></div></div></header>
+<!-- END: MainHeader -->
+<main class="flex-grow pt-20 relative z-10 w-full bg-[#FCFAF8] min-h-screen">
+<div class="w-full mx-auto flex flex-col md:flex-row min-h-[calc(100vh-5rem)] border-b border-[#E5E5E5]">
+<!-- Left Column -->
+<div class="w-full md:w-[40%] bg-[#0D0D0D] p-8 md:p-16 lg:p-24 flex flex-col justify-center border-r border-[#E5E5E5] relative">
+<div class="max-w-md mx-auto w-full">
+<h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold mb-6 leading-tight text-white">Initiate Strategic Alignment.</h1>
+<p class="text-base text-gray-300 font-sans font-light mb-16 leading-relaxed">Submit your operational requirements. Our engineering directors review all RFQs within 24 hours to determine architectural fit.</p>
+<div class="space-y-6">
+<h3 class="text-xs font-grotesk tracking-widest text-white/50 uppercase mb-8">What Happens Next</h3>
+<ul class="space-y-6 text-sm font-grotesk text-white/80">
+<li class="flex items-start gap-4">
+<span class="text-white/40">01.</span>
+<span>Discovery</span>
+</li>
+<li class="flex items-start gap-4">
+<span class="text-white/40">02.</span>
+<span>Scope Blueprint</span>
+</li>
+<li class="flex items-start gap-4">
+<span class="text-white/40">03.</span>
+<span>Execution</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Right Column -->
+<div class="w-full md:w-[60%] bg-[#FCFAF8] p-8 md:p-16 lg:p-24 flex items-center">
+<div class="max-w-2xl mx-auto w-full">
+<!-- 6-Step Enterprise Form -->
+<form class="space-y-16">
+<section class="space-y-8">
+<div class="mb-6 flex items-center gap-4 text-xs font-grotesk tracking-widest text-black uppercase">
+<span class="">01. Company Details</span>
+<div class="flex-grow h-px bg-black/10"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<input class="bg-white border border-black text-black placeholder-black/40 rounded-none p-5 transition-none w-full text-sm focus:ring-0 focus:border-black focus:outline-none" placeholder="Company Name" type="text"/>
+<input class="bg-white border border-black text-black placeholder-black/40 rounded-none p-5 transition-none w-full text-sm focus:ring-0 focus:border-black focus:outline-none" placeholder="Current Website URL" type="url"/>
+<div class="md:col-span-2">
+<input class="bg-white border border-black text-black placeholder-black/40 rounded-none p-5 transition-none w-full text-sm focus:ring-0 focus:border-black focus:outline-none" placeholder="Work Email" type="email"/>
+</div>
+</div>
+</section>
+<section class="space-y-8">
+<div class="mb-6 flex items-center gap-4 text-xs font-grotesk tracking-widest text-black uppercase">
+<span class="">02. Project Goals</span>
+<div class="flex-grow h-px bg-black/10"></div>
+</div>
+<div class="space-y-6">
+<select class="bg-white border border-black text-black placeholder-black/40 rounded-none p-5 transition-none w-full text-sm focus:ring-0 focus:border-black focus:outline-none appearance-none rounded-none">
+<option disabled="" selected="" value="">Primary Objective</option>
+<option>Complete Rebranding</option>
+<option>New B2B Platform</option>
+<option>Performance Optimization</option>
+<option>Custom Web App</option>
+</select>
+<textarea class="bg-white border border-black text-black placeholder-black/40 rounded-none p-5 transition-none w-full text-sm focus:ring-0 focus:border-black focus:outline-none resize-none" placeholder="Briefly describe your main challenge or vision." rows="4"></textarea>
+</div>
+</section>
+<section class="space-y-8">
+<div class="mb-6 flex items-center gap-4 text-xs font-grotesk tracking-widest text-black uppercase">
+<span class="">03. Timeline &amp; Budget</span>
+<div class="flex-grow h-px bg-black/10"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<select class="bg-white border border-black text-black placeholder-black/40 rounded-none p-5 transition-none w-full text-sm focus:ring-0 focus:border-black focus:outline-none appearance-none rounded-none">
+<option disabled="" selected="" value="">Expected Timeline</option>
+<option>2-4 Weeks</option>
+<option>1-2 Months</option>
+<option>Flexible</option>
+</select>
+<select class="bg-white border border-black text-black placeholder-black/40 rounded-none p-5 transition-none w-full text-sm focus:ring-0 focus:border-black focus:outline-none appearance-none rounded-none">
+<option disabled="" selected="" value="">Allocated Budget (Optional)</option>
+<option>$15k - $30k</option>
+<option>$30k - $80k</option>
+<option>$80k+</option>
+</select>
+</div>
+</section>
+<div class="pt-8">
+<button class="bg-black text-white w-full py-6 rounded-none uppercase tracking-widest text-xs font-grotesk font-semibold hover:bg-[#1a1a1a] transition-none border border-black block" type="submit"> 
+                    [ SUBMIT PROPOSAL REQUEST ] 
+                </button>
+<p class="mt-8 text-center text-[10px] text-black/40 font-grotesk uppercase tracking-widest"> 
+                    Your information is handled with the highest level of professional discretion. 
+                </p>
+</div>
+</form>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-[#FAFAF8] border-t border-[#E5E5E5] py-24 px-4 sm:px-6 lg:px-8"><div class="max-w-7xl mx-auto"><div class="grid grid-cols-2 md:grid-cols-4 gap-12 mb-24"><!-- Brand --><div class="col-span-2 md:col-span-1"><a class="font-serif text-xl font-semibold tracking-wide text-obsidian uppercase mb-6 block" href="#">EXVORTA</a><p class="text-xs text-obsidian/40 leading-relaxed font-light max-w-xs">The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE.</p></div><!-- Solutions --><div><h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">THE ECOSYSTEM</h4><ul class="space-y-4 text-[11px] text-obsidian/60"><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Web</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Docs</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Track</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta CRM</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Intel</a></li></ul></div><!-- Company --><div><h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">COMPANY</h4><ul class="space-y-4 text-[11px] text-obsidian/60"><li class=""><a class="hover:text-obsidian transition-colors" href="#">Our Vision</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Design Blueprints</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Market Insights</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Contact Us</a></li></ul></div><!-- Legal --><div><h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">LEGAL &amp; ACCESS</h4><ul class="space-y-4 text-[11px] text-obsidian/60"><li class=""><a class="hover:text-obsidian transition-colors" href="#">Request Proposal</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Privacy Policy</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Terms of Service</a></li></ul></div></div><div class="border-t border-black/5 pt-12 text-center"><p class="text-[10px] tracking-widest text-obsidian/30 uppercase">© 2026 Exvorta. All rights reserved.</p></div></div></footer>
+</body></html>

@@ -2,10 +2,10 @@
 
 import React from 'react'
 import { Reveal, StaggerContainer, StaggerItem } from '../ui/Reveal'
-import { Link } from '@/i18n/routing'
+import Link from 'next/link'
 import type { Page } from '@/payload-types'
 
-type CTABannerProps = Extract<NonNullable<Page['blocks']>[0], { blockType: 'ctaBanner' }>
+type CTABannerProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'ctaBanner' }>
 type GuaranteeType = NonNullable<CTABannerProps['guarantees']>[0]
 
 export default function CTABannerBlock(props: CTABannerProps) {

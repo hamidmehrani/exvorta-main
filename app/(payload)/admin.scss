@@ -1,0 +1,92 @@
+/* admin.scss - Brutalist / Exvorta OS Admin Styles */
+
+:root {
+  --theme-bg: #0A0A0A !important;
+  --theme-elevation-50: #111111 !important;
+  --theme-elevation-100: #141414 !important;
+  --theme-elevation-150: #181818 !important;
+  --theme-elevation-200: #1A1A1A !important;
+  
+  --theme-text: #E5E5E5 !important;
+  --theme-text-muted: #888888 !important;
+  
+  --theme-border: #333333 !important;
+  
+  --theme-success-400: #00FF66 !important;
+  --theme-error-400: #FF3333 !important;
+
+  /* Form & UI overrides */
+  --input-bg: #0D0D0D !important;
+  --input-border: #333 !important;
+  --btn-bg: #E5E5E5 !important;
+  --btn-text: #0D0D0D !important;
+}
+
+body {
+  background-color: var(--theme-bg) !important;
+  color: var(--theme-text) !important;
+}
+
+/* Hard edges, no radius */
+* {
+  border-radius: 0 !important;
+}
+
+/* Sidebar styling */
+.nav {
+  background-color: var(--theme-elevation-50) !important;
+  border-right: 1px solid var(--theme-border) !important;
+}
+
+/* Cards & Panels */
+.card, .panel, .payload-table {
+  background-color: var(--theme-elevation-100) !important;
+  border: 1px solid var(--theme-border) !important;
+}
+
+/* Typography tweaks */
+h1, h2, h3, h4, h5, h6 {
+  font-family: ui-serif, "Playfair Display", serif !important;
+  letter-spacing: -0.02em;
+}
+
+.table th, .badge, .btn {
+  font-family: ui-monospace, "Space Mono", monospace !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Input fields */
+input, textarea, select {
+  background-color: var(--input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  color: var(--theme-text) !important;
+  font-family: ui-monospace, monospace !important;
+  font-size: 12px !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--theme-success-400) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Buttons */
+.btn--style-primary {
+  background-color: var(--theme-success-400) !important;
+  color: #000 !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+.btn--style-secondary {
+  background-color: transparent !important;
+  border: 1px solid var(--theme-border) !important;
+  color: var(--theme-text) !important;
+}
+
+/* Sub-header / Eyebrows */
+.view-description {
+  color: var(--theme-text-muted) !important;
+  font-family: monospace;
+}

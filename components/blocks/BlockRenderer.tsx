@@ -15,7 +15,7 @@ import VideoBlock from './VideoBlock'
 
 import { Page } from '@/payload-types'
 
-type BlockType = NonNullable<Page['blocks']>[number]
+type BlockType = NonNullable<Page['layout']>[number]
 
 interface BlockRendererProps {
   blocks?: BlockType[] | null

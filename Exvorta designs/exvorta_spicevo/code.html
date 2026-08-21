@@ -1,0 +1,399 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Spicevo Case Study - EXVORTA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "warning-amber": "#FFB800",
+                    "primary": "#5d5f5d",
+                    "surface-dim": "#ddd9d8",
+                    "background": "#fcf8f8",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#002114",
+                    "surface-container-low": "#f6f3f2",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "inverse-surface": "#313030",
+                    "on-primary-container": "#727372",
+                    "warm-cream": "#FAFAF8",
+                    "on-surface-variant": "#444846",
+                    "secondary-fixed-dim": "#c9c6c5",
+                    "on-surface": "#1c1b1b",
+                    "inverse-primary": "#c6c7c5",
+                    "tertiary": "#006c4a",
+                    "tertiary-container": "#ebfff1",
+                    "on-primary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed-variant": "#474646",
+                    "secondary-container": "#e5e2e1",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#c6c7c5",
+                    "outline": "#747876",
+                    "secondary": "#5f5e5e",
+                    "surface-container-high": "#ebe7e6",
+                    "on-tertiary": "#ffffff",
+                    "obsidian": "#0D0D0D",
+                    "info-blue": "#0066FF",
+                    "on-error": "#ffffff",
+                    "emerald": "#059669",
+                    "surface-variant": "#e5e2e1",
+                    "surface-bright": "#fcf8f8",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#f1edec",
+                    "on-tertiary-fixed-variant": "#005137",
+                    "primary-fixed": "#e2e3e1",
+                    "on-secondary-container": "#656464",
+                    "tertiary-fixed": "#85f8c4",
+                    "on-background": "#1c1b1b",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#c4c7c5",
+                    "tertiary-fixed-dim": "#68dba9",
+                    "secondary-fixed": "#e5e2e1",
+                    "on-tertiary-container": "#00835b",
+                    "zinc-elevated": "#1A1A1A",
+                    "on-primary-fixed": "#1a1c1b",
+                    "success-glow": "#00FF66",
+                    "surface": "#fcf8f8",
+                    "surface-white": "#FFFFFF",
+                    "on-primary-fixed-variant": "#454746",
+                    "surface-tint": "#5d5f5d",
+                    "surface-container-highest": "#e5e2e1",
+                    "primary-container": "#fafaf8",
+                    "inverse-on-surface": "#f4f0ef",
+                    "zinc-dark": "#141414"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "ui-padding-dense": "0.875rem 1.25rem",
+                    "container-max": "1280px",
+                    "gutter": "1.5rem",
+                    "section-gap-lg": "8rem",
+                    "dashboard-max": "1440px",
+                    "section-gap-md": "6rem"
+            },
+            "fontFamily": {
+                    "label-caps": [
+                            "Inter"
+                    ],
+                    "mono-terminal": [
+                            "monospace"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ],
+                    "mono-data": [
+                            "monospace"
+                    ],
+                    "headline-lg": [
+                            "Playfair Display"
+                    ],
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "headline-xl": [
+                            "Playfair Display"
+                    ],
+                    "display-hero": [
+                            "Playfair Display"
+                    ],
+                    "display-hero-mobile": [
+                            "Playfair Display"
+                    ]
+            },
+            "fontSize": {
+                    "label-caps": [
+                            "11px",
+                            {
+                                    "lineHeight": "1",
+                                    "letterSpacing": "0.15em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "mono-terminal": [
+                            "10px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-md": [
+                            "15px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "300"
+                            }
+                    ],
+                    "mono-data": [
+                            "11px",
+                            {
+                                    "lineHeight": "1.4",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "300"
+                            }
+                    ],
+                    "headline-xl": [
+                            "60px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-hero": [
+                            "84px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-hero-mobile": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ]
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-obsidian antialiased text-warm-cream">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-obsidian/95 backdrop-blur-xl border-b border-white/5 text-surface-bright">
+<div class="max-w-dashboard-max mx-auto flex justify-between items-center px-gutter py-4">
+<div class="font-headline-lg text-headline-lg tracking-tighter text-surface-bright font-semibold hover:text-emerald transition-colors duration-300">
+                EXVORTA
+            </div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-on-surface-variant font-label-caps text-label-caps tracking-[0.15em] hover:text-emerald transition-colors duration-300" href="#">Solutions</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps tracking-[0.15em] hover:text-emerald transition-colors duration-300" href="#">Infrastructure</a>
+<a class="text-emerald font-bold border-b-2 border-emerald pb-1 font-label-caps text-label-caps tracking-[0.15em] hover:text-emerald transition-colors duration-300 scale-95 transition-transform duration-200" href="#">R&amp;D</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps tracking-[0.15em] hover:text-emerald transition-colors duration-300" href="#">About</a>
+</div>
+<button class="hidden md:block bg-obsidian border border-white/20 text-surface-bright font-label-caps text-label-caps tracking-[0.15em] px-6 py-3 rounded-none hover:bg-emerald hover:border-emerald hover:text-obsidian transition-all duration-300">
+                START_PROPOSAL
+            </button>
+<button class="md:hidden text-surface-bright">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content: Case Study Hero -->
+<main class="min-h-screen pt-32 pb-24 px-gutter flex flex-col justify-center border-b border-white/10">
+<div class="max-w-dashboard-max mx-auto w-full relative z-10">
+<div class="mb-12">
+<a class="inline-flex items-center gap-2 text-emerald font-mono-terminal text-mono-terminal hover:text-emerald/80 transition-colors uppercase" href="#">
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_left">arrow_left</span>
+                    BACK TO INDEX
+                </a>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+<div class="col-span-1 lg:col-span-5 flex flex-col justify-end">
+<h1 class="font-display-hero-mobile md:font-display-hero text-display-hero-mobile md:text-display-hero tracking-tighter leading-none mb-6">
+                        Spicevo
+                    </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mb-12">
+                        Organic Herbs &amp; Spices Exporter.
+                    </p>
+<table class="w-full border-collapse border border-white/10 mt-auto">
+<tbody><tr class="border-b border-white/10">
+<td class="p-4 border-r border-white/10 font-mono-terminal text-mono-terminal text-emerald/80 w-1/3">ESTABLISHED:</td>
+<td class="p-4 font-mono-terminal text-mono-terminal text-warm-cream">2014, Istanbul, Turkey</td>
+</tr>
+<tr class="border-b border-white/10">
+<td class="p-4 border-r border-white/10 font-mono-terminal text-mono-terminal text-emerald/80">VOLUME:</td>
+<td class="p-4 font-mono-terminal text-mono-terminal text-warm-cream">480+ MT/YEAR</td>
+</tr>
+<tr class="border-b border-white/10">
+<td class="p-4 border-r border-white/10 font-mono-terminal text-mono-terminal text-emerald/80">CERTIFICATIONS:</td>
+<td class="p-4 font-mono-terminal text-mono-terminal text-warm-cream">EU Organic, USDA NOP, ISO 22000</td>
+</tr>
+<tr>
+<td class="p-4 border-r border-white/10 font-mono-terminal text-mono-terminal text-emerald/80">TECH STACK:</td>
+<td class="p-4 font-mono-terminal text-mono-terminal text-warm-cream">Next.js 15, Payload CMS, Neon</td>
+</tr>
+</tbody></table>
+</div>
+<div class="col-span-1 lg:col-span-7 relative h-[400px] lg:h-[600px] border border-white/10 bg-zinc-dark p-2">
+<img class="w-full h-full object-cover rounded-none grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700" src="https://lh3.googleusercontent.com/aida/AP1WRLsluHrudtzDaG50aSD36NdRzN58w6vb8tMpFOdnfIZFgY1dBgREUPWYQlTjj9EbRdLgnplkZYewTF9sMmaeJSXAK3oto-ygLUZfgwWyy7yWx7KwCDhAFMeuV49Vhkho1reIvl0I9GKNryk-9aFBdjJS583MJmCtZCneN1ZtU54xdaArh6k8eLfsYFLn5M0d_X1KdW11WwN2Sz8g_rTEjmd88-HJHGcuK3mzWuDZmmpB05aQ3niGkBjgHbc">
+</div>
+</div>
+</div>
+</main><section class="bg-warm-cream text-obsidian py-32 border-t border-obsidian" id="brand-strategy">
+<div class="max-w-dashboard-max mx-auto px-gutter">
+<!-- Part 1: BRAND POSITIONING -->
+<div class="mb-24">
+<div class="font-mono-terminal text-emerald uppercase mb-8">[ BRAND POSITIONING ]</div>
+<blockquote class="font-headline-xl text-headline-xl italic max-w-[800px] mb-12 leading-tight">
+        "The organic herbs supplier that European and Gulf buyers trust — because every container ships with documentation as clean as the product itself."
+      </blockquote>
+<div class="border-b border-obsidian/10 w-full"></div>
+</div>
+<!-- Part 2: DESIGN SYSTEM GRID -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+<!-- Left Column (PALETTE) -->
+<div class="lg:col-span-7">
+<div class="font-mono-terminal text-emerald uppercase mb-8">[ PALETTE ]</div>
+<div class="grid grid-cols-3 gap-4">
+<div class="aspect-square bg-[#F7F2EC] border border-obsidian flex flex-col justify-end p-4">
+<span class="font-mono-terminal text-[10px] uppercase">WARM CREAM</span>
+</div>
+<div class="aspect-square bg-[#8B3A0F] border border-obsidian flex flex-col justify-end p-4 text-surface-white">
+<span class="font-mono-terminal text-[10px] uppercase">DEEP RUST</span>
+</div>
+<div class="aspect-square bg-[#2D5A27] border border-obsidian flex flex-col justify-end p-4 text-surface-white">
+<span class="font-mono-terminal text-[10px] uppercase">FOREST GREEN</span>
+</div>
+</div>
+</div>
+<!-- Right Column (TYPOGRAPHY) -->
+<div class="lg:col-span-5">
+<div class="font-mono-terminal text-emerald uppercase mb-8">[ TYPOGRAPHY ]</div>
+<div class="space-y-12">
+<div>
+<div class="font-display-hero text-6xl mb-2">Playfair Display</div>
+<div class="font-mono-terminal text-[10px] text-on-surface-variant uppercase">Primary Headings / Authoritative</div>
+</div>
+<div>
+<div class="font-body-lg text-2xl font-light mb-2">Inter 300</div>
+<div class="font-mono-terminal text-[10px] text-on-surface-variant uppercase">Body / Technical Clarity</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section class="bg-obsidian py-32 border-t border-white/10" id="cms-infrastructure">
+<div class="max-w-dashboard-max mx-auto px-gutter">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0">
+<!-- Left Column -->
+<div class="lg:col-span-5 lg:pr-24 flex flex-col justify-center">
+<div class="font-mono-terminal text-emerald uppercase mb-8 text-[12px]">[ THE ENGINE ]</div>
+<h2 class="font-display-hero text-6xl text-warm-cream tracking-tighter mb-8 leading-tight">
+          Payload CMS 3.0 Integration.
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+          Total operational control. The export team manages product specifications, EU Organic certifications, and RFQ lead data dynamically—without touching a single line of code.
+        </p>
+</div>
+<!-- Vertical Divider (Desktop) -->
+<div class="hidden lg:block w-px bg-white/10 h-full"></div>
+<!-- Right Column -->
+<div class="lg:col-span-6 lg:pl-24 flex items-center">
+<div class="w-full border border-white/10 bg-zinc-dark rounded-none overflow-hidden">
+<!-- Mockup Header -->
+<div class="border-b border-white/10 px-4 py-2 flex justify-between items-center bg-obsidian">
+<span class="font-mono-terminal text-[10px] text-white/40">[ ADMIN_TERMINAL_V3.0 ]</span>
+<div class="flex gap-1">
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+</div>
+</div>
+<div class="flex">
+<!-- Sidebar Rail -->
+<div class="w-12 border-r border-white/10 flex flex-col items-center py-4 gap-4 bg-obsidian">
+<span class="material-symbols-outlined text-white/20 text-sm">dashboard</span>
+<span class="material-symbols-outlined text-emerald text-sm">inventory_2</span>
+<span class="material-symbols-outlined text-white/20 text-sm">verified</span>
+<span class="material-symbols-outlined text-white/20 text-sm">analytics</span>
+<span class="material-symbols-outlined text-white/20 text-sm">settings</span>
+</div>
+<!-- Data Table -->
+<div class="flex-1 p-4">
+<table class="w-full border-collapse">
+<thead>
+<tr class="text-left border-b border-white/10">
+<th class="font-mono-terminal text-[10px] text-white/40 pb-2">ID</th>
+<th class="font-mono-terminal text-[10px] text-white/40 pb-2">PRODUCT</th>
+<th class="font-mono-terminal text-[10px] text-white/40 pb-2">CERTIFICATION</th>
+<th class="font-mono-terminal text-[10px] text-white/40 pb-2">STATUS</th>
+</tr>
+</thead>
+<tbody class="font-mono-terminal text-[11px]">
+<tr class="border-b border-white/5">
+<td class="py-3 text-white/60">SP-01</td>
+<td class="py-3 text-warm-cream">DRIED OREGANO</td>
+<td class="py-3 text-white/60">EU ORGANIC</td>
+<td class="py-3 text-emerald">[ ACTIVE ]</td>
+</tr>
+<tr>
+<td class="py-3 text-white/60">SP-02</td>
+<td class="py-3 text-warm-cream">THYME LEAVES</td>
+<td class="py-3 text-white/60">USDA NOP</td>
+<td class="py-3 text-emerald">[ ACTIVE ]</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section class="bg-warm-cream text-obsidian py-32 border-t border-obsidian" id="digital-infrastructure">
+<div class="max-w-dashboard-max mx-auto px-gutter">
+<!-- Section Header -->
+<div class="mb-24">
+<div class="font-mono-terminal text-emerald uppercase mb-8">[ DIGITAL INFRASTRUCTURE ]</div>
+<h2 class="font-display-hero text-6xl tracking-tighter mb-6 leading-tight">Built for Borderless Trade.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md">Fully localized routing and content delivery.</p>
+</div>
+<!-- i18n Feature Block -->
+<div class="border border-obsidian p-8 mb-24 flex flex-col md:flex-row gap-4 items-center">
+<span class="font-mono-terminal text-emerald font-bold">GLOBAL i18n ROUTING SUPPORTED:</span>
+<span class="font-mono-terminal">ENGLISH / SPANISH / TURKISH / ARABIC (RTL) / PERSIAN (RTL)</span>
+</div><div class="py-32 flex justify-center items-center w-full">
+  <a href="#" class="inline-flex items-center justify-center bg-emerald text-surface-white font-mono-terminal text-2xl tracking-widest px-16 py-8 rounded-none hover:bg-emerald/90 transition-all duration-300 w-full md:w-auto min-w-[400px] border border-emerald">
+    VIEW LIVE PROJECT ↗
+  </a>
+</div>
+<!-- Interface Gallery -->
+
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-12 bg-obsidian border-t border-white/5 text-on-surface-variant">
+<div class="max-w-dashboard-max mx-auto flex flex-col md:flex-row justify-between items-center px-gutter gap-6">
+<div class="font-headline-lg text-headline-lg text-surface-bright tracking-tighter font-semibold">
+                EXVORTA
+            </div>
+<div class="font-mono-terminal text-mono-terminal text-on-surface-variant text-center md:text-left">
+                © 2024 EXVORTA INSTITUTIONAL. ALL RIGHTS RESERVED. [ SYS_VER_2.4 ]
+            </div>
+<div class="flex gap-8 font-mono-terminal text-mono-terminal">
+<a class="text-on-surface-variant hover:text-emerald transition-all" href="#">Legal Compliance</a>
+<a class="text-on-surface-variant hover:text-emerald transition-all" href="#">Privacy Protocol</a>
+<a class="text-on-surface-variant hover:text-emerald transition-all" href="#">Data Security</a>
+</div>
+</div>
+</footer>
+
+
+</body></html>

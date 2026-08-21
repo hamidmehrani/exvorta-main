@@ -24,12 +24,12 @@ function SubmitButton() {
   )
 }
 
-export default function LoginForm({ locale }: { locale: string }) {
+export default function LoginForm() {
   const [state, formAction] = useActionState(loginAction, { error: '', success: false })
 
   return (
     <form action={formAction} className="flex flex-col gap-5 w-full text-start">
-      <input type="hidden" name="locale" value={locale} />
+
       
       {state?.error && (
         <div className="p-4 bg-danger/10 border border-danger/20 text-danger rounded-lg text-sm font-medium">

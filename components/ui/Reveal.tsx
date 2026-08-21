@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 
 export const EASE_OUT: [number, number, number, number] = [0.25, 1, 0.5, 1]
 export const EASE_IN_OUT = [0.65, 0, 0.35, 1]
@@ -18,7 +18,7 @@ export function Reveal({ children, delay = 0, className = '', y = 16, duration =
   const shouldReduceMotion = useReducedMotion()
 
   return (
-    <motion.div
+    <m.div
       initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y }}
       whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
@@ -26,7 +26,7 @@ export function Reveal({ children, delay = 0, className = '', y = 16, duration =
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -57,7 +57,7 @@ export function StaggerContainer({
   }
 
   return (
-    <motion.div
+    <m.div
       variants={containerVariants}
       initial="hidden"
       whileInView="show"
@@ -65,7 +65,7 @@ export function StaggerContainer({
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -82,8 +82,51 @@ export function StaggerItem({ children, className = '', y = 16 }: { children: Re
   }
 
   return (
-    <motion.div variants={itemVariants} className={className}>
+    <m.div variants={itemVariants} className={className}>
       {children}
-    </motion.div>
+    </m.div>
   )
 }
+
+export function AnimatedSection({ children, className = '', delay = 0, id }: { children: React.ReactNode, className?: string, delay?: number, id?: string }) {
+  const shouldReduceMotion = useReducedMotion()
+  return (
+    <m.section
+      id={id}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+      whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay, ease: EASE_OUT }}
+      className={className}
+    >
+      {children}
+    </m.section>
+  )
+}
+
+export function AnimatedButton({ children, className = '', href, ...props }: { children: React.ReactNode, className?: string } & React.ButtonHTMLAttributes<HTMLButtonElement> & { href?: string }) {
+  if (href) {
+    return (
+      <m.a
+        href={href}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className={className}
+        {...(props as any)}
+      >
+        {children}
+      </m.a>
+    )
+  }
+  return (
+    <m.button
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className={className}
+      {...(props as any)}
+    >
+      {children}
+    </m.button>
+  )
+}
+

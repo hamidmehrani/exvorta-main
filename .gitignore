@@ -44,4 +44,7 @@ next-env.d.ts
 postgres_data/
 # tooling
 repomix-output.xml
+repomix-output*.md
+tree.md
 screenshots/
+*.log

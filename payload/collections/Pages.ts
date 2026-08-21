@@ -4,6 +4,8 @@ import { FeatureGridBlock } from '../blocks/FeatureGridBlock'
 import { RichTextBlock } from '../blocks/RichTextBlock'
 import { CTABlock } from '../blocks/CTABlock'
 import { CTABannerBlock } from '../blocks/CTABannerBlock'
+import { ThesisBlock } from '../blocks/ThesisBlock'
+import { GlobalPresenceBlock } from '../blocks/GlobalPresenceBlock'
 import { PricingBlock } from '../blocks/PricingBlock'
 import { FAQBlock } from '../blocks/FAQBlock'
 import { TestimonialBlock } from '../blocks/TestimonialBlock'
@@ -12,30 +14,37 @@ import { MarqueeBlock } from '../blocks/MarqueeBlock'
 import { VideoBlock } from '../blocks/VideoBlock'
 import { ProcessBlock } from '../blocks/ProcessBlock'
 import { ContactFormBlock } from '../blocks/ContactFormBlock'
+import { PortfolioShowcaseBlock } from '../blocks/PortfolioShowcaseBlock'
+import { FeatureShowcaseBlock } from '../blocks/FeatureShowcaseBlock'
+import { RoadmapBlock } from '../blocks/RoadmapBlock'
+import { WaitlistFormBlock } from '../blocks/WaitlistFormBlock'
+import { RFQFormBlock } from '../blocks/RFQFormBlock'
+import { TeamShowcaseBlock } from '../blocks/TeamShowcaseBlock'
+import { ProductShowcaseBlock } from '../blocks/ProductShowcaseBlock'
+import { PortfolioArchiveBlock } from '../blocks/PortfolioArchiveBlock'
+import { ProblemStatementBlock } from '../blocks/ProblemStatementBlock'
+import { VisionBlock } from '../blocks/VisionBlock'
+import { FounderBlock } from '../blocks/FounderBlock'
 
 import { revalidatePath } from 'next/cache'
 
 const generatePreviewUrl = (doc: Record<string, unknown>, req: { locale?: string | null }) => {
-  const locale = req?.locale || 'en'
   const slug = doc?.slug || ''
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || ''
-  return `${baseUrl}/${locale}/${slug === 'home' ? '' : slug}`
+  return `${baseUrl}/${slug === 'home' ? '' : slug}`
 }
 
-const locales = ['en', 'fa', 'ar']
 const revalidateHook = ({ doc }: { doc: { slug?: string; _status?: string } }) => {
   if (doc._status === 'published' || !('_status' in doc)) {
     const slug = doc.slug || ''
-    locales.forEach((locale) => {
-      const path = slug === 'home' || slug === 'index' 
-        ? `/${locale}` 
-        : `/${locale}/${slug}`
-      try {
-        revalidatePath(path, 'page')
-      } catch {
-        // Ignore in standalone scripts
-      }
-    })
+    const path = slug === 'home' || slug === 'index' 
+      ? `/` 
+      : `/${slug}`
+    try {
+      revalidatePath(path, 'page')
+    } catch {
+      // Ignore in standalone scripts
+    }
   }
   return doc
 }
@@ -82,7 +91,7 @@ export const Pages: CollectionConfig = {
           label: 'Content',
           fields: [
             {
-              name: 'blocks',
+              name: 'layout',
               type: 'blocks',
               blocks: [
                 HeroBlock,
@@ -98,6 +107,19 @@ export const Pages: CollectionConfig = {
                 VideoBlock,
                 ProcessBlock,
                 ContactFormBlock,
+                PortfolioShowcaseBlock,
+                FeatureShowcaseBlock,
+                RoadmapBlock,
+                WaitlistFormBlock,
+                RFQFormBlock,
+                TeamShowcaseBlock,
+                ProductShowcaseBlock,
+                PortfolioArchiveBlock,
+                ThesisBlock,
+                GlobalPresenceBlock,
+                ProblemStatementBlock,
+                VisionBlock,
+                FounderBlock,
               ],
             },
           ],
@@ -136,16 +158,21 @@ export const Pages: CollectionConfig = {
             },
             {
               name: 'allowedRoles',
-              type: 'select',
-              options: [
-                { label: 'Admin', value: 'admin' },
-                { label: 'Partner', value: 'partner' },
-                { label: 'Customer', value: 'customer' },
-              ],
-              hasMany: true,
+              type: 'array',
               admin: {
                 condition: (data) => data.requiresAuth === true,
               },
+              fields: [
+                {
+                  name: 'role',
+                  type: 'select',
+                  options: [
+                    { label: 'Admin', value: 'admin' },
+                    { label: 'Partner', value: 'partner' },
+                    { label: 'Customer', value: 'customer' },
+                  ],
+                },
+              ],
             },
           ],
         },

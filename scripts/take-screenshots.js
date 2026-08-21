@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'http://localhost:3002';
 const OUT_DIR = path.join(__dirname, '../screenshots');
 
 // Allow running a single route for testing
@@ -11,11 +11,19 @@ const isTestMode = process.argv.includes('--test');
 const LOCALES = isTestMode ? ['en'] : ['en', 'ar', 'fa'];
 
 const ROUTES = isTestMode 
-  ? [{ path: '/test-blocks', name: 'test-blocks' }]
+  ? [
+      { path: '/ecosystem', name: 'ecosystem' },
+      { path: '/portfolio/nutave', name: 'nutave' },
+      { path: '/portfolio/spicevo', name: 'spicevo' },
+      { path: '/portfolio/stonvi', name: 'stonvi' }
+    ]
   : [
       { path: '', name: 'home' },
       { path: '/test-blocks', name: 'test-blocks' },
-      { path: '/login', name: 'login' }
+      { path: '/login', name: 'login' },
+      { path: '/portfolio', name: 'portfolio' },
+      { path: '/portfolio/nutave', name: 'nutave' },
+      { path: '/waitlist', name: 'waitlist' }
     ];
 
 async function run() {

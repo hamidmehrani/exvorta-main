@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import { CollectionConfig, Plugin } from 'payload'
 import { v2 as cloudinary } from 'cloudinary'
 import { UploadApiOptions, ConfigOptions } from 'cloudinary'
@@ -76,7 +75,7 @@ export const cloudinaryStorage = (options: CloudinaryStorageOptions): Plugin => 
               const proxyUrl = process.env.https_proxy || process.env.HTTPS_PROXY
               if (proxyUrl) {
                 try {
-                  const { HttpsProxyAgent } = require('https-proxy-agent')
+                  const { HttpsProxyAgent } = await import('https-proxy-agent')
                   proxyAgent = new HttpsProxyAgent(proxyUrl)
                   Object.assign(uploadOptions, { agent: proxyAgent })
                 } catch {

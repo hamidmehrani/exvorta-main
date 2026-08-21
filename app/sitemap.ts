@@ -22,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         depth: 0,
       })
 
-      docs.forEach((doc: Record<string, unknown>) => {
+      docs.forEach((doc: any) => {
         const slug = doc.slug === 'home' ? '' : doc.slug
         const fullPath = slug ? `${pathPrefix}/${slug}` : pathPrefix
         
@@ -56,7 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let redirectFromPaths = new Set<string>()
   try {
     const { docs: redirects } = await payload.find({ collection: 'redirects', limit: 1000, depth: 0 })
-    redirectFromPaths = new Set(redirects.map((r: Record<string, unknown>) => r.from as string))
+    redirectFromPaths = new Set(redirects.map((r: { from: string }) => r.from))
   } catch (error) {
     console.error('Failed to fetch redirects for sitemap', error)
   }

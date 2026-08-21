@@ -4,24 +4,45 @@ import { sendLeadEmails } from './Leads/hooks/sendLeadEmails'
 export const Leads: CollectionConfig = {
   slug: 'leads',
   admin: {
-    useAsTitle: 'name',
-    defaultColumns: ['name', 'email', 'createdAt'],
+    useAsTitle: 'email',
+    defaultColumns: ['email', 'source', 'status', 'createdAt'],
     group: 'Content',
-  },
-  access: {
-    create: () => true, // Allow unauthenticated submissions
-    read: ({ req: { user } }) => Boolean(user),
-    update: ({ req: { user } }) => Boolean(user),
-    delete: ({ req: { user } }) => Boolean(user),
   },
   hooks: {
     afterChange: [sendLeadEmails],
   },
+  access: {
+    create: () => true, // Allow unauthenticated submissions from the frontend
+    read: ({ req: { user } }) => Boolean(user),
+    update: ({ req: { user } }) => Boolean(user),
+    delete: ({ req: { user } }) => Boolean(user),
+  },
   fields: [
     {
-      name: 'name',
-      type: 'text',
+      name: 'source',
+      type: 'select',
       required: true,
+      options: [
+        { label: 'Waitlist', value: 'Waitlist' },
+        { label: 'RFQ', value: 'RFQ' },
+      ],
+      admin: {
+        position: 'sidebar',
+      }
+    },
+    {
+      name: 'status',
+      type: 'select',
+      defaultValue: 'New',
+      options: [
+        { label: 'New', value: 'New' },
+        { label: 'Under Review', value: 'Under Review' },
+        { label: 'Contacted', value: 'Contacted' },
+        { label: 'Archived', value: 'Archived' },
+      ],
+      admin: {
+        position: 'sidebar',
+      }
     },
     {
       name: 'email',
@@ -29,26 +50,12 @@ export const Leads: CollectionConfig = {
       required: true,
     },
     {
-      name: 'phone',
+      name: 'company',
       type: 'text',
     },
     {
-      name: 'message',
-      type: 'textarea',
-    },
-    {
-      name: 'status',
-      type: 'select',
-      defaultValue: 'new',
-      options: [
-        { label: 'New', value: 'new' },
-        { label: 'Contacted', value: 'contacted' },
-        { label: 'Qualified', value: 'qualified' },
-        { label: 'Closed', value: 'closed' },
-      ],
-      admin: {
-        position: 'sidebar',
-      },
+      name: 'payload',
+      type: 'json', // Using JSON to safely store arbitrary form data
     },
   ],
 }

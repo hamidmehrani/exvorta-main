@@ -1,16 +1,10 @@
 import React from 'react'
-import { getPayloadClient } from '@/lib/payload'
 
-export default async function WhatsAppFloat() {
-  const payload = await getPayloadClient()
-  let config: { phoneNumber?: string; enableWidget?: boolean; defaultMessage?: string } | null = null
+interface WhatsAppFloatProps {
+  config: { phoneNumber?: string; enableWidget?: boolean; defaultMessage?: string } | null
+}
 
-  try {
-    config = await payload.findGlobal({
-      slug: 'whatsapp-config',
-    })
-  } catch {}
-
+export default function WhatsAppFloat({ config }: WhatsAppFloatProps) {
   if (!config?.enableWidget || !config?.phoneNumber) {
     return null
   }

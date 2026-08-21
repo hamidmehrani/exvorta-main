@@ -1,0 +1,3653 @@
+{
+  "exvorta_Web": {
+    "hasDashboard": false,
+    "sections": [
+      {
+        "id": "site-header",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta web"
+          },
+          {
+            "tag": "a",
+            "text": "PORTFOLIO"
+          },
+          {
+            "tag": "a",
+            "text": "ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "THE FIRM"
+          },
+          {
+            "tag": "a",
+            "text": "CLIENT LOGIN"
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST PROPOSAL ]"
+          }
+        ]
+      },
+      {
+        "id": "section-1",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ EXVORTA WEB ]"
+          },
+          {
+            "tag": "span",
+            "text": "High-Performance Websites."
+          },
+          {
+            "tag": "span",
+            "text": "For Global Traders."
+          },
+          {
+            "tag": "p",
+            "text": "We build high-performance websites that make global trading companies look like the serious players they are."
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST PROPOSAL ]"
+          },
+          {
+            "tag": "a",
+            "text": "[ VIEW RECENT PROJECTS ]"
+          },
+          {
+            "tag": "span",
+            "text": "[ ENGINEERED FOR SPEED ]"
+          },
+          {
+            "tag": "span",
+            "text": "[ GLOBAL B2B READY ]"
+          },
+          {
+            "tag": "span",
+            "text": "[ ON-TIME DELIVERY ]"
+          }
+        ]
+      },
+      {
+        "id": "section-2",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ THE CREDIBILITY GAP ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Your business moves millions. Your website looks like a startup."
+          },
+          {
+            "tag": "h3",
+            "text": "01. FAILED DUE DILIGENCE"
+          },
+          {
+            "tag": "p",
+            "text": "International partners judge your reliability in 3 seconds. A slow, template-based website screams 'high risk' to tier-1 enterprise buyers."
+          },
+          {
+            "tag": "h3",
+            "text": "02. LOST ENTERPRISE LEADS"
+          },
+          {
+            "tag": "p",
+            "text": "Big buyers don't fill out broken forms on generic sites. They quietly leave, taking lucrative, multi-year contracts directly to your competitors."
+          },
+          {
+            "tag": "h3",
+            "text": "03. OUTDATED INFRASTRUCTURE"
+          },
+          {
+            "tag": "p",
+            "text": "You shouldn't be wasting hours fighting with cheap WordPress plugins or broken mobile layouts when you need to be closing global supply deals."
+          }
+        ]
+      },
+      {
+        "id": "section-3",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ THE EXVORTA SOLUTION ]"
+          },
+          {
+            "tag": "h2",
+            "text": "We don't build brochures. We engineer digital assets."
+          },
+          {
+            "tag": "p",
+            "text": "Your website shouldn't be a cost center. It should be your most relentless sales executive—working 24/7 to project authority, filter unqualified noise, and close global deals."
+          },
+          {
+            "tag": "h3",
+            "text": "Look like a $100M Player."
+          },
+          {
+            "tag": "p",
+            "text": "We strip away amateur templates and apply elite, bespoke UI/UX architecture. Your digital presence will instantly match the scale and ambition of your global operations."
+          },
+          {
+            "tag": "h3",
+            "text": "Turn Traffic into Contracts."
+          },
+          {
+            "tag": "p",
+            "text": "Beautiful isn't enough. We engineer optimized user flows and secure intake portals that guide high-tier enterprise leads directly into your sales pipeline."
+          },
+          {
+            "tag": "h3",
+            "text": "You Trade. We Handle the Tech."
+          },
+          {
+            "tag": "p",
+            "text": "Stop wrestling with broken plugins. We deploy secure, hyper-fast, maintenance-free infrastructures so your team can focus strictly on moving volume."
+          }
+        ]
+      },
+      {
+        "id": "section-4",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ ARCHITECTURAL SPECS ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Pure Code. Flawless Aesthetics."
+          },
+          {
+            "tag": "h3",
+            "text": "Bespoke Art Direction. Refined Until Perfect."
+          },
+          {
+            "tag": "p",
+            "text": "Custom visual identities designed from scratch. We refine every pixel until we achieve a shared, institutional masterpiece."
+          },
+          {
+            "tag": "h3",
+            "text": "100% Hardcoded."
+          },
+          {
+            "tag": "p",
+            "text": "Built from scratch. No templates, no shortcuts. Elite code for unbreachable security and extreme speed."
+          },
+          {
+            "tag": "h3",
+            "text": "High-Performance UX."
+          },
+          {
+            "tag": "p",
+            "text": "Fluid animations and instant interaction speeds designed for high-stakes, fast-moving global trade environments."
+          },
+          {
+            "tag": "h3",
+            "text": "Dedicated Ongoing Support."
+          },
+          {
+            "tag": "p",
+            "text": "Professional infrastructure handling and unlimited layout updates so your team remains focused on moving trade volume."
+          }
+        ]
+      },
+      {
+        "id": "section-5",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ THE DEPLOYMENT PIPELINE ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Zero Friction. Infinite Precision."
+          },
+          {
+            "tag": "span",
+            "text": "WEEK 1"
+          },
+          {
+            "tag": "h3",
+            "text": "Strategic Discovery"
+          },
+          {
+            "tag": "h4",
+            "text": "ARCHITECTURAL BLUEPRINTING"
+          },
+          {
+            "tag": "p",
+            "text": "We audit your current digital footprint and map out a bespoke strategy that aligns your technical infrastructure with your global market ambitions."
+          },
+          {
+            "tag": "span",
+            "text": "WEEKS 2-3"
+          },
+          {
+            "tag": "h3",
+            "text": "The Iterative Canvas"
+          },
+          {
+            "tag": "h4",
+            "text": "BESPOKE VISUAL DESIGN"
+          },
+          {
+            "tag": "p",
+            "text": "Our art directors create your visual identity from scratch. No UI kits. No shortcuts. Just high-fidelity, institutional-grade aesthetics."
+          },
+          {
+            "tag": "span",
+            "text": "WEEKS 4-5"
+          },
+          {
+            "tag": "h3",
+            "text": "Hardcoded Engineering"
+          },
+          {
+            "tag": "h4",
+            "text": "PURE CODE DEVELOPMENT"
+          },
+          {
+            "tag": "p",
+            "text": "Once design is approved, our engineers build the front-end using pure, lightweight code. We optimize for sub-second load times on the global trade floor."
+          },
+          {
+            "tag": "span",
+            "text": "ONGOING"
+          },
+          {
+            "tag": "h3",
+            "text": "Handover & Concierge"
+          },
+          {
+            "tag": "h4",
+            "text": "Deployment & Dedicated Support"
+          },
+          {
+            "tag": "p",
+            "text": "We launch your asset to the global edge network. From there, we provide concierge-level support and maintenance for your evolving digital ecosystem."
+          }
+        ]
+      },
+      {
+        "id": "section-6",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ 06. PORTFOLIO SHOWCASE ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Proof of Execution."
+          },
+          {
+            "tag": "p",
+            "text": "Our recent deployments for elite trading institutions worldwide. Examine our track record of delivering uncompromised quality."
+          },
+          {
+            "tag": "a",
+            "text": "EXPLORE FULL PORTFOLIO ↗"
+          },
+          {
+            "tag": "span",
+            "text": "[ CINEMATIC B&W IMAGE PLACEHOLDER ]"
+          }
+        ]
+      },
+      {
+        "id": "section-7",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ SCOPE OF INVESTMENT ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Tailored Architectures."
+          },
+          {
+            "tag": "span",
+            "text": "Scoped to Your Scale."
+          },
+          {
+            "tag": "p",
+            "text": "We scope every engagement individually based on your operational complexity and market ambitions."
+          },
+          {
+            "tag": "h3",
+            "text": "01. Foundation"
+          },
+          {
+            "tag": "p",
+            "text": "All packages include: Custom Design, Custom Development & Admin Panel"
+          },
+          {
+            "tag": "div",
+            "text": "Pricing Upon Proposal"
+          },
+          {
+            "tag": "h3",
+            "text": "02. Professional"
+          },
+          {
+            "tag": "p",
+            "text": "All packages include: Custom Design, Custom Development & Admin Panel"
+          },
+          {
+            "tag": "div",
+            "text": "Pricing Upon Proposal"
+          },
+          {
+            "tag": "h3",
+            "text": "03. Premium"
+          },
+          {
+            "tag": "p",
+            "text": "All packages include: Custom Design, Custom Development & Admin Panel"
+          },
+          {
+            "tag": "div",
+            "text": "Pricing Upon Proposal"
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST A CUSTOM SCOPE ]"
+          }
+        ]
+      },
+      {
+        "id": "section-8",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ THE MARKET CONSENSUS ]"
+          },
+          {
+            "tag": "h3",
+            "text": "75% of people judge a company's credibility based on their website design alone."
+          },
+          {
+            "tag": "span",
+            "text": "— Stanford Web Credibility Research, B.J. Fogg"
+          },
+          {
+            "tag": "h4",
+            "text": "The Zero-Risk Standard"
+          },
+          {
+            "tag": "p",
+            "text": "Every engagement begins with a clear scope and mutual agreement. We deliver to standard or we iterate until we do. No ambiguity. No surprises."
+          },
+          {
+            "tag": "div",
+            "text": "The Exvorta Partners"
+          }
+        ]
+      },
+      {
+        "id": "section-9",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ EXECUTIVE BRIEFING ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Clarity on Execution."
+          },
+          {
+            "tag": "span",
+            "text": "Addressing Common Friction."
+          },
+          {
+            "tag": "span",
+            "text": "How much of my team's time will this deployment require?"
+          },
+          {
+            "tag": "p",
+            "text": "Virtually none. We require a single 60-minute strategic alignment call. From there, our architects and copywriters handle 100% of the heavy lifting. You simply review and approve the final institutional asset."
+          },
+          {
+            "tag": "span",
+            "text": "We move fast. Do we need internal developers to update the site?"
+          },
+          {
+            "tag": "p",
+            "text": "No. Your focus should remain entirely on moving trade volume. Every engagement includes ongoing dedicated support. Any updates, new pages, or adjustments are handled by our team — so you stay focused on your business."
+          },
+          {
+            "tag": "span",
+            "text": "Why custom architecture instead of a premium WordPress setup?"
+          },
+          {
+            "tag": "p",
+            "text": "WordPress is built for general use. We build specifically for your business — custom architecture, faster load times, and a codebase only you own. No shared templates, no plugin dependencies."
+          }
+        ]
+      },
+      {
+        "id": "section-10",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ INITIATE DEPLOYMENT ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Secure Your CompetitiveAdvantage in Global Trade."
+          },
+          {
+            "tag": "p",
+            "text": "Your competitors are investing in their digital presence. This is your move."
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST PROPOSAL ]"
+          },
+          {
+            "tag": "div",
+            "text": "* Strict NDA enforcement. Proposals delivered within 48 hours."
+          }
+        ]
+      },
+      {
+        "id": "section-11",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "p",
+            "text": "The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE."
+          },
+          {
+            "tag": "h4",
+            "text": "THE ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Web"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Docs"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Track"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta CRM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Intel"
+          },
+          {
+            "tag": "h4",
+            "text": "COMPANY"
+          },
+          {
+            "tag": "a",
+            "text": "Our Vision"
+          },
+          {
+            "tag": "a",
+            "text": "Design Blueprints"
+          },
+          {
+            "tag": "a",
+            "text": "Market Insights"
+          },
+          {
+            "tag": "a",
+            "text": "Contact Us"
+          },
+          {
+            "tag": "h4",
+            "text": "LEGAL & ACCESS"
+          },
+          {
+            "tag": "a",
+            "text": "Request Proposal"
+          },
+          {
+            "tag": "a",
+            "text": "Privacy Policy"
+          },
+          {
+            "tag": "a",
+            "text": "Terms of Service"
+          },
+          {
+            "tag": "p",
+            "text": "© 2026 Exvorta. All rights reserved."
+          }
+        ]
+      }
+    ]
+  },
+  "exvorta_about_page": {
+    "hasDashboard": false,
+    "sections": [
+      {
+        "id": "site-header",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta web"
+          },
+          {
+            "tag": "a",
+            "text": "PORTFOLIO"
+          },
+          {
+            "tag": "a",
+            "text": "ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "THE FIRM"
+          },
+          {
+            "tag": "a",
+            "text": "CLIENT LOGIN"
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST PROPOSAL ]"
+          }
+        ]
+      },
+      {
+        "id": "hero",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ THE EXVORTA IDENTITY ]"
+          },
+          {
+            "tag": "h1",
+            "text": "We Engineer Digital Gravity."
+          },
+          {
+            "tag": "span",
+            "text": "For the World's Most Demanding Trade Entities."
+          },
+          {
+            "tag": "p",
+            "text": "Exvorta is a boutique digital architecture firm. We exist strictly to close the credibility gap between your monumental physical trading velocity and your online infrastructure."
+          },
+          {
+            "tag": "div",
+            "text": "[ DUBAI · GLOBAL REACH ]"
+          }
+        ]
+      },
+      {
+        "id": "section-2",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ THE EXVORTATHESIS ]"
+          },
+          {
+            "tag": "h2",
+            "text": "The era of the digital brochure is dead. A generic website signals operational weakness to global partners. We engineer assets with a balance sheet impact."
+          },
+          {
+            "tag": "p",
+            "text": "In the high-stakes arena of global trade, your digital footprint is your most heavily scrutinized asset. Before a contract is signed, before a container is shipped, serious buyers verify your credibility online before they ever reach out."
+          },
+          {
+            "tag": "p",
+            "text": "We established Exvorta to provide elite trading firms with digital infrastructure that matches their physical scale. No templates. No shortcuts. Just pure, unadulterated performance architecture."
+          }
+        ]
+      },
+      {
+        "id": "section-3",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ HOW WE OPERATE ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Methodical.Relentless."
+          },
+          {
+            "tag": "span",
+            "text": "Pure Execution."
+          },
+          {
+            "tag": "p",
+            "text": "We do not operate like a traditional agency. We function as an outsourced architectural wing for your trading operations. High velocity, zero friction."
+          },
+          {
+            "tag": "h3",
+            "text": "Architectural Precision"
+          },
+          {
+            "tag": "p",
+            "text": "We don't guess. We map your entire digital supply chain before writing a single line of code. Every interface is designed to capture tier-one enterprise leads and establish absolute market authority."
+          },
+          {
+            "tag": "h3",
+            "text": "Hardcoded Superiority"
+          },
+          {
+            "tag": "p",
+            "text": "We bypass bloated content management systems. Our engineers deploy pure, bespoke code directly to the global edge network. The result is elite security standards and sub-second load times on any device, anywhere."
+          },
+          {
+            "tag": "h3",
+            "text": "Dedicated Ongoing Support"
+          },
+          {
+            "tag": "p",
+            "text": "Deployment is a baseline, not a finish line. We handle your entire digital infrastructure maintenance, updates, and scaling, so you stay focused on your business, not your website."
+          }
+        ]
+      },
+      {
+        "id": "founder",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ 04. THE FOUNDER ]"
+          },
+          {
+            "tag": "div",
+            "text": "Hamid Mehrani"
+          },
+          {
+            "tag": "p",
+            "text": "Based in Dubai. Background in digital engineering and international trade operations. Founded Exvorta to bridge the credibility gap facing global trading firms."
+          },
+          {
+            "tag": "span",
+            "text": "HAMID MEHRANI"
+          },
+          {
+            "tag": "span",
+            "text": "PRINCIPAL ARCHITECT, EXVORTA"
+          }
+        ]
+      },
+      {
+        "id": "values",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ THE EXVORTA STANDARD ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Our Operating Principles."
+          },
+          {
+            "tag": "div",
+            "text": "01 — ENGINEERING"
+          },
+          {
+            "tag": "h3",
+            "text": "Zero Bloat Architecture."
+          },
+          {
+            "tag": "p",
+            "text": "We categorically reject templates and heavy content management systems. Every line of code is written specifically for your entity, ensuring strong security standards and fast load times on any device."
+          },
+          {
+            "tag": "div",
+            "text": "02 — AESTHETICS"
+          },
+          {
+            "tag": "h3",
+            "text": "Institutional Authority."
+          },
+          {
+            "tag": "p",
+            "text": "Design is not decoration; it is a mechanism for trust. We apply elite, bespoke UI/UX architecture so your digital presence instantly matches the scale of your global operations."
+          },
+          {
+            "tag": "div",
+            "text": "03 — PRIVACY"
+          },
+          {
+            "tag": "h3",
+            "text": "Absolute Discretion."
+          },
+          {
+            "tag": "p",
+            "text": "We operate under strict Non-Disclosure Agreements. Your digital infrastructure, competitive data, and market strategies are treated as confidential business assets."
+          },
+          {
+            "tag": "div",
+            "text": "04 — PARTNERSHIP"
+          },
+          {
+            "tag": "h3",
+            "text": "Dedicated Partnership"
+          },
+          {
+            "tag": "p",
+            "text": "Deployment is just the beginning. We remain available for updates, adjustments, and ongoing improvements as your business grows."
+          }
+        ]
+      },
+      {
+        "id": "global-presence",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ GLOBAL EDGE INFRASTRUCTURE ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Built for Global Reach."
+          },
+          {
+            "tag": "p",
+            "text": "Your buyers are everywhere. Your website should perform everywhere — on any device, in any market, at any hour."
+          },
+          {
+            "tag": "span",
+            "text": "[ MENA & Gulf ]"
+          },
+          {
+            "tag": "p",
+            "text": "Serving sovereign wealth funds and energy trade entities across the GCC."
+          },
+          {
+            "tag": "span",
+            "text": "[ Europe & UK ]"
+          },
+          {
+            "tag": "p",
+            "text": "Powering high-frequency trade desks in Mayfair, Geneva, and Frankfurt."
+          },
+          {
+            "tag": "span",
+            "text": "[ Asia Pacific ]"
+          },
+          {
+            "tag": "p",
+            "text": "Connecting institutional commodities brokers in Singapore and Hong Kong."
+          }
+        ]
+      },
+      {
+        "id": "cta",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ INITIATE PARTNERSHIP ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Align your digital infrastructurewith your operational scale."
+          },
+          {
+            "tag": "p",
+            "text": "Stop allowing generic architecture to dilute your market authority. Engage our engineering team to map your optimal digital footprint."
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST A PROPOSAL ]"
+          },
+          {
+            "tag": "div",
+            "text": "[ Response within 24 hours ]"
+          }
+        ]
+      },
+      {
+        "id": "section-8",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "p",
+            "text": "The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE."
+          },
+          {
+            "tag": "h4",
+            "text": "THE ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Web"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Docs"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Track"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta CRM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Intel"
+          },
+          {
+            "tag": "h4",
+            "text": "COMPANY"
+          },
+          {
+            "tag": "a",
+            "text": "Our Vision"
+          },
+          {
+            "tag": "a",
+            "text": "Design Blueprints"
+          },
+          {
+            "tag": "a",
+            "text": "Market Insights"
+          },
+          {
+            "tag": "a",
+            "text": "Contact Us"
+          },
+          {
+            "tag": "h4",
+            "text": "LEGAL & ACCESS"
+          },
+          {
+            "tag": "a",
+            "text": "Request Proposal"
+          },
+          {
+            "tag": "a",
+            "text": "Privacy Policy"
+          },
+          {
+            "tag": "a",
+            "text": "Terms of Service"
+          },
+          {
+            "tag": "p",
+            "text": "© 2026 Exvorta. All rights reserved."
+          }
+        ]
+      }
+    ]
+  },
+  "exvorta_blog": {
+    "hasDashboard": false,
+    "sections": [
+      {
+        "id": "site-header",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta web"
+          },
+          {
+            "tag": "a",
+            "text": "PORTFOLIO"
+          },
+          {
+            "tag": "a",
+            "text": "ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "THE FIRM"
+          },
+          {
+            "tag": "a",
+            "text": "CLIENT LOGIN"
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST PROPOSAL ]"
+          }
+        ]
+      },
+      {
+        "id": "blog-hero",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ INSTITUTIONAL INTELLIGENCE ARCHIVE ]"
+          },
+          {
+            "tag": "h1",
+            "text": "Trade Intelligence."
+          },
+          {
+            "tag": "span",
+            "text": "Every week."
+          },
+          {
+            "tag": "p",
+            "text": "Institutional-grade analysis, regulatory compliance updates, and architectural blueprints for global commodities trading."
+          }
+        ]
+      },
+      {
+        "id": "blog-featured",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ DATA COMPILING ]"
+          }
+        ]
+      },
+      {
+        "id": "blog-grid",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "DATE: UNKNOWN"
+          },
+          {
+            "tag": "span",
+            "text": "CAT: UNKNOWN"
+          },
+          {
+            "tag": "span",
+            "text": "DATE: UNKNOWN"
+          },
+          {
+            "tag": "span",
+            "text": "CAT: UNKNOWN"
+          },
+          {
+            "tag": "span",
+            "text": "DATE: UNKNOWN"
+          },
+          {
+            "tag": "span",
+            "text": "CAT: UNKNOWN"
+          },
+          {
+            "tag": "span",
+            "text": "DATE: UNKNOWN"
+          },
+          {
+            "tag": "span",
+            "text": "CAT: UNKNOWN"
+          },
+          {
+            "tag": "span",
+            "text": "DATE: UNKNOWN"
+          },
+          {
+            "tag": "span",
+            "text": "CAT: UNKNOWN"
+          },
+          {
+            "tag": "span",
+            "text": "DATE: UNKNOWN"
+          },
+          {
+            "tag": "span",
+            "text": "CAT: UNKNOWN"
+          }
+        ]
+      },
+      {
+        "id": "blog-newsletter",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ WEEKLY BRIEFING ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Get weekly trade insights."
+          },
+          {
+            "tag": "p",
+            "text": "Actionable data delivered straight to your executive inbox."
+          }
+        ]
+      },
+      {
+        "id": "blog-topics",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ EXPLORE ARCHIVES ]"
+          },
+          {
+            "tag": "span",
+            "text": "Trade Compliance"
+          },
+          {
+            "tag": "span",
+            "text": "HS Codes"
+          },
+          {
+            "tag": "span",
+            "text": "Shipping"
+          },
+          {
+            "tag": "span",
+            "text": "Market Intel"
+          },
+          {
+            "tag": "span",
+            "text": "UAE Trade"
+          }
+        ]
+      },
+      {
+        "id": "blog-promo",
+        "texts": [
+          {
+            "tag": "h3",
+            "text": "Looking for the tools behind the insights?"
+          },
+          {
+            "tag": "p",
+            "text": "Explore Exvorta Docs and Track for enterprise trade management."
+          },
+          {
+            "tag": "a",
+            "text": "[ VIEW ECOSYSTEM ]"
+          }
+        ]
+      },
+      {
+        "id": "blog-cta",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ INITIATE PARTNERSHIP ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Ready to automate your trade operations?"
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST PROPOSAL ]"
+          }
+        ]
+      },
+      {
+        "id": "section-8",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "p",
+            "text": "The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE."
+          },
+          {
+            "tag": "h4",
+            "text": "THE ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Web"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Docs"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Track"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta CRM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Intel"
+          },
+          {
+            "tag": "h4",
+            "text": "COMPANY"
+          },
+          {
+            "tag": "a",
+            "text": "Our Vision"
+          },
+          {
+            "tag": "a",
+            "text": "Design Blueprints"
+          },
+          {
+            "tag": "a",
+            "text": "Market Insights"
+          },
+          {
+            "tag": "a",
+            "text": "Contact Us"
+          },
+          {
+            "tag": "h4",
+            "text": "LEGAL & ACCESS"
+          },
+          {
+            "tag": "a",
+            "text": "Request Proposal"
+          },
+          {
+            "tag": "a",
+            "text": "Privacy Policy"
+          },
+          {
+            "tag": "a",
+            "text": "Terms of Service"
+          },
+          {
+            "tag": "p",
+            "text": "© 2026 Exvorta. All rights reserved."
+          }
+        ]
+      }
+    ]
+  },
+  "exvorta_ecosystem": {
+    "hasDashboard": false,
+    "sections": [
+      {
+        "id": "site-header",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta web"
+          },
+          {
+            "tag": "a",
+            "text": "PORTFOLIO"
+          },
+          {
+            "tag": "a",
+            "text": "ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "THE FIRM"
+          },
+          {
+            "tag": "a",
+            "text": "CLIENT LOGIN"
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST PROPOSAL ]"
+          }
+        ]
+      },
+      {
+        "id": "ecosystem-hero",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ THE GLOBAL TRADE OPERATING SYSTEM ]"
+          },
+          {
+            "tag": "h1",
+            "text": "A Unifying Core."
+          },
+          {
+            "tag": "span",
+            "text": "One OS for Global Trading Infrastructure."
+          },
+          {
+            "tag": "p",
+            "text": "We do not build isolated products. We engineer an integrated digital command center. From bespoke Web architectures to automated documentation and trade tracking, Exvorta merges Web, Docs, Track, CRM, and Intel into a single, cohesive operating system for global traders."
+          },
+          {
+            "tag": "span",
+            "text": "[ WEB · DOCS · TRACK · CRM · INTEL · SUITE ]"
+          }
+        ]
+      },
+      {
+        "id": "ecosystem-problem",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ THE FRAGMENTATION PROBLEM ]"
+          },
+          {
+            "tag": "h2",
+            "text": "The modern trading entity is paralyzed by shattered software."
+          },
+          {
+            "tag": "p",
+            "text": "You use one vendor for a public website, another for client portals, and legacy systems for tracking. This fragmentation creates data silos, wasted hours, and decisions made on incomplete information. To scale globally, you do not need more apps. You need a singular, unified nervous system."
+          }
+        ]
+      },
+      {
+        "id": "product-web",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ MODULE 01 ]"
+          },
+          {
+            "tag": "span",
+            "text": "LIVE"
+          },
+          {
+            "tag": "h2",
+            "text": "Exvorta Web."
+          },
+          {
+            "tag": "p",
+            "text": "Bespoke digital architecture for global trading entities. We replace fragile templates with hardcoded, high-performance web infrastructure designed entirely for institutional authority and tier-one lead acquisition."
+          },
+          {
+            "tag": "a",
+            "text": "[ VIEW ARCHITECTURE ]"
+          },
+          {
+            "tag": "div",
+            "text": "EXVORTA // RAD_VIEWPORT"
+          }
+        ]
+      },
+      {
+        "id": "product-docs",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "docs.exvorta.com // ALPHA"
+          },
+          {
+            "tag": "div",
+            "text": "[ Commercial Invoice ]"
+          },
+          {
+            "tag": "div",
+            "text": "[ Packing List ]"
+          },
+          {
+            "tag": "div",
+            "text": "[ Certificate of Origin ]"
+          },
+          {
+            "tag": "div",
+            "text": "Exporter"
+          },
+          {
+            "tag": "div",
+            "text": "Consignee"
+          },
+          {
+            "tag": "div",
+            "text": "HS Code"
+          },
+          {
+            "tag": "div",
+            "text": "Declared Value"
+          },
+          {
+            "tag": "div",
+            "text": "Origin Country"
+          },
+          {
+            "tag": "span",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "span",
+            "text": "[ CLOSED BETA ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Exvorta Docs."
+          },
+          {
+            "tag": "p",
+            "text": "Trade documents generated in seconds. Commercial invoices, packing lists, and certificates of origin — auto-built from a single data entry. No formatting errors. No customs delays."
+          },
+          {
+            "tag": "p",
+            "text": "Currently available exclusively to active Exvorta Web clients."
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST BETA ACCESS ]"
+          }
+        ]
+      },
+      {
+        "id": "product-track",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ COMING SOON ]"
+          },
+          {
+            "tag": "span",
+            "text": "Global Logistics Alpha"
+          },
+          {
+            "tag": "h2",
+            "text": "Exvorta Track."
+          },
+          {
+            "tag": "p",
+            "text": "Real-time, verifiable visibility into your global trade pipeline. Exvorta Track moves asset tracking from static spreadsheets to a dynamic, hardened data ecosystem, connecting directly with major global carriers and freight forwarders."
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST ALPHA ACCESS ]"
+          },
+          {
+            "tag": "span",
+            "text": "arrow_forward"
+          },
+          {
+            "tag": "div",
+            "text": "track.exvorta.com // VESSEL_TRACKER_V2"
+          },
+          {
+            "tag": "span",
+            "text": "[ ACTIVE SHIPMENTS ]"
+          },
+          {
+            "tag": "span",
+            "text": "[ IN TRANSIT ]"
+          },
+          {
+            "tag": "span",
+            "text": "[ DELIVERED ]"
+          },
+          {
+            "tag": "span",
+            "text": "DUBAI → ROTTERDAM"
+          },
+          {
+            "tag": "span",
+            "text": "MAERSK"
+          },
+          {
+            "tag": "span",
+            "text": "IN TRANSIT"
+          },
+          {
+            "tag": "span",
+            "text": "SHANGHAI → JEBEL ALI"
+          },
+          {
+            "tag": "span",
+            "text": "AT CUSTOMS"
+          },
+          {
+            "tag": "span",
+            "text": "HAMBURG → SINGAPORE"
+          },
+          {
+            "tag": "span",
+            "text": "DELIVERED"
+          },
+          {
+            "tag": "span",
+            "text": "MUMBAI → NEW YORK"
+          },
+          {
+            "tag": "span",
+            "text": "FEDEX"
+          },
+          {
+            "tag": "span",
+            "text": "LOADING"
+          },
+          {
+            "tag": "span",
+            "text": "[ LOADED ]"
+          },
+          {
+            "tag": "span",
+            "text": "[ SHIPPED ]"
+          },
+          {
+            "tag": "span",
+            "text": "[ IN TRANSIT ]"
+          },
+          {
+            "tag": "span",
+            "text": "[ DELIVERED ]"
+          }
+        ]
+      },
+      {
+        "id": "product-crm",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "crm.exvorta.com // RELATIONSHIP_ENGINE"
+          },
+          {
+            "tag": "span",
+            "text": "search"
+          },
+          {
+            "tag": "div",
+            "text": "Nova Petrochem"
+          },
+          {
+            "tag": "span",
+            "text": "🇦🇪"
+          },
+          {
+            "tag": "div",
+            "text": "Gulf Logistics"
+          },
+          {
+            "tag": "span",
+            "text": "🇸🇦"
+          },
+          {
+            "tag": "div",
+            "text": "Armada Metals"
+          },
+          {
+            "tag": "span",
+            "text": "🇩🇪"
+          },
+          {
+            "tag": "div",
+            "text": "TradeSource Co"
+          },
+          {
+            "tag": "span",
+            "text": "🇨🇳"
+          },
+          {
+            "tag": "div",
+            "text": "Nova Petrochem // UAE // Active Buyer"
+          },
+          {
+            "tag": "span",
+            "text": "PETROCHEMICAL"
+          },
+          {
+            "tag": "span",
+            "text": "VERIFIED"
+          },
+          {
+            "tag": "div",
+            "text": "INQUIRY"
+          },
+          {
+            "tag": "div",
+            "text": "NEGOTIATION"
+          },
+          {
+            "tag": "div",
+            "text": "Crude Derivative Batch #4471"
+          },
+          {
+            "tag": "div",
+            "text": "$340,000 · Due: 14 Jun"
+          },
+          {
+            "tag": "div",
+            "text": "CONFIRMED"
+          },
+          {
+            "tag": "div",
+            "text": "SHIPPED"
+          },
+          {
+            "tag": "div",
+            "text": "PAID"
+          },
+          {
+            "tag": "div",
+            "text": "4 Active Deals"
+          },
+          {
+            "tag": "div",
+            "text": "$1.2M Pipeline"
+          },
+          {
+            "tag": "div",
+            "text": "2 Docs Pending"
+          },
+          {
+            "tag": "span",
+            "text": "[ COMING SOON ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Exvorta CRM."
+          },
+          {
+            "tag": "p",
+            "text": "Manage every buyer and supplier relationship in one place. Deal pipelines, document history, follow-up reminders — built specifically for how traders actually work."
+          },
+          {
+            "tag": "a",
+            "text": "[ JOIN THE WAITLIST ]"
+          },
+          {
+            "tag": "span",
+            "text": "terminal"
+          }
+        ]
+      },
+      {
+        "id": "product-intel",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ MODULE 05 ]"
+          },
+          {
+            "tag": "span",
+            "text": "COMING SOON"
+          },
+          {
+            "tag": "h2",
+            "text": "Exvorta Intel."
+          },
+          {
+            "tag": "p",
+            "text": "Intuition does not scale. Exvorta Intel processes millions of global trade data points into actionable, predictive commodity forecasting and supply chain risk analysis."
+          },
+          {
+            "tag": "p",
+            "text": "Monitor macro-economic shifts, track competitor vessel routes, and analyze real-time pricing arbitrage across global ports—all from a single executive terminal."
+          },
+          {
+            "tag": "a",
+            "text": "[ JOIN THE WAITLIST ]"
+          },
+          {
+            "tag": "span",
+            "text": "[INTEL_ALPHA_ACCESS // LIVE NODE_03]"
+          },
+          {
+            "tag": "div",
+            "text": "PREDICTIVE NEURAL FORECAST // COMMODITY_AGGREGATE"
+          },
+          {
+            "tag": "div",
+            "text": "+12.4% Est."
+          },
+          {
+            "tag": "span",
+            "text": "[ RISK CORRELATION MATRIX ]"
+          },
+          {
+            "tag": "span",
+            "text": "CRUDE"
+          },
+          {
+            "tag": "span",
+            "text": "+2.4%"
+          },
+          {
+            "tag": "span",
+            "text": "COPPER"
+          },
+          {
+            "tag": "span",
+            "text": "-0.8%"
+          },
+          {
+            "tag": "span",
+            "text": "+1.1%"
+          },
+          {
+            "tag": "span",
+            "text": "[AI MODEL: ACTIVE // LATENCY <5MS]"
+          },
+          {
+            "tag": "span",
+            "text": "[SIGNAL_ACQUISITION_PULSE]"
+          }
+        ]
+      },
+      {
+        "id": "ecosystem-vision",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "THE ULTIMATE VISION"
+          },
+          {
+            "tag": "h2",
+            "text": "Total Synthesis."
+          },
+          {
+            "tag": "span",
+            "text": "The Exvorta Suite."
+          },
+          {
+            "tag": "p",
+            "text": "When Web, Docs, Track, CRM, and Intel converge, they cease to be individual tools. They become a singular, unbreachable digital nervous system. This is the Exvorta Suite: the absolute apex of global trade infrastructure."
+          },
+          {
+            "tag": "span",
+            "text": "DOCS"
+          },
+          {
+            "tag": "span",
+            "text": "TRACK"
+          },
+          {
+            "tag": "span",
+            "text": "INTEL"
+          }
+        ]
+      },
+      {
+        "id": "ecosystem-roadmap",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ DEPLOYMENT SCHEDULE ]"
+          },
+          {
+            "tag": "h2",
+            "text": "The Infrastructure Roadmap."
+          },
+          {
+            "tag": "div",
+            "text": "PHASE 0 // ACTIVE"
+          },
+          {
+            "tag": "h3",
+            "text": "Exvorta Web"
+          },
+          {
+            "tag": "p",
+            "text": "Foundation established. Deploying hardcoded, high-velocity digital architectures for tier-one trade entities globally."
+          },
+          {
+            "tag": "div",
+            "text": "PHASE 1 // Q3 2026"
+          },
+          {
+            "tag": "h3",
+            "text": "Docs & Track Modules"
+          },
+          {
+            "tag": "p",
+            "text": "Releasing the zero-trust document data room (Docs) and the real-time supply chain visibility dashboard (Track) to our existing infrastructure partners."
+          },
+          {
+            "tag": "div",
+            "text": "PHASE 2 // Q1 2027"
+          },
+          {
+            "tag": "h3",
+            "text": "Exvorta CRM"
+          },
+          {
+            "tag": "p",
+            "text": "Rolling out the first relationship architecture engineered explicitly for international trade desks, integrating KYC and broker networks."
+          },
+          {
+            "tag": "div",
+            "text": "PHASE 3 // Q3 2027"
+          },
+          {
+            "tag": "h3",
+            "text": "Exvorta Intel"
+          },
+          {
+            "tag": "p",
+            "text": "Deploying the institutional-grade market intelligence terminal for predictive commodity forecasting and risk correlation."
+          },
+          {
+            "tag": "div",
+            "text": "PHASE 4 // 2028"
+          },
+          {
+            "tag": "h3",
+            "text": "The Exvorta Suite"
+          },
+          {
+            "tag": "p",
+            "text": "Complete modular synthesis. All individual products seamlessly converge into the unified global trade operating system."
+          }
+        ]
+      },
+      {
+        "id": "ecosystem-cta",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ INITIATE PARTNERSHIP ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Secure your digital foundation."
+          },
+          {
+            "tag": "span",
+            "text": "Unlock the ecosystem."
+          },
+          {
+            "tag": "p",
+            "text": "Alpha access to Exvorta Docs and Track is strictly prioritized for our active web architecture clients. Upgrade your public infrastructure today to guarantee your position in the future of global trade."
+          },
+          {
+            "tag": "a",
+            "text": "[ UPGRADE WEB ARCHITECTURE ]"
+          },
+          {
+            "tag": "a",
+            "text": "[ JOIN SOFTWARE WAITLIST ]"
+          },
+          {
+            "tag": "span",
+            "text": "* Web proposals are subject to capacity constraints."
+          }
+        ]
+      },
+      {
+        "id": "section-11",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "p",
+            "text": "The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE."
+          },
+          {
+            "tag": "h4",
+            "text": "THE ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Web"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Docs"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Track"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta CRM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Intel"
+          },
+          {
+            "tag": "h4",
+            "text": "COMPANY"
+          },
+          {
+            "tag": "a",
+            "text": "Our Vision"
+          },
+          {
+            "tag": "a",
+            "text": "Design Blueprints"
+          },
+          {
+            "tag": "a",
+            "text": "Market Insights"
+          },
+          {
+            "tag": "a",
+            "text": "Contact Us"
+          },
+          {
+            "tag": "h4",
+            "text": "LEGAL & ACCESS"
+          },
+          {
+            "tag": "a",
+            "text": "Request Proposal"
+          },
+          {
+            "tag": "a",
+            "text": "Privacy Policy"
+          },
+          {
+            "tag": "a",
+            "text": "Terms of Service"
+          },
+          {
+            "tag": "p",
+            "text": "© 2026 Exvorta. All rights reserved."
+          }
+        ]
+      }
+    ]
+  },
+  "exvorta_home page": {
+    "hasDashboard": true,
+    "sections": [
+      {
+        "id": "site-header",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta web"
+          },
+          {
+            "tag": "a",
+            "text": "PORTFOLIO"
+          },
+          {
+            "tag": "a",
+            "text": "ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "THE FIRM"
+          },
+          {
+            "tag": "a",
+            "text": "CLIENT LOGIN"
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST PROPOSAL ]"
+          }
+        ]
+      },
+      {
+        "id": "hero-section",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ ENGINE V1.0 LIVE ]"
+          },
+          {
+            "tag": "h1",
+            "text": "Digital Infrastructurefor Global Traders"
+          },
+          {
+            "tag": "p",
+            "text": "The definitive digital foundation for elite importers and exporters. Precision-engineered web presence and automated compliance."
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST PROPOSAL ]"
+          },
+          {
+            "tag": "div",
+            "text": "Exvorta OS"
+          },
+          {
+            "tag": "div",
+            "text": "SYS_ONLINE"
+          },
+          {
+            "tag": "span",
+            "text": "Workspace"
+          },
+          {
+            "tag": "span",
+            "text": "Global Routing"
+          },
+          {
+            "tag": "span",
+            "text": "Active"
+          },
+          {
+            "tag": "div",
+            "text": "A. Mercer"
+          },
+          {
+            "tag": "div",
+            "text": "Admin"
+          },
+          {
+            "tag": "div",
+            "text": "Total Volume (TEU)"
+          },
+          {
+            "tag": "div",
+            "text": "34,290"
+          },
+          {
+            "tag": "div",
+            "text": "Active Clearances"
+          },
+          {
+            "tag": "div",
+            "text": "ACROSS 14 JURISDICTIONS"
+          },
+          {
+            "tag": "div",
+            "text": "Compliance Health"
+          },
+          {
+            "tag": "span",
+            "text": "Export Controls"
+          },
+          {
+            "tag": "span",
+            "text": "CLEAR"
+          },
+          {
+            "tag": "span",
+            "text": "Sanctions Screen"
+          },
+          {
+            "tag": "span",
+            "text": "CLEAR"
+          },
+          {
+            "tag": "div",
+            "text": "LIVE CLEARANCE LEDGER"
+          },
+          {
+            "tag": "span",
+            "text": "CLEARED"
+          },
+          {
+            "tag": "span",
+            "text": "IN TRANSIT"
+          },
+          {
+            "tag": "span",
+            "text": "PENDING KYC"
+          },
+          {
+            "tag": "span",
+            "text": "CLEARED"
+          },
+          {
+            "tag": "span",
+            "text": "CUSTOMS HOLD"
+          },
+          {
+            "tag": "span",
+            "text": "CLEARED"
+          },
+          {
+            "tag": "div",
+            "text": "Live Terminal Log"
+          },
+          {
+            "tag": "div",
+            "text": "[14:02:11 UTC]"
+          },
+          {
+            "tag": "div",
+            "text": "Customs cleared at"
+          },
+          {
+            "tag": "span",
+            "text": "AE-DXB"
+          },
+          {
+            "tag": "div",
+            "text": "REF: TRK-9821-X"
+          },
+          {
+            "tag": "div",
+            "text": "[13:58:44 UTC]"
+          },
+          {
+            "tag": "div",
+            "text": "Vessel arrived at berth"
+          },
+          {
+            "tag": "span",
+            "text": "BE-ANR"
+          },
+          {
+            "tag": "div",
+            "text": "REF: TRK-9912-A"
+          },
+          {
+            "tag": "div",
+            "text": "[13:45:09 UTC]"
+          },
+          {
+            "tag": "div",
+            "text": "KYC verification requested"
+          },
+          {
+            "tag": "span",
+            "text": "US-HOU"
+          },
+          {
+            "tag": "div",
+            "text": "REF: TRK-4491-C"
+          },
+          {
+            "tag": "div",
+            "text": "[13:12:30 UTC]"
+          },
+          {
+            "tag": "div",
+            "text": "Automated commercial invoice generated."
+          },
+          {
+            "tag": "div",
+            "text": "SYS_DOC_ENGINE"
+          },
+          {
+            "tag": "div",
+            "text": "[12:44:05 UTC]"
+          },
+          {
+            "tag": "div",
+            "text": "Sanctions screen passed"
+          },
+          {
+            "tag": "span",
+            "text": "GLOBAL"
+          },
+          {
+            "tag": "div",
+            "text": "REF: TRK-1005-D"
+          },
+          {
+            "tag": "div",
+            "text": "[12:30:00 UTC]"
+          },
+          {
+            "tag": "div",
+            "text": "Daily route optimization complete."
+          },
+          {
+            "tag": "div",
+            "text": "SYS_ROUTE_ENGINE"
+          },
+          {
+            "tag": "div",
+            "text": "[11:15:22 UTC]"
+          },
+          {
+            "tag": "div",
+            "text": "Departed origin port"
+          },
+          {
+            "tag": "span",
+            "text": "CN-SHA"
+          },
+          {
+            "tag": "div",
+            "text": "REF: TRK-3302-B"
+          }
+        ]
+      },
+      {
+        "id": "manifesto",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "Architecture Manifesto"
+          },
+          {
+            "tag": "h2",
+            "text": "Built for How Traders Actually Work"
+          },
+          {
+            "tag": "h3",
+            "text": "Rapid Bespoke Deployment"
+          },
+          {
+            "tag": "p",
+            "text": "High-performance websites delivered in just 2–4 weeks. We leverage advanced coding frameworks and agile team structures to move at the speed of global trade, without ever compromising institutional prestige."
+          },
+          {
+            "tag": "h3",
+            "text": "Headless Architecture"
+          },
+          {
+            "tag": "p",
+            "text": "Built on modern, scalable infrastructure (Next.js & Edge compute). API-ready designs ensuring your web presence is fast, secure, and globally accessible without legacy constraints."
+          },
+          {
+            "tag": "h3",
+            "text": "Absolute Data Sovereignty"
+          },
+          {
+            "tag": "p",
+            "text": "Enterprise-grade security protocols standard in every build. We ensure your corporate presence and proprietary intelligence remain strictly confidential and protected."
+          }
+        ]
+      },
+      {
+        "id": "the-pitch",
+        "texts": [
+          {
+            "tag": "h2",
+            "text": "Deals are won before the first meeting."
+          },
+          {
+            "tag": "p",
+            "text": "Without a credible digital presence, you are losing deals before the first conversation. Exvorta fixes this."
+          }
+        ]
+      },
+      {
+        "id": "portfolio-index",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ OUR INFRASTRUCTURE WORK ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Proof of Execution."
+          },
+          {
+            "tag": "h3",
+            "text": "Spicevo"
+          },
+          {
+            "tag": "p",
+            "text": "Certified organic herbs supply chain for European premium markets."
+          },
+          {
+            "tag": "span",
+            "text": "INDUSTRY"
+          },
+          {
+            "tag": "span",
+            "text": "ORGANIC HERBS"
+          },
+          {
+            "tag": "span",
+            "text": "VOLUME"
+          },
+          {
+            "tag": "span",
+            "text": "480 MT/YR"
+          },
+          {
+            "tag": "span",
+            "text": "SERVICE"
+          },
+          {
+            "tag": "span",
+            "text": "WEB DESIGN & CMS"
+          },
+          {
+            "tag": "a",
+            "text": "VIEW CASE STUDY ↗"
+          },
+          {
+            "tag": "h3",
+            "text": "Nutave"
+          },
+          {
+            "tag": "p",
+            "text": "Precision nut processing and distribution for global wholesale partners."
+          },
+          {
+            "tag": "span",
+            "text": "INDUSTRY"
+          },
+          {
+            "tag": "span",
+            "text": "PREMIUM NUTS"
+          },
+          {
+            "tag": "span",
+            "text": "VOLUME"
+          },
+          {
+            "tag": "span",
+            "text": "650 MT/YR"
+          },
+          {
+            "tag": "span",
+            "text": "SERVICE"
+          },
+          {
+            "tag": "span",
+            "text": "B2B WEB DEVELOPMENT"
+          },
+          {
+            "tag": "a",
+            "text": "VIEW CASE STUDY ↗"
+          },
+          {
+            "tag": "h3",
+            "text": "Stonvi"
+          },
+          {
+            "tag": "p",
+            "text": "High-end ceramic and stone materials for international architectural projects."
+          },
+          {
+            "tag": "span",
+            "text": "INDUSTRY"
+          },
+          {
+            "tag": "span",
+            "text": "CERAMICS"
+          },
+          {
+            "tag": "span",
+            "text": "VOLUME"
+          },
+          {
+            "tag": "span",
+            "text": "2.4M SQM/YR"
+          },
+          {
+            "tag": "span",
+            "text": "SERVICE"
+          },
+          {
+            "tag": "span",
+            "text": "CORPORATE WEBSITE & CMS"
+          },
+          {
+            "tag": "a",
+            "text": "VIEW CASE STUDY ↗"
+          }
+        ]
+      },
+      {
+        "id": "exvorta-docs",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "EXVORTA_DOCUMENT_WORKFLOW_v4"
+          },
+          {
+            "tag": "span",
+            "text": "Bill of Lading"
+          },
+          {
+            "tag": "div",
+            "text": "CIF (Cost, Insurance & Freight)"
+          },
+          {
+            "tag": "div",
+            "text": "2901.21.00"
+          },
+          {
+            "tag": "div",
+            "text": "AE JEA (JEBEL ALI)"
+          },
+          {
+            "tag": "div",
+            "text": "Document Reference"
+          },
+          {
+            "tag": "div",
+            "text": "REF: EXV-8829-DXB"
+          },
+          {
+            "tag": "div",
+            "text": "1. SHIPPER"
+          },
+          {
+            "tag": "div",
+            "text": "Global Petrochem LLC\n      Jafza One, Dubai, UAE"
+          },
+          {
+            "tag": "div",
+            "text": "2. CONSIGNEE"
+          },
+          {
+            "tag": "div",
+            "text": "Vanguard Resources\n      Botlek, Rotterdam, Netherlands"
+          },
+          {
+            "tag": "div",
+            "text": "VESSEL"
+          },
+          {
+            "tag": "div",
+            "text": "MSC Isabella"
+          },
+          {
+            "tag": "div",
+            "text": "VOYAGE"
+          },
+          {
+            "tag": "div",
+            "text": "V-092A"
+          },
+          {
+            "tag": "div",
+            "text": "AE JEA"
+          },
+          {
+            "tag": "div",
+            "text": "NL RTM"
+          },
+          {
+            "tag": "div",
+            "text": "7. DESCRIPTION OF GOODS AND SERVICES"
+          },
+          {
+            "tag": "p",
+            "text": "Petrochemical Raw Materials in ISO Tank Containers."
+          },
+          {
+            "tag": "div",
+            "text": "TOTAL GROSS WEIGHT:"
+          },
+          {
+            "tag": "span",
+            "text": "24,500.00 KGS"
+          },
+          {
+            "tag": "div",
+            "text": "HS CODE:"
+          },
+          {
+            "tag": "span",
+            "text": "2901.21.00"
+          },
+          {
+            "tag": "div",
+            "text": "Digital Signature"
+          },
+          {
+            "tag": "div",
+            "text": "Alex Mercer"
+          },
+          {
+            "tag": "div",
+            "text": "✓ COMPLIANCE VERIFIED"
+          },
+          {
+            "tag": "div",
+            "text": "Document Automation"
+          },
+          {
+            "tag": "h2",
+            "text": "Trade Documents,Automated & Perfected."
+          },
+          {
+            "tag": "p",
+            "text": "Stop wasting hours on manual paperwork. Instantly generate, digitally sign, and manage strictly compliant global trade documents from official templates."
+          },
+          {
+            "tag": "span",
+            "text": "Intelligent Template Memory"
+          },
+          {
+            "tag": "span",
+            "text": "Digital Signatures"
+          },
+          {
+            "tag": "span",
+            "text": "Bank-Grade Compliance & API Ready"
+          },
+          {
+            "tag": "a",
+            "text": "Explore Exvorta Docs"
+          }
+        ]
+      },
+      {
+        "id": "roadmap",
+        "texts": [
+          {
+            "tag": "h2",
+            "text": "The Master Plan: Exvorta Ecosystem"
+          },
+          {
+            "tag": "p",
+            "text": "We are actively building the definitive, unified operating system for global trade."
+          },
+          {
+            "tag": "div",
+            "text": "[ PHASE 1 ]"
+          },
+          {
+            "tag": "h3",
+            "text": "Exvorta Track"
+          },
+          {
+            "tag": "p",
+            "text": "End-to-end multimodal logistics telemetry and predictive freight visibility."
+          },
+          {
+            "tag": "div",
+            "text": "[ PHASE 2 ]"
+          },
+          {
+            "tag": "h3",
+            "text": "Exvorta CRM"
+          },
+          {
+            "tag": "p",
+            "text": "Trade-specific counterparty risk management and global vendor intelligence."
+          },
+          {
+            "tag": "div",
+            "text": "[ PHASE 3 ]"
+          },
+          {
+            "tag": "h3",
+            "text": "Exvorta Intel"
+          },
+          {
+            "tag": "p",
+            "text": "Proprietary market data, trade flows, and real-time commodities pricing benchmarks."
+          },
+          {
+            "tag": "div",
+            "text": "[ THE VISION ]"
+          },
+          {
+            "tag": "h3",
+            "text": "Exvorta Suite"
+          },
+          {
+            "tag": "p",
+            "text": "The ultimate convergence. A singular, unified digital infrastructure seamlessly integrating your web presence, automated compliance, logistics, and intelligence into one trade OS."
+          }
+        ]
+      },
+      {
+        "id": "section-7",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "p",
+            "text": "The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE."
+          },
+          {
+            "tag": "h4",
+            "text": "THE ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Web"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Docs"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Track"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta CRM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Intel"
+          },
+          {
+            "tag": "h4",
+            "text": "COMPANY"
+          },
+          {
+            "tag": "a",
+            "text": "Our Vision"
+          },
+          {
+            "tag": "a",
+            "text": "Design Blueprints"
+          },
+          {
+            "tag": "a",
+            "text": "Market Insights"
+          },
+          {
+            "tag": "a",
+            "text": "Contact Us"
+          },
+          {
+            "tag": "h4",
+            "text": "LEGAL & ACCESS"
+          },
+          {
+            "tag": "a",
+            "text": "Request Proposal"
+          },
+          {
+            "tag": "a",
+            "text": "Privacy Policy"
+          },
+          {
+            "tag": "a",
+            "text": "Terms of Service"
+          },
+          {
+            "tag": "p",
+            "text": "© 2026 Exvorta. All rights reserved."
+          }
+        ]
+      }
+    ]
+  },
+  "exvorta_insights": {
+    "hasDashboard": false,
+    "sections": [
+      {
+        "id": "site-header",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta web"
+          },
+          {
+            "tag": "a",
+            "text": "PORTFOLIO"
+          },
+          {
+            "tag": "a",
+            "text": "ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "THE FIRM"
+          },
+          {
+            "tag": "a",
+            "text": "CLIENT LOGIN"
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST PROPOSAL ]"
+          }
+        ]
+      },
+      {
+        "id": "blog-hero",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ EXVORTA INTELLIGENCE NODE ]"
+          },
+          {
+            "tag": "h1",
+            "text": "Trade Intelligence."
+          },
+          {
+            "tag": "span",
+            "text": "Every week."
+          },
+          {
+            "tag": "p",
+            "text": "Institutional-grade analysis, regulatory compliance updates, and architectural blueprints for global commodities trading."
+          }
+        ]
+      },
+      {
+        "id": "blog-featured",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ DATA COMPILING ]"
+          }
+        ]
+      },
+      {
+        "id": "blog-grid",
+        "texts": []
+      },
+      {
+        "id": "blog-newsletter",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ WEEKLY BRIEFING ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Get weekly trade insights."
+          },
+          {
+            "tag": "p",
+            "text": "Actionable data delivered straight to your executive inbox."
+          }
+        ]
+      },
+      {
+        "id": "blog-topics",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ EXPLORE ARCHIVES ]"
+          },
+          {
+            "tag": "span",
+            "text": "Trade Compliance"
+          },
+          {
+            "tag": "span",
+            "text": "HS Codes"
+          },
+          {
+            "tag": "span",
+            "text": "Shipping"
+          },
+          {
+            "tag": "span",
+            "text": "Market Intel"
+          },
+          {
+            "tag": "span",
+            "text": "UAE Trade"
+          }
+        ]
+      },
+      {
+        "id": "blog-promo",
+        "texts": [
+          {
+            "tag": "h3",
+            "text": "Looking for the tools behind the insights?"
+          },
+          {
+            "tag": "p",
+            "text": "Explore Exvorta Docs and Track for enterprise trade management."
+          },
+          {
+            "tag": "a",
+            "text": "[ VIEW ECOSYSTEM ]"
+          }
+        ]
+      },
+      {
+        "id": "blog-cta",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "[ INITIATE PARTNERSHIP ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Ready to automate your trade operations?"
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST PROPOSAL ]"
+          }
+        ]
+      },
+      {
+        "id": "section-8",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "p",
+            "text": "The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE."
+          },
+          {
+            "tag": "h4",
+            "text": "THE ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Web"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Docs"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Track"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta CRM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Intel"
+          },
+          {
+            "tag": "h4",
+            "text": "COMPANY"
+          },
+          {
+            "tag": "a",
+            "text": "Our Vision"
+          },
+          {
+            "tag": "a",
+            "text": "Design Blueprints"
+          },
+          {
+            "tag": "a",
+            "text": "Market Insights"
+          },
+          {
+            "tag": "a",
+            "text": "Contact Us"
+          },
+          {
+            "tag": "h4",
+            "text": "LEGAL & ACCESS"
+          },
+          {
+            "tag": "a",
+            "text": "Request Proposal"
+          },
+          {
+            "tag": "a",
+            "text": "Privacy Policy"
+          },
+          {
+            "tag": "a",
+            "text": "Terms of Service"
+          },
+          {
+            "tag": "p",
+            "text": "© 2026 Exvorta. All rights reserved."
+          }
+        ]
+      }
+    ]
+  },
+  "exvorta_nutave": {
+    "hasDashboard": false,
+    "sections": [
+      {
+        "id": "section-0",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ BRAND POSITIONING ]"
+          },
+          {
+            "tag": "div",
+            "text": "[ PALETTE ]"
+          },
+          {
+            "tag": "span",
+            "text": "CANVAS"
+          },
+          {
+            "tag": "span",
+            "text": "GOLD ACCENT"
+          },
+          {
+            "tag": "div",
+            "text": "[ TYPOGRAPHY ]"
+          },
+          {
+            "tag": "div",
+            "text": "Playfair Display"
+          },
+          {
+            "tag": "div",
+            "text": "Editorial Headings / Luxury Heritage"
+          },
+          {
+            "tag": "div",
+            "text": "Space Grotesk"
+          },
+          {
+            "tag": "div",
+            "text": "Data & Specs / Industrial Authority"
+          }
+        ]
+      },
+      {
+        "id": "section-1",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ COMPLIANCE ENGINE ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Dynamic Quality Control."
+          },
+          {
+            "tag": "p",
+            "text": "Nutave's BRC Grade A status requires rigorous traceability. We engineered a headless Payload CMS architecture that allows their QC team to instantly attach lab results, sensory profiles, and batch numbers to every shipment without touching code."
+          },
+          {
+            "tag": "div",
+            "text": "SYSTEM_TRACEABILITY_ACTIVE"
+          },
+          {
+            "tag": "div",
+            "text": "SECURE_HASH: 8f2e...91a0 | PAYLOAD_CMS_V3.0"
+          }
+        ]
+      },
+      {
+        "id": "section-2",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ DIGITAL PRESENCE ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Built for Premium Retail."
+          },
+          {
+            "tag": "p",
+            "text": "Experience the live Nutave digital infrastructure."
+          },
+          {
+            "tag": "a",
+            "text": "VIEW LIVE PROJECT ↗"
+          }
+        ]
+      },
+      {
+        "id": "section-3",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "a",
+            "text": "Legal Compliance"
+          },
+          {
+            "tag": "a",
+            "text": "Privacy Protocol"
+          },
+          {
+            "tag": "a",
+            "text": "Data Security"
+          },
+          {
+            "tag": "div",
+            "text": "© 2024 EXVORTA INSTITUTIONAL. ALL RIGHTS RESERVED. [ SYS_VER_2.4 ]"
+          }
+        ]
+      }
+    ]
+  },
+  "exvorta_portfolio": {
+    "hasDashboard": false,
+    "sections": [
+      {
+        "id": "section-0",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ SELECTED WORKS ]"
+          },
+          {
+            "tag": "h1",
+            "text": "Latest Web Design Works."
+          },
+          {
+            "tag": "p",
+            "text": "Premium websites and CMS platforms engineered for global exporters."
+          }
+        ]
+      },
+      {
+        "id": "section-1",
+        "texts": [
+          {
+            "tag": "h2",
+            "text": "Spicevo"
+          },
+          {
+            "tag": "div",
+            "text": "INDUSTRY: Organic Herbs | STACK: Next.js 15, Payload CMS"
+          },
+          {
+            "tag": "a",
+            "text": "READ CASE STUDY"
+          },
+          {
+            "tag": "a",
+            "text": "VIEW LIVE PROJECT"
+          },
+          {
+            "tag": "h2",
+            "text": "Nutave"
+          },
+          {
+            "tag": "div",
+            "text": "INDUSTRY: Premium Nuts | STACK: Next.js 15, Payload CMS"
+          },
+          {
+            "tag": "a",
+            "text": "READ CASE STUDY"
+          },
+          {
+            "tag": "a",
+            "text": "VIEW LIVE PROJECT"
+          },
+          {
+            "tag": "h2",
+            "text": "Stonvi"
+          },
+          {
+            "tag": "div",
+            "text": "INDUSTRY: Ceramics | STACK: Next.js 15, Payload CMS"
+          },
+          {
+            "tag": "a",
+            "text": "READ CASE STUDY"
+          },
+          {
+            "tag": "a",
+            "text": "VIEW LIVE PROJECT"
+          }
+        ]
+      },
+      {
+        "id": "section-2",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ SYSTEM ARCHITECTURE ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Institutional-Grade Infrastructure."
+          },
+          {
+            "tag": "p",
+            "text": "We don't use templates. We engineer scalable, dynamic, and secure web applications built on modern enterprise stacks."
+          },
+          {
+            "tag": "h3",
+            "text": "Next.js 15 Architecture"
+          },
+          {
+            "tag": "p",
+            "text": "Server-side rendering and static site generation for sub-second page loads."
+          },
+          {
+            "tag": "h3",
+            "text": "Payload CMS 3.0"
+          },
+          {
+            "tag": "p",
+            "text": "A fully dynamic, headless content engine. Total client control over products and forms."
+          },
+          {
+            "tag": "h3",
+            "text": "Cloud Native Database"
+          },
+          {
+            "tag": "p",
+            "text": "Powered by Neon PostgreSQL. Highly available, secure database infrastructure."
+          }
+        ]
+      },
+      {
+        "id": "section-3",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ NEXT STEPS ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Initiate a Project."
+          },
+          {
+            "tag": "p",
+            "text": "We partner with a limited number of global exporters each quarter to ensure institutional-grade delivery. Let's discuss your digital infrastructure."
+          },
+          {
+            "tag": "a",
+            "text": "REQUEST A CONSULTATION"
+          }
+        ]
+      },
+      {
+        "id": "section-4",
+        "texts": [
+          {
+            "tag": "p",
+            "text": "© 2024 INSTITUTIONAL ELITE. ALL RIGHTS RESERVED. [ SYS_VER_2.4 ]"
+          },
+          {
+            "tag": "a",
+            "text": "Legal"
+          },
+          {
+            "tag": "a",
+            "text": "Privacy"
+          },
+          {
+            "tag": "a",
+            "text": "Terms"
+          },
+          {
+            "tag": "div",
+            "text": "AGENCY_INDEX"
+          }
+        ]
+      }
+    ]
+  },
+  "exvorta_rfq": {
+    "hasDashboard": false,
+    "sections": [
+      {
+        "id": "site-header",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta web"
+          },
+          {
+            "tag": "a",
+            "text": "PORTFOLIO"
+          },
+          {
+            "tag": "a",
+            "text": "ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "THE FIRM"
+          },
+          {
+            "tag": "a",
+            "text": "CLIENT LOGIN"
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST PROPOSAL ]"
+          }
+        ]
+      },
+      {
+        "id": "section-1",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "01. Company Details"
+          }
+        ]
+      },
+      {
+        "id": "section-2",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "02. Project Goals"
+          }
+        ]
+      },
+      {
+        "id": "section-3",
+        "texts": [
+          {
+            "tag": "span",
+            "text": "03. Timeline & Budget"
+          }
+        ]
+      },
+      {
+        "id": "section-4",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "p",
+            "text": "The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE."
+          },
+          {
+            "tag": "h4",
+            "text": "THE ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Web"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Docs"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Track"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta CRM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Intel"
+          },
+          {
+            "tag": "h4",
+            "text": "COMPANY"
+          },
+          {
+            "tag": "a",
+            "text": "Our Vision"
+          },
+          {
+            "tag": "a",
+            "text": "Design Blueprints"
+          },
+          {
+            "tag": "a",
+            "text": "Market Insights"
+          },
+          {
+            "tag": "a",
+            "text": "Contact Us"
+          },
+          {
+            "tag": "h4",
+            "text": "LEGAL & ACCESS"
+          },
+          {
+            "tag": "a",
+            "text": "Request Proposal"
+          },
+          {
+            "tag": "a",
+            "text": "Privacy Policy"
+          },
+          {
+            "tag": "a",
+            "text": "Terms of Service"
+          },
+          {
+            "tag": "p",
+            "text": "© 2026 Exvorta. All rights reserved."
+          }
+        ]
+      }
+    ]
+  },
+  "exvorta_spicevo": {
+    "hasDashboard": false,
+    "sections": [
+      {
+        "id": "brand-strategy",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ BRAND POSITIONING ]"
+          },
+          {
+            "tag": "div",
+            "text": "[ PALETTE ]"
+          },
+          {
+            "tag": "span",
+            "text": "WARM CREAM"
+          },
+          {
+            "tag": "span",
+            "text": "DEEP RUST"
+          },
+          {
+            "tag": "span",
+            "text": "FOREST GREEN"
+          },
+          {
+            "tag": "div",
+            "text": "[ TYPOGRAPHY ]"
+          },
+          {
+            "tag": "div",
+            "text": "Playfair Display"
+          },
+          {
+            "tag": "div",
+            "text": "Primary Headings / Authoritative"
+          },
+          {
+            "tag": "div",
+            "text": "Inter 300"
+          },
+          {
+            "tag": "div",
+            "text": "Body / Technical Clarity"
+          }
+        ]
+      },
+      {
+        "id": "cms-infrastructure",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ THE ENGINE ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Payload CMS 3.0 Integration."
+          },
+          {
+            "tag": "p",
+            "text": "Total operational control. The export team manages product specifications, EU Organic certifications, and RFQ lead data dynamically—without touching a single line of code."
+          },
+          {
+            "tag": "span",
+            "text": "[ ADMIN_TERMINAL_V3.0 ]"
+          },
+          {
+            "tag": "span",
+            "text": "dashboard"
+          },
+          {
+            "tag": "span",
+            "text": "inventory_2"
+          },
+          {
+            "tag": "span",
+            "text": "verified"
+          },
+          {
+            "tag": "span",
+            "text": "analytics"
+          },
+          {
+            "tag": "span",
+            "text": "settings"
+          }
+        ]
+      },
+      {
+        "id": "digital-infrastructure",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ DIGITAL INFRASTRUCTURE ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Built for Borderless Trade."
+          },
+          {
+            "tag": "p",
+            "text": "Fully localized routing and content delivery."
+          },
+          {
+            "tag": "span",
+            "text": "GLOBAL i18n ROUTING SUPPORTED:"
+          },
+          {
+            "tag": "span",
+            "text": "ENGLISH / SPANISH / TURKISH / ARABIC (RTL) / PERSIAN (RTL)"
+          },
+          {
+            "tag": "a",
+            "text": "VIEW LIVE PROJECT ↗"
+          }
+        ]
+      },
+      {
+        "id": "section-3",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "div",
+            "text": "© 2024 EXVORTA INSTITUTIONAL. ALL RIGHTS RESERVED. [ SYS_VER_2.4 ]"
+          },
+          {
+            "tag": "a",
+            "text": "Legal Compliance"
+          },
+          {
+            "tag": "a",
+            "text": "Privacy Protocol"
+          },
+          {
+            "tag": "a",
+            "text": "Data Security"
+          }
+        ]
+      }
+    ]
+  },
+  "exvorta_stonvi": {
+    "hasDashboard": false,
+    "sections": [
+      {
+        "id": "section-0",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ BRAND POSITIONING ]"
+          },
+          {
+            "tag": "div",
+            "text": "[ MATERIAL PALETTE ]"
+          },
+          {
+            "tag": "span",
+            "text": "CANVAS / BASE"
+          },
+          {
+            "tag": "span",
+            "text": "INK / PRIMARY"
+          },
+          {
+            "tag": "span",
+            "text": "STEEL / ACCENT"
+          },
+          {
+            "tag": "div",
+            "text": "[ TYPOGRAPHY ]"
+          },
+          {
+            "tag": "div",
+            "text": "Playfair Display"
+          },
+          {
+            "tag": "div",
+            "text": "Headings / Architectural Authority"
+          },
+          {
+            "tag": "div",
+            "text": "Space Grotesk"
+          },
+          {
+            "tag": "div",
+            "text": "Metadata & Specs / Precision"
+          }
+        ]
+      },
+      {
+        "id": "section-1",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ SYSTEM ARCHITECTURE ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Centralized PIM."
+          },
+          {
+            "tag": "p",
+            "text": "Managing over 800 ceramic SKUs requires institutional-grade infrastructure. We deployed a headless Payload CMS architecture to dynamically control technical specifications, BIM files, and ISO certifications across 35 countries."
+          },
+          {
+            "tag": "div",
+            "text": "PRODUCT"
+          },
+          {
+            "tag": "div",
+            "text": "THICKNESS"
+          },
+          {
+            "tag": "div",
+            "text": "BIM FILE"
+          },
+          {
+            "tag": "div",
+            "text": "BG-800"
+          },
+          {
+            "tag": "div",
+            "text": "BASALTINA GRIGIO"
+          },
+          {
+            "tag": "div",
+            "text": "12.5 MM"
+          },
+          {
+            "tag": "div",
+            "text": "[ READY ]"
+          },
+          {
+            "tag": "div",
+            "text": "CB-120"
+          },
+          {
+            "tag": "div",
+            "text": "CARRARA BIANCO"
+          },
+          {
+            "tag": "div",
+            "text": "6.0 MM"
+          },
+          {
+            "tag": "div",
+            "text": "[ READY ]"
+          }
+        ]
+      },
+      {
+        "id": "section-2",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ DIGITAL PRESENCE ]"
+          },
+          {
+            "tag": "h2",
+            "text": "Specify with confidence."
+          },
+          {
+            "tag": "p",
+            "text": "Experience the live Stonvi architectural specification platform."
+          },
+          {
+            "tag": "a",
+            "text": "VIEW LIVE PROJECT ↗"
+          }
+        ]
+      },
+      {
+        "id": "section-3",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "a",
+            "text": "Legal Compliance"
+          },
+          {
+            "tag": "a",
+            "text": "Privacy Protocol"
+          },
+          {
+            "tag": "a",
+            "text": "Data Security"
+          },
+          {
+            "tag": "div",
+            "text": "© 2024 EXVORTA INSTITUTIONAL. ALL RIGHTS RESERVED. [ SYS_VER_2.4 ]"
+          }
+        ]
+      }
+    ]
+  },
+  "exvorta_waitlist": {
+    "hasDashboard": false,
+    "sections": [
+      {
+        "id": "site-header",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta web"
+          },
+          {
+            "tag": "a",
+            "text": "PORTFOLIO"
+          },
+          {
+            "tag": "a",
+            "text": "ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "THE FIRM"
+          },
+          {
+            "tag": "a",
+            "text": "CLIENT LOGIN"
+          },
+          {
+            "tag": "a",
+            "text": "[ REQUEST PROPOSAL ]"
+          }
+        ]
+      },
+      {
+        "id": "section-1",
+        "texts": [
+          {
+            "tag": "div",
+            "text": "[ EXVORTA ECOSYSTEM ]"
+          },
+          {
+            "tag": "h1",
+            "text": "Request Alpha Access."
+          },
+          {
+            "tag": "p",
+            "text": "The Exvorta Suite (Docs, Track, CRM, Intel) is currently in closed beta. Enter your corporate email to join the waitlist."
+          },
+          {
+            "tag": "span",
+            "text": "* Note: Active Exvorta Web architectural clients bypass the waitlist automatically."
+          },
+          {
+            "tag": "div",
+            "text": "End-to-End Encrypted Data Transmission"
+          }
+        ]
+      },
+      {
+        "id": "section-2",
+        "texts": [
+          {
+            "tag": "a",
+            "text": "EXVORTA"
+          },
+          {
+            "tag": "p",
+            "text": "The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE."
+          },
+          {
+            "tag": "h4",
+            "text": "THE ECOSYSTEM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Web"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Docs"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Track"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta CRM"
+          },
+          {
+            "tag": "a",
+            "text": "Exvorta Intel"
+          },
+          {
+            "tag": "h4",
+            "text": "COMPANY"
+          },
+          {
+            "tag": "a",
+            "text": "Our Vision"
+          },
+          {
+            "tag": "a",
+            "text": "Design Blueprints"
+          },
+          {
+            "tag": "a",
+            "text": "Market Insights"
+          },
+          {
+            "tag": "a",
+            "text": "Contact Us"
+          },
+          {
+            "tag": "h4",
+            "text": "LEGAL & ACCESS"
+          },
+          {
+            "tag": "a",
+            "text": "Request Proposal"
+          },
+          {
+            "tag": "a",
+            "text": "Privacy Policy"
+          },
+          {
+            "tag": "a",
+            "text": "Terms of Service"
+          },
+          {
+            "tag": "p",
+            "text": "© 2026 Exvorta. All rights reserved."
+          }
+        ]
+      }
+    ]
+  }
+}

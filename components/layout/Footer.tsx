@@ -1,13 +1,10 @@
 import React from 'react'
-import { Link } from '@/i18n/routing'
-import { getTranslations } from 'next-intl/server'
+import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
 import { Footer as FooterType } from '@/payload-types'
 
-export const Footer = async () => {
+export default async function Footer() {
   const currentYear = new Date().getFullYear()
-  const t = await getTranslations('Footer')
-  
   const payload = await getPayloadClient()
   let footerData: FooterType | null = null
   
@@ -32,9 +29,7 @@ export const Footer = async () => {
               Boilerplate
             </span>
           </div>
-          <p className="text-sm text-muted max-w-sm leading-relaxed">
-            {t('description')}
-          </p>
+            A boilerplate built for speed and scale.
         </div>
 
         {footerData?.columns?.map((column, colIndex) => (
@@ -47,19 +42,19 @@ export const Footer = async () => {
                 const refValue = item.link?.reference?.value
                 const isRef = item.link?.type === 'reference' && refValue
                 const href = isRef
-                  ? `/${typeof refValue === 'string' ? refValue : (refValue?.slug || refValue?.id || '')}`
+                  ? `/${typeof refValue === 'string' || typeof refValue === 'number' ? refValue : ((refValue as {slug?: string, id?: string | number})?.slug || (refValue as {slug?: string, id?: string | number})?.id || '')}`
                   : (item.link?.url || '#')
                 const isExternal = item.link?.type === 'custom' && item.link?.openInNewTab
                 return (
                   <li key={item.id || linkIndex}>
-                    <Link 
+                    <a 
                       href={href} 
                       className="text-sm text-muted hover:text-text transition-colors duration-200"
                       target={isExternal ? "_blank" : undefined}
                       rel={isExternal ? "noopener noreferrer" : undefined}
                     >
                       {item.link?.label}
-                    </Link>
+                    </a>
                   </li>
                 )
               })}
@@ -70,14 +65,13 @@ export const Footer = async () => {
 
       <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
         <span className="text-xs text-muted">
-          &copy; {currentYear} {footerData?.copyrightText || t('rights')}
+          &copy; {currentYear} {footerData?.copyrightText || 'All rights reserved.'}
         </span>
         <span className="text-xs text-muted flex items-center gap-1">
-          {t('designed')}
+          Designed & Built with passion
         </span>
       </div>
     </footer>
   )
 }
 
-export default Footer

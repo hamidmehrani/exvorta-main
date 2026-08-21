@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { Link } from '@/i18n/routing'
+import a from 'next/link'
 import { setCookieConsent } from '@/actions/setCookieConsent'
 
 interface CookieBannerProps {
@@ -38,9 +38,9 @@ export default function CookieBanner({ config }: { config: CookieBannerProps }) 
       <p className="text-sm text-text flex-1">
         {config.text || 'We use cookies to ensure you get the best experience on our website.'}
         {config.policyUrl && (
-          <Link href={config.policyUrl} className="ms-2 font-medium text-accent hover:underline">
+          <a href={config.policyUrl} className="ms-2 font-medium text-accent hover:underline">
             Learn more
-          </Link>
+          </a>
         )}
       </p>
       <div className="flex items-center gap-3">

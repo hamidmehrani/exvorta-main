@@ -1,10 +1,17 @@
 import { CollectionConfig } from 'payload'
+import { isAdmin } from '../access/isAdmin'
 
 export const Redirects: CollectionConfig = {
   slug: 'redirects',
   admin: {
     useAsTitle: 'from',
     group: 'Global Settings',
+  },
+  access: {
+    read: () => true, // Public — middleware fetches redirects for all unauthenticated requests
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
   },
   fields: [
     {

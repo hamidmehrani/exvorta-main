@@ -1,18 +1,15 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Link } from '@/i18n/routing'
-import LanguageSwitcher from '../ui/LanguageSwitcher'
-
 import type { Page } from '@/payload-types'
 
-interface NavLink {
+interface Nava {
   id?: string | null
   link: {
     type?: 'reference' | 'custom' | null
     reference?: {
       relationTo: 'pages'
-      value: string | Page
+      value: string | number | Page
     } | null
     url?: string | null
     label: string
@@ -21,7 +18,7 @@ interface NavLink {
 }
 
 interface HeaderClientProps {
-  navLinks: NavLink[]
+  navLinks: Nava[]
   t: {
     features: string
     collections: string
@@ -31,92 +28,97 @@ interface HeaderClientProps {
 }
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, t }) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [hasScrolled, setHasScrolled] = useState(false)
 
-  const toggleMenu = () => {
-    setIsMobileMenuOpen((prev) => !prev)
-  }
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
-    <header className="w-full border-b border-border bg-bg/85 backdrop-blur-md sticky top-0 z-50 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center text-bg font-bold text-lg">
+    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${hasScrolled ? 'bg-surface/80 backdrop-blur-md border-b border-border py-4' : 'bg-transparent py-6'}`}>
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <a href="/" className="flex items-center gap-2 group">
+          <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center text-bg font-bold text-lg group-hover:scale-105 transition-transform">
             B
           </div>
-          <span className="text-lg font-bold tracking-tight text-text uppercase">
-            Boilerplate
-          </span>
-        </div>
+          <span className="text-xl font-bold tracking-tight text-text">Boilerplate</span>
+        </a>
 
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((item, idx) => {
-            const refValue = item.link.reference?.value
-            const isRef = item.link.type === 'reference' && refValue
-            const href = isRef
-              ? `/${typeof refValue === 'string' ? refValue : refValue.slug || ''}`
-              : (item.link.url || '#')
-            const isExternal = item.link.type === 'custom' && item.link.openInNewTab
+            const refValue = item.link.reference?.value;
+            const isRef = item.link.type === 'reference' && refValue;
+            const href = isRef 
+              ? `/${typeof refValue === 'string' || typeof refValue === 'number' ? refValue : (refValue as {slug?: string, id?: string | number})?.slug || (refValue as {slug?: string, id?: string | number})?.id || ''}`
+              : (item.link.url || '#');
+            const isExternal = item.link.type === 'custom' && item.link.openInNewTab;
+            
             return (
-              <Link 
-                key={item.id || idx} 
-                href={href} 
-                className="text-sm font-medium text-muted hover:text-accent transition-colors duration-200"
+              <a 
+                key={item.id || idx}
+                href={href}
+                className="text-sm font-medium text-muted hover:text-text transition-colors relative group"
                 target={isExternal ? "_blank" : undefined}
                 rel={isExternal ? "noopener noreferrer" : undefined}
               >
                 {item.link.label}
-              </Link>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+              </a>
             )
           })}
-          <div className="border-s border-border ps-6 flex items-center gap-4">
-            <LanguageSwitcher />
-            <Link href="/admin" className="px-4 h-9 inline-flex items-center justify-center rounded-md border border-border text-text hover:bg-surface-2 text-sm font-medium transition-all duration-200">
-              {t.admin}
-            </Link>
-          </div>
         </nav>
 
-        <button onClick={toggleMenu} className="md:hidden text-text hover:text-accent transition-colors">
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            {isMobileMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
+        <div className="hidden md:flex items-center gap-4">
+          <a href="/login" className="text-sm font-medium text-text hover:text-primary transition-colors">
+            Log in
+          </a>
+          <a href="/register" className="px-5 py-2.5 rounded-md bg-primary text-bg text-sm font-medium hover:bg-primary/90 transition-colors">
+            Get Started
+          </a>
+        </div>
+
+        <button 
+          className="md:hidden flex flex-col gap-1.5 p-2 z-50"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          <span className={`w-6 h-0.5 bg-text transition-transform ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+          <span className={`w-6 h-0.5 bg-text transition-opacity ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+          <span className={`w-6 h-0.5 bg-text transition-transform ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
         </button>
       </div>
 
-      {/* Mobile Menu Drawer */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-bg shadow-lg absolute top-full left-0 w-full z-40 animate-in slide-in-from-top-2">
-          <nav className="flex flex-col p-6 gap-4">
+        {isMenuOpen && (
+          <div className="fixed inset-0 bg-surface z-40 flex flex-col pt-24 px-6 pb-6 animate-in slide-in-from-top-full duration-300">
+            <nav className="flex flex-col gap-6 text-2xl font-bold mb-auto">
             {navLinks.map((item, idx) => {
               const refValue = item.link.reference?.value
               const isRef = item.link.type === 'reference' && refValue
               const href = isRef
-                ? `/${typeof refValue === 'string' ? refValue : refValue.slug || ''}`
+                ? `/${typeof refValue === 'string' || typeof refValue === 'number' ? refValue : (refValue as {slug?: string, id?: string | number})?.slug || (refValue as {slug?: string, id?: string | number})?.id || ''}`
                 : (item.link.url || '#')
               const isExternal = item.link.type === 'custom' && item.link.openInNewTab
               return (
-                <Link 
+                <a 
                   key={item.id || idx} 
                   href={href} 
                   className="text-base font-medium text-text hover:text-accent transition-colors duration-200" 
-                  onClick={toggleMenu}
+                  onClick={() => setIsMenuOpen(false)}
                   target={isExternal ? "_blank" : undefined}
                   rel={isExternal ? "noopener noreferrer" : undefined}
                 >
                   {item.link.label}
-                </Link>
+                </a>
               )
             })}
             <div className="border-t border-border pt-4 flex flex-col gap-4">
-              <LanguageSwitcher />
-              <Link href="/admin" className="h-10 inline-flex items-center justify-center rounded-md bg-primary text-bg font-medium transition-all duration-200" onClick={toggleMenu}>
+              <a href="/admin" className="h-10 inline-flex items-center justify-center rounded-md bg-primary text-bg font-medium transition-all duration-200" onClick={() => setIsMenuOpen(false)}>
                 {t.admin}
-              </Link>
+              </a>
             </div>
           </nav>
         </div>

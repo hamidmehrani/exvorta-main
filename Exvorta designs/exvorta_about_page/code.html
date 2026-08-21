@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Exvorta | About Page Skeleton</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed": "#e5e2e1",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#006c4a",
+                        "primary": "#5d5f5d",
+                        "tertiary-container": "#ebfff1",
+                        "success-glow": "#00FF66",
+                        "obsidian": "#0D0D0D",
+                        "tertiary-fixed": "#85f8c4",
+                        "primary-fixed-dim": "#c6c7c5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#727372",
+                        "primary-container": "#fafaf8",
+                        "on-tertiary-fixed": "#002114",
+                        "surface-container-high": "#ebe7e6",
+                        "warm-cream": "#FAFAF8",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e5e2e1",
+                        "on-secondary-container": "#656464",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1c1b1b",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#00835b",
+                        "inverse-surface": "#313030",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#474646",
+                        "background": "#fcf8f8",
+                        "on-tertiary-fixed-variant": "#005137",
+                        "secondary": "#5f5e5e",
+                        "inverse-on-surface": "#f4f0ef",
+                        "zinc-elevated": "#1A1A1A",
+                        "warning-amber": "#FFB800",
+                        "info-blue": "#0066FF",
+                        "surface-dim": "#ddd9d8",
+                        "surface-container-low": "#f6f3f2",
+                        "outline-variant": "#c4c7c5",
+                        "tertiary-fixed-dim": "#68dba9",
+                        "on-primary-fixed": "#1a1c1b",
+                        "outline": "#747876",
+                        "inverse-primary": "#c6c7c5",
+                        "surface-container": "#f1edec",
+                        "error": "#ba1a1a",
+                        "emerald": "#059669",
+                        "surface-bright": "#fcf8f8",
+                        "surface-tint": "#5d5f5d",
+                        "primary-fixed": "#e2e3e1",
+                        "on-primary-fixed-variant": "#454746",
+                        "surface-container-highest": "#e5e2e1",
+                        "secondary-fixed-dim": "#c9c6c5",
+                        "on-surface-variant": "#444846",
+                        "on-background": "#1c1b1b",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#e5e2e1",
+                        "zinc-dark": "#141414",
+                        "surface-white": "#FFFFFF",
+                        "surface": "#fcf8f8"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    spacing: {
+                        "container-max": "1280px",
+                        "dashboard-max": "1440px",
+                        "ui-padding-dense": "0.875rem 1.25rem",
+                        "section-gap-lg": "8rem",
+                        "gutter": "1.5rem",
+                        "section-gap-md": "6rem"
+                    },
+                    fontFamily: {
+                        "mono-data": ["monospace"],
+                        "label-caps": ["Inter"],
+                        "headline-lg": ["Playfair Display"],
+                        "display-hero": ["Playfair Display"],
+                        "headline-xl": ["Playfair Display"],
+                        "body-lg": ["Inter"],
+                        "mono-terminal": ["monospace"],
+                        "display-hero-mobile": ["Playfair Display"],
+                        "body-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "mono-data": ["11px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "1", "letterSpacing": "0.15em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display-hero": ["84px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-xl": ["60px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "300" }],
+                        "mono-terminal": ["10px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                        "display-hero-mobile": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["15px", { "lineHeight": "1.6", "fontWeight": "300" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .noise-bg {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body class="bg-[#FCFAF8] text-on-surface antialiased min-h-screen flex flex-col relative">
+<div class="fixed inset-0 noise-bg z-[-1]"></div>
+<header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-black/5" data-purpose="site-header"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between"><!-- Logo --><div class="flex-shrink-0"><a class="font-serif text-2xl font-semibold tracking-wide text-obsidian uppercase" href="#">EXVORTA</a></div><!-- Desktop Navigation --><nav class="hidden md:flex items-center space-x-12 text-[11px] font-medium tracking-widest text-obsidian/60 uppercase"><a class="hover:text-obsidian transition-colors" href="#"></a><a class="text-[10px] tracking-[0.2em] font-medium text-black/70 hover:text-black uppercase transition-all duration-300" href="#" style='--tw-scale-x: 1; --tw-scale-y: 1; --tw-pan-x: ; --tw-pan-y: ; --tw-pinch-zoom: ; --tw-scroll-snap-strictness: proximity; --tw-gradient-from-position: ; --tw-gradient-via-position: ; --tw-gradient-to-position: ; --tw-ordinal: ; --tw-slashed-zero: ; --tw-numeric-figure: ; --tw-numeric-spacing: ; --tw-numeric-fraction: ; --tw-ring-inset: ; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: rgb(59 130 246 / 0.5); --tw-ring-offset-shadow: 0 0 #0000; --tw-ring-shadow: 0 0 #0000; --tw-shadow: 0 0 #0000; --tw-shadow-colored: 0 0 #0000; --tw-blur: ; --tw-brightness: ; --tw-contrast: ; --tw-grayscale: ; --tw-hue-rotate: ; --tw-invert: ; --tw-saturate: ; --tw-sepia: ; --tw-drop-shadow: ; --tw-backdrop-blur: ; --tw-backdrop-brightness: ; --tw-backdrop-contrast: ; --tw-backdrop-grayscale: ; --tw-backdrop-hue-rotate: ; --tw-backdrop-invert: ; --tw-backdrop-opacity: ; --tw-backdrop-saturate: ; --tw-backdrop-sepia: ; --tw-contain-size: ; --tw-contain-layout: ; --tw-contain-paint: ; --tw-contain-style: ; font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; background-color: rgb(252, 250, 248); outline: none !important; box-shadow: none !important;'>Exvorta web</a><a class="hover:text-obsidian transition-colors" href="#">PORTFOLIO</a><a class="hover:text-obsidian transition-colors" href="#">ECOSYSTEM</a><a class="hover:text-obsidian transition-colors" href="#">THE FIRM</a></nav><!-- CTA --><div class="hidden md:block"><a class="mr-6 text-[10px] tracking-[0.2em] font-mono text-black/70 hover:text-black uppercase transition-all" href="#">CLIENT LOGIN</a><a class="bg-black text-white px-6 py-3 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-[#1a1a1a] transition-colors rounded-none" href="#">[ REQUEST PROPOSAL ]</a></div><!-- Mobile menu button --><div class="md:hidden flex items-center"><button class="text-obsidian hover:text-gray-500 focus:outline-none" type="button"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button></div></div></header>
+<main class="flex-grow pt-20">
+<!-- 01. [ HERO ] -->
+<section class="w-full bg-[#0A0A0A] flex flex-col items-center justify-center text-center relative px-6 py-40 min-h-[75vh] overflow-hidden rounded-none" id="hero">
+<!-- The "Khafan" Visual (CSS Glow) -->
+<div class="relative z-10 max-w-7xl mx-auto flex flex-col items-center">
+<!-- The Eyebrow (Context) -->
+<span class="text-[9px] md:text-[10px] font-mono tracking-[0.4em] text-white/40 uppercase mb-10 block">[ THE EXVORTA IDENTITY ]</span>
+<!-- The Monumental Headline -->
+<h1 class="text-5xl md:text-[5.5rem] font-serif font-bold text-white leading-[1.05] tracking-tight max-w-5xl mx-auto mb-10">
+            We Engineer Digital Gravity. <br/>
+<span class="text-white/60">For the World's Most Demanding Trade Entities.</span>
+</h1>
+<!-- The Clarifying Statement -->
+<p class="max-w-2xl mx-auto text-lg md:text-xl text-white/50 leading-relaxed font-sans mt-6">
+            Exvorta is a boutique digital architecture firm. We exist strictly to close the credibility gap between your monumental physical trading velocity and your online infrastructure.
+        </p>
+<!-- The Subtle Scroll Indicator -->
+<div class="text-[9px] font-mono text-white/20 tracking-[0.2em] uppercase mt-16">[ DUBAI · GLOBAL REACH ]</div>
+</div>
+</section>
+<!-- 02. [ THE THESIS ] -->
+<section class="w-full bg-[#FCFAF8] py-32 md:py-48 px-6">
+<div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
+<!-- Left Column: The Anchor -->
+<div class="lg:col-span-3 flex flex-col justify-start">
+<div class="w-12 h-[1px] bg-black/20 mb-8"></div>
+<span class="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase leading-relaxed">[ THE EXVORTA<br/>THESIS ]</span>
+</div>
+<!-- Right Column: The Manifesto -->
+<div class="lg:col-span-9 flex flex-col justify-center">
+<h2 class="text-4xl md:text-5xl lg:text-6xl font-serif text-black leading-[1.1] tracking-tight mb-12 max-w-4xl">
+                The era of the digital brochure is dead. A generic website signals operational weakness to global partners. We engineer assets with a balance sheet impact.
+            </h2>
+<p class="text-xl text-black/60 font-sans leading-relaxed max-w-3xl mb-8">In the high-stakes arena of global trade, your digital footprint is your most heavily scrutinized asset. Before a contract is signed, before a container is shipped, serious buyers verify your credibility online before they ever reach out.</p>
+<p class="text-xl text-black/60 font-sans leading-relaxed max-w-3xl">
+                We established Exvorta to provide elite trading firms with digital infrastructure that matches their physical scale. No templates. No shortcuts. Just pure, unadulterated performance architecture.
+            </p>
+</div>
+</div>
+</section>
+<!-- 03. [ THE FIRM ] -->
+<section class="w-full bg-[#0A0A0A] py-32 md:py-48 px-6">
+<div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-16">
+<!-- Left Column: Core Statement -->
+<div class="lg:col-span-5 flex flex-col justify-start lg:sticky lg:top-32 h-fit">
+<span class="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase mb-8 block">[ HOW WE OPERATE ]</span>
+<h2 class="text-4xl md:text-5xl font-serif text-white leading-tight mb-8">Methodical.<br/>Relentless.<br/><span class="text-white/50">Pure Execution.</span></h2>
+<p class="text-lg text-white/50 font-sans leading-relaxed">We do not operate like a traditional agency. We function as an outsourced architectural wing for your trading operations. High velocity, zero friction.</p>
+</div>
+<!-- Right Column: Operational Pillars -->
+<div class="lg:col-span-7 flex flex-col mt-12 lg:mt-0">
+<!-- Pillar 01 -->
+<div class="border-t border-white/10 pt-8 pb-12">
+<div class="flex items-center gap-6 mb-6">
+<span class="text-xs font-mono text-white/30">01</span>
+<h3 class="text-2xl font-serif text-white">Architectural Precision</h3>
+</div>
+<p class="text-white/60 leading-relaxed font-sans pl-10">We don't guess. We map your entire digital supply chain before writing a single line of code. Every interface is designed to capture tier-one enterprise leads and establish absolute market authority.</p>
+</div>
+<!-- Pillar 02 -->
+<div class="border-t border-white/10 pt-8 pb-12">
+<div class="flex items-center gap-6 mb-6">
+<span class="text-xs font-mono text-white/30">02</span>
+<h3 class="text-2xl font-serif text-white">Hardcoded Superiority</h3>
+</div>
+<p class="text-white/60 leading-relaxed font-sans pl-10">We bypass bloated content management systems. Our engineers deploy pure, bespoke code directly to the global edge network. The result is elite security standards and sub-second load times on any device, anywhere.</p>
+</div>
+<!-- Pillar 03 -->
+<div class="border-t border-white/10 pt-8 pb-12 border-b border-white/10">
+<div class="flex items-center gap-6 mb-6">
+<span class="text-xs font-mono text-white/30">03</span>
+<h3 class="text-2xl font-serif text-white">Dedicated Ongoing Support</h3>
+</div>
+<p class="text-white/60 leading-relaxed font-sans pl-10">Deployment is a baseline, not a finish line. We handle your entire digital infrastructure maintenance, updates, and scaling, so you stay focused on your business, not your website.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 04. [ THE FOUNDER ] -->
+<section class="w-full py-32 relative overflow-hidden bg-white text-black" id="founder">
+<div class="max-w-7xl mx-auto px-6 w-full flex flex-col min-h-[40vh] bg-transparent"><span class="text-xs font-mono tracking-widest text-black/40 uppercase">[ 04. THE FOUNDER ]</span>
+<div class="mt-16 grid grid-cols-1 lg:grid-cols-5 w-full items-center">
+<!-- Left Column: Editorial Quote & Signature -->
+<div class="lg:col-span-3 flex flex-col pr-16">
+<blockquote class="text-3xl md:text-4xl lg:text-5xl font-serif text-black leading-tight mb-12 italic">
+            "Architecture is not just visual; it is a balance sheet asset. We engineer digital gravity for the world's most demanding trade entities."
+        </blockquote>
+<div class="mt-4">
+<div class="font-serif italic text-3xl text-black mb-4">Hamid Mehrani</div>
+<div class="flex flex-col gap-1">
+<p class="text-[11px] font-sans leading-relaxed text-black/60 mb-3 max-w-md">
+    Based in Dubai. Background in digital engineering and international trade operations. Founded Exvorta to bridge the credibility gap facing global trading firms.
+</p><span class="text-[10px] font-mono tracking-[0.3em] text-black/60 uppercase">HAMID MEHRANI</span>
+<span class="text-[10px] font-mono tracking-[0.3em] text-black/40 uppercase">PRINCIPAL ARCHITECT, EXVORTA</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Portrait -->
+<div class="lg:col-span-2">
+<div class="relative aspect-[3/4] w-full overflow-hidden border border-black/10 rounded-none shadow-none">
+<img alt="Hamid Mehrani, Principal Architect" class="w-full h-full object-cover grayscale contrast-125 rounded-none" src="https://lh3.googleusercontent.com/aida/AP1WRLuCABArA0dFLPr7X-kzVh0ePxOiRBVUP80aMVLCo4Zm4Ag2EAEoleoHyv0zWqpOnKnbtnsp02fwaS4F40nXwEtHwo6Hu37pR0UyHPVeXKTKGCk1JgsgwSz0hJbZz5DCEqEuCjqHpnaD22poW7CaU5XQdjCPR66D6sQgWW8JrlQDhNZRuAOZUQKKBc5gsUC-uogWXb3IaFvVe96wEpHZC0o7uvK3SdERtz23Ob1kTgrgftxXjgLLYQOXdFw"/>
+</div>
+</div>
+</div></div>
+</section>
+<!-- 05. [ OPERATING PRINCIPLES ] -->
+<section class="w-full bg-[#0A0A0A] py-32 md:py-48 px-6" id="values"><div class="max-w-7xl mx-auto w-full"><span class="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase mb-6 block text-center">[ THE EXVORTA STANDARD ]</span><h2 class="text-4xl md:text-5xl font-serif text-white text-center mb-24">Our Operating Principles.</h2><div class="grid grid-cols-1 md:grid-cols-2 w-full border-t border-l border-[#333]"><div class="bg-transparent border-r border-b border-[#333] p-12 lg:p-16 rounded-none flex flex-col h-full"><div class="font-mono text-xs text-white/30 tracking-widest mb-10 uppercase">01 — ENGINEERING</div><h3 class="text-2xl font-serif text-white mb-4">Zero Bloat Architecture.</h3><p class="text-white/50 leading-relaxed font-sans">We categorically reject templates and heavy content management systems. Every line of code is written specifically for your entity, ensuring strong security standards and fast load times on any device.</p></div><div class="bg-transparent border-r border-b border-[#333] p-12 lg:p-16 rounded-none flex flex-col h-full"><div class="font-mono text-xs text-white/30 tracking-widest mb-10 uppercase">02 — AESTHETICS</div><h3 class="text-2xl font-serif text-white mb-4">Institutional Authority.</h3><p class="text-white/50 leading-relaxed font-sans">Design is not decoration; it is a mechanism for trust. We apply elite, bespoke UI/UX architecture so your digital presence instantly matches the scale of your global operations.</p></div><div class="bg-transparent border-r border-b border-[#333] p-12 lg:p-16 rounded-none flex flex-col h-full"><div class="font-mono text-xs text-white/30 tracking-widest mb-10 uppercase">03 — PRIVACY</div><h3 class="text-2xl font-serif text-white mb-4">Absolute Discretion.</h3><p class="text-white/50 leading-relaxed font-sans">We operate under strict Non-Disclosure Agreements. Your digital infrastructure, competitive data, and market strategies are treated as confidential business assets.</p></div><div class="bg-transparent border-r border-b border-[#333] p-12 lg:p-16 rounded-none flex flex-col h-full"><div class="font-mono text-xs text-white/30 tracking-widest mb-10 uppercase">04 — PARTNERSHIP</div><h3 class="text-2xl font-serif text-white mb-4">Dedicated Partnership</h3><p class="text-white/50 leading-relaxed font-sans">Deployment is just the beginning. We remain available for updates, adjustments, and ongoing improvements as your business grows.</p></div></div></div></section>
+<!-- 06. [ GLOBAL PRESENCE ] -->
+<section class="w-full bg-[#FCFAF8] py-32 md:py-40 px-6 border-y border-[#E5E5E5]" id="global-presence"> <div class="max-w-7xl mx-auto w-full flex flex-col"> <!-- Header Block --> <span class="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-6 block text-center">[ GLOBAL EDGE INFRASTRUCTURE ]</span> <h2 class="text-4xl md:text-5xl font-serif text-black text-center mb-8">Built for Global Reach.</h2> <p class="text-lg text-black/50 font-sans text-center max-w-2xl mx-auto mb-24">Your buyers are everywhere. Your website should perform everywhere — on any device, in any market, at any hour.</p> <!-- Terminal Grid --> <div class="grid grid-cols-1 md:grid-cols-3 w-full border-t border-b border-[#E5E5E5]">
+<!-- [ MENA & Gulf ] -->
+<div class="p-12 border-b md:border-b-0 md:border-r border-[#E5E5E5] flex flex-col">
+<span class="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-6">[ MENA &amp; Gulf ]</span>
+<p class="text-lg font-serif text-black leading-relaxed">Serving sovereign wealth funds and energy trade entities across the GCC.</p>
+</div>
+<!-- [ Europe & UK ] -->
+<div class="p-12 border-b md:border-b-0 md:border-r border-[#E5E5E5] flex flex-col">
+<span class="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-6">[ Europe &amp; UK ]</span>
+<p class="text-lg font-serif text-black leading-relaxed">Powering high-frequency trade desks in Mayfair, Geneva, and Frankfurt.</p>
+</div>
+<!-- [ Asia Pacific ] -->
+<div class="p-12 flex flex-col">
+<span class="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-6">[ Asia Pacific ]</span>
+<p class="text-lg font-serif text-black leading-relaxed">Connecting institutional commodities brokers in Singapore and Hong Kong.</p>
+</div>
+</div> </div> </section>
+<!-- 07. [ FINAL CTA ] -->
+<section class="w-full bg-[#0A0A0A] py-40 px-6 flex flex-col justify-center items-center relative overflow-hidden rounded-none" id="cta"><div class="absolute top-0 left-0 w-full h-[1px] bg-white/10"></div><span class="text-[10px] font-mono tracking-[0.3em] text-white/40 uppercase mb-8 block text-center z-10">[ INITIATE PARTNERSHIP ]</span><h2 class="text-4xl md:text-6xl font-serif text-white text-center mb-8 leading-tight tracking-tight z-10 max-w-4xl mx-auto">Align your digital infrastructure<br/>with your operational scale.</h2><p class="text-lg text-white/50 font-sans text-center max-w-2xl mx-auto mb-16 z-10">Stop allowing generic architecture to dilute your market authority. Engage our engineering team to map your optimal digital footprint.</p><div class="flex justify-center z-10"><a class="bg-white text-black px-12 py-6 text-[11px] uppercase tracking-[0.25em] font-mono hover:bg-gray-200 transition-all duration-300 shadow-none hover:shadow-none flex items-center gap-3 rounded-none" href="#"> [ REQUEST A PROPOSAL ] </a></div><div class="mt-10 text-[9px] font-mono tracking-[0.2em] text-white/30 uppercase text-center z-10">[ Response within 24 hours ]</div></section>
+</main>
+<footer class="bg-[#FAFAF8] border-t border-black/10 py-24 px-4 sm:px-6 lg:px-8"><div class="max-w-7xl mx-auto"><div class="grid grid-cols-2 md:grid-cols-4 gap-12 mb-24"><!-- Brand --><div class="col-span-2 md:col-span-1"><a class="font-serif text-xl font-semibold tracking-wide text-obsidian uppercase mb-6 block" href="#">EXVORTA</a><p class="text-xs text-obsidian/40 leading-relaxed font-light max-w-xs">The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE.</p></div><!-- Solutions --><div><h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">THE ECOSYSTEM</h4><ul class="space-y-4 text-[11px] text-obsidian/60"><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Web</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Docs</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Track</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta CRM</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Exvorta Intel</a></li></ul></div><!-- Company --><div><h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">COMPANY</h4><ul class="space-y-4 text-[11px] text-obsidian/60"><li class=""><a class="hover:text-obsidian transition-colors" href="#">Our Vision</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Design Blueprints</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Market Insights</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Contact Us</a></li></ul></div><!-- Legal --><div><h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">LEGAL &amp; ACCESS</h4><ul class="space-y-4 text-[11px] text-obsidian/60"><li class=""><a class="hover:text-obsidian transition-colors" href="#">Request Proposal</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Privacy Policy</a></li><li class=""><a class="hover:text-obsidian transition-colors" href="#">Terms of Service</a></li></ul></div></div><div class="border-t border-black/5 pt-12 text-center"><p class="text-[10px] tracking-widest text-obsidian/30 uppercase">© 2026 Exvorta. All rights reserved.</p></div></div></footer>
+</body></html>
