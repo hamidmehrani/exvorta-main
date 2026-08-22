@@ -12,10 +12,17 @@ import RichTextBlock from './RichTextBlock'
 import StatsBlock from './StatsBlock'
 import TestimonialBlock from './TestimonialBlock'
 import VideoBlock from './VideoBlock'
+import PortfolioArchiveBlock from './PortfolioArchiveBlock'
+import ProductShowcaseBlock from './ProductShowcaseBlock'
+import RoadmapBlock from './RoadmapBlock'
+import EcosystemBlock from './EcosystemBlock'
+import FounderBlock from './FounderBlock'
+import VisionBlock from './VisionBlock'
+import ThesisBlock from './ThesisBlock'
 
 import { Page } from '@/payload-types'
 
-type BlockType = NonNullable<Page['layout']>[number]
+type BlockType = any
 
 interface BlockRendererProps {
   blocks?: BlockType[] | null
@@ -57,6 +64,21 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ blocks }) => {
             return <TestimonialBlock key={key} {...block} />
           case 'video':
             return <VideoBlock key={key} {...block} />
+          case 'portfolioArchive':
+          case 'portfolio':
+            return <PortfolioArchiveBlock key={key} {...block} />
+          case 'productShowcase':
+            return <ProductShowcaseBlock key={key} {...block} />
+          case 'roadmap':
+            return <RoadmapBlock key={key} {...block} />
+          case 'ecosystem':
+            return <EcosystemBlock key={key} {...block} />
+          case 'founder':
+            return <FounderBlock key={key} {...block} />
+          case 'vision':
+            return <VisionBlock key={key} {...block} />
+          case 'thesis':
+            return <ThesisBlock key={key} {...block} />
           default:
             return (
               <div key={key} className="p-8 border border-dashed border-danger text-danger text-center my-4 rounded-lg bg-surface">

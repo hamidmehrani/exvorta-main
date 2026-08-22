@@ -1,24 +1,37 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import type { Metadata } from 'next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import PageWrapper from '@/components/layout/PageWrapper'
 import SmoothScrollProvider from '@/components/providers/SmoothScrollProvider'
-import Script from 'next/script'
+import { FramerMotionProvider } from '@/components/providers/FramerMotionProvider'
+import { PageTransition } from '@/components/layout/PageTransition'
+import { LoadingBar } from '@/components/ui/LoadingBar'
+import localFont from 'next/font/local'
 import '../globals.css'
-
 
 import { getPayloadClient } from '@/lib/payload'
 import OrganizationSchema from '@/components/seo/OrganizationSchema'
-import type { SeoDefault, SiteSetting, Analytics } from '@/payload-types'
 
 import DeferredWidgets from '@/components/layout/DeferredWidgets'
-import WhatsAppFloat from '@/components/ui/WhatsAppFloat'
-
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { cookies, headers } from 'next/headers'
 import SkipToContent from '@/components/legal/SkipToContent'
 import { generateMeta } from '@/utils/generateMeta'
+
+const inter = localFont({
+  src: '../../public/fonts/Inter-Variable.woff2',
+  variable: '--font-inter',
+  display: 'swap',
+  weight: '100 900',
+})
+
+const vazirmatn = localFont({
+  src: '../../public/fonts/Vazirmatn-Variable.woff2',
+  variable: '--font-vazirmatn',
+  display: 'swap',
+  weight: '100 900',
+})
 
 export async function generateMetadata(): Promise<Metadata> {
   return generateMeta()
@@ -75,41 +88,51 @@ export default async function FrontendLayout({
   const hasConsent = cookieStore.get('cookie-consent')?.value === 'accepted'
 
   return (
-    <div dir={dir} className={`h-full antialiased light`} data-theme="light">
-      <div className="min-h-full flex flex-col bg-bg text-text">
-        <SkipToContent />
-        <OrganizationSchema />
-        {hasConsent && analyticsConfig?.gaId && <GoogleAnalytics gaId={analyticsConfig.gaId} />}
-        {hasConsent && analyticsConfig?.gtmId && <GoogleTagManager gtmId={analyticsConfig.gtmId} />}
-        
-        {siteSettings?.maintenanceMode ? (
-          <div className="flex flex-col items-center justify-center min-h-screen bg-bg text-text">
-            <div className="text-center p-12 border-2 border-border rounded-none max-w-xl w-full bg-surface relative overflow-hidden">
-              <div className="absolute top-0 start-0 w-full h-2 bg-text" />
-              <h1 className="text-5xl font-serif font-bold text-text mb-4 tracking-tighter uppercase">Maintenance</h1>
-              <p className="text-muted mb-8 text-sm font-mono uppercase tracking-widest">We are currently updating our systems. Please check back shortly.</p>
-            </div>
-          </div>
-        ) : (
-          <>
-            <Header />
-            <SmoothScrollProvider>
-              <PageWrapper>{children}</PageWrapper>
-            </SmoothScrollProvider>
-            <Footer />
-            <DeferredWidgets 
-              cookieConfig={cookieConfig}
-              whatsappConfig={whatsappConfig}
-              umamiConfig={siteSettings?.umamiWebsiteId ? {
-                websiteId: siteSettings.umamiWebsiteId,
-                scriptUrl: siteSettings?.umamiScriptUrl || 'https://cloud.umami.is/script.js',
-                nonce: nonce
-              } : null}
-            />
-          </>
-        )}
-      </div>
-    </div>
+    <html lang="en" className={`${inter.variable} ${vazirmatn.variable}`}>
+      <body>
+        <SmoothScrollProvider>
+          <Suspense fallback={null}>
+            <LoadingBar />
+          </Suspense>
+          <FramerMotionProvider>
+            <PageTransition>
+              <div dir={dir} className={`h-full antialiased`}>
+                <div className="min-h-full flex flex-col bg-cream text-obsidian">
+                  <SkipToContent />
+                  <OrganizationSchema />
+                  {hasConsent && analyticsConfig?.gaId && <GoogleAnalytics gaId={analyticsConfig.gaId} />}
+                  {hasConsent && analyticsConfig?.gtmId && <GoogleTagManager gtmId={analyticsConfig.gtmId} />}
+                  
+                  {siteSettings?.maintenanceMode ? (
+                    <div className="flex flex-col items-center justify-center min-h-screen bg-cream text-obsidian">
+                      <div className="text-center p-12 border-2 border-border-dark rounded-none max-w-xl w-full bg-surface relative overflow-hidden">
+                        <div className="absolute top-0 start-0 w-full h-2 bg-obsidian" />
+                        <h1 className="text-5xl font-serif font-bold text-obsidian mb-4 tracking-tighter uppercase">Maintenance</h1>
+                        <p className="text-obsidian/60 mb-8 text-sm font-mono uppercase tracking-widest">We are currently updating our systems. Please check back shortly.</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <Header />
+                      <PageWrapper>{children}</PageWrapper>
+                      <Footer />
+                      <DeferredWidgets 
+                        cookieConfig={cookieConfig}
+                        whatsappConfig={whatsappConfig}
+                        umamiConfig={siteSettings?.umamiWebsiteId ? {
+                          websiteId: siteSettings.umamiWebsiteId,
+                          scriptUrl: siteSettings?.umamiScriptUrl || 'https://cloud.umami.is/script.js',
+                          nonce: nonce
+                        } : null}
+                      />
+                    </>
+                  )}
+                </div>
+              </div>
+            </PageTransition>
+          </FramerMotionProvider>
+        </SmoothScrollProvider>
+      </body>
+    </html>
   )
 }
-

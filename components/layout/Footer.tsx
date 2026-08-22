@@ -18,60 +18,55 @@ export default async function Footer() {
   }
 
   return (
-    <footer className="w-full border-t border-border bg-surface py-16 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
-        <div className="flex flex-col gap-4 col-span-1 md:col-span-2">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center text-bg font-bold text-lg">
-              B
-            </div>
-            <span className="text-lg font-bold tracking-tight text-text uppercase">
-              Boilerplate
-            </span>
+    <footer className="w-full border-t border-border-dark bg-obsidian py-24">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-24">
+          <div className="flex flex-col gap-4 col-span-2 md:col-span-1">
+            <Link href="/" className="font-serif text-xl font-semibold tracking-wide text-cream uppercase mb-2 block">
+              EXVORTA
+            </Link>
+            <p className="text-xs text-cream/40 leading-relaxed font-light max-w-xs">
+              The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE.
+            </p>
           </div>
-            A boilerplate built for speed and scale.
+
+          {footerData?.columns?.map((column, colIndex) => (
+            <div key={column.id || colIndex}>
+              <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-cream mb-6">
+                {column.title}
+              </h4>
+              <ul className="flex flex-col gap-4 text-[11px] text-cream/60">
+                {column.links?.map((item, linkIndex) => {
+                  const refValue = item.link?.reference?.value
+                  const isRef = item.link?.type === 'reference' && refValue
+                  const href = isRef
+                    ? `/${typeof refValue === 'string' || typeof refValue === 'number' ? refValue : ((refValue as {slug?: string, id?: string | number})?.slug || (refValue as {slug?: string, id?: string | number})?.id || '')}`
+                    : (item.link?.url || '#')
+                  const isExternal = item.link?.type === 'custom' && item.link?.openInNewTab
+                  return (
+                    <li key={item.id || linkIndex}>
+                      <a 
+                        href={href} 
+                        className="hover:text-cream transition-colors duration-200 block"
+                        target={isExternal ? "_blank" : undefined}
+                        rel={isExternal ? "noopener noreferrer" : undefined}
+                      >
+                        {item.link?.label}
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {footerData?.columns?.map((column, colIndex) => (
-          <div key={column.id || colIndex}>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-muted mb-4">
-              {column.title}
-            </h4>
-            <ul className="flex flex-col gap-3">
-              {column.links?.map((item, linkIndex) => {
-                const refValue = item.link?.reference?.value
-                const isRef = item.link?.type === 'reference' && refValue
-                const href = isRef
-                  ? `/${typeof refValue === 'string' || typeof refValue === 'number' ? refValue : ((refValue as {slug?: string, id?: string | number})?.slug || (refValue as {slug?: string, id?: string | number})?.id || '')}`
-                  : (item.link?.url || '#')
-                const isExternal = item.link?.type === 'custom' && item.link?.openInNewTab
-                return (
-                  <li key={item.id || linkIndex}>
-                    <a 
-                      href={href} 
-                      className="text-sm text-muted hover:text-text transition-colors duration-200"
-                      target={isExternal ? "_blank" : undefined}
-                      rel={isExternal ? "noopener noreferrer" : undefined}
-                    >
-                      {item.link?.label}
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        ))}
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-        <span className="text-xs text-muted">
-          &copy; {currentYear} {footerData?.copyrightText || 'All rights reserved.'}
-        </span>
-        <span className="text-xs text-muted flex items-center gap-1">
-          Designed & Built with passion
-        </span>
+        <div className="border-t border-border-dark pt-12 text-center">
+          <p className="text-[10px] tracking-widest text-cream/30 uppercase">
+            &copy; {currentYear} {footerData?.copyrightText || 'Exvorta. All rights reserved.'}
+          </p>
+        </div>
       </div>
     </footer>
   )
 }
-

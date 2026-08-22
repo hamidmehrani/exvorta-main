@@ -24,7 +24,7 @@ export const FounderBlock: React.FC<FounderBlockProps> = (props) => {
   const bio = props.bio || "Based in Dubai. Background in digital engineering and international trade operations. Founded Exvorta to bridge the credibility gap facing global trading firms.";
   const roleTitle = props.roleTitle || "HAMID MEHRANI";
   const roleCompany = props.roleCompany || "PRINCIPAL ARCHITECT, EXVORTA";
-  const imageSrc = props.imageSrc || "https://lh3.googleusercontent.com/aida/AP1WRLuCABArA0dFLPr7X-kzVh0ePxOiRBVUP80aMVLCo4Zm4Ag2EAEoleoHyv0zWqpOnKnbtnsp02fwaS4F40nXwEtHwo6Hu37pR0UyHPVeXKTKGCk1JgsgwSz0hJbZz5DCEqEuCjqHpnaD22poW7CaU5XQdjCPR66D6sQgWW8JrlQDhNZRuAOZUQKKBc5gsUC-uogWXb3IaFvVe96wEpHZC0o7uvK3SdERtz23Ob1kTgrgftxXjgLLYQOXdFw";
+  const imageSrc = props.imageSrc || "";
   const imageAlt = props.imageAlt || "Hamid Mehrani, Principal Architect";
 
   return (

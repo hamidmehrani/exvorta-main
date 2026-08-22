@@ -1,0 +1,27 @@
+<!-- BEGIN: Architecture Manifesto -->
+<section class="py-24 border-t border-black/5" data-purpose="manifesto">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<div class="text-[10px] tracking-widest uppercase text-obsidian/40 mb-4">Architecture Manifesto</div>
+<h2 class="text-3xl md:text-4xl font-serif text-obsidian">Built for How Traders Actually Work</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface p-8 border border-black/5 rounded-sm hover:shadow-soft transition-shadow relative border-t-2 border-transparent hover:border-black transition-all duration-300"><span class="text-gray-200 text-4xl font-serif leading-none absolute top-6 right-8 opacity-50">01</span>
+<h3 class="text-lg font-serif mb-3 text-black font-semibold" data-stitch-orig-opacity="0">Rapid Bespoke Deployment</h3>
+<p class="text-sm text-obsidian/60 leading-relaxed font-light text-gray-600" data-stitch-orig-opacity="0">High-performance websites delivered in just 2–4 weeks. We leverage advanced coding frameworks and agile team structures to move at the speed of global trade, without ever compromising institutional prestige.</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface p-8 border border-black/5 rounded-sm hover:shadow-soft transition-shadow relative border-t-2 border-transparent hover:border-black transition-all duration-300"><span class="text-gray-200 text-4xl font-serif leading-none absolute top-6 right-8 opacity-50">02</span>
+<h3 class="text-lg font-serif mb-3 text-black font-semibold" data-stitch-orig-opacity="0">Headless Architecture</h3>
+<p class="text-sm text-obsidian/60 leading-relaxed font-light text-gray-600" data-stitch-orig-opacity="0">Built on modern, scalable infrastructure (Next.js &amp; Edge compute). API-ready designs ensuring your web presence is fast, secure, and globally accessible without legacy constraints.</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface p-8 border border-black/5 rounded-sm hover:shadow-soft transition-shadow relative border-t-2 border-transparent hover:border-black transition-all duration-300"><span class="text-gray-200 text-4xl font-serif leading-none absolute top-6 right-8 opacity-50">03</span>
+<h3 class="text-lg font-serif mb-3 text-black font-semibold" data-stitch-orig-opacity="0">Absolute Data Sovereignty</h3>
+<p class="text-sm text-obsidian/60 leading-relaxed font-light text-gray-600" data-stitch-orig-opacity="0">Enterprise-grade security protocols standard in every build. We ensure your corporate presence and proprietary intelligence remain strictly confidential and protected.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Architecture Manifesto -->

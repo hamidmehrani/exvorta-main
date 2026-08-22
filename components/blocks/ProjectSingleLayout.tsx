@@ -113,7 +113,7 @@ export function ProjectSingleLayout({ project }: { project?: Project }) {
   const clientName = project?.clientName || 'Premium Dried Fruits & Nuts Exporter.';
   const heroImageUrl = project?.heroImage && typeof project.heroImage === 'object' && project.heroImage.url 
     ? project.heroImage.url 
-    : 'https://lh3.googleusercontent.com/aida-public/AB6AXuDTcX8iFlHKFQvFN8bJQfOGg-_nzLQXMhBlL202Kmrc73fYxYhLKeFJWoMmZcXKwAtP3M0VlUY3zIeyjilaLKZQ9ArHT75i9gZKSBA_HnCIwE6IINE61ZOlhaXC2qYS880W7rWArYRukR8buTNfzLK6N-4I6FRbjkL5MSw8Cx19KQSo7DxjgWq3uZ1DCBTsKKX5xrVIiytGpYkGJ_rA5hYotAwpH8xIvVrdnKjibZ9X1yW7lSnishAJ';
+    : '';
 
   const specifics: ProjectSpecifics = projectSpecifics[slug] || projectSpecifics['nutave'];
   
