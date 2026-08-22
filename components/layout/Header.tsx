@@ -13,7 +13,7 @@ export const Header = async () => {
       depth: 2,
     }) as Navigation
   } catch (error) {
-    console.error('Error fetching navigation data', error)
+    console.warn('[Header] CMS navigation unavailable, using fallback', error)
   }
 
   const translations = {
@@ -23,7 +23,15 @@ export const Header = async () => {
     admin: 'Admin',
   }
 
-  return <HeaderClient navLinks={navData?.links || []} t={translations} />
+  const fallbackLinks: NonNullable<Navigation['links']> = [
+    { link: { type: 'custom', label: 'SOLUTIONS', url: '/ecosystem' }, id: 'fallback-1' },
+    { link: { type: 'custom', label: 'PORTFOLIO', url: '/portfolio' }, id: 'fallback-2' },
+    { link: { type: 'custom', label: 'ECOSYSTEM', url: '/ecosystem' }, id: 'fallback-3' },
+  ]
+  
+  const finalNavLinks = navData?.links?.length ? navData.links : fallbackLinks
+
+  return <HeaderClient navLinks={finalNavLinks} t={translations} />
 }
 
 export default Header

@@ -14,8 +14,41 @@ export default async function Footer() {
       depth: 2,
     }) as FooterType
   } catch (error) {
-    console.error('Error fetching footer data', error)
+    console.warn('[Footer] CMS footer unavailable, using fallback', error)
   }
+
+  const fallbackColumns: NonNullable<FooterType['columns']> = [
+    {
+      id: 'col-1',
+      title: 'Company',
+      links: [
+        { id: 'link-1-1', link: { type: 'custom', label: 'About', url: '/' } },
+        { id: 'link-1-2', link: { type: 'custom', label: 'Services', url: '/ecosystem' } },
+        { id: 'link-1-3', link: { type: 'custom', label: 'Process', url: '/#process' } },
+        { id: 'link-1-4', link: { type: 'custom', label: 'Contact', url: '/rfq' } },
+      ],
+    },
+    {
+      id: 'col-2',
+      title: 'Work',
+      links: [
+        { id: 'link-2-1', link: { type: 'custom', label: 'Portfolio', url: '/portfolio' } },
+        { id: 'link-2-2', link: { type: 'custom', label: 'Case Studies', url: '/portfolio' } },
+        { id: 'link-2-3', link: { type: 'custom', label: 'Insights', url: '/insights' } },
+      ],
+    },
+    {
+      id: 'col-3',
+      title: 'Legal',
+      links: [
+        { id: 'link-3-1', link: { type: 'custom', label: 'Privacy Policy', url: '/legal/privacy' } },
+        { id: 'link-3-2', link: { type: 'custom', label: 'Terms of Service', url: '/legal/terms' } },
+        { id: 'link-3-3', link: { type: 'custom', label: 'Cookie Policy', url: '/legal/cookies' } },
+      ],
+    },
+  ]
+
+  const finalColumns = footerData?.columns?.length ? footerData.columns : fallbackColumns
 
   return (
     <footer className="w-full border-t border-border-dark bg-obsidian py-24">
@@ -26,11 +59,11 @@ export default async function Footer() {
               EXVORTA
             </Link>
             <p className="text-xs text-cream/40 leading-relaxed font-light max-w-xs">
-              The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE.
+              Digital infrastructure for global traders
             </p>
           </div>
 
-          {footerData?.columns?.map((column, colIndex) => (
+          {finalColumns.map((column, colIndex) => (
             <div key={column.id || colIndex}>
               <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-cream mb-6">
                 {column.title}
@@ -63,7 +96,7 @@ export default async function Footer() {
 
         <div className="border-t border-border-dark pt-12 text-center">
           <p className="text-[10px] tracking-widest text-cream/30 uppercase">
-            &copy; {currentYear} {footerData?.copyrightText || 'Exvorta. All rights reserved.'}
+            © 2026 Exvorta — All rights reserved.
           </p>
         </div>
       </div>
