@@ -32,7 +32,7 @@ export const PortfolioShowcaseBlock: React.FC<PortfolioShowcaseBlockProps> = (pr
   return (
     <AnimatedSection className="w-full py-32 bg-white border-b border-[#E5E5E5]">
       <div className="max-w-7xl mx-auto px-6 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-24 items-center">
           
           {/* Left Column */}
           <div className="md:col-span-5 flex flex-col items-start">
@@ -70,7 +70,7 @@ export const PortfolioShowcaseBlock: React.FC<PortfolioShowcaseBlockProps> = (pr
                 slug={projectData.slug}
               />
             ) : (
-              <div className="w-full aspect-[4/3] border border-black bg-[#E5E5E5] flex items-center justify-center relative overflow-hidden">
+              <div className="w-full aspect-video border border-black bg-[#E5E5E5] flex items-center justify-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-black/5 mix-blend-multiply"></div>
                 <span className="text-xs font-mono text-black/30 tracking-widest uppercase relative z-10">
                   [ CINEMATIC B&W IMAGE PLACEHOLDER ]

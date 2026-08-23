@@ -23,25 +23,25 @@ export const ProcessBlock: React.FC<ProcessBlockProps> = (props) => {
   
   const defaultSteps: ProcessStep[] = [
     {
-      stepNumber: "01",
+      stepNumber: "WEEK 1",
       title: "Strategic Discovery",
       subtitle: "ARCHITECTURAL BLUEPRINTING",
       description: "We audit your current digital footprint and map out a bespoke strategy that aligns your technical infrastructure with your global market ambitions."
     },
     {
-      stepNumber: "02",
+      stepNumber: "WEEKS 2-3",
       title: "The Iterative Canvas",
       subtitle: "BESPOKE VISUAL DESIGN",
       description: "Our art directors create your visual identity from scratch. No UI kits. No shortcuts. Just high-fidelity, institutional-grade aesthetics."
     },
     {
-      stepNumber: "03",
+      stepNumber: "WEEKS 4-5",
       title: "Hardcoded Engineering",
       subtitle: "PURE CODE DEVELOPMENT",
       description: "Once design is approved, our engineers build the front-end using pure, lightweight code. We optimize for sub-second load times on the global trade floor."
     },
     {
-      stepNumber: "04",
+      stepNumber: "ONGOING",
       title: "Handover & Concierge",
       subtitle: "Deployment & Dedicated Support",
       description: "We launch your asset to the global edge network. From there, we provide concierge-level support and maintenance for your evolving digital ecosystem."

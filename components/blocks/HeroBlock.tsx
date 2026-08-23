@@ -31,7 +31,54 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
     )
   }
 
-  // Both Home and Web are light theme, but only Home gets the dashboard.
+  if (isWebHero) {
+    return (
+      <AnimatedSection className="w-full relative py-0">
+        <section className="relative w-full max-w-7xl mx-auto px-6 flex flex-col items-center justify-center min-h-[90vh] py-20 text-center">
+          {/* Status Pill */}
+          <div className="relative z-10 flex items-center gap-2 bg-black/[0.03] px-4 py-1.5 border border-black/5 mb-10 rounded-none">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="relative inline-flex h-1.5 w-1.5 bg-emerald-500 rounded-none"></span>
+            </span>
+            <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-black/60">
+              {props.eyebrow || '[ EXVORTA WEB ]'}
+            </span>
+          </div>
+          
+          {/* Monumental Headline */}
+          <h1 className="relative z-10 font-serif text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight mb-8"
+              dangerouslySetInnerHTML={{ __html: props.headline || '<span class="block text-black">High-Performance Websites.</span>\n<span class="block text-black/80">For Global Traders.</span>' }}
+          />
+          
+          {/* Strategic Sub-headline */}
+          <p className="relative z-10 max-w-2xl text-sm md:text-base text-black/60 leading-relaxed font-sans mb-12">
+            {props.subheadline || 'We build high-performance websites that make global trading companies look like the serious players they are.'}
+          </p>
+          
+          {/* Dual CTA Buttons */}
+          <div className="relative z-10 flex flex-col sm:flex-row items-center gap-4 mb-16">
+            <a className="bg-[#0D0D0D] text-white px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-gray-900 transition-all duration-300 rounded-none" href={props.primaryCTA?.url || "#"}>
+              {props.primaryCTA?.label || '[ REQUEST PROPOSAL ]'}
+            </a>
+            <a className="border text-black/80 px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-black/5 transition-all duration-300 border-black rounded-none" href="/portfolio">
+              [ VIEW RECENT PROJECTS ]
+            </a>
+          </div>
+          
+          {/* Legal Micro-copy */}
+          <div className="absolute bottom-12 left-0 right-0 px-6 hidden sm:block">
+            <div className="max-w-4xl mx-auto flex justify-between items-center text-[10px] tracking-[0.3em] font-mono text-black/40 uppercase">
+              <span>[ ENGINEERED FOR SPEED ]</span>
+              <span>[ GLOBAL B2B READY ]</span>
+              <span>[ ON-TIME DELIVERY ]</span>
+            </div>
+          </div>
+        </section>
+      </AnimatedSection>
+    )
+  }
+
+  // Fallback to Home Hero for others
   return (
     <AnimatedSection className="w-full">
       {/*  BEGIN: Hero Section  */}
