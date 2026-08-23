@@ -5,10 +5,10 @@ import type {  Footer as FooterType  } from '@/payload-types'
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear()
-  const payload = await getPayloadClient()
   let footerData: FooterType | null = null
   
   try {
+    const payload = await getPayloadClient()
     footerData = await payload.findGlobal({
       slug: 'footer',
       depth: 2,

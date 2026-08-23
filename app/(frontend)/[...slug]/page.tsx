@@ -106,8 +106,18 @@ export default async function DynamicPage({
         subheadline: 'The institutional standard. Bespoke architecture, flawless aesthetics, and engineered for elite B2B trading companies operating at a global scale.',
         primaryCTA: { label: '[ REQUEST A CUSTOM SCOPE ]', url: '/rfq' },
       },
-      { blockType: 'problemStatement' },
-      { blockType: 'featureShowcase' },
+      { 
+        blockType: 'problemStatement',
+        eyebrow: '[ THE PROBLEM ]',
+        headline: 'Without a credible digital presence...',
+        description: 'In global trade, deals are won before the first meeting. Exvorta fixes this.',
+        theme: 'light'
+      },
+      { 
+        blockType: 'featureShowcase',
+        label: '[ ARCHITECTURAL SPECS ]',
+        title: 'Pure Code. Flawless Aesthetics.'
+      },
       { blockType: 'process' },
       { blockType: 'portfolioShowcase' },
       { blockType: 'pricing' },

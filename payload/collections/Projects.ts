@@ -25,6 +25,56 @@ export const Projects: CollectionConfig = {
       },
     },
     {
+      name: 'excerpt',
+      type: 'textarea',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'heroBgColor',
+      type: 'text',
+      defaultValue: '#FAFAF8',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'accentColor',
+      type: 'text',
+      defaultValue: '#059669',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'liveUrl',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'clientInfo',
+      type: 'group',
+      fields: [
+        { name: 'industry', type: 'text' },
+        { name: 'volume', type: 'text' },
+        { name: 'service', type: 'text' },
+      ],
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'featuredImage',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'clientName',
       type: 'text',
     },

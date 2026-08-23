@@ -587,6 +587,16 @@ export interface Project {
   id: number;
   title: string;
   slug: string;
+  excerpt?: string | null;
+  heroBgColor?: string | null;
+  accentColor?: string | null;
+  liveUrl?: string | null;
+  clientInfo?: {
+    industry?: string | null;
+    volume?: string | null;
+    service?: string | null;
+  };
+  featuredImage?: (number | null) | Media;
   clientName?: string | null;
   metrics?:
     | {
@@ -1934,6 +1944,18 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  excerpt?: T;
+  heroBgColor?: T;
+  accentColor?: T;
+  liveUrl?: T;
+  clientInfo?:
+    | T
+    | {
+        industry?: T;
+        volume?: T;
+        service?: T;
+      };
+  featuredImage?: T;
   clientName?: T;
   metrics?:
     | T

@@ -33,8 +33,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const payload = await getPayloadClient();
   try {
+    const payload = await getPayloadClient();
     const { docs } = await payload.find({
       collection: 'projects',
       limit: 100,
@@ -44,6 +44,7 @@ export async function generateStaticParams() {
       slug: doc.slug,
     }));
   } catch (error) {
+    console.warn('[Project generateStaticParams] DB not ready, skipping pre-render', error);
     return [];
   }
 }
@@ -75,47 +76,37 @@ export default async function ProjectSinglePage({ params }: Props) {
 
   if (!project) {
     if (resolvedParams.slug === 'spicevo') {
-      project = { id: '1', title: 'Spicevo', slug: 'spicevo', heroBgColor: '#FAFAF8', accentColor: '#7A2E2E', excerpt: 'Organic Herbs & Spices Exporter.', metrics: [{label: 'Industry', value: 'Agriculture'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project;
+      project = { id: '1', title: 'Spicevo', slug: 'spicevo', heroBgColor: '#FAFAF8', accentColor: '#059669', excerpt: 'Organic Herbs & Spices Exporter.', metrics: [{label: 'Industry', value: 'Agriculture'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project;
     } else if (resolvedParams.slug === 'nutave') {
-      project = { id: '2', title: 'Nutave', slug: 'nutave', heroBgColor: '#2B1A0E', accentColor: '#C69A3A', excerpt: 'Premium Dried Fruits & Nuts Exporter.', metrics: [{label: 'Industry', value: 'Agriculture'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project;
+      project = { id: '2', title: 'Nutave', slug: 'nutave', heroBgColor: '#3B2314', accentColor: '#C8922A', excerpt: 'Premium Dried Fruits & Nuts Exporter.', metrics: [{label: 'Industry', value: 'Agriculture'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project;
     } else if (resolvedParams.slug === 'stonvi') {
-      project = { id: '3', title: 'Stonvi', slug: 'stonvi', heroBgColor: '#F4F6F7', accentColor: '#5C6E7A', excerpt: 'Ceramic & Building Materials Exporter.', metrics: [{label: 'Industry', value: 'Construction'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project;
+      project = { id: '3', title: 'Stonvi', slug: 'stonvi', heroBgColor: '#F4F6F7', accentColor: '#2C3E50', excerpt: 'Ceramic & Building Materials Exporter.', metrics: [{label: 'Industry', value: 'Construction'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project;
     } else {
       notFound();
     }
   }
 
-  const breadcrumbList = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://exvorta.com',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Portfolio',
-        item: 'https://exvorta.com/portfolio',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: project.title,
-        item: `https://exvorta.com/portfolio/${resolvedParams.slug}`,
-      },
-    ],
-  };
+  let breadcrumbsHtml = '';
+  try {
+    const breadcrumbList = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://exvorta.com' },
+        { '@type': 'ListItem', position: 2, name: 'Portfolio', item: 'https://exvorta.com/portfolio' },
+        { '@type': 'ListItem', position: 3, name: project.title, item: `https://exvorta.com/portfolio/${resolvedParams.slug}` },
+      ],
+    };
+    breadcrumbsHtml = JSON.stringify(breadcrumbList);
+  } catch (error) {
+    console.error('Breadcrumbs error:', error);
+  }
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList) }}
-      />
+      {breadcrumbsHtml && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: breadcrumbsHtml }} />
+      )}
       <ProjectSingleLayout project={project} />
     </>
   );

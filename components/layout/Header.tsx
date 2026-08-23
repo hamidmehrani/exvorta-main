@@ -4,10 +4,9 @@ import type {  Navigation  } from '@/payload-types'
 import HeaderClient from './HeaderClient'
 
 export const Header = async () => {
-  const payload = await getPayloadClient()
-  
   let navData: Navigation | null = null
   try {
+    const payload = await getPayloadClient()
     navData = await payload.findGlobal({
       slug: 'navigation',
       depth: 2,

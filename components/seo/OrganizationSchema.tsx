@@ -3,12 +3,11 @@ import { getPayloadClient } from '@/lib/payload'
 import type { SiteSetting, SocialLink } from '@/payload-types'
 
 export default async function OrganizationSchema() {
-  const payload = await getPayloadClient()
-
   let siteSettings: SiteSetting | null = null
   let socialLinks: SocialLink | null = null
 
   try {
+    const payload = await getPayloadClient()
     siteSettings = await payload.findGlobal({
       slug: 'site-settings',
     })
@@ -17,6 +16,7 @@ export default async function OrganizationSchema() {
     })
   } catch (error) {
     console.error('Failed to fetch globals for OrganizationSchema', error)
+    return null
   }
 
   const siteName = siteSettings?.siteName || 'Agency Boilerplate'

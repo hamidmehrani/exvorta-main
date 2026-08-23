@@ -1,33 +1,33 @@
-'use client'
+'use client';
 
-import React, { useEffect } from 'react'
+import React from 'react';
 
-export default function ErrorBoundary({
+export default function Error({
   error,
   reset,
 }: {
   error: Error & { digest?: string }
   reset: () => void
 }) {
-  useEffect(() => {
-    console.error('Frontend Component Error:', error)
-  }, [error])
-
   return (
-    <div className="min-h-[70vh] flex flex-col items-center justify-center bg-surface text-text p-6">
-      <div className="max-w-md w-full text-center border border-border p-10 rounded-xl shadow-2xl relative overflow-hidden bg-bg">
-        <div className="absolute top-0 left-0 w-full h-1 bg-danger" />
-        <h2 className="text-3xl font-bold mb-4 tracking-tight">Something went wrong</h2>
-        <p className="text-muted mb-8 text-sm">
-          A critical component failed to load. Our team has been notified.
+    <div className="min-h-[70vh] flex items-center justify-center p-6 bg-[#0D0D0D]">
+      <div className="max-w-md w-full border border-white/10 bg-[#141414] p-8 text-white">
+        <h1 className="font-serif text-3xl mb-4 text-[#FAFAF8]">Component Error</h1>
+        <p className="font-mono text-xs text-white/60 mb-8 uppercase tracking-widest leading-relaxed">
+          The requested section could not be rendered.
         </p>
+        <div className="bg-black/50 p-4 border border-red-500/30 mb-8 overflow-auto">
+          <code className="font-mono text-[10px] text-red-400">
+            {error.message || 'Unknown error occurred'}
+          </code>
+        </div>
         <button
           onClick={() => reset()}
-          className="px-6 py-3 bg-primary text-bg font-semibold rounded-lg hover:bg-primary/90 transition-colors"
+          className="w-full py-4 bg-white text-black font-mono text-xs tracking-widest uppercase hover:bg-white/90 transition-colors"
         >
-          Try Again
+          [ RETRY RENDER ]
         </button>
       </div>
     </div>
-  )
+  );
 }
