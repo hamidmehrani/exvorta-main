@@ -57,6 +57,8 @@ const blockComponents: Record<string, React.ComponentType<any>> = {
   roadmap: RoadmapBlock, 
   problemStatement: ProblemStatementBlock, 
   problem: ProblemStatementBlock,
+  firm: dynamic(() => import('./FirmBlock').then(m => m.default || m.FirmBlock), { ssr: false, loading: LoadingPlaceholder }),
+  firmBlock: dynamic(() => import('./FirmBlock').then(m => m.default || m.FirmBlock), { ssr: false, loading: LoadingPlaceholder }),
   portfolioArchive: dynamic(() => import('./PortfolioArchiveBlock').then(m => m.default || m.PortfolioArchiveBlock), { ssr: false, loading: LoadingPlaceholder }),
   portfolio: dynamic(() => import('./PortfolioArchiveBlock').then(m => m.default || m.PortfolioArchiveBlock), { ssr: false, loading: LoadingPlaceholder }),
   productShowcase: dynamic(() => import('./ProductShowcaseBlock').then(m => m.default || m.ProductShowcaseBlock), { ssr: false, loading: LoadingPlaceholder }),

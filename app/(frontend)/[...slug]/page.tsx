@@ -90,9 +90,11 @@ export default async function DynamicPage({
         eyebrow: "[ THE EXVORTA IDENTITY ]"
       },
       { blockType: 'thesis' },
+      { blockType: 'firm' },
       { blockType: 'founder' },
+      { blockType: 'vision' },
       { blockType: 'globalPresence' },
-      { blockType: 'vision' }
+      { blockType: 'ctaBanner' }
     ] as any;
   }
 
