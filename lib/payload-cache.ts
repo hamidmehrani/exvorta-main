@@ -5,15 +5,20 @@ import { Page, SeoDefault } from '@/payload-types';
 
 export const getCachedPage = cache(unstable_cache(
   async (slug: string) => {
-    const payload = await getPayloadClient();
-    const { docs } = await payload.find({
-      collection: 'pages',
-      where: {
-        slug: { equals: slug },
-      },
-      limit: 1,
-    });
-    return (docs && docs.length > 0 ? docs[0] : null) as Page | null;
+    try {
+      const payload = await getPayloadClient();
+      const { docs } = await payload.find({
+        collection: 'pages',
+        where: {
+          slug: { equals: slug },
+        },
+        limit: 1,
+      });
+      return (docs && docs.length > 0 ? docs[0] : null) as Page | null;
+    } catch (e) {
+      console.warn(`Failed to fetch page ${slug} - DB tables might be missing`);
+      return null;
+    }
   },
   ['payload-page'],
   { revalidate: 300, tags: ['pages'] }

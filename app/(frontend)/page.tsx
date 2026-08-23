@@ -6,7 +6,6 @@ import { headers } from 'next/headers'
 import type {  Page, SeoDefault  } from '@/payload-types'
 import BlockRenderer from '@/components/blocks/BlockRenderer'
 import LivePreviewListener from '@/components/live-preview/LivePreviewListener'
-import { notFound } from 'next/navigation'
 
 import { getCachedPage } from '@/lib/payload-cache'
 import { generateMeta } from '@/utils/generateMeta'
@@ -32,7 +31,21 @@ export default async function HomePage() {
   }
 
   if (!pageDoc) {
-    notFound()
+    // Hardcoded home layout — renders even without a seeded CMS database
+    pageDoc = {
+      id: 0,
+      title: 'Home',
+      slug: 'home',
+      layout: [
+        {
+          blockType: 'hero',
+          eyebrow: 'ENGINE V1.0 LIVE',
+          headline: 'Digital Infrastructure<br/>for Global Traders',
+          subheadline: 'The definitive digital foundation for elite importers and exporters. Precision-engineered web presence and automated compliance.',
+          primaryCTA: { label: '[ REQUEST PROPOSAL ]', url: '/rfq' },
+        },
+      ],
+    } as any
   }
 
   if (pageDoc?.requiresAuth) {

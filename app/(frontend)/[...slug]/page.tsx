@@ -99,6 +99,13 @@ export default async function DynamicPage({
   // Force blocks for 'exvorta-web'
   if (pageSlug === 'exvorta-web') {
     pageDoc!.layout = [
+      {
+        blockType: 'hero',
+        eyebrow: '[ HIGH-PERFORMANCE WEBSITES ]',
+        headline: 'High-Performance Websites.<br/><span class="text-white/50">For Global Traders.</span>',
+        subheadline: 'The institutional standard. Bespoke architecture, flawless aesthetics, and engineered for elite B2B trading companies operating at a global scale.',
+        primaryCTA: { label: '[ REQUEST A CUSTOM SCOPE ]', url: '/rfq' },
+      },
       { blockType: 'problemStatement' },
       { blockType: 'featureShowcase' },
       { blockType: 'process' },

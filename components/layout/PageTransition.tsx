@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { m as motion, AnimatePresence } from "framer-motion"
+import { AnimatePresence, m as motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { useReducedMotion } from '@/lib/animations'
 
@@ -18,21 +18,23 @@ export function PageTransition({ children }: PageTransitionProps) {
     setMounted(true)
   }, [])
 
-  if (!mounted || prefersReducedMotion) {
-    return <div>{children}</div>
-  }
-
+  // Always render the SAME component tree structure — prevents "Rendered more hooks
+  // than during the previous render" in Next.js App Router caused by React reconciling
+  // different component structures between SSR and CSR renders.
+  // Pre-mount: children rendered immediately visible (no animation flash).
+  // Post-mount + reduced motion: same static wrapper.
+  // Post-mount + full motion: AnimatePresence with key-based page transition.
   return (
     <AnimatePresence mode="wait">
       <motion.div
         key={pathname}
-        initial={{ opacity: 0, y: 20 }}
+        initial={mounted && !prefersReducedMotion ? { opacity: 0, y: 12 } : false}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        transition={{ 
-          duration: 0.4, 
-          ease: [0.22, 1, 0.36, 1], // Cinematic ease
-          delay: 0.1 // 100ms delay for enter as requested
+        exit={mounted && !prefersReducedMotion ? { opacity: 0, y: -12 } : undefined}
+        transition={{
+          duration: 0.35,
+          ease: [0.22, 1, 0.36, 1],
+          delay: 0.05,
         }}
       >
         {children}
