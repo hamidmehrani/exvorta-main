@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
-import { Footer as FooterType } from '@/payload-types'
+import type {  Footer as FooterType  } from '@/payload-types'
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear()

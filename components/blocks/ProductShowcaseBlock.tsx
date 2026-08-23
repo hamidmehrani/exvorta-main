@@ -4,7 +4,7 @@ import { AnimatedSection } from '../ui/Reveal';
 import { Container } from '../ui/Container';
 import { MonoLabel } from '../ui/MonoLabel';
 
-export default function ProductShowcaseBlock(props: any) {
+export function ProductShowcaseBlock(props: any) {
   return (
     <AnimatedSection className="w-full" data-purpose="product-showcase">
       <section className="py-32 bg-brand-cream border-t border-brand-obsidian/5 relative overflow-hidden" data-purpose="exvorta-docs"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -157,3 +157,5 @@ export default function ProductShowcaseBlock(props: any) {
     </AnimatedSection>
   );
 }
+
+export default ProductShowcaseBlock;

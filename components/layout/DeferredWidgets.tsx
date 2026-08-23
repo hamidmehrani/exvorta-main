@@ -3,8 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Script from 'next/script'
-import WhatsAppFloat from '@/components/ui/WhatsAppFloat'
-
+const WhatsAppFloat = dynamic(() => import('@/components/ui/WhatsAppFloat'), { ssr: false })
 const CookieBanner = dynamic(() => import('@/components/legal/CookieBanner'), { ssr: false })
 
 interface DeferredWidgetsProps {

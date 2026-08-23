@@ -57,3 +57,5 @@ export function MagneticButton({
     </motion.div>
   )
 }
+
+export default MagneticButton;

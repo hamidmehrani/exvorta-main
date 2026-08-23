@@ -1,8 +1,7 @@
 'use client'
 
 import React, { useRef, useEffect } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import type { gsap as GSAPType } from 'gsap'
 import { useReducedMotion } from '@/lib/animations'
 
 interface SectionRevealProps extends React.HTMLAttributes<HTMLElement> {
@@ -27,34 +26,41 @@ export function SectionReveal({
 
   useEffect(() => {
     if (prefersReducedMotion || !containerRef.current) return
-    gsap.registerPlugin(ScrollTrigger)
+    let ctx: any;
+    Promise.all([
+      import('gsap').then(m => m.gsap || m.default),
+      import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
+    ]).then(([gsap, ScrollTrigger]) => {
+      if (!gsap || !ScrollTrigger) return;
+      gsap.registerPlugin(ScrollTrigger)
 
-    const elements = containerRef.current.children
-    if (!elements.length) return
+      const elements = containerRef.current!.children
+      if (!elements.length) return
 
-    gsap.fromTo(
-      elements,
-      {
-        y: distance,
-        opacity: 0,
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration,
-        ease: 'power3.out',
-        stagger: staggerDelay,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 85%',
-        },
-      }
-    )
+      ctx = gsap.context(() => {
+        gsap.fromTo(
+          elements,
+          {
+            y: distance,
+            opacity: 0,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration,
+            ease: 'power3.out',
+            stagger: staggerDelay,
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 85%',
+            },
+          }
+        )
+      })
+    })
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => {
-        if (t.trigger === containerRef.current) t.kill()
-      })
+      ctx?.revert()
     }
   }, [prefersReducedMotion, distance, duration, staggerDelay])
 
@@ -72,3 +78,5 @@ export function SectionReveal({
     </Component>
   )
 }
+
+export default SectionReveal

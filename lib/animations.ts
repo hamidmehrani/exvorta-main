@@ -1,7 +1,5 @@
-"use client"
+
 import { useEffect, useState } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 export const easings = {
   cinematic: [0.22, 1, 0.36, 1],
@@ -40,8 +38,9 @@ export const useReducedMotion = () => {
   return level === 'none'
 }
 
-export const initGSAP = () => {
-  if (typeof window !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger)
-  }
+export async function initGSAP(){
+  const { gsap } = await import('gsap')
+  const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+  gsap.registerPlugin(ScrollTrigger)
+  return { gsap, ScrollTrigger }
 }

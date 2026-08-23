@@ -1,19 +1,26 @@
 'use client'
 
 import React, { useEffect, ReactNode } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import type { gsap as GSAPType } from 'gsap'
 
 interface GSAPProviderProps {
   children: ReactNode
 }
 
-export default function GSAPProvider({ children }: GSAPProviderProps) {
+export function GSAPProvider({ children }: GSAPProviderProps) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger)
+      Promise.all([
+        import('gsap').then(m => m.gsap || m.default),
+        import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
+      ]).then(([gsap, ScrollTrigger]) => {
+        if (!gsap || !ScrollTrigger) return;
+        gsap.registerPlugin(ScrollTrigger)
+      })
     }
   }, [])
 
   return <>{children}</>
 }
+
+export default GSAPProvider

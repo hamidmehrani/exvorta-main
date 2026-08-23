@@ -1,8 +1,7 @@
 'use client'
 
 import React, { useRef, useEffect, useState } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import type { gsap as GSAPType } from 'gsap'
 import { useReducedMotion } from '@/lib/animations'
 
 export interface MonoLabelProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -21,34 +20,41 @@ export function MonoLabel({ children, as: Component = 'div', className = '', ...
   useEffect(() => {
     setText(originalText)
     if (prefersReducedMotion || !containerRef.current || !originalText) return
-    gsap.registerPlugin(ScrollTrigger)
+    let ctx: any;
+    Promise.all([
+      import('gsap').then(m => m.gsap || m.default),
+      import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
+    ]).then(([gsap, ScrollTrigger]) => {
+      if (!gsap || !ScrollTrigger) return;
+      gsap.registerPlugin(ScrollTrigger)
 
-    const obj = { value: 0 }
-    
-    gsap.to(obj, {
-      value: originalText.length,
-      duration: 0.4,
-      ease: 'power2.inOut',
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top 90%',
-      },
-      onUpdate: () => {
-        const progress = Math.floor(obj.value)
-        const scrambled = originalText.split('').map((char, index) => {
-          if (index < progress) return char
-          if (char === ' ') return ' '
-          return CHARS[Math.floor(Math.random() * CHARS.length)]
-        }).join('')
-        setText(scrambled)
-      },
-      onComplete: () => setText(originalText)
+      const obj = { value: 0 }
+      
+      ctx = gsap.context(() => {
+        gsap.to(obj, {
+          value: originalText.length,
+          duration: 0.4,
+          ease: 'power2.inOut',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 90%',
+          },
+          onUpdate: () => {
+            const progress = Math.floor(obj.value)
+            const scrambled = originalText.split('').map((char, index) => {
+              if (index < progress) return char
+              if (char === ' ') return ' '
+              return CHARS[Math.floor(Math.random() * CHARS.length)]
+            }).join('')
+            setText(scrambled)
+          },
+          onComplete: () => setText(originalText)
+        })
+      })
     })
     
     return () => {
-      ScrollTrigger.getAll().forEach(t => {
-        if (t.trigger === containerRef.current) t.kill()
-      })
+      ctx?.revert()
     }
   }, [originalText, prefersReducedMotion])
 
@@ -58,3 +64,5 @@ export function MonoLabel({ children, as: Component = 'div', className = '', ...
     </Component>
   )
 }
+
+export default MonoLabel;

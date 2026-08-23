@@ -7,3 +7,5 @@ export function Hairline({ className = '', ...props }: HairlineProps) {
     <div className={`hairline ${className}`} {...props} />
   )
 }
+
+export default Hairline;

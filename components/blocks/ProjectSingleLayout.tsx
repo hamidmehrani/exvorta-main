@@ -7,8 +7,7 @@ import { Stat } from '@/components/ui/Stat';
 import type { Project } from '@/payload-types';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import Link from 'next/link';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type { gsap as GSAPType } from 'gsap';
 import { useAnimationLevel } from '@/lib/animations';
 import { ScrollProgress } from '@/components/ui/ScrollProgress';
 import { MagneticButton } from '@/components/ui/MagneticButton';
@@ -128,22 +127,31 @@ export function ProjectSingleLayout({ project }: { project?: Project }) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          gsap.registerPlugin(ScrollTrigger);
+          let ctx: any;
+          Promise.all([
+            import('gsap').then(m => m.gsap || m.default),
+            import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
+          ]).then(([gsap, ScrollTrigger]) => {
+            if (!gsap || !ScrollTrigger) return;
+            gsap.registerPlugin(ScrollTrigger);
 
-          gsap.fromTo(heroImageContainerRef.current,
-            { clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)' },
-            { 
-              clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', 
-              duration: 1.2, 
-              ease: 'expo.out',
-              delay: 0.2 
-            }
-          );
+            ctx = gsap.context(() => {
+              gsap.fromTo(heroImageContainerRef.current,
+                { clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)' },
+                { 
+                  clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', 
+                  duration: 1.2, 
+                  ease: 'expo.out',
+                  delay: 0.2 
+                }
+              );
 
-          gsap.fromTo(heroImageRef.current,
-            { scale: 1.2 },
-            { scale: 1, duration: 1.2, ease: 'expo.out', delay: 0.2 }
-          );
+              gsap.fromTo(heroImageRef.current,
+                { scale: 1.2 },
+                { scale: 1, duration: 1.2, ease: 'expo.out', delay: 0.2 }
+              );
+            });
+          });
           observer.disconnect()
         }
       },
@@ -404,3 +412,5 @@ export function ProjectSingleLayout({ project }: { project?: Project }) {
     </div>
   );
 }
+
+export default ProjectSingleLayout;

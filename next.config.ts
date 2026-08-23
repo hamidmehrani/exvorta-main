@@ -18,6 +18,7 @@ for (const envVar of requiredEnvVars) {
 }
 
 const nextConfig: NextConfig = {
+  transpilePackages: ['lenis', 'gsap', 'framer-motion'],
   eslint: {
     ignoreDuringBuilds: true,
   },

@@ -21,3 +21,5 @@ export function Stat({ label, value, trend, className = '', ...props }: StatProp
     </div>
   )
 }
+
+export default Stat;

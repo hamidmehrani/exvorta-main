@@ -8,8 +8,7 @@ import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { MonoLabel } from '@/components/ui/MonoLabel';
 import { Button } from '@/components/ui/Button';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type { gsap as GSAPType } from 'gsap';
 import { useAnimationLevel } from '@/lib/animations';
 import { MagneticButton } from '@/components/ui/MagneticButton';
 import { AnimatedHeadline } from '@/components/ui/AnimatedHeadline';
@@ -73,9 +72,15 @@ function HomepagePortfolioSection({
   useEffect(() => {
     if (animationLevel === 'none' || !containerRef.current || !gridRef.current) return;
     
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray('.portfolio-card') as HTMLElement[];
+    let ctx: any;
+    Promise.all([
+      import('gsap').then(m => m.gsap || m.default),
+      import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
+    ]).then(([gsap, ScrollTrigger]) => {
+      if (!gsap || !ScrollTrigger) return;
+      gsap.registerPlugin(ScrollTrigger);
+      ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray('.portfolio-card') as HTMLElement[];
       
       // Staggered card entrance on scroll
       gsap.fromTo(cards,
@@ -115,8 +120,9 @@ function HomepagePortfolioSection({
         });
       }
     }, containerRef);
+    })
     
-    return () => ctx.revert();
+    return () => ctx?.revert();
   }, [animationLevel, safeProjects.length]);
 
   return (
@@ -230,48 +236,55 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
   useEffect(() => {
     if (animationLevel === 'none' || !containerRef.current || !gridRef.current) return;
     
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray('.portfolio-card') as HTMLElement[];
-      
-      gsap.fromTo(cards,
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: gridRef.current,
-            start: 'top 85%',
+    let ctx: any;
+    Promise.all([
+      import('gsap').then(m => m.gsap || m.default),
+      import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
+    ]).then(([gsap, ScrollTrigger]) => {
+      if (!gsap || !ScrollTrigger) return;
+      gsap.registerPlugin(ScrollTrigger);
+      ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray('.portfolio-card') as HTMLElement[];
+        
+        gsap.fromTo(cards,
+          { y: 60, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: 'top 85%',
+            }
           }
-        }
-      );
+        );
 
-      if (animationLevel === 'full') {
-        cards.forEach(card => {
-          const title = card.querySelector('.card-title');
-          if (title) {
-            gsap.fromTo(title,
-              { y: 15 },
-              {
-                y: -15,
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: card,
-                  start: 'top bottom',
-                  end: 'bottom top',
-                  scrub: true,
+        if (animationLevel === 'full') {
+          cards.forEach(card => {
+            const title = card.querySelector('.card-title');
+            if (title) {
+              gsap.fromTo(title,
+                { y: 15 },
+                {
+                  y: -15,
+                  ease: 'none',
+                  scrollTrigger: {
+                    trigger: card,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true,
+                  }
                 }
-              }
-            );
-          }
-        });
-      }
-    }, containerRef);
+              );
+            }
+          });
+        }
+      }, containerRef);
+    })
     
-    return () => ctx.revert();
+    return () => ctx?.revert();
   }, [animationLevel, hasProjects]);
   
   return (

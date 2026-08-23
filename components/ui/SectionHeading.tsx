@@ -17,3 +17,5 @@ export function SectionHeading({ title, eyebrow, as: Component = 'h2', className
     </div>
   )
 }
+
+export default SectionHeading;

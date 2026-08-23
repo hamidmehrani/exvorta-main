@@ -130,3 +130,5 @@ export function AnimatedButton({ children, className = '', href, ...props }: { c
   )
 }
 
+
+export default Reveal;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Page } from '@/payload-types'
+import type {  Page  } from '@/payload-types'
 import { AnimatedSection } from '@/components/ui/Reveal'
 
 type CTABlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'cta' }>

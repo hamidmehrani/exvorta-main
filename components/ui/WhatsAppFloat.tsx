@@ -4,7 +4,7 @@ interface WhatsAppFloatProps {
   config: { phoneNumber?: string; enableWidget?: boolean; defaultMessage?: string } | null
 }
 
-export default function WhatsAppFloat({ config }: WhatsAppFloatProps) {
+export function WhatsAppFloat({ config }: WhatsAppFloatProps) {
   if (!config?.enableWidget || !config?.phoneNumber) {
     return null
   }
@@ -27,3 +27,5 @@ export default function WhatsAppFloat({ config }: WhatsAppFloatProps) {
     </a>
   )
 }
+
+export default WhatsAppFloat;

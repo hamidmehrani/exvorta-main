@@ -43,3 +43,5 @@ export function Marquee({ children, className = '', speed = 40 }: MarqueeProps) 
     </div>
   )
 }
+
+export default Marquee;

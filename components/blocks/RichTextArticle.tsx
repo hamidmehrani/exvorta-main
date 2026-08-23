@@ -1,5 +1,5 @@
 import React from 'react';
-import { Post } from '@/payload-types';
+import type {  Post  } from '@/payload-types';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { Container } from '@/components/ui/Container';
 import { MonoLabel } from '@/components/ui/MonoLabel';
@@ -131,3 +131,5 @@ export const RichTextArticle: React.FC<RichTextArticleProps> = ({ post, content,
     </div>
   );
 };
+
+export default RichTextArticle;

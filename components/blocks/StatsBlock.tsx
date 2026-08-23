@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useRef, useEffect, useState } from 'react'
-import { Page } from '@/payload-types'
+import type {  Page  } from '@/payload-types'
 import { AnimatedSection } from '@/components/ui/Reveal'
 import { m, useInView } from 'framer-motion'
 

@@ -7,9 +7,9 @@ import { Button } from '@/components/ui/Button';
 import { Hairline } from '@/components/ui/Hairline';
 // import Link from 'next/link';
 
-import { Ecosystem } from '@/payload-types';
+import type {  Ecosystem  } from '@/payload-types';
 
-export default function EcosystemBlock({ data }: { data?: Ecosystem }) {
+export function EcosystemBlock({ data }: { data?: Ecosystem }) {
   const hero = data?.hero || {
     eyebrow: '{hero.eyebrow}',
     title: '{hero.title}',
@@ -645,3 +645,5 @@ export default function EcosystemBlock({ data }: { data?: Ecosystem }) {
     </>
   );
 }
+
+export default EcosystemBlock;

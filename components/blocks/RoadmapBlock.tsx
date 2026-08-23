@@ -3,7 +3,7 @@
 import { AnimatedSection } from '../ui/Reveal';
 import { Container } from '../ui/Container';
 
-export default function RoadmapBlock(props: any) {
+export function RoadmapBlock(props: any) {
   return (
     <AnimatedSection className="w-full">
       <section className="py-24 bg-brand-cream text-brand-obsidian border-t border-hairline-light" data-purpose="roadmap">
@@ -85,3 +85,5 @@ export default function RoadmapBlock(props: any) {
     </AnimatedSection>
   );
 }
+
+export default RoadmapBlock;

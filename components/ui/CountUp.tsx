@@ -45,3 +45,5 @@ export function CountUp({ value, duration = 2, className = '' }: CountUpProps) {
   )
 }
 
+
+export default CountUp;

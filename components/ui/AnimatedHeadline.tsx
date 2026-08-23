@@ -1,8 +1,7 @@
 'use client'
 
 import React, { useRef, useEffect } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import type { gsap as GSAPType } from 'gsap'
 import { useReducedMotion } from '@/lib/animations'
 
 interface AnimatedHeadlineProps {
@@ -41,38 +40,45 @@ export function AnimatedHeadline({
   useEffect(() => {
     const node = containerRef.current
     if (prefersReducedMotion || !node) return
-    gsap.registerPlugin(ScrollTrigger)
+    let ctx: any;
+    Promise.all([
+      import('gsap').then(m => m.gsap || m.default),
+      import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
+    ]).then(([gsap, ScrollTrigger]) => {
+      if (!gsap || !ScrollTrigger) return;
+      gsap.registerPlugin(ScrollTrigger)
 
-    const chars = node.querySelectorAll('.character')
-    
-    gsap.fromTo(
-      chars,
-      {
-        y: '100%',
-        opacity: 0,
-        rotateX: -90,
-      },
-      {
-        y: '0%',
-        opacity: 1,
-        rotateX: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        stagger: {
-          each: 0.02,
-        },
-        delay,
-        scrollTrigger: {
-          trigger: node,
-          start: 'top 85%',
-        },
-      }
-    )
+      const chars = node.querySelectorAll('.character')
+      
+      ctx = gsap.context(() => {
+        gsap.fromTo(
+          chars,
+          {
+            y: '100%',
+            opacity: 0,
+            rotateX: -90,
+          },
+          {
+            y: '0%',
+            opacity: 1,
+            rotateX: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            stagger: {
+              each: 0.02,
+            },
+            delay,
+            scrollTrigger: {
+              trigger: node,
+              start: 'top 85%',
+            },
+          }
+        )
+      })
+    })
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => {
-        if (t.trigger === node) t.kill()
-      })
+      ctx?.revert()
     }
   }, [prefersReducedMotion, delay])
 
@@ -90,3 +96,5 @@ export function AnimatedHeadline({
     </Component>
   )
 }
+
+export default AnimatedHeadline;

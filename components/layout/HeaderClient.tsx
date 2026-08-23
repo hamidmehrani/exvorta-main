@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { Page } from '@/payload-types'
+import type {  Page  } from '@/payload-types'
 
 interface NavLink {
   link: {

@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { AnimatedSection, AnimatedButton } from '@/components/ui/Reveal';
 import Link from 'next/link';
-import { Post, Media, Category } from '@/payload-types';
+import type {  Post, Media, Category  } from '@/payload-types';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { MonoLabel } from '@/components/ui/MonoLabel';
@@ -206,3 +206,5 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
     </div>
   );
 };
+
+export default InsightsArchive;

@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 
@@ -31,3 +33,5 @@ export function Button({ variant = 'primary', href, className = '', children, ..
     </button>
   )
 }
+
+export default Button

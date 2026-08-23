@@ -1,6 +1,6 @@
 import React from 'react'
 import { getPayloadClient } from '@/lib/payload'
-import { Navigation } from '@/payload-types'
+import type {  Navigation  } from '@/payload-types'
 import HeaderClient from './HeaderClient'
 
 export const Header = async () => {

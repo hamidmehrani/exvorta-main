@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
 import { headers } from 'next/headers'
-import { Page, SeoDefault } from '@/payload-types'
+import type {  Page, SeoDefault  } from '@/payload-types'
 import BlockRenderer from '@/components/blocks/BlockRenderer'
 import LivePreviewListener from '@/components/live-preview/LivePreviewListener'
 

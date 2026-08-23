@@ -8,7 +8,7 @@ import type { Page } from '@/payload-types'
 type CTABannerProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'ctaBanner' }>
 type GuaranteeType = NonNullable<CTABannerProps['guarantees']>[0]
 
-export default function CTABannerBlock(props: CTABannerProps) {
+export function CTABannerBlock(props: CTABannerProps) {
   const { label, headline, description, primaryCTA, secondaryCTA, guarantees } = props
 
   return (
@@ -33,3 +33,5 @@ export default function CTABannerBlock(props: CTABannerProps) {
     </section>
   )
 }
+
+export default CTABannerBlock;

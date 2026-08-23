@@ -14,7 +14,7 @@ interface Props {
   source?: string
 }
 
-export default function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
+export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
   const [isPending, setIsPending] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -242,3 +242,5 @@ export default function WaitlistClientForm({ placeholder, buttonText, source }: 
     </m.div>
   )
 }
+
+export default WaitlistClientForm;

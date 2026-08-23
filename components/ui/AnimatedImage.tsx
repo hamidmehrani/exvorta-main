@@ -71,3 +71,5 @@ export function AnimatedImage({
     </div>
   )
 }
+
+export default AnimatedImage;

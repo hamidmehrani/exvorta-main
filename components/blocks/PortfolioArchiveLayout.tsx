@@ -113,3 +113,5 @@ export function PortfolioArchiveLayout({ projects }: { projects?: Project[] }) {
   );
 }
 
+
+export default PortfolioArchiveLayout;

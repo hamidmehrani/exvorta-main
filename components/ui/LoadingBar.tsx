@@ -43,3 +43,5 @@ export function LoadingBar() {
     </AnimatePresence>
   )
 }
+
+export default LoadingBar;

@@ -8,7 +8,7 @@ interface CMSImageProps {
   priority?: boolean
 }
 
-export default function CMSImage({ media, className = '', priority = false }: CMSImageProps) {
+export function CMSImage({ media, className = '', priority = false }: CMSImageProps) {
   if (!media || typeof media === 'string') {
     return null
   }
@@ -38,3 +38,5 @@ export default function CMSImage({ media, className = '', priority = false }: CM
     />
   )
 }
+
+export default CMSImage;

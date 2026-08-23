@@ -12,3 +12,5 @@ export function Container({ children, as: Component = 'div', className = '', ...
     </Component>
   )
 }
+
+export default Container;
