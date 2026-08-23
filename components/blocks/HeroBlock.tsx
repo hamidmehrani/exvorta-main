@@ -5,34 +5,25 @@ import { AnimatedSection } from '@/components/ui/Reveal'
 type HeroBlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'hero' }>
 
 export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
+  const isHome = props.headline?.includes('Digital Infrastructure') || props.eyebrow?.includes('ENGINE') || (!props.headline && !props.eyebrow) // fallback to home if nothing
+  const isWebHero = props.eyebrow?.includes('HIGH-PERFORMANCE') || props.headline?.includes('High-Performance') || props.eyebrow?.includes('WEBSITES')
   const isAboutHero = props.headline?.includes('Gravity') || props.eyebrow?.includes('IDENTITY') || props.headline?.includes('Digital Gravity')
-  const isWebHero = props.eyebrow?.includes('HIGH-PERFORMANCE') || props.headline?.includes('High-Performance')
 
-  if (isAboutHero || isWebHero) {
+  if (isAboutHero) {
     return (
       <AnimatedSection className="w-full">
         <section className="w-full bg-[#0A0A0A] flex flex-col items-center justify-center text-center relative px-6 py-40 min-h-[85vh] overflow-hidden rounded-none" id="hero">
           <div className="relative z-10 max-w-7xl mx-auto flex flex-col items-center">
             <span className="text-[9px] md:text-[10px] font-mono tracking-[0.4em] text-white/40 uppercase mb-10 block">
-              {props.eyebrow || (isWebHero ? '[ HIGH-PERFORMANCE WEBSITES ]' : '[ THE EXVORTA IDENTITY ]')}
+              {props.eyebrow || '[ THE EXVORTA IDENTITY ]'}
             </span>
             <h1
               className="text-5xl md:text-[5.5rem] font-serif font-bold text-white leading-[1.05] tracking-tight max-w-5xl mx-auto mb-10"
-              dangerouslySetInnerHTML={{ __html: props.headline || (isWebHero ? 'High-Performance Websites.<br/><span class="text-white/50">For Global Traders.</span>' : 'We Engineer Digital Gravity.<br/><span class="text-white/60">For the World\'s Most Demanding Trade Entities.</span>') }}
+              dangerouslySetInnerHTML={{ __html: props.headline || 'We Engineer Digital Gravity.<br/><span class="text-white/60">For the World\'s Most Demanding Trade Entities.</span>' }}
             />
             <p className="max-w-2xl mx-auto text-lg md:text-xl text-white/50 leading-relaxed font-sans mt-6">
-              {props.subheadline || (isWebHero
-                ? 'The institutional standard. Bespoke architecture, flawless aesthetics, and engineered for elite B2B trading companies operating at a global scale.'
-                : 'Exvorta is a boutique digital architecture firm. We exist strictly to close the credibility gap between your monumental physical trading velocity and your online infrastructure.')}
+              {props.subheadline || 'Exvorta is a boutique digital architecture firm. We exist strictly to close the credibility gap between your monumental physical trading velocity and your online infrastructure.'}
             </p>
-            {isWebHero && (
-              <a
-                href={props.primaryCTA?.url || '/rfq'}
-                className="mt-12 inline-flex items-center justify-center px-10 py-4 bg-white text-[#0A0A0A] text-[10px] font-mono tracking-[0.3em] uppercase hover:bg-white/90 transition-all duration-200"
-              >
-                {props.primaryCTA?.label || '[ REQUEST A CUSTOM SCOPE ]'}
-              </a>
-            )}
             <div className="text-[9px] font-mono text-white/20 tracking-[0.2em] uppercase mt-16">[ DUBAI · GLOBAL REACH ]</div>
           </div>
         </section>
@@ -40,6 +31,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
     )
   }
 
+  // Both Home and Web are light theme, but only Home gets the dashboard.
   return (
     <AnimatedSection className="w-full">
       {/*  BEGIN: Hero Section  */}
@@ -47,12 +39,13 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative">
 {/*  Hero Content  */}
 <div className="text-center max-w-4xl mx-auto mb-20">
-<div className="inline-flex items-center justify-center px-3 py-1 mb-8 rounded-full border border-black/10 bg-white/50 text-[10px] tracking-widest uppercase text-obsidian/60"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2"></span> [ {props.eyebrow || "ENGINE V1.0 LIVE"} ]</div>
-<h1 className="text-5xl md:text-7xl lg:text-[84px] leading-[1.1] font-serif font-semibold text-obsidian mb-8 tracking-tight" dangerouslySetInnerHTML={{ __html: props.headline || "Digital Infrastructure<br/>for Global Traders" }} />
-<p className="text-base md:text-lg text-obsidian/60 max-w-2xl mx-auto mb-12 font-light">{props.subheadline || "The definitive digital foundation for elite importers and exporters. Precision-engineered web presence and automated compliance."}</p>
+<div className="inline-flex items-center justify-center px-3 py-1 mb-8 rounded-full border border-black/10 bg-white/50 text-[10px] tracking-widest uppercase text-obsidian/60"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2"></span> [ {props.eyebrow || (isWebHero ? "HIGH-PERFORMANCE WEBSITES" : "ENGINE V1.0 LIVE")} ]</div>
+<h1 className="text-5xl md:text-7xl lg:text-[84px] leading-[1.1] font-serif font-semibold text-obsidian mb-8 tracking-tight" dangerouslySetInnerHTML={{ __html: props.headline || (isWebHero ? "High-Performance Websites.<br/><span class='text-black/50'>For Global Traders.</span>" : "Digital Infrastructure<br/>for Global Traders") }} />
+<p className="text-base md:text-lg text-obsidian/60 max-w-2xl mx-auto mb-12 font-light">{props.subheadline || (isWebHero ? "The institutional standard. Bespoke architecture, flawless aesthetics, and engineered for elite B2B trading companies operating at a global scale." : "The definitive digital foundation for elite importers and exporters. Precision-engineered web presence and automated compliance.")}</p>
 <a className="inline-flex items-center justify-center px-8 py-4 bg-obsidian text-white text-xs font-medium tracking-widest uppercase shadow-[0_0_15px_rgba(0,102,255,0.5)] hover:bg-black/80 transition-all" href={props.primaryCTA?.url || "#"}>{props.primaryCTA?.label || "[ REQUEST PROPOSAL ]"}</a>
 </div>
-{/*  Dashboard Preview  */}
+{/*  Dashboard Preview - ONLY for Home  */}
+{(!isWebHero) && (
 <div className="relative w-full max-w-[1400px] mx-auto rounded-xl shadow-2xl overflow-hidden bg-dashboard border border-border-dark flex flex-col mt-20" style={{ height: "700px" }}>{/*  Dashboard Header  */}
 <div className="h-12 border-b border-border-dark flex items-center px-4 justify-between bg-black/40">
 <div className="flex items-center space-x-2 w-32">
@@ -289,6 +282,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 </div>
 </div>
 </div></div>
+)}
 </div></section><div className="py-12 flex justify-center" data-purpose="social-proof-anchor"><p className="text-[11px] font-sans text-obsidian/40 uppercase tracking-[0.2em] text-center max-w-xl leading-relaxed">Elevating digital infrastructure for modern trading firms across the GCC and Europe.</p></div>
 {/*  END: Hero Section  */}
 
