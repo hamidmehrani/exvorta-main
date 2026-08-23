@@ -52,7 +52,7 @@ export default function RFQForm() {
   }
 
   const inputClass = `peer bg-transparent border-b border-hairline-light text-black placeholder:text-transparent rounded-none px-0 py-4 pt-6 text-sm focus:ring-0 focus:border-brand-emerald focus:outline-none uppercase font-mono tracking-widest w-full transition-colors duration-300 ${error ? 'border-red-500' : ''}`
-  const labelClass = `absolute left-0 top-6 text-black/40 text-[10px] uppercase font-mono tracking-widest transition-all duration-300 pointer-events-none peer-focus:top-0 peer-focus:text-[8px] peer-focus:text-brand-emerald peer-focus:opacity-100 peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-[8px] peer-not-placeholder-shown:text-black/60`
+  const labelClass = `absolute left-0 top-6 text-black/40 text-[10px] uppercase font-mono tracking-widest transition-all duration-300 pointer-events-none peer-focus:top-0 peer-focus:text-[8px] peer-focus:text-brand-emerald peer-focus:opacity-100 peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[8px] peer-[:not(:placeholder-shown)]:text-black/60 peer-valid:top-0 peer-valid:text-[8px] peer-valid:text-black/60`
 
   if (success) {
     return (
@@ -133,7 +133,7 @@ export default function RFQForm() {
         <div className="space-y-10">
           <InputWrapper>
             <select name="businessType" className={inputClass} disabled={isPending} defaultValue="" required>
-              <option disabled value="" className="text-black/40">BUSINESS TYPE *</option>
+              <option value="" disabled hidden></option>
               <option value="importer">Importer</option>
               <option value="exporter">Exporter</option>
               <option value="trading_company">Trading Company</option>
@@ -162,7 +162,7 @@ export default function RFQForm() {
         <div className="grid grid-cols-1 gap-10">
           <InputWrapper>
             <select name="budget" className={inputClass} disabled={isPending} defaultValue="" required>
-              <option disabled value="" className="text-black/40">ALLOCATED BUDGET *</option>
+              <option value="" disabled hidden></option>
               <option value="$800–1.5k">$800–1.5k</option>
               <option value="$1.5–3k">$1.5–3k</option>
               <option value="$3k+">$3k+</option>

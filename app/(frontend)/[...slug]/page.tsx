@@ -20,13 +20,21 @@ export async function generateMetadata({
   if (!slug || slug.length === 0) {
     return { title: 'Not Found' }
   }
-  const pageSlug = slug.join('/')
+  const rawSlug = slug.join('/')
+  const slugMap: Record<string, string> = { 'web': 'exvorta-web', 'firm': 'the-firm', 'about': 'the-firm' }
+  const pageSlug = slugMap[rawSlug] || rawSlug
 
   let pageDoc: Page | null = null
   try {
     pageDoc = await getCachedPage(pageSlug)
+    if (!pageDoc && pageSlug === 'exvorta-web') {
+      pageDoc = await getCachedPage('web')
+    }
+    if (!pageDoc && pageSlug === 'the-firm') {
+      pageDoc = await getCachedPage('about')
+    }
   } catch (error) {
-    console.error('Failed to fetch home page metadata', error)
+    console.error('Failed to fetch page metadata', error)
   }
 
   return generateMeta({ doc: pageDoc, url: `/${pageSlug}` })
@@ -41,17 +49,64 @@ export default async function DynamicPage({
   if (!slug || slug.length === 0) {
     notFound()
   }
-  const pageSlug = slug.join('/')
+  const rawSlug = slug.join('/')
+  const slugMap: Record<string, string> = { 'web': 'exvorta-web', 'firm': 'the-firm', 'about': 'the-firm' }
+  const pageSlug = slugMap[rawSlug] || rawSlug
+
+  // Redirect root case studies to portfolio
+  if (['spicevo', 'nutave', 'stonvi', 'aurora', 'vanguard'].includes(pageSlug)) {
+    const { redirect } = await import('next/navigation');
+    redirect(`/portfolio/${pageSlug}`);
+  }
+
   let pageDoc: Page | null = null
 
   try {
     pageDoc = await getCachedPage(pageSlug)
+    if (!pageDoc && pageSlug === 'exvorta-web') {
+      pageDoc = await getCachedPage('web')
+    }
+    if (!pageDoc && pageSlug === 'the-firm') {
+      pageDoc = await getCachedPage('about')
+    }
   } catch (error) {
     console.error('Error fetching page content', error)
   }
 
   if (!pageDoc) {
-    notFound()
+    if (pageSlug === 'exvorta-web' || pageSlug === 'the-firm') {
+      pageDoc = { id: 1, title: pageSlug, slug: pageSlug, layout: [] } as any;
+    } else {
+      notFound()
+    }
+  }
+
+  // Force blocks for 'the-firm' or 'about'
+  if (pageSlug === 'the-firm' || pageSlug === 'about') {
+    pageDoc!.layout = [
+      {
+        blockType: 'hero',
+        headline: "We Engineer Digital Gravity. <br/><span class=\"text-white/60\">For the World's Most Demanding Trade Entities.</span>",
+        eyebrow: "[ THE EXVORTA IDENTITY ]"
+      },
+      { blockType: 'thesis' },
+      { blockType: 'founder' },
+      { blockType: 'globalPresence' },
+      { blockType: 'vision' }
+    ] as any;
+  }
+
+  // Force blocks for 'exvorta-web'
+  if (pageSlug === 'exvorta-web') {
+    pageDoc!.layout = [
+      { blockType: 'problemStatement' },
+      { blockType: 'featureShowcase' },
+      { blockType: 'process' },
+      { blockType: 'portfolioShowcase' },
+      { blockType: 'pricing' },
+      { blockType: 'testimonialBlock' },
+      { blockType: 'faq' }
+    ] as any;
   }
 
   if (pageDoc?.requiresAuth) {

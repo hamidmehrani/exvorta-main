@@ -117,6 +117,26 @@ html[dir="rtl"] body {
   }
 }
 
+/* ─── Site Container ────────────────────────────────────────────────────────
+   Used by <Container> component everywhere. Matches design system:
+   max-w: 1280px (container-max), px: 1.5rem (gutter) → 2rem on md
+   ─────────────────────────────────────────────────────────────────────────── */
+.container-site {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-site {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
 /* ─── Locale-aware font-sans overrides ────────────────────────────────────── */
 
 /* Farsi: IRANSansX variable font */

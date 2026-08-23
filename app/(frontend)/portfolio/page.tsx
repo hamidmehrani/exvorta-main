@@ -2,50 +2,32 @@ import React from 'react';
 import type { Metadata } from 'next'
 import { generateMeta } from '@/utils/generateMeta'
 import { PortfolioArchiveBlock } from '@/components/blocks/PortfolioArchiveBlock';
+import { getPayloadClient } from '@/lib/payload';
 import type { Project } from '@/payload-types';
 
 export async function generateMetadata(): Promise<Metadata> {
   return generateMeta({ title: 'Portfolio', description: 'Latest Web Design Works. Premium websites and CMS platforms engineered for global exporters.' })
 }
 
-export default function PortfolioArchivePage() {
-  const projects = [
-    {
-      id: '1',
-      title: 'Nutave',
-      slug: 'nutave',
-      metrics: [
-        { label: 'INDUSTRY', value: 'PREMIUM NUTS', id: 'm1' },
-        { label: 'STACK', value: 'B2B WEB DEVELOPMENT', id: 'm2' }
-      ],
-      image: {
-        url: '',
-        alt: 'Nutave E-Commerce Platform'
-      }
-    },
-    {
-      id: '2',
-      title: 'Aurora',
-      slug: 'aurora',
-      clientName: 'Global Commodities Brokerage.',
-      tags: ['B2B PLATFORM', 'MARKET DATA', 'SECURE PORTAL'],
-      image: {
-        url: '',
-        alt: 'Aurora Trading Platform'
-      }
-    },
-    {
-      id: '3',
-      title: 'Vanguard',
-      slug: 'vanguard',
-      clientName: 'International Logistics & Supply Chain.',
-      tags: ['TRACK & TRACE', 'API INTEGRATION', 'COMPLIANCE'],
-      image: {
-        url: '',
-        alt: 'Vanguard Logistics Dashboard'
-      }
-    }
-  ] as unknown as Project[];
+export default async function PortfolioArchivePage() {
+  const payload = await getPayloadClient();
+  
+  const { docs: projects } = await payload.find({
+    collection: 'projects',
+    limit: 10,
+    depth: 1,
+  });
 
-  return <PortfolioArchiveBlock projects={projects} fullPage={true} />;
+  let projectsToRender = projects;
+  const hasSpicevo = projects.some(p => p.slug === 'spicevo');
+  
+  if (!hasSpicevo) {
+    projectsToRender = [
+      { id: '1', title: 'Spicevo', slug: 'spicevo', excerpt: 'Organic Herbs & Spices Exporter.', metrics: [{label: 'Industry', value: 'Agriculture'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project,
+      { id: '2', title: 'Nutave', slug: 'nutave', excerpt: 'Premium Dried Fruits & Nuts Exporter.', metrics: [{label: 'Industry', value: 'Agriculture'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project,
+      { id: '3', title: 'Stonvi', slug: 'stonvi', excerpt: 'Ceramic & Building Materials Exporter.', metrics: [{label: 'Industry', value: 'Construction'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project
+    ]
+  }
+
+  return <PortfolioArchiveBlock projects={projectsToRender} fullPage={true} />;
 }

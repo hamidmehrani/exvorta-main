@@ -40,10 +40,6 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error'] } : false,
   },
-  experimental: {
-    // Reduces bundle size by tree-shaking large icon/utility packages
-    optimizePackageImports: ['framer-motion'],
-  },
   async headers() {
     return [
       {

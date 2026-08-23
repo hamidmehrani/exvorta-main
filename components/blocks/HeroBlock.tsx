@@ -5,6 +5,30 @@ import { AnimatedSection } from '@/components/ui/Reveal'
 type HeroBlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'hero' }>
 
 export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
+  const isAboutHero = props.headline?.includes('Gravity') || props.eyebrow?.includes('IDENTITY') || props.headline?.includes('Digital Gravity')
+
+  if (isAboutHero) {
+    return (
+      <AnimatedSection className="w-full">
+        <section className="w-full bg-[#0A0A0A] flex flex-col items-center justify-center text-center relative px-6 py-40 min-h-[75vh] overflow-hidden rounded-none" id="hero">
+          <div className="relative z-10 max-w-7xl mx-auto flex flex-col items-center">
+            <span className="text-[9px] md:text-[10px] font-mono tracking-[0.4em] text-white/40 uppercase mb-10 block">
+              {props.eyebrow || "[ THE EXVORTA IDENTITY ]"}
+            </span>
+            <h1 
+              className="text-5xl md:text-[5.5rem] font-serif font-bold text-white leading-[1.05] tracking-tight max-w-5xl mx-auto mb-10"
+              dangerouslySetInnerHTML={{ __html: props.headline || "We Engineer Digital Gravity. <br/><span class=\"text-white/60\">For the World's Most Demanding Trade Entities.</span>" }}
+            />
+            <p className="max-w-2xl mx-auto text-lg md:text-xl text-white/50 leading-relaxed font-sans mt-6">
+              {props.subheadline || "Exvorta is a boutique digital architecture firm. We exist strictly to close the credibility gap between your monumental physical trading velocity and your online infrastructure."}
+            </p>
+            <div className="text-[9px] font-mono text-white/20 tracking-[0.2em] uppercase mt-16">[ DUBAI · GLOBAL REACH ]</div>
+          </div>
+        </section>
+      </AnimatedSection>
+    )
+  }
+
   return (
     <AnimatedSection className="w-full">
       {/*  BEGIN: Hero Section  */}

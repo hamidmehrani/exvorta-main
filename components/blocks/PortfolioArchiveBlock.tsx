@@ -12,6 +12,7 @@ import type { gsap as GSAPType } from 'gsap';
 import { useAnimationLevel } from '@/lib/animations';
 import { MagneticButton } from '@/components/ui/MagneticButton';
 import { AnimatedHeadline } from '@/components/ui/AnimatedHeadline';
+import { LiveWebsiteFrame } from '@/components/ui/LiveWebsiteFrame';
 
 // ── Strict Type Definitions ───────────────────────────────────────────────────
 
@@ -45,9 +46,19 @@ function isInlineProject(obj: unknown): obj is InlineProject {
   return typeof obj === 'object' && obj !== null && 'title' in obj && !('slug' in obj);
 }
 
-function extractMediaUrl(media?: number | Media | null): string {
+function extractMediaUrl(media?: number | Media | null, fallbackSlug?: string): string {
   if (typeof media === 'object' && media !== null && 'url' in media && media.url) {
     return media.url;
+  }
+  // Per-project placeholder fallbacks
+  if (fallbackSlug) {
+    const slugFallbacks: Record<string, string> = {
+      spicevo: 'https://lh3.googleusercontent.com/aida/AP1WRLsluHrudtzDaG50aSD36NdRzN58w6vb8tMpFOdnfIZFgY1dBgREUPWYQlTjj9EbRdLgnplkZYewTF9sMmaeJSXAK3oto-ygLUZfgwWyy7yWx7KwCDhAFMeuV49Vhkho1reIvl0I9GKNryk-9aFBdjJS583MJmCtZCneN1ZtU54xdaArh6k8eLfsYFLn5M0d_X1KdW11WwN2Sz8g_rTEjmd88-HJHGcuK3mzWuDZmmpB05aQ3niGkBjgHbc',
+      nutave:  'https://lh3.googleusercontent.com/aida-public/AB6AXuDTcX8iFlHKFQvFN8bJQfOGg-_nzLQXMhBlL202Kmrc73fYxYhLKeFJWoMmZcXKwAtP3M0VlUY3zIeyjilaLKZQ9ArHT75i9gZKSBA_HnCIwE6IINE61ZOlhaXC2qYS880W7rWArYRukR8buTNfzLK6N-4I6FRbjkL5MSw8Cx19KQSo7DxjgWq3uZ1DCBTsKKX5xrVIiytGpYkGJ_rA5hYotAwpH8xIvVrdnKjibZ9X1yW7lSnishAJ',
+      stonvi:  'https://lh3.googleusercontent.com/aida-public/AB6AXuC1fBGp_Q-oYaZ_77-Dl_o0yav-sbdcaXdvuZurZ6Xw_cFmzia2dVyoWlkeHktMpOx-uPNV1RZh1higeAS7Cefvwm-QJaB6nIvs5wwou5LOSJFBWXQAJlgxKQ1VKjkvbDlgruwshK21vYvyIIdaaoE8_CRLUExVLK_itwzJbc0NpEk7ZQU-sGCu96gv237wss-RqkVV4dCDyf37XJ7-ZIY9MEd79b4aps2VhT9qwb6uym6ca-TBxbC6',
+    }
+    const key = Object.keys(slugFallbacks).find(k => fallbackSlug.toLowerCase().includes(k))
+    if (key) return slugFallbacks[key]
   }
   return '';
 }
@@ -149,18 +160,13 @@ function HomepagePortfolioSection({
               key={project.id || index} 
               className="portfolio-card group flex flex-col bg-white border border-black/5 rounded-none overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 relative"
             >
-              <div className="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
-                {project.imageUrl && (
-                  <Image
-                    src={project.imageUrl}
-                    alt={project.title}
-                    fill
-                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-[0.22,1,0.36,1] group-hover:scale-105"
-                  />
-                )}
-                {/* Decorative overlay matching "Institutional Elite" */}
-                <div className="absolute inset-0 border-[0.5px] border-white/20 pointer-events-none mix-blend-overlay"></div>
-              </div>
+              <LiveWebsiteFrame
+                title={project.title}
+                imageUrl={project.imageUrl || ''}
+                industry={project.industry}
+                volume={project.volume}
+                service={project.service}
+              />
 
               <div className="flex flex-col flex-grow p-8">
                 <h3 className="card-title font-serif text-3xl text-black mb-4 font-medium tracking-tight relative z-10">
@@ -171,27 +177,6 @@ function HomepagePortfolioSection({
                     {project.description}
                   </p>
                 )}
-
-                <div className="space-y-3 font-mono text-[9px] uppercase tracking-widest mb-10 text-gray-500">
-                  {project.industry && (
-                    <div className="flex justify-between border-b border-black/5 pb-2">
-                      <span>INDUSTRY</span>
-                      <span className="text-black font-medium">{project.industry}</span>
-                    </div>
-                  )}
-                  {project.volume && (
-                    <div className="flex justify-between border-b border-black/5 pb-2">
-                      <span>VOLUME</span>
-                      <span className="text-black font-medium">{project.volume}</span>
-                    </div>
-                  )}
-                  {project.service && (
-                    <div className="flex justify-between border-b border-black/5 pb-2">
-                      <span>SERVICE</span>
-                      <span className="text-black font-medium">{project.service}</span>
-                    </div>
-                  )}
-                </div>
 
                 <div className="mt-auto self-start">
                   <MagneticButton>
@@ -323,19 +308,11 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
                     key={project.id || index}
                     className="portfolio-card group flex flex-col bg-white border border-black/5 rounded-none overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 relative"
                   >
-                    <div className="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
-                      {heroImageUrl ? (
-                        <Image
-                          alt={project.title}
-                          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-[0.22,1,0.36,1] group-hover:scale-105"
-                          src={heroImageUrl}
-                          fill
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-brand-obsidian/5" />
-                      )}
-                      <div className="absolute inset-0 border-[0.5px] border-white/20 pointer-events-none mix-blend-overlay"></div>
-                    </div>
+                    <LiveWebsiteFrame
+                      title={project.title}
+                      imageUrl={extractMediaUrl(project.heroImage, project.slug)}
+                      slug={project.slug}
+                    />
                     
                     <div className="flex flex-col flex-grow p-8">
                       <h3 className="card-title font-serif text-3xl text-black mb-4 font-medium tracking-tight relative z-10">

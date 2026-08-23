@@ -3,13 +3,13 @@ import React from 'react'
 import type { Media } from '@/payload-types'
 
 interface CMSImageProps {
-  media: Media | string | null | undefined
+  media: Media | string | number | null | undefined
   className?: string
   priority?: boolean
 }
 
 export function CMSImage({ media, className = '', priority = false }: CMSImageProps) {
-  if (!media || typeof media === 'string') {
+  if (!media || typeof media === 'string' || typeof media === 'number') {
     return null
   }
 

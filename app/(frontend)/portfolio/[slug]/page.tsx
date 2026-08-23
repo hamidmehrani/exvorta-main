@@ -74,7 +74,15 @@ export default async function ProjectSinglePage({ params }: Props) {
   }
 
   if (!project) {
-    notFound();
+    if (resolvedParams.slug === 'spicevo') {
+      project = { id: '1', title: 'Spicevo', slug: 'spicevo', heroBgColor: '#FAFAF8', accentColor: '#7A2E2E', excerpt: 'Organic Herbs & Spices Exporter.', metrics: [{label: 'Industry', value: 'Agriculture'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project;
+    } else if (resolvedParams.slug === 'nutave') {
+      project = { id: '2', title: 'Nutave', slug: 'nutave', heroBgColor: '#2B1A0E', accentColor: '#C69A3A', excerpt: 'Premium Dried Fruits & Nuts Exporter.', metrics: [{label: 'Industry', value: 'Agriculture'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project;
+    } else if (resolvedParams.slug === 'stonvi') {
+      project = { id: '3', title: 'Stonvi', slug: 'stonvi', heroBgColor: '#F4F6F7', accentColor: '#5C6E7A', excerpt: 'Ceramic & Building Materials Exporter.', metrics: [{label: 'Industry', value: 'Construction'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project;
+    } else {
+      notFound();
+    }
   }
 
   const breadcrumbList = {

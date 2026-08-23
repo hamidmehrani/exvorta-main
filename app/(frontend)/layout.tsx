@@ -55,7 +55,8 @@ export default async function FrontendLayout({
       slug: 'site-settings',
     })
   } catch (e) {
-    console.error("Failed to fetch site-settings", e);
+    console.warn("site-settings fetch failed, using default", e);
+    siteSettings = { enableCookieBanner: false, maintenanceMode: false } as any;
   }
 
   try {
@@ -63,7 +64,8 @@ export default async function FrontendLayout({
       slug: 'analytics',
     })
   } catch (e) {
-    console.error("Failed to fetch analytics", e);
+    console.warn("analytics fetch failed, using default", e);
+    analyticsConfig = {} as any;
   }
   
   try {
@@ -71,7 +73,8 @@ export default async function FrontendLayout({
       slug: 'whatsapp-config',
     })) as unknown as { phoneNumber?: string; enableWidget?: boolean; defaultMessage?: string }
   } catch (e) {
-    console.error("Failed to fetch whatsapp-config", e);
+    console.warn("whatsapp-config fetch failed, using default", e);
+    whatsappConfig = { enableWidget: false, phoneNumber: '', defaultMessage: '' } as any;
   }
 
   const cookieStore = await cookies()
