@@ -15,6 +15,7 @@ export interface TestimonialBlockProps {
 }
 
 export const TestimonialBlock: React.FC<TestimonialBlockProps> = (props) => {
+  try {
   const eyebrow = props.eyebrow || "[ THE MARKET CONSENSUS ]"
   const quote = props.quote || "75% of people judge a company's credibility based on their website design alone."
   const quoteAuthor = props.quoteAuthor || "Stanford Web Credibility Research, B.J. Fogg"
@@ -56,6 +57,9 @@ export const TestimonialBlock: React.FC<TestimonialBlockProps> = (props) => {
       </div>
     </AnimatedSection>
   )
+  } catch (error) {
+    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in TestimonialBlock</div>
+  }
 }
 
 export default TestimonialBlock

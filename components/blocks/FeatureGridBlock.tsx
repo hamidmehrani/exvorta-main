@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import type {  Page  } from '@/payload-types'
 import { AnimatedSection } from '@/components/ui/Reveal'
@@ -23,6 +24,7 @@ const DEFAULT_FEATURES = [
 ]
 
 export const FeatureGridBlock: React.FC<FeatureGridBlockProps> = (props) => {
+  try {
   const features = props.features && props.features.length > 0 ? props.features : DEFAULT_FEATURES;
 
   return (
@@ -48,6 +50,9 @@ export const FeatureGridBlock: React.FC<FeatureGridBlockProps> = (props) => {
       </section>
     </AnimatedSection>
   )
+  } catch (error) {
+    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in FeatureGridBlock</div>
+  }
 }
 
 export default FeatureGridBlock

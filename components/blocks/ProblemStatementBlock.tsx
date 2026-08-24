@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { AnimatedSection } from '@/components/ui/Reveal';
 import type { Page } from '@/payload-types'
@@ -11,6 +12,7 @@ export const ProblemStatementBlock: React.FC<ProblemStatementBlockProps> = ({
   statements,
   theme = 'dark',
 }) => {
+  try {
   const isLight = theme === 'light'
   
   if (isLight) {
@@ -79,6 +81,9 @@ export const ProblemStatementBlock: React.FC<ProblemStatementBlockProps> = ({
       </div>
     </AnimatedSection>
   )
+  } catch (error) {
+    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in ProblemStatementBlock</div>
+  }
 }
 
 export default ProblemStatementBlock;

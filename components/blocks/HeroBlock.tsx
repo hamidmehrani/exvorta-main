@@ -6,6 +6,7 @@ import { AnimatedSection } from '@/components/ui/Reveal'
 type HeroBlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'hero' }>
 
 export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
+  try {
   const isHome = props.headline?.includes('Digital Infrastructure') || props.eyebrow?.includes('ENGINE') || (!props.headline && !props.eyebrow) // fallback to home if nothing
   const isWebHero = props.eyebrow?.includes('HIGH-PERFORMANCE') || props.headline?.includes('High-Performance') || props.eyebrow?.includes('WEBSITES')
   const isAboutHero = props.headline?.includes('Gravity') || props.eyebrow?.includes('IDENTITY') || props.headline?.includes('Digital Gravity')
@@ -336,6 +337,9 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 
     </AnimatedSection>
   )
+  } catch (error) {
+    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in HeroBlock</div>
+  }
 }
 
 export default HeroBlock

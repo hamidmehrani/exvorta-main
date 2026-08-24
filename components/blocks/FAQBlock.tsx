@@ -16,6 +16,7 @@ export interface FAQBlockProps {
 }
 
 export const FAQBlock: React.FC<FAQBlockProps> = (props) => {
+  try {
   const eyebrow = props.eyebrow || "[ EXECUTIVE BRIEFING ]"
   const sectionTitle = props.sectionTitle || "Clarity on Execution.<br/><span class=\"text-white/50\">Addressing Common Friction.</span>"
   
@@ -68,6 +69,9 @@ export const FAQBlock: React.FC<FAQBlockProps> = (props) => {
       </div>
     </AnimatedSection>
   )
+  } catch (error) {
+    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in FAQBlock</div>
+  }
 }
 
 export default FAQBlock

@@ -18,6 +18,7 @@ export interface ProcessBlockProps {
 }
 
 export const ProcessBlock: React.FC<ProcessBlockProps> = (props) => {
+  try {
   const eyebrow = props.eyebrow || "[ THE DEPLOYMENT PIPELINE ]"
   const headline = props.headline || "Zero Friction. Infinite Precision."
   
@@ -107,6 +108,9 @@ export const ProcessBlock: React.FC<ProcessBlockProps> = (props) => {
       </div>
     </AnimatedSection>
   )
+  } catch (error) {
+    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in ProcessBlock</div>
+  }
 }
 
 export default ProcessBlock

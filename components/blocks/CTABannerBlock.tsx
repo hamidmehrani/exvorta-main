@@ -8,6 +8,7 @@ import type { Page } from '@/payload-types'
 type CTABannerProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'ctaBanner' }>
 
 export function CTABannerBlock(props: CTABannerProps) {
+  try {
   const label = props.label || "[ INITIATE PARTNERSHIP ]"
   const headline = props.headline || "Align your digital infrastructure<br/>with your operational scale."
   const description = props.description || "Stop allowing generic architecture to dilute your market authority. Engage our engineering team to map your optimal digital footprint."
@@ -39,6 +40,9 @@ export function CTABannerBlock(props: CTABannerProps) {
       </div>
     </AnimatedSection>
   )
+  } catch (error) {
+    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in CTABannerBlock</div>
+  }
 }
 
 export default CTABannerBlock;

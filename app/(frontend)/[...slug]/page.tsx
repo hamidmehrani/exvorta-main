@@ -53,6 +53,25 @@ export default async function DynamicPage({
   const slugMap: Record<string, string> = { 'web': 'exvorta-web', 'firm': 'the-firm', 'about': 'the-firm' }
   const pageSlug = slugMap[rawSlug] || rawSlug
 
+  if (pageSlug === 'web' || pageSlug === 'exvorta-web') {
+    const fallbackPage = {
+      id: 999, title: 'exvorta-web', slug: 'exvorta-web',
+      layout: [
+        { id: 'hero-1', blockType: 'hero', eyebrow: '[ HIGH-PERFORMANCE WEBSITES ]', headline: 'High-Performance Websites.<br/><span class="text-white/50">For Global Traders.</span>', subheadline: 'We build high-performance websites that make global trading companies look like the serious players they are.', primaryCTA: { label: '[ REQUEST A CUSTOM SCOPE ]', url: '/rfq' } },
+        { id: 'pg-1', blockType: 'problemStatement', eyebrow: '[ THE CREDIBILITY GAP ]', headline: 'Your business moves millions. Your website looks like a startup.', description: 'International partners judge your reliability...' },
+        { id: 'fg-1', blockType: 'featureGrid', theme: 'dark' },
+        { id: 'fs-1', blockType: 'featureShowcase', label: '[ ARCHITECTURAL SPECS ]', title: 'Pure Code. Flawless Aesthetics.' },
+        { id: 'pr-1', blockType: 'process' },
+        { id: 'ps-1', blockType: 'portfolioShowcase' },
+        { id: 'pric-1', blockType: 'pricing' },
+        { id: 'test-1', blockType: 'testimonialBlock' },
+        { id: 'faq-1', blockType: 'faq' },
+        { id: 'cta-1', blockType: 'ctaBanner' },
+      ]
+    } as any
+    return <main className="flex-1 flex flex-col w-full bg-[#FAFAF8]"><BlockRenderer blocks={fallbackPage.layout} /></main>
+  }
+
   // Redirect root case studies to portfolio
   if (['spicevo', 'nutave', 'stonvi', 'aurora', 'vanguard'].includes(pageSlug)) {
     const { redirect } = await import('next/navigation');

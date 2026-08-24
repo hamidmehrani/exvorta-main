@@ -15,6 +15,7 @@ export interface FeatureShowcaseBlockProps {
 }
 
 export const FeatureShowcaseBlock: React.FC<FeatureShowcaseBlockProps> = (props) => {
+  try {
   const eyebrow = props.label || "[ ARCHITECTURAL SPECS ]"
   const title = props.title || "Pure Code. Flawless Aesthetics."
   
@@ -113,6 +114,9 @@ export const FeatureShowcaseBlock: React.FC<FeatureShowcaseBlockProps> = (props)
       </div>
     </AnimatedSection>
   )
+  } catch (error) {
+    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in FeatureShowcaseBlock</div>
+  }
 }
 
 export default FeatureShowcaseBlock

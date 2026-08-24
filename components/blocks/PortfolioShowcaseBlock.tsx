@@ -16,6 +16,7 @@ export interface PortfolioShowcaseBlockProps {
 }
 
 export const PortfolioShowcaseBlock: React.FC<PortfolioShowcaseBlockProps> = (props) => {
+  try {
   const eyebrow = props.label || "[ 06. PORTFOLIO SHOWCASE ]"
   const title = props.title || "Proof of Execution."
   const description = props.description || "Our recent deployments for elite trading institutions worldwide. Examine our track record of delivering uncompromised quality."
@@ -83,6 +84,9 @@ export const PortfolioShowcaseBlock: React.FC<PortfolioShowcaseBlockProps> = (pr
       </div>
     </AnimatedSection>
   )
+  } catch (error) {
+    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in PortfolioShowcaseBlock</div>
+  }
 }
 
 export default PortfolioShowcaseBlock

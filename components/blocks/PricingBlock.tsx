@@ -25,6 +25,7 @@ export interface PricingBlockProps {
 }
 
 export const PricingBlock: React.FC<PricingBlockProps> = (props) => {
+  try {
   const eyebrow = props.eyebrow || "[ SCOPE OF INVESTMENT ]"
   const sectionTitle = props.sectionTitle || "Tailored Architectures."
   const sectionSubtitle = props.sectionSubtitle || "Scoped to Your Scale."
@@ -135,6 +136,9 @@ export const PricingBlock: React.FC<PricingBlockProps> = (props) => {
       </div>
     </AnimatedSection>
   )
+  } catch (error) {
+    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in PricingBlock</div>
+  }
 }
 
 export default PricingBlock
