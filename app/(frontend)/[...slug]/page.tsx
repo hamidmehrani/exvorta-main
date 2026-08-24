@@ -73,6 +73,8 @@ export default async function DynamicPage({
     console.error('Error fetching page content', error)
   }
 
+  console.log("[DEBUG] pageSlug:", pageSlug, "pageDoc found:", !!pageDoc, "layout len:", pageDoc?.layout?.length)
+
   if (!pageDoc) {
     if (pageSlug === 'exvorta-web' || pageSlug === 'the-firm') {
       pageDoc = { id: 1, title: pageSlug, slug: pageSlug, layout: [] } as any;
@@ -81,45 +83,50 @@ export default async function DynamicPage({
     }
   }
 
-  // Force blocks for 'the-firm' or 'about'
-  if ((pageSlug === 'the-firm' || pageSlug === 'about') && (!pageDoc?.layout || pageDoc.layout.length === 0)) {
-    pageDoc!.layout = [
-      {
-        id: 'hero-firm',
-        blockType: 'hero',
-        headline: "We Engineer Digital Gravity. <br/><span class=\"text-white/60\">For the World's Most Demanding Trade Entities.</span>",
-        eyebrow: "[ THE EXVORTA IDENTITY ]"
-      },
-      { id: 'thesis-firm', blockType: 'thesis' },
-      { id: 'firm-firm', blockType: 'firm' },
-      { id: 'founder-firm', blockType: 'founder' },
-      { id: 'vision-firm', blockType: 'vision' },
-      { id: 'global-firm', blockType: 'globalPresence' },
-      { id: 'cta-firm', blockType: 'ctaBanner' }
-    ] as any;
+  let isFallback = !pageDoc || !pageDoc.layout || pageDoc.layout.length === 0
+  if (pageDoc?.layout && pageDoc.layout.length < 3 && (pageSlug === 'exvorta-web' || pageSlug === 'the-firm' || pageSlug === 'about')) {
+    isFallback = true
   }
 
-  // Force blocks for 'exvorta-web'
-  if (pageSlug === 'exvorta-web' && (!pageDoc?.layout || pageDoc.layout.length === 0)) {
-    pageDoc!.layout = [
-      {
-        id: 'hero-exvorta-web',
-        blockType: 'hero',
-        eyebrow: '[ HIGH-PERFORMANCE WEBSITES ]',
-        headline: 'High-Performance Websites.<br/><span class="text-white/50">For Global Traders.</span>',
-        subheadline: 'The institutional standard. Bespoke architecture, flawless aesthetics, and engineered for elite B2B trading companies operating at a global scale.',
-        primaryCTA: { label: '[ REQUEST A CUSTOM SCOPE ]', url: '/rfq' },
-      },
-      { id: 'problem-1', blockType: 'problemStatement', eyebrow: '[ THE PROBLEM ]', headline: 'Without a credible digital presence...', description: 'In global trade...', theme: 'dark' },
-      { id: 'problem-2', blockType: 'problemStatement', theme: 'light' },
-      { id: 'feature-1', blockType: 'featureShowcase', label: '[ ARCHITECTURAL SPECS ]', title: 'Pure Code. Flawless Aesthetics.' },
-      { id: 'process-1', blockType: 'process' },
-      { id: 'portfolio-1', blockType: 'portfolioShowcase' },
-      { id: 'pricing-1', blockType: 'pricing' },
-      { id: 'testimonial-1', blockType: 'testimonialBlock' },
-      { id: 'faq-1', blockType: 'faq' }
-    ] as any;
+  if (isFallback) {
+    if (pageSlug === 'the-firm' || pageSlug === 'about') {
+      pageDoc!.layout = [
+        {
+          id: 'hero-firm',
+          blockType: 'hero',
+          headline: "We Engineer Digital Gravity. <br/><span class=\"text-white/60\">For the World's Most Demanding Trade Entities.</span>",
+          eyebrow: "[ THE EXVORTA IDENTITY ]"
+        },
+        { id: 'thesis-firm', blockType: 'thesis' },
+        { id: 'firm-firm', blockType: 'firm' },
+        { id: 'founder-firm', blockType: 'founder' },
+        { id: 'vision-firm', blockType: 'vision' },
+        { id: 'global-firm', blockType: 'globalPresence' },
+        { id: 'cta-firm', blockType: 'ctaBanner' }
+      ] as any;
+    } else if (pageSlug === 'exvorta-web') {
+      pageDoc!.layout = [
+        {
+          id: 'hero-exvorta-web',
+          blockType: 'hero',
+          eyebrow: '[ HIGH-PERFORMANCE WEBSITES ]',
+          headline: 'High-Performance Websites.<br/><span class="text-white/50">For Global Traders.</span>',
+          subheadline: 'The institutional standard. Bespoke architecture, flawless aesthetics, and engineered for elite B2B trading companies operating at a global scale.',
+          primaryCTA: { label: '[ REQUEST A CUSTOM SCOPE ]', url: '/rfq' },
+        },
+        { id: 'problem-1', blockType: 'problemStatement', eyebrow: '[ THE PROBLEM ]', headline: 'Without a credible digital presence...', description: 'In global trade...', theme: 'dark' },
+        { id: 'problem-2', blockType: 'problemStatement', theme: 'light' },
+        { id: 'feature-1', blockType: 'featureShowcase', label: '[ ARCHITECTURAL SPECS ]', title: 'Pure Code. Flawless Aesthetics.' },
+        { id: 'process-1', blockType: 'process' },
+        { id: 'portfolio-1', blockType: 'portfolioShowcase' },
+        { id: 'pricing-1', blockType: 'pricing' },
+        { id: 'testimonial-1', blockType: 'testimonialBlock' },
+        { id: 'faq-1', blockType: 'faq' }
+      ] as any;
+    }
   }
+
+  console.log("[DEBUG] final layout len:", pageDoc?.layout?.length, "types:", pageDoc?.layout?.map((b:any)=>b.blockType))
 
   if (pageDoc?.requiresAuth) {
     const payload = await getPayloadClient()

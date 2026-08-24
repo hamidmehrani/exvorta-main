@@ -36,14 +36,14 @@ const blockComponents: Record<string, any> = {
   ecosystem: dynamic(() => import('./EcosystemBlock').then(m => m.default || m.EcosystemBlock), { ssr: false }),
   marquee: dynamic(() => import('./MarqueeBlock').then(m => m.default || m.MarqueeBlock), { ssr: false }),
 }
-class ErrorBoundary extends React.Component<any, any> { constructor(p:any){super(p); this.state={hasError:false}} static getDerivedStateFromError(){return{hasError:true}} componentDidCatch(e:any,i:any){console.error(e,i)} render(){ if(this.state.hasError) return null; return this.props.children } }
+class ErrorBoundary extends React.Component<any, any> { constructor(p:any){super(p); this.state={hasError:false}} static getDerivedStateFromError(){return{hasError:true}} componentDidCatch(e:any,i:any){console.error(e,i)} render(){ if(this.state.hasError) return <div style={{padding:20, border:'1px solid red'}}>BLOCK CRASHED: {this.props.blockType}</div>; return this.props.children } }
 const BlockRenderer = ({ blocks }: { blocks?: any[] }) => {
   if (!blocks?.length) return null
   return <>{blocks.map((b,i) => {
     const type = b.blockType || b._blockType
     const Comp = blockComponents[type]
     if (!Comp) { console.warn(`MISSING ${type}`); return null }
-    return <ErrorBoundary key={b.id||i}><Comp {...b} /></ErrorBoundary>
+    return <ErrorBoundary key={b.id||i} blockType={type}><Comp {...b} /></ErrorBoundary>
   })}</>
 }
 export default BlockRenderer
