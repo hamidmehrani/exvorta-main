@@ -93,7 +93,6 @@ export default async function FrontendLayout({
   return (
     <html lang="en" className={`${inter.variable} ${vazirmatn.variable}`}>
       <body>
-        <SmoothScrollProvider>
           <Suspense fallback={null}>
             <LoadingBar />
           </Suspense>
@@ -134,7 +133,6 @@ export default async function FrontendLayout({
               </div>
             </PageTransition>
           </FramerMotionProvider>
-        </SmoothScrollProvider>
       </body>
     </html>
   )

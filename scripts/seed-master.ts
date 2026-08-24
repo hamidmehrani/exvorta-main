@@ -1,7 +1,5 @@
-import { loadEnvConfig } from '@next/env'
-loadEnvConfig(process.cwd())
+import 'dotenv/config'
 import { getPayload } from 'payload'
-import configPromise from '../payload.config'
 
 const pagesToSeed: any[] = [
   {
@@ -557,6 +555,7 @@ async function seedMaster() {
   console.log('Seeding Master Pages via Local API...')
   // process.env.DATABASE_URI = process.env.DATABASE_URI_UNPOOLED || process.env.DATABASE_URI
   try {
+    const { default: configPromise } = await import('../payload.config.ts');
     const payload = await getPayload({ config: configPromise })
 
     const seededProductIds: string[] = []

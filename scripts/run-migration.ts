@@ -21,6 +21,7 @@
  *   NODE_OPTIONS="--require ./scripts/next-env-shim.cjs" \
  *     npx tsx scripts/run-migration.ts status
  */
+import 'dotenv/config'
 import payload from 'payload'
 async function main() {
   const [cmd, ...rest] = process.argv.slice(2)
