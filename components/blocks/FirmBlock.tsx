@@ -60,7 +60,7 @@ export const FirmBlock: React.FC<FirmBlockProps> = (props) => {
         
         {/* Right Column: Operational Pillars */}
         <div className="lg:col-span-7 flex flex-col mt-12 lg:mt-0">
-          {pillars.map((pillar, i) => (
+          {pillars?.map((pillar, i) => (
             <div key={i} className={`border-t border-white/10 pt-8 pb-12 ${i === pillars.length - 1 ? 'border-b' : ''}`}>
               <div className="flex items-center gap-6 mb-6">
                 <span className="text-xs font-mono text-white/30">{pillar.number}</span>

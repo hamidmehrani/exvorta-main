@@ -15,22 +15,17 @@ export const Header = async () => {
     console.warn('[Header] CMS navigation unavailable, using fallback', error)
   }
 
-  const translations = {
-    features: 'Features',
-    collections: 'Collections',
-    docs: 'Docs',
-    admin: 'Admin',
-  }
-
+  // Mirrors the design spec header: PORTFOLIO · ECOSYSTEM · THE FIRM
   const fallbackLinks: NonNullable<Navigation['links']> = [
-    { link: { type: 'custom', label: 'SOLUTIONS', url: '/ecosystem' }, id: 'fallback-1' },
-    { link: { type: 'custom', label: 'PORTFOLIO', url: '/portfolio' }, id: 'fallback-2' },
-    { link: { type: 'custom', label: 'ECOSYSTEM', url: '/ecosystem' }, id: 'fallback-3' },
+    { link: { type: 'custom', label: 'PORTFOLIO', url: '/portfolio' }, id: 'fallback-1' },
+    { link: { type: 'custom', label: 'ECOSYSTEM', url: '/ecosystem' }, id: 'fallback-2' },
+    { link: { type: 'custom', label: 'THE FIRM', url: '/about' }, id: 'fallback-3' },
   ]
-  
+
   const finalNavLinks = navData?.links?.length ? navData.links : fallbackLinks
 
-  return <HeaderClient navLinks={finalNavLinks} t={translations} />
+  return <HeaderClient navLinks={finalNavLinks} />
 }
 
 export default Header
+

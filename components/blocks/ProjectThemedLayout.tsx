@@ -4,6 +4,7 @@ import React from 'react';
 import type { Project } from '@/payload-types';
 import { AnimatedSection } from '@/components/ui/Reveal';
 import { CMSImage } from '@/components/ui/CMSImage';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export function ProjectThemedLayout({ project }: { project?: Project }) {
@@ -56,7 +57,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                 <table className="w-full border-collapse border border-white/10">
                   <tbody>
                     {project?.metrics && project.metrics.length > 0 ? (
-                      project.metrics.map((metric, i) => (
+                      project.metrics?.map((metric, i) => (
                         <tr key={i} className="border-b border-white/10 last:border-b-0">
                           <td className="p-4 border-r border-white/10 font-mono text-[10px] w-1/3 uppercase" style={{ color: accentColor }}>{metric.label}:</td>
                           <td className="p-4 font-mono text-[10px] text-[#FAFAF8] uppercase">{metric.value}</td>
@@ -91,7 +92,14 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
               {project?.heroImage ? (
                  <CMSImage media={project.heroImage} className="w-full h-full object-cover rounded-none grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700" />
               ) : (
-                <img className="w-full h-full object-cover rounded-none grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700" src={heroImageUrl} alt={project?.title || 'Case Study'} />
+                <Image
+                  className="w-full h-full object-cover rounded-none grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
+                  src={heroImageUrl}
+                  alt={project?.title || 'Case Study'}
+                  width={1200}
+                  height={800}
+                  unoptimized
+                />
               )}
             </div>
           </div>
@@ -115,7 +123,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
             <div className="lg:col-span-7">
               <div className="font-mono text-[10px] uppercase tracking-widest mb-8" style={{ color: accentColor }}>[ PALETTE ]</div>
               <div className="grid grid-cols-3 gap-4">
-                {palette.colors.map((color, idx) => (
+                {palette.colors?.map((color, idx) => (
                   <div key={idx} className="aspect-square border border-[#0D0D0D] flex flex-col justify-end p-4" style={{ backgroundColor: color }}>
                     <span className={`font-mono text-[10px] uppercase ${idx > 0 ? 'text-white' : ''}`}>{palette.names[idx]}</span>
                   </div>

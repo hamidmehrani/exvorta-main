@@ -24,7 +24,9 @@ import RFQFormBlock from './RFQFormBlock'
 import WaitlistFormBlock from './WaitlistFormBlock'
 import RoadmapBlock from './RoadmapBlock'
 import ProblemStatementBlock from './ProblemStatementBlock'
-const blockComponents: Record<string, any> = {
+// Block components declare specific prop interfaces, but the renderer receives
+// untyped CMS layout data by design — entries are cast at lookup time.
+const blockComponents: Record<string, unknown> = {
   hero: HeroBlock, featureGrid: FeatureGridBlock, featureShowcase: FeatureShowcaseBlock, stats: StatsBlock, cta: CTABlock, ctaBanner: CTABannerBlock, richText: RichTextBlock, video: VideoBlock,
   process: ProcessBlock, processBlock: ProcessBlock, faq: FAQBlock, faqBlock: FAQBlock, pricing: PricingBlock, pricingBlock: PricingBlock,
   testimonialBlock: TestimonialBlock, thesis: ThesisBlock, vision: VisionBlock, founder: FounderBlock, globalPresence: GlobalPresenceBlock,
@@ -36,12 +38,19 @@ const blockComponents: Record<string, any> = {
   ecosystem: dynamic(() => import('./EcosystemBlock').then(m => m.default || m.EcosystemBlock), { ssr: false }),
   marquee: dynamic(() => import('./MarqueeBlock').then(m => m.default || m.MarqueeBlock), { ssr: false }),
 }
-class ErrorBoundary extends React.Component<any, any> { constructor(p:any){super(p); this.state={hasError:false}} static getDerivedStateFromError(){return{hasError:true}} componentDidCatch(e:any,i:any){console.error(e,i)} render(){ if(this.state.hasError) return <div style={{padding:20, border:'1px solid red'}}>BLOCK CRASHED: {this.props.blockType}</div>; return this.props.children } }
-const BlockRenderer = ({ blocks }: { blocks?: any[] }) => {
+interface BlockData {
+  blockType?: string
+  _blockType?: string
+  id?: string | number
+  [key: string]: unknown
+}
+
+class ErrorBoundary extends React.Component<{ blockType?: string; children?: React.ReactNode }, { hasError: boolean }> { constructor(p:{blockType?: string; children?: React.ReactNode}){super(p); this.state={hasError:false}} static getDerivedStateFromError(){return{hasError:true}} componentDidCatch(e: unknown,i: unknown){console.error(e,i)} render(){ if(this.state.hasError) { if (process.env.NODE_ENV !== 'production') { return <div style={{padding:20, border:'1px solid red'}}>BLOCK CRASHED: {this.props.blockType}</div> } return null } return this.props.children } }
+const BlockRenderer = ({ blocks }: { blocks?: BlockData[] }) => {
   if (!blocks?.length) return null
-  return <>{blocks.map((b,i) => {
+  return <>{blocks?.map((b,i) => {
     const type = b.blockType || b._blockType
-    const Comp = blockComponents[type]
+    const Comp = (type ? blockComponents[type] : undefined) as React.FC<BlockData> | undefined
     if (!Comp) { console.warn(`MISSING ${type}`); return null }
     return <ErrorBoundary key={b.id||i} blockType={type}><Comp {...b} /></ErrorBoundary>
   })}</>

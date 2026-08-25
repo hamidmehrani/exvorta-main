@@ -1,8 +1,11 @@
 'use client'
 
 import React, { useRef, useEffect } from 'react'
-import type { gsap as GSAPType } from 'gsap'
 import { useReducedMotion } from '@/lib/animations'
+
+interface GsapContext {
+  revert: () => void
+}
 
 interface AnimatedHeadlineProps {
   text: string
@@ -40,7 +43,7 @@ export function AnimatedHeadline({
   useEffect(() => {
     const node = containerRef.current
     if (prefersReducedMotion || !node) return
-    let ctx: any;
+    let ctx: GsapContext | undefined
     Promise.all([
       import('gsap').then(m => m.gsap || m.default),
       import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)

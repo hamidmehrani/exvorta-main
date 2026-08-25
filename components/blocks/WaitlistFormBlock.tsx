@@ -16,33 +16,33 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
       <div className="absolute inset-0 z-0 bg-noise mix-blend-overlay rounded-none pointer-events-none" style={{ opacity: 0.03 }}></div>
       
       {/* Content Container */}
-      <div className="w-full max-w-2xl mx-auto flex flex-col items-center text-center relative z-10 rounded-none">
-        
+      <div className="w-full max-w-2xl mx-auto flex flex-col items-center text-center relative z-10">
+
         {/* Typography Block */}
-        <div className="text-[10px] font-mono-terminal text-mono-terminal tracking-[0.3em] text-white/40 uppercase mb-8 rounded-none">
+        <div className="text-[10px] font-mono tracking-[0.3em] text-white/40 uppercase mb-8">
           [ EXVORTA ECOSYSTEM ]
         </div>
-        
-        <h1 className="text-4xl md:text-5xl font-display-hero text-surface-bright mb-6 leading-tight rounded-none">
+
+        <h1 className="text-4xl md:text-5xl font-serif font-semibold text-white mb-6 leading-tight">
           Request Alpha Access.
         </h1>
-        
-        <p className="font-body-lg text-body-lg text-white/50 leading-relaxed mb-12 max-w-lg mx-auto rounded-none">
-          The Exvorta Suite (Docs, Track, CRM, Intel) is currently in closed beta. Enter your corporate email to join the waitlist. 
-          <br className="rounded-none"/><br className="rounded-none"/>
-          <span className="text-white/30 text-sm italic rounded-none font-mono">* Note: Active Exvorta Web architectural clients bypass the waitlist automatically.</span>
+
+        <p className="text-base md:text-lg text-white/50 font-light leading-relaxed mb-12 max-w-lg mx-auto">
+          The Exvorta Suite (Docs, Track, CRM, Intel) is currently in closed beta. Enter your corporate email to join the waitlist.
+          <br /><br />
+          <span className="text-white/30 text-sm italic font-mono">* Note: Active Exvorta Web architectural clients bypass the waitlist automatically.</span>
         </p>
-        
-        <WaitlistClientForm 
-          placeholder={placeholder || ''} 
-          buttonText={buttonText || ''} 
-          source={source || ''} 
+
+        <WaitlistClientForm
+          placeholder={placeholder || ''}
+          buttonText={buttonText || ''}
+          source={source || ''}
         />
-        
+
         {/* Security Micro-copy */}
-        <div className="mt-8 flex items-center gap-3 opacity-30 rounded-none">
-          <div className="w-1.5 h-1.5 rounded-full bg-emerald rounded-none"></div>
-          <div className="text-[8px] font-mono-terminal text-mono-terminal tracking-widest text-surface-bright uppercase rounded-none">
+        <div className="mt-8 flex items-center gap-3 opacity-30">
+          <div className="w-1.5 h-1.5 rounded-full bg-emerald"></div>
+          <div className="text-[8px] font-mono tracking-widest text-white/80 uppercase">
             End-to-End Encrypted Data Transmission
           </div>
         </div>

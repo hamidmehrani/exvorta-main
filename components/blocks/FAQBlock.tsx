@@ -49,7 +49,7 @@ export const FAQBlock: React.FC<FAQBlockProps> = (props) => {
         />
         
         <div className="flex flex-col border-t border-white/20">
-          {questions.map((q, i) => (
+          {questions?.map((q, i) => (
             <details key={i} className="group border-b border-white/20 py-8 cursor-pointer [&_summary::-webkit-details-marker]:hidden" open>
               <summary className="text-xl md:text-2xl font-serif text-white list-none flex justify-between items-center outline-none">
                 <span>{q.question}</span>

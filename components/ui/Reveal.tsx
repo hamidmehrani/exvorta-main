@@ -2,9 +2,10 @@
 
 import React from 'react'
 import { m, useReducedMotion } from 'framer-motion'
+import { easings } from '@/lib/animations'
 
-export const EASE_OUT: [number, number, number, number] = [0.25, 1, 0.5, 1]
-export const EASE_IN_OUT = [0.65, 0, 0.35, 1]
+export const EASE_OUT = easings.cinematic
+export const EASE_IN_OUT: [number, number, number, number] = [0.65, 0, 0.35, 1]
 
 interface RevealProps {
   children: React.ReactNode
@@ -104,15 +105,18 @@ export function AnimatedSection({ children, className = '', delay = 0, id }: { c
   )
 }
 
-export function AnimatedButton({ children, className = '', href, ...props }: { children: React.ReactNode, className?: string } & React.ButtonHTMLAttributes<HTMLButtonElement> & { href?: string }) {
+export function AnimatedButton({ children, className = '', href, type }: { children: React.ReactNode; className?: string; href?: string; type?: 'button' | 'submit' | 'reset' }) {
+  const motionProps = {
+    whileHover: { scale: 1.02 },
+    whileTap: { scale: 0.98 },
+  }
+
   if (href) {
     return (
       <m.a
         href={href}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        {...motionProps}
         className={className}
-        {...(props as any)}
       >
         {children}
       </m.a>
@@ -120,10 +124,9 @@ export function AnimatedButton({ children, className = '', href, ...props }: { c
   }
   return (
     <m.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      type={type || 'button'}
+      {...motionProps}
       className={className}
-      {...(props as any)}
     >
       {children}
     </m.button>

@@ -48,3 +48,9 @@ repomix-output*.md
 tree.md
 screenshots/
 *.log
+repomix.md
+repomix-output.xml
+.next-3001
+bash_probe.txt
+AUDIT_REPORT.md
+DEBUG_EDIT_REPORT.md

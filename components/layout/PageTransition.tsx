@@ -3,7 +3,7 @@
 import React from 'react'
 import { AnimatePresence, m as motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
-import { useReducedMotion } from '@/lib/animations'
+import { useReducedMotion, easings } from '@/lib/animations'
 
 interface PageTransitionProps {
   children: React.ReactNode
@@ -33,7 +33,7 @@ export function PageTransition({ children }: PageTransitionProps) {
         exit={mounted && !prefersReducedMotion ? { opacity: 0, y: -12 } : undefined}
         transition={{
           duration: 0.35,
-          ease: [0.22, 1, 0.36, 1],
+          ease: easings.cinematic,
           delay: 0.05,
         }}
       >

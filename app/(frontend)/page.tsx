@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { getPayloadClient } from '@/lib/payload'
 import { headers } from 'next/headers'
-import type {  Page, SeoDefault  } from '@/payload-types'
+import type {  Page  } from '@/payload-types'
 import BlockRenderer from '@/components/blocks/BlockRenderer'
 import LivePreviewListener from '@/components/live-preview/LivePreviewListener'
 
@@ -45,7 +45,7 @@ export default async function HomePage() {
           primaryCTA: { label: '[ REQUEST PROPOSAL ]', url: '/rfq' },
         },
       ],
-    } as any
+    } as unknown as Page
   }
 
   if (pageDoc?.requiresAuth) {

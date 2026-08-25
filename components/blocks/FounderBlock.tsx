@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import { AnimatedSection } from '@/components/ui/Reveal'
 import { CMSImage } from '@/components/ui/CMSImage'
 
@@ -62,22 +63,20 @@ export const FounderBlock: React.FC<FounderBlockProps> = (props) => {
           <div className="lg:col-span-2 mt-12 lg:mt-0">
             <div className="relative aspect-[3/4] w-full overflow-hidden border border-black/10 rounded-none shadow-none bg-black/5 flex items-center justify-center">
               {hasCMSImage ? (
-                <CMSImage 
-                  media={props.image} 
+                <CMSImage
+                  media={props.image}
                   className="w-full h-full object-cover grayscale contrast-125 rounded-none"
                 />
               ) : (
-                <img 
-                  alt={`${name}, ${role}`}
-                  src={defaultImageUrl}
-                  className="w-full h-full object-cover grayscale contrast-125 rounded-none" 
-                  onError={(e) => {
-                    // Fallback to initials if even the default image fails
-                    e.currentTarget.style.display = 'none';
-                    const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-                    e.currentTarget.parentElement!.innerHTML = `<span class="text-4xl font-serif text-black/20">${initials}</span>`;
-                  }}
-                />
+                <div className="relative w-full h-full">
+                  <Image
+                    alt={`${name}, ${role}`}
+                    src={defaultImageUrl}
+                    fill
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    className="object-cover grayscale contrast-125 rounded-none"
+                  />
+                </div>
               )}
             </div>
           </div>

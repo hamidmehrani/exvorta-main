@@ -91,7 +91,7 @@ export const PricingBlock: React.FC<PricingBlockProps> = (props) => {
         </p>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 w-full items-stretch border border-black">
-          {tiersToRender.map((tier, index) => {
+          {tiersToRender?.map((tier, index) => {
             const isMiddle = index === 1
             const isLast = index === tiersToRender.length - 1
             
@@ -111,7 +111,7 @@ export const PricingBlock: React.FC<PricingBlockProps> = (props) => {
                   {tier.highlight}
                 </p>
                 <ul className="flex-grow flex flex-col gap-4 mb-12">
-                  {tier.features.map((f, i) => (
+                  {tier.features?.map((f, i) => (
                     <li key={i} className={`text-sm ${itemTextClass} flex items-start gap-3 border-t ${borderClass} pt-4`}>
                       + {f.feature}
                     </li>

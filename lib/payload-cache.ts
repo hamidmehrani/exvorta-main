@@ -31,8 +31,8 @@ export const getCachedSeoDefaults = cache(unstable_cache(
       return await payload.findGlobal({
         slug: 'seo-defaults',
       }) as SeoDefault;
-    } catch (error: any) {
-      console.warn('seo_defaults not available, using fallback:', error.message)
+    } catch (error: unknown) {
+      console.warn('seo_defaults not available, using fallback:', error instanceof Error ? error.message : error)
       return {
         fallbackTitle: 'Exvorta',
         fallbackDescription: 'Digital infrastructure for global traders',

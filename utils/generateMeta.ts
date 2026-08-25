@@ -3,8 +3,16 @@ import { getPayloadClient } from '@/lib/payload'
 import type { SeoDefault } from '@/payload-types'
 import { getCachedSeoDefaults } from '@/lib/payload-cache'
 
+export interface MetaDocShape {
+  meta?: {
+    title?: string | null
+    description?: string | null
+    image?: { url?: string | null } | number | null
+  } | null
+}
+
 export type GenerateMetaArgs = {
-  doc?: any
+  doc?: MetaDocShape | null
   title?: string
   description?: string
   image?: string
@@ -27,6 +35,7 @@ export const generateMeta = async (args?: GenerateMetaArgs): Promise<Metadata> =
   if (
     seoDefaults?.defaultOgImage &&
     typeof seoDefaults.defaultOgImage === 'object' &&
+    'url' in seoDefaults.defaultOgImage &&
     seoDefaults.defaultOgImage.url
   ) {
     fallbackOgImageUrl = seoDefaults.defaultOgImage.url
@@ -34,9 +43,14 @@ export const generateMeta = async (args?: GenerateMetaArgs): Promise<Metadata> =
 
   const title = args?.title || args?.doc?.meta?.title || fallbackTitle
   const description = args?.description || args?.doc?.meta?.description || fallbackDescription
+  const docImage = args?.doc?.meta?.image
+  const docImageUrl =
+    docImage && typeof docImage === 'object' && typeof docImage.url === 'string'
+      ? docImage.url
+      : undefined
   const ogImage =
     args?.image ||
-    args?.doc?.meta?.image?.url ||
+    docImageUrl ||
     fallbackOgImageUrl
 
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'

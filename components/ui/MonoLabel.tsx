@@ -1,8 +1,11 @@
 'use client'
 
 import React, { useRef, useEffect, useState } from 'react'
-import type { gsap as GSAPType } from 'gsap'
 import { useReducedMotion } from '@/lib/animations'
+
+interface GsapContext {
+  revert: () => void
+}
 
 export interface MonoLabelProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
@@ -20,7 +23,7 @@ export function MonoLabel({ children, as: Component = 'div', className = '', ...
   useEffect(() => {
     setText(originalText)
     if (prefersReducedMotion || !containerRef.current || !originalText) return
-    let ctx: any;
+    let ctx: GsapContext | undefined
     Promise.all([
       import('gsap').then(m => m.gsap || m.default),
       import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)

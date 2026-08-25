@@ -1,5 +1,5 @@
-/* eslint-disable */
 import React from 'react'
+import Image from 'next/image'
 import type { Media } from '@/payload-types'
 
 interface CMSImageProps {
@@ -26,15 +26,19 @@ export function CMSImage({ media, className = '', priority = false }: CMSImagePr
     }
   }
 
+  // Remote Cloudinary URLs are already delivered optimized (f_auto,q_auto);
+  // skip Next's image optimizer to avoid double-processing.
+  const isRemote = finalUrl.startsWith('http')
+
   return (
-    <img
+    <Image
       src={finalUrl}
       alt={alt || 'CMS Image'}
       width={width || 800}
       height={height || 600}
       className={className || "w-full h-full object-cover"}
-      loading={priority ? 'eager' : 'lazy'}
-      {...(priority ? { fetchPriority: 'high' } : {})}
+      priority={priority}
+      unoptimized={isRemote}
     />
   )
 }

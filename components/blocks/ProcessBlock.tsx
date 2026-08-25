@@ -67,7 +67,7 @@ export const ProcessBlock: React.FC<ProcessBlockProps> = (props) => {
           {/* Vertical Line */}
           <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-black/20 -translate-x-1/2 hidden md:block"></div>
           
-          {steps.map((step, index) => {
+          {steps?.map((step, index) => {
             const isEven = index % 2 === 0
             const isLast = index === steps.length - 1
             

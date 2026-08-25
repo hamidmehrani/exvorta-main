@@ -35,7 +35,7 @@ export const ProblemStatementBlock: React.FC<ProblemStatementBlockProps> = ({
               <p className="text-lg text-black/60 leading-relaxed font-sans" dangerouslySetInnerHTML={{ __html: description || "Your website shouldn't be a cost center. It should be your most relentless sales executive—working 24/7 to project authority, filter unqualified noise, and close global deals." }} />
             </div>
             <div className="lg:col-span-7 flex flex-col gap-12">
-              {renderStatements.map((stmt, idx) => (
+              {renderStatements?.map((stmt, idx) => (
                 <div key={idx} className="border-l border-black/20 pl-8">
                   <h3 className="text-2xl font-serif text-black mb-3">{stmt.title}</h3>
                   <p className="text-black/60 leading-relaxed">{stmt.description}</p>
@@ -67,7 +67,7 @@ export const ProblemStatementBlock: React.FC<ProblemStatementBlockProps> = ({
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
-          {renderDarkStatements.map((stmt, index) => (
+          {renderDarkStatements?.map((stmt, index) => (
             <div key={index} className="border-t border-white/20 pt-8">
               <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-4">
                 {stmt.title}

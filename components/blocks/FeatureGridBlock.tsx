@@ -36,7 +36,7 @@ export const FeatureGridBlock: React.FC<FeatureGridBlockProps> = (props) => {
             <h2 className="text-3xl md:text-4xl font-serif text-obsidian">{props.sectionTitle || "Built for How Traders Actually Work"}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {features.map((feature, idx) => (
+            {features?.map((feature, idx) => (
               <div key={feature.id || idx} className="bg-surface p-8 border border-black/5 rounded-sm hover:shadow-soft transition-shadow relative border-t-2 border-transparent hover:border-black transition-all duration-300">
                 <span className="text-gray-200 text-4xl font-serif leading-none absolute top-6 right-8 opacity-50">
                   {String(idx + 1).padStart(2, '0')}

@@ -1,0 +1,10 @@
+repomix.md
+repomix-output.xml
+node_modules
+.next
+.next-*
+*.log
+*.tsbuildinfo
+screenshots
+lighthouse-baselines
+appDataDir

@@ -54,7 +54,7 @@ export const GlobalPresenceBlock: React.FC<GlobalPresenceBlockProps> = (props) =
         
         {/* Terminal Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 w-full border-t border-b border-[#E5E5E5]">
-          {locations.map((loc, index) => {
+          {locations?.map((loc, index) => {
             const isLast = index === locations.length - 1
             const borderClass = isLast ? "" : "border-b md:border-b-0 md:border-r border-[#E5E5E5]"
             

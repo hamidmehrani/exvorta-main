@@ -22,7 +22,7 @@ export const RFQFormBlock: React.FC<RFQFormBlockType> = (props) => {
               <h3 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-8">What Happens Next</h3>
               <ul className="space-y-6 text-sm font-mono text-white/80">
                 {phases && phases.length > 0 ? (
-                  phases.map((phase, i) => (
+                  phases?.map((phase, i) => (
                     <li key={i} className="flex items-start gap-4">
                       <span className="text-white/40">{phase.stepNumber}</span>
                       <span>{phase.stepName}</span>

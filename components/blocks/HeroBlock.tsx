@@ -40,7 +40,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
           {/* Status Pill */}
           <div className="relative z-10 flex items-center gap-2 bg-black/[0.03] px-4 py-1.5 border border-black/5 mb-10 rounded-none">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="relative inline-flex h-1.5 w-1.5 bg-emerald-500 rounded-none"></span>
+              <span className="relative inline-flex h-1.5 w-1.5 bg-[#059669] rounded-none"></span>
             </span>
             <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-black/60">
               {props.eyebrow || '[ EXVORTA WEB ]'}

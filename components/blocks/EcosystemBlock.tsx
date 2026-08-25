@@ -11,34 +11,34 @@ import type {  Ecosystem  } from '@/payload-types';
 
 export function EcosystemBlock({ data }: { data?: Ecosystem }) {
   const hero = data?.hero || {
-    eyebrow: '{hero.eyebrow}',
-    title: '{hero.title}',
-    subtitle: '{hero.subtitle}',
-    description: '{hero.description}',
-    badge: '{hero.badge}'
+    eyebrow: '[ THE EXVORTA SUITE ]',
+    title: 'A Unifying Core',
+    subtitle: 'for Global Trade.',
+    description: 'One integrated operating system connecting your web presence, documents, logistics, and intelligence.',
+    badge: 'SUITE'
   };
   const problem = data?.problem || {
-    eyebrow: '{problem.eyebrow}',
-    title: '{problem.title}',
-    description: '{problem.description}'
+    eyebrow: '[ THE FRAGMENTATION PROBLEM ]',
+    title: 'Trade runs on scattered tools.',
+    description: 'WhatsApp threads, Excel sheets, and email chains. Your operations deserve better infrastructure.'
   };
   const vision = data?.vision || {
-    badge: '{vision.badge}',
-    title: '{vision.title}',
-    subtitle: '{vision.subtitle}',
-    description: '{vision.description}'
+    badge: '[ THE VISION ]',
+    title: 'One trade OS.',
+    subtitle: 'Every workflow.',
+    description: 'The Exvorta Suite unifies every product into a single, seamless platform for global traders.'
   };
   const roadmap = data?.roadmap || {
-    eyebrow: '{roadmap.eyebrow}',
-    title: '{roadmap.title}'
+    eyebrow: '[ ROADMAP ]',
+    title: 'The Master Plan'
   };
   const cta = data?.cta || {
-    eyebrow: '{cta.eyebrow}',
-    title: '{cta.title}',
-    subtitle: '{cta.subtitle}',
-    description: '{cta.description}',
-    primaryCtaText: '[ UPGRADE WEB ARCHITECTURE ]',
-    primaryCtaLink: '/proposal',
+    eyebrow: '[ GET STARTED ]',
+    title: 'Ready to upgrade your trade infrastructure?',
+    subtitle: 'Two ways to begin.',
+    description: 'Request a web proposal or join the waitlist for the Exvorta Suite.',
+    primaryCtaText: '[ REQUEST PROPOSAL ]',
+    primaryCtaLink: '/rfq',
     secondaryCtaText: '[ JOIN SOFTWARE WAITLIST ]',
     secondaryCtaLink: '/waitlist',
     disclaimer: '* Web proposals are subject to capacity constraints.'

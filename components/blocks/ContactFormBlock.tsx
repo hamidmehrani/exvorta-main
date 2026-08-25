@@ -1,14 +1,50 @@
 import React from 'react'
+import { AnimatedSection } from '@/components/ui/Reveal'
+import ContactForm from '@/components/forms/ContactForm'
 
-export const ContactFormBlock: React.FC<Record<string, unknown>> = (props) => {
+export interface ContactFormBlockProps {
+  blockType?: string
+  title?: string
+  subtitle?: string
+}
+
+export const ContactFormBlock: React.FC<ContactFormBlockProps> = ({ title, subtitle }) => {
   return (
-    <div className="p-12 border border-dashed border-muted text-muted text-center my-8 rounded-lg bg-surface max-w-5xl mx-auto flex flex-col items-center justify-center gap-2">
-      <span className="text-xs font-mono uppercase tracking-widest">[ Placeholder ]</span>
-      <h2 className="text-xl font-semibold text-text">ContactFormBlock</h2>
-      <pre className="text-xs text-start max-w-full overflow-hidden truncate opacity-50 mt-4 bg-bg p-4 rounded">
-        {JSON.stringify(props, null, 2)}
-      </pre>
-    </div>
+    <AnimatedSection className="w-full bg-[#FCFAF8] min-h-screen">
+      <div className="w-full mx-auto flex flex-col md:flex-row min-h-[calc(100vh-5rem)] border-b border-[#E5E5E5]">
+        {/* Left Column */}
+        <div className="w-full md:w-[40%] bg-[#0D0D0D] p-8 md:p-16 lg:p-24 flex flex-col justify-center border-r border-[#E5E5E5] relative">
+          <div className="max-w-md mx-auto w-full">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold mb-6 leading-tight text-white">
+              {title || 'Start the Conversation.'}
+            </h1>
+            <p className="text-base text-gray-300 font-sans font-light mb-16 leading-relaxed">
+              {subtitle || 'Questions about scope, timelines, or infrastructure? Our team responds within one business day.'}
+            </p>
+            <div className="space-y-6">
+              <h3 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-8">Direct Channels</h3>
+              <ul className="space-y-6 text-sm font-mono text-white/80">
+                <li className="flex items-start gap-4">
+                  <span className="text-white/40">01.</span>
+                  <span>hello@exvorta.com</span>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span className="text-white/40">02.</span>
+                  <span>Dubai, UAE — Global Reach</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column */}
+        <div className="w-full md:w-[60%] bg-[#FCFAF8] p-8 md:p-16 lg:p-24 flex items-center">
+          <div className="max-w-2xl mx-auto w-full">
+            <ContactForm />
+          </div>
+        </div>
+      </div>
+    </AnimatedSection>
   )
 }
 

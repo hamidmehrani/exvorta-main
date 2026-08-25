@@ -7,11 +7,12 @@ import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { MonoLabel } from '@/components/ui/MonoLabel';
 import { Button } from '@/components/ui/Button';
-import { m as motion } from "framer-motion";
+import { m as motion, type Variants } from "framer-motion";
+import { easings } from "@/lib/animations";
 
-const cinematicEasing = [0.22, 1, 0.36, 1];
+const cinematicEasing = easings.cinematic;
 
-const container: any = {
+const container: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -21,12 +22,12 @@ const container: any = {
   }
 };
 
-const item: any = {
+const item: Variants = {
   hidden: { y: 40, opacity: 0 },
-  show: { 
-    y: 0, 
-    opacity: 1, 
-    transition: { duration: 0.8, ease: cinematicEasing } 
+  show: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.8, ease: cinematicEasing }
   }
 };
 
@@ -57,7 +58,7 @@ export function PortfolioArchiveLayout({ projects }: { projects?: Project[] }) {
         className="w-full flex flex-col bg-brand-cream"
       >
         {hasProjects ? (
-          projects.map((project, index) => {
+          projects?.map((project, index) => {
             const heroImageUrl =
               project.heroImage && typeof project.heroImage === 'object'
                 ? project.heroImage.url

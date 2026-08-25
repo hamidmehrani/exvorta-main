@@ -91,7 +91,7 @@ export const FeatureShowcaseBlock: React.FC<FeatureShowcaseBlockProps> = (props)
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 w-full border border-white/20">
-          {featuresToRender.map((f, i) => {
+          {featuresToRender?.map((f, i) => {
             // Apply borders conditionally based on position in grid
             const isLastRow = i >= featuresToRender.length - 2
             const isRightCol = i % 2 !== 0

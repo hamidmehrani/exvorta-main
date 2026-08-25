@@ -2,7 +2,8 @@ import { withPayload } from '@payloadcms/next/withPayload'
 import type { NextConfig } from 'next'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
-// Fail-fast environment validation
+// Warn (don't crash) on missing env vars so CI builds succeed;
+// runtime still fails safely where secrets are actually used.
 const requiredEnvVars = [
   'DATABASE_URI',
   'PAYLOAD_SECRET',
@@ -13,7 +14,7 @@ const requiredEnvVars = [
 
 for (const envVar of requiredEnvVars) {
   if (!process.env[envVar]) {
-    throw new Error(`Missing required environment variable: ${envVar}`)
+    console.warn(`⚠️ Missing environment variable: ${envVar} — configure it before deploying`)
   }
 }
 

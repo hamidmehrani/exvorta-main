@@ -92,8 +92,6 @@ export default async function DynamicPage({
     console.error('Error fetching page content', error)
   }
 
-  console.log("[DEBUG] pageSlug:", pageSlug, "pageDoc found:", !!pageDoc, "layout len:", pageDoc?.layout?.length)
-
   if (!pageDoc) {
     if (pageSlug === 'exvorta-web' || pageSlug === 'the-firm') {
       pageDoc = { id: 1, title: pageSlug, slug: pageSlug, layout: [] } as any;
@@ -144,8 +142,6 @@ export default async function DynamicPage({
       ] as any;
     }
   }
-
-  console.log("[DEBUG] final layout len:", pageDoc?.layout?.length, "types:", pageDoc?.layout?.map((b:any)=>b.blockType))
 
   if (pageDoc?.requiresAuth) {
     const payload = await getPayloadClient()

@@ -8,13 +8,16 @@ import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { MonoLabel } from '@/components/ui/MonoLabel';
 import { Button } from '@/components/ui/Button';
-import type { gsap as GSAPType } from 'gsap';
 import { useAnimationLevel } from '@/lib/animations';
 import { MagneticButton } from '@/components/ui/MagneticButton';
 import { AnimatedHeadline } from '@/components/ui/AnimatedHeadline';
 import { LiveWebsiteFrame } from '@/components/ui/LiveWebsiteFrame';
 
 // ── Strict Type Definitions ───────────────────────────────────────────────────
+
+interface GsapContext {
+  revert: () => void
+}
 
 export interface InlineProject {
   id?: string;
@@ -83,7 +86,7 @@ function HomepagePortfolioSection({
   useEffect(() => {
     if (animationLevel === 'none' || !containerRef.current || !gridRef.current) return;
     
-    let ctx: any;
+    let ctx: GsapContext | undefined;
     Promise.all([
       import('gsap').then(m => m.gsap || m.default),
       import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
@@ -155,7 +158,7 @@ function HomepagePortfolioSection({
 
         {/* 1 col mobile, 2 col tablet, 3 col desktop as requested */}
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-          {safeProjects.map((project, index) => (
+          {safeProjects?.map((project, index) => (
             <article 
               key={project.id || index} 
               className="portfolio-card group flex flex-col bg-white border border-black/5 rounded-none overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 relative"
@@ -221,7 +224,7 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
   useEffect(() => {
     if (animationLevel === 'none' || !containerRef.current || !gridRef.current) return;
     
-    let ctx: any;
+    let ctx: GsapContext | undefined;
     Promise.all([
       import('gsap').then(m => m.gsap || m.default),
       import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
@@ -295,7 +298,7 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
         <Container>
           {hasProjects ? (
             <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project, index) => {
+              {projects?.map((project, index) => {
                 const heroImageUrl = extractMediaUrl(project.heroImage);
                 const industry = project.metrics?.find((m) => m.label.toLowerCase() === 'industry')?.value || 'Various';
                 const stack = project.metrics?.find((m) => m.label.toLowerCase() === 'tech stack' || m.label.toLowerCase() === 'stack')?.value || 'Next.js';

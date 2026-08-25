@@ -6,14 +6,29 @@ import Script from 'next/script'
 const WhatsAppFloat = dynamic(() => import('@/components/ui/WhatsAppFloat'), { ssr: false })
 const CookieBanner = dynamic(() => import('@/components/legal/CookieBanner'), { ssr: false })
 
+interface CookieConfig {
+  enable?: boolean | null
+  text?: string | null
+  policyUrl?: string | null
+  hasResponded?: boolean
+}
+
+interface WhatsAppWidgetConfig {
+  enableWidget?: boolean | null
+  phoneNumber?: string | null
+  defaultMessage?: string | null
+}
+
+interface UmamiConfig {
+  websiteId: string
+  scriptUrl: string
+  nonce: string
+}
+
 interface DeferredWidgetsProps {
-  cookieConfig: any
-  whatsappConfig: any
-  umamiConfig: {
-    websiteId: string
-    scriptUrl: string
-    nonce: string
-  } | null
+  cookieConfig: CookieConfig
+  whatsappConfig: WhatsAppWidgetConfig | null
+  umamiConfig: UmamiConfig | null
 }
 
 export default function DeferredWidgets({ cookieConfig, umamiConfig, whatsappConfig }: DeferredWidgetsProps) {
@@ -22,7 +37,7 @@ export default function DeferredWidgets({ cookieConfig, umamiConfig, whatsappCon
   useEffect(() => {
     // Load widgets after 3 seconds OR on first user interaction
     const timer = setTimeout(() => setShowWidgets(true), 3000)
-    
+
     const interaction = () => {
       setShowWidgets(true)
       clearTimeout(timer)
@@ -56,9 +71,9 @@ export default function DeferredWidgets({ cookieConfig, umamiConfig, whatsappCon
       <WhatsAppFloat config={whatsappConfig} />
       <CookieBanner config={cookieConfig} />
       {umamiConfig && (
-        <Script 
-          src={umamiConfig.scriptUrl} 
-          data-website-id={umamiConfig.websiteId} 
+        <Script
+          src={umamiConfig.scriptUrl}
+          data-website-id={umamiConfig.websiteId}
           strategy="lazyOnload"
           nonce={umamiConfig.nonce}
         />

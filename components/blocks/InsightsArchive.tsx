@@ -2,9 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 import { AnimatedSection, AnimatedButton } from '@/components/ui/Reveal';
 import Link from 'next/link';
-import type {  Post, Media, Category  } from '@/payload-types';
+import type { Post } from '@/payload-types';
 import { Container } from '@/components/ui/Container';
-import { Button } from '@/components/ui/Button';
 import { MonoLabel } from '@/components/ui/MonoLabel';
 import { Hairline } from '@/components/ui/Hairline';
 
@@ -26,21 +25,17 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
             Institutional-grade analysis, regulatory compliance updates, and architectural blueprints for global commodities trading.
           </p>
           <div className="w-full max-w-4xl pt-8 flex flex-wrap justify-center gap-3 md:gap-4 border-t border-white/10">
-            <Button variant="mono" className="bg-white text-black hover:bg-gray-200">
+            <span className="inline-flex items-center bg-white text-black px-5 py-2.5 text-[11px] font-mono uppercase tracking-[0.2em] rounded-sm">
               [ ALL INSIGHTS ]
-            </Button>
-            <Button variant="mono" className="bg-white/[0.02] border border-white/10 text-white/60 hover:bg-white/10 hover:text-white">
-              MARKET INTEL
-            </Button>
-            <Button variant="mono" className="bg-white/[0.02] border border-white/10 text-white/60 hover:bg-white/10 hover:text-white">
-              COMPLIANCE
-            </Button>
-            <Button variant="mono" className="bg-white/[0.02] border border-white/10 text-white/60 hover:bg-white/10 hover:text-white">
-              DOCUMENTS
-            </Button>
-            <Button variant="mono" className="bg-white/[0.02] border border-white/10 text-white/60 hover:bg-white/10 hover:text-white">
-              ARCHITECTURE
-            </Button>
+            </span>
+            {['MARKET INTEL', 'COMPLIANCE', 'DOCUMENTS', 'ARCHITECTURE'].map((topic) => (
+              <span
+                key={topic}
+                className="inline-flex items-center bg-white/[0.02] border border-white/10 text-white/60 px-5 py-2.5 text-[11px] font-mono uppercase tracking-[0.2em] rounded-sm"
+              >
+                {topic}
+              </span>
+            ))}
           </div>
         </Container>
       </AnimatedSection>
@@ -71,7 +66,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts && posts.length > 0 ? (
-              posts.map((post) => (
+              posts?.map((post) => (
                 <Link href={`/insights/${post.slug}`} key={post.id} className="w-full flex flex-col group cursor-pointer block">
                   <div className="w-full aspect-[4/3] bg-black/[0.03] rounded-lg mb-6 border border-black/5 overflow-hidden relative">
                     {typeof post.coverImage === 'object' && post.coverImage?.url ? (
@@ -99,7 +94,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
                 </Link>
               ))
             ) : (
-              [1, 2, 3, 4, 5, 6].map((i) => (
+              [1, 2, 3, 4, 5, 6]?.map((i) => (
                 <div key={i} className="w-full flex flex-col">
                   <div className="w-full aspect-[4/3] bg-black/[0.03] rounded-lg mb-6 border border-black/5 animate-pulse"></div>
                   <div className="flex items-center justify-between mb-4">
@@ -152,7 +147,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
             [ EXPLORE ARCHIVES ]
           </MonoLabel>
           <div className="flex flex-wrap justify-center gap-3">
-            {['Trade Compliance', 'HS Codes', 'Shipping', 'Market Intel', 'UAE Trade'].map((topic) => (
+            {['Trade Compliance', 'HS Codes', 'Shipping', 'Market Intel', 'UAE Trade']?.map((topic) => (
               <span
                 key={topic}
                 className="px-5 py-3 border border-black/10 text-black/60 text-[10px] font-mono uppercase tracking-widest hover:bg-black/5 cursor-pointer"

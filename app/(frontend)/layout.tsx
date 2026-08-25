@@ -11,6 +11,7 @@ import localFont from 'next/font/local'
 import '../globals.css'
 
 import { getPayloadClient } from '@/lib/payload'
+import type { SiteSetting, Analytics, WhatsappConfig } from '@/payload-types'
 import OrganizationSchema from '@/components/seo/OrganizationSchema'
 
 import DeferredWidgets from '@/components/layout/DeferredWidgets'
@@ -46,35 +47,35 @@ export default async function FrontendLayout({
 
   // Fetch SiteSettings for Cookie Banner
   const payload = await getPayloadClient()
-  let siteSettings = null;
-  let analyticsConfig = null;
-  let whatsappConfig = null;
+  let siteSettings: SiteSetting | null = null
+  let analyticsConfig: Analytics | null = null
+  let whatsappConfig: Pick<WhatsappConfig, 'enableWidget' | 'phoneNumber' | 'defaultMessage'> | null = null
 
   try {
     siteSettings = await payload.findGlobal({
       slug: 'site-settings',
-    })
+    }) as SiteSetting
   } catch (e) {
     console.warn("site-settings fetch failed, using default", e);
-    siteSettings = { enableCookieBanner: false, maintenanceMode: false } as any;
+    siteSettings = { id: 0, siteName: 'Exvorta', enableCookieBanner: false, maintenanceMode: false };
   }
 
   try {
     analyticsConfig = await payload.findGlobal({
       slug: 'analytics',
-    })
+    }) as Analytics
   } catch (e) {
     console.warn("analytics fetch failed, using default", e);
-    analyticsConfig = {} as any;
+    analyticsConfig = { id: 0, gtmId: null, gaId: null };
   }
-  
+
   try {
     whatsappConfig = (await payload.findGlobal({
       slug: 'whatsapp-config',
-    })) as unknown as { phoneNumber?: string; enableWidget?: boolean; defaultMessage?: string }
+    })) as WhatsappConfig
   } catch (e) {
     console.warn("whatsapp-config fetch failed, using default", e);
-    whatsappConfig = { enableWidget: false, phoneNumber: '', defaultMessage: '' } as any;
+    whatsappConfig = { enableWidget: false, phoneNumber: '', defaultMessage: '' };
   }
 
   const cookieStore = await cookies()

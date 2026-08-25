@@ -1,7 +1,9 @@
 
 import { useEffect, useState } from 'react'
 
-export const easings = {
+export type Easing = [number, number, number, number]
+
+export const easings: Record<string, Easing> = {
   cinematic: [0.22, 1, 0.36, 1],
   expoOut: [0.16, 1, 0.3, 1],
   sharp: [0.4, 0, 0.2, 1],

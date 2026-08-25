@@ -20,10 +20,9 @@ interface NavLink {
 
 interface HeaderClientProps {
   navLinks: NavLink[]
-  t: any
 }
 
-export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, t }) => {
+export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const toggleMenu = () => {

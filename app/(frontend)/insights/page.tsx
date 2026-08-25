@@ -1,9 +1,8 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { generateMeta } from '@/utils/generateMeta';
-import { getPayload } from 'payload';
-import configPromise from '@/payload.config';
-import { notFound } from 'next/navigation';
+import { getPayloadClient } from '@/lib/payload';
+import type { Post } from '@/payload-types';
 import { InsightsArchive } from '@/components/blocks/InsightsArchive';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -13,18 +12,23 @@ export async function generateMetadata(): Promise<Metadata> {
 export const dynamic = 'force-dynamic';
 
 export default async function InsightsPage() {
-  notFound();
-  const payload = await getPayload({ config: configPromise });
-  
-  const postsData = await payload.find({
-    collection: 'posts',
-    limit: 50,
-    sort: '-publishedDate',
-  });
+  let posts: Post[] = [];
+
+  try {
+    const payload = await getPayloadClient();
+    const result = await payload.find({
+      collection: 'posts',
+      limit: 50,
+      sort: '-publishedDate',
+    });
+    posts = result.docs;
+  } catch (error) {
+    console.error('[InsightsPage] Failed to fetch posts, rendering archive without data', error);
+  }
 
   return (
     <main className="w-full flex-grow bg-white">
-      <InsightsArchive posts={postsData.docs} />
+      <InsightsArchive posts={posts} />
     </main>
   );
 }

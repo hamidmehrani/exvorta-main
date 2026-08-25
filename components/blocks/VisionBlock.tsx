@@ -61,7 +61,7 @@ export const VisionBlock: React.FC<VisionBlockProps> = (props) => {
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 w-full border-t border-l border-[#333]">
-          {principles.map((p, i) => {
+          {principles?.map((p, i) => {
             const num = p.number || String(i + 1).padStart(2, '0')
             return (
               <div key={i} className="bg-transparent border-r border-b border-[#333] p-12 lg:p-16 rounded-none flex flex-col h-full">

@@ -26,6 +26,7 @@ import Tags from './payload/collections/Tags'
 import Redirects from './payload/collections/Redirects'
 import Categories from './payload/collections/Categories'
 import Projects from './payload/collections/Projects'
+import Certifications from './payload/collections/Certifications'
 import FormSubmissions from './payload/collections/FormSubmissions'
 import Waitlist from './payload/collections/Waitlist'
 
@@ -83,6 +84,7 @@ export default buildConfig({
     Redirects,
     Categories,
     Projects,
+    Certifications,
     FormSubmissions,
     Waitlist,
   ],

@@ -84,7 +84,7 @@ export const StatsBlock: React.FC<StatsBlockProps> = ({ stats }) => {
       <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {stats.map((stat, idx) => (
+        {stats?.map((stat, idx) => (
           <m.div 
             key={stat.id || idx}
             initial={{ opacity: 0, y: 30 }}
