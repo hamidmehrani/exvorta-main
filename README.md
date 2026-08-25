@@ -31,19 +31,21 @@
 ## Quick Start (Local Development)
 
 ### Prerequisites
-- Node.js 20+
-- Docker + Docker Compose (for local Postgres)
+- Node.js 22 LTS (`.nvmrc` provided; engines field enforces `>=20 <23` — do NOT use Node 26)
+- pnpm 10+ (`corepack enable`)
 - A Neon account (or use Docker)
+- **Developers in Iran / filtered networks:** you need a VPN for both `pnpm install` and any Neon connection (`payload migrate`, `next dev` DB fetches). DNS filtering causes `getaddrinfo EAI_AGAIN` errors otherwise.
 
 ### 1. Clone & Install
 ```bash
 git clone <repo-url>
 cd exvorta
-npm install --legacy-peer-deps
+pnpm install
 ```
 
-> **Note:** `--legacy-peer-deps` is required because Payload CMS pins `next < 15.5.0`.
-> Do not use `npm audit fix --force` — see Known Issues in this README.
+> pnpm automatically runs build scripts for the approved packages (`sharp`, `esbuild`, etc. — see `allowBuilds` in `pnpm-workspace.yaml`). No manual `approve-builds` step needed.
+>
+> A postinstall script (`scripts/fix-payload-loadenv.mjs`) patches a known payload@3.x CLI bug that crashes `payload migrate` under tsx. It is idempotent; if payload updates upstream, it refuses to patch and tells you.
 
 ### 2. Environment Variables
 ```bash
@@ -55,22 +57,37 @@ cp .env.example .env
 **Option A — Neon (recommended):**
 1. Create a project at [neon.tech](https://neon.tech)
 2. Copy the **pooled** connection string → `DATABASE_URI`
-3. Copy the **direct** connection string → `DATABASE_URI_UNPOOLED`
+3. Copy the **direct** (unpooled) connection string → `DATABASE_URI_UNPOOLED`
+
+Migrations automatically use `DATABASE_URI_UNPOOLED`; the app uses `DATABASE_URI`. Never swap them manually.
 
 **Option B — Local Docker:**
 ```bash
 npm run db:up
-# DATABASE_URI=postgresql://postgres:postgres@localhost:5432/exvorta
+# Set DATABASE_URI=postgresql://postgres:postgres@localhost:5432/exvorta
 ```
 
 ### 4. Run Migrations
 ```bash
-NODE_OPTIONS="--require ./scripts/next-env-shim.cjs" npx tsx scripts/run-migration.ts run
+pnpm migrate
 ```
 
-### 5. Start Dev Server
+This applies everything in `migrations/` (site_settings, navigation, footer, pages, posts, media, users, etc.) and records them in `payload_migrations`.
+
+Useful variants:
+- `pnpm migrate:create <name>` — generate a new migration from schema changes
+- `pnpm payload migrate:status` — show applied/pending
+- `pnpm payload migrate:fresh` — drop everything and re-run (destructive)
+
+### 5. Create First Admin User
 ```bash
-npm run dev
+pnpm dev
+```
+Open http://localhost:3000/admin — Payload shows the create-first-user screen.
+
+### 6. Start Dev Server
+```bash
+pnpm dev
 # App:   http://localhost:3000
 # Admin: http://localhost:3000/admin
 ```

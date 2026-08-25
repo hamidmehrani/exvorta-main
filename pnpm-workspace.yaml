@@ -1,0 +1,8 @@
+# pnpm 10+/11 settings live here, not in package.json.
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  bufferutil: true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true

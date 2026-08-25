@@ -44,6 +44,23 @@ import Analytics from './payload/globals/Analytics'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+// Migration commands (payload migrate / migrate:fresh / etc.) must hit Neon's
+// DIRECT (unpooled) endpoint: PgBouncer in front of the pooled endpoint breaks
+// the long-running advisory-lock transactions migrations use. The app itself
+// keeps the pooled URI. PAYLOAD_MIGRATING is set too late to use here (after
+// this module evaluates), hence the argv sniff.
+const isMigrateCommand = process.argv.some((arg) => arg.includes('migrate'))
+const dbConnectionString =
+  (isMigrateCommand ? process.env.DATABASE_URI_UNPOOLED : undefined) ||
+  process.env.DATABASE_URI ||
+  (() => {
+    throw new Error(
+      isMigrateCommand
+        ? 'DATABASE_URI_UNPOOLED is required for migrations'
+        : 'DATABASE_URI is required',
+    )
+  })()
+
 if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
   console.warn('⚠️ CLOUDINARY ENVS MISSING: Media uploads will fail.');
 }
@@ -102,9 +119,16 @@ export default buildConfig({
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || (() => { throw new Error('PAYLOAD_SECRET is required') })(),
   db: vercelPostgresAdapter({
-    // Uses POSTGRES_URL env var (pooler endpoint) by default.
-    // Explicitly passing DATABASE_URI as fallback for clarity.
-    connectionString: process.env.DATABASE_URI || (() => { throw new Error('DATABASE_URI is required') })(),
+    // vercelPostgresAdapter ignores its top-level `connectionString` arg — it
+    // connects via POSTGRES_URL env or pool.connectionString (see its
+    // connect()). Pass pool.connectionString explicitly so the pooled/unpooled
+    // selection above actually takes effect.
+    pool: {
+      connectionString: dbConnectionString,
+      // single connection while migrating: migrations take advisory locks and
+      // a multi-connection pool can deadlock against itself
+      ...(isMigrateCommand ? { max: 1 } : {}),
+    },
     push: false,
   }),
   plugins: [
