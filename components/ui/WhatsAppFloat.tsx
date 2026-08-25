@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface WhatsAppFloatProps {
-  config: { phoneNumber?: string; enableWidget?: boolean; defaultMessage?: string } | null
+config: { phoneNumber?: string | null; enableWidget?: boolean | null; defaultMessage?: string | null } | null
 }
 
 export function WhatsAppFloat({ config }: WhatsAppFloatProps) {
