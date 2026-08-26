@@ -12,6 +12,7 @@ import { useAnimationLevel } from '@/lib/animations';
 import { MagneticButton } from '@/components/ui/MagneticButton';
 import { AnimatedHeadline } from '@/components/ui/AnimatedHeadline';
 import { LiveWebsiteFrame } from '@/components/ui/LiveWebsiteFrame';
+import { Reveal } from '@/components/ui/Reveal';
 
 // ── Strict Type Definitions ───────────────────────────────────────────────────
 
@@ -143,7 +144,7 @@ function HomepagePortfolioSection({
     <section ref={containerRef} className="w-full py-32 bg-[#FAFAF8] border-t border-black/5" data-purpose="proof-of-execution">
       <Container>
         {/* Header matched to reference design */}
-        <div className="mb-20">
+        <Reveal y={20} className="mb-20">
           <div className="font-mono text-[11px] tracking-[0.25em] text-gray-500 uppercase mb-4">
             {sectionLabel || '[ OUR INFRASTRUCTURE WORK ]'}
           </div>
@@ -154,7 +155,7 @@ function HomepagePortfolioSection({
             <p className="mt-4 text-lg text-black/60 font-light max-w-2xl">{subtitle}</p>
           )}
           <div className="w-full h-[1px] bg-black mt-8"></div>
-        </div>
+        </Reveal>
 
         {/* 1 col mobile, 2 col tablet, 3 col desktop as requested */}
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">

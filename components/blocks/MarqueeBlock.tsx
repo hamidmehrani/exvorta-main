@@ -1,14 +1,48 @@
-import React from 'react'
+'use client'
 
-export const MarqueeBlock: React.FC<Record<string, unknown>> = (props) => {
+import React from 'react'
+import Image from 'next/image'
+import type { Media } from '@/payload-types'
+import { AnimatedSection } from '@/components/ui/Reveal'
+import { MonoLabel } from '@/components/ui/MonoLabel'
+import { Marquee } from '@/components/ui/motion/Marquee'
+
+interface LogoItem {
+  logo: number | Media
+  id?: string | null
+}
+
+export const MarqueeBlock: React.FC<{
+  sectionTitle?: string | null
+  logos?: LogoItem[] | null
+  [key: string]: unknown
+}> = ({ sectionTitle, logos }) => {
+  const items = (logos || []).filter((l) => {
+    const img = l.logo
+    return typeof img === 'object' && img !== null && 'url' in img && Boolean(img.url)
+  })
+
+  if (items.length === 0) return null
+
   return (
-    <div className="p-12 border border-dashed border-muted text-muted text-center my-8 rounded-lg bg-surface max-w-5xl mx-auto flex flex-col items-center justify-center gap-2">
-      <span className="text-xs font-mono uppercase tracking-widest">[ Placeholder ]</span>
-      <h2 className="text-xl font-semibold text-text">MarqueeBlock</h2>
-      <pre className="text-xs text-start max-w-full overflow-hidden truncate opacity-50 mt-4 bg-bg p-4 rounded">
-        {JSON.stringify(props, null, 2)}
-      </pre>
-    </div>
+    <AnimatedSection className="w-full py-20 px-6 border-b border-black/5 overflow-hidden">
+      {sectionTitle && (
+        <div className="text-center mb-12">
+          <MonoLabel className="text-black/40 uppercase">{sectionTitle}</MonoLabel>
+        </div>
+      )}
+      <Marquee speed={40}>
+        {items.map((item, i) => {
+          const img = item.logo as Media
+          if (!img.url) return null
+          return (
+            <div key={item.id ?? i} className="w-40 md:w-48 h-10 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity duration-500">
+              <Image src={img.url} alt={img.alt || 'Client logo'} fill sizes="192px" className="object-contain" />
+            </div>
+          )
+        })}
+      </Marquee>
+    </AnimatedSection>
   )
 }
 

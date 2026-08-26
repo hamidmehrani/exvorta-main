@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { AnimatedSection } from '@/components/ui/Reveal'
+import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 
 export interface FirmBlockProps {
   eyebrow?: string
@@ -59,19 +59,21 @@ export const FirmBlock: React.FC<FirmBlockProps> = (props) => {
         </div>
         
         {/* Right Column: Operational Pillars */}
-        <div className="lg:col-span-7 flex flex-col mt-12 lg:mt-0">
+        <StaggerContainer className="lg:col-span-7 flex flex-col mt-12 lg:mt-0" staggerChildren={0.14} delayChildren={0.2}>
           {pillars?.map((pillar, i) => (
-            <div key={i} className={`border-t border-white/10 pt-8 pb-12 ${i === pillars.length - 1 ? 'border-b' : ''}`}>
-              <div className="flex items-center gap-6 mb-6">
-                <span className="text-xs font-mono text-white/30">{pillar.number}</span>
-                <h3 className="text-2xl font-serif text-white">{pillar.title}</h3>
+            <StaggerItem key={i}>
+              <div className={`border-t border-white/10 pt-8 pb-12 ${i === pillars.length - 1 ? 'border-b' : ''}`}>
+                <div className="flex items-center gap-6 mb-6">
+                  <span className="text-xs font-mono text-white/30">{pillar.number}</span>
+                  <h3 className="text-2xl font-serif text-white">{pillar.title}</h3>
+                </div>
+                <p className="text-white/60 leading-relaxed font-sans pl-10">
+                  {pillar.description}
+                </p>
               </div>
-              <p className="text-white/60 leading-relaxed font-sans pl-10">
-                {pillar.description}
-              </p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
         
       </div>
     </AnimatedSection>

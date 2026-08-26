@@ -1,7 +1,8 @@
 'use client'
 
 import React from 'react'
-import { AnimatedSection } from '@/components/ui/Reveal'
+import { AnimatedSection, StaggerContainer, StaggerItem, EASE_OUT } from '@/components/ui/Reveal'
+import { m } from 'framer-motion'
 
 export interface ProcessStep {
   stepNumber?: string
@@ -64,46 +65,57 @@ export const ProcessBlock: React.FC<ProcessBlockProps> = (props) => {
         </div>
         
         <div className="relative max-w-4xl mx-auto">
-          {/* Vertical Line */}
-          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-black/20 -translate-x-1/2 hidden md:block"></div>
-          
-          {steps?.map((step, index) => {
-            const isEven = index % 2 === 0
-            const isLast = index === steps.length - 1
-            
-            return (
-              <div key={index} className={`relative group ${isLast ? '' : 'mb-32'}`}>
-                <div className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} items-start md:items-center gap-8 md:gap-16`}>
-                  
-                  {/* Left Side (or Right Side on reverse) */}
-                  <div className={`w-full md:w-1/2 ${isEven ? 'md:text-right' : ''}`}>
-                    <span className="text-[9px] font-mono tracking-[0.3em] text-emerald-600 uppercase mb-2 block">
-                      {step.stepNumber}
-                    </span>
-                    <h3 className="text-2xl font-serif text-black mb-3">{step.title}</h3>
-                  </div>
-                  
-                  {/* Node */}
-                  <div className="hidden md:flex w-4 h-4 bg-white border border-black z-10 shrink-0"></div>
-                  
-                  {/* Right Side (or Left Side on reverse) */}
-                  <div className={`w-full md:w-1/2 ${!isEven ? 'md:text-right flex justify-end' : ''}`}>
-                    <div>
-                      {step.subtitle && (
-                        <h4 className="text-xs font-bold uppercase tracking-widest mb-3">
-                          {step.subtitle}
-                        </h4>
-                      )}
-                      <p className="text-sm text-black/60 leading-relaxed max-w-sm">
-                        {step.description}
-                      </p>
+          {/* Vertical Line — draws in on scroll */}
+          <m.div
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 1.4, delay: 0.2, ease: EASE_OUT }}
+            style={{ transformOrigin: 'top' }}
+            className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-black/20 -translate-x-1/2 hidden md:block"
+          ></m.div>
+
+          <StaggerContainer staggerChildren={0.18} delayChildren={0.3}>
+            {steps?.map((step, index) => {
+              const isEven = index % 2 === 0
+              const isLast = index === steps.length - 1
+
+              return (
+                <StaggerItem key={index}>
+                  <div className={`relative group ${isLast ? '' : 'mb-32'}`}>
+                    <div className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} items-start md:items-center gap-8 md:gap-16`}>
+
+                      {/* Left Side (or Right Side on reverse) */}
+                      <div className={`w-full md:w-1/2 ${isEven ? 'md:text-right' : ''}`}>
+                        <span className="text-[9px] font-mono tracking-[0.3em] text-emerald-600 uppercase mb-2 block">
+                          {step.stepNumber}
+                        </span>
+                        <h3 className="text-2xl font-serif text-black mb-3">{step.title}</h3>
+                      </div>
+
+                      {/* Node */}
+                      <div className="hidden md:flex w-4 h-4 bg-white border border-black z-10 shrink-0 transition-all duration-500 group-hover:bg-black group-hover:scale-125"></div>
+
+                      {/* Right Side (or Left Side on reverse) */}
+                      <div className={`w-full md:w-1/2 ${!isEven ? 'md:text-right flex justify-end' : ''}`}>
+                        <div>
+                          {step.subtitle && (
+                            <h4 className="text-xs font-bold uppercase tracking-widest mb-3">
+                              {step.subtitle}
+                            </h4>
+                          )}
+                          <p className="text-sm text-black/60 leading-relaxed max-w-sm">
+                            {step.description}
+                          </p>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
-                  
-                </div>
-              </div>
-            )
-          })}
+                </StaggerItem>
+              )
+            })}
+          </StaggerContainer>
         </div>
       </div>
     </AnimatedSection>

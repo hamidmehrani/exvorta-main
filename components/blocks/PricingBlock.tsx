@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { AnimatedSection } from '@/components/ui/Reveal'
+import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 
 export interface PricingTier {
   tierName: string
@@ -90,7 +90,7 @@ export const PricingBlock: React.FC<PricingBlockProps> = (props) => {
           {description}
         </p>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 w-full items-stretch border border-black">
+        <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 w-full items-stretch border border-black" staggerChildren={0.12} delayChildren={0.15}>
           {tiersToRender?.map((tier, index) => {
             const isMiddle = index === 1
             const isLast = index === tiersToRender.length - 1
@@ -105,7 +105,8 @@ export const PricingBlock: React.FC<PricingBlockProps> = (props) => {
             if (!isLast) containerBorderClass += "border-b lg:border-b-0 lg:border-r border-black "
             
             return (
-              <div key={index} className={`${bgClass} ${containerBorderClass} p-10 flex flex-col rounded-none`}>
+              <StaggerItem key={index}>
+              <div className={`${bgClass} ${containerBorderClass} p-10 flex flex-col rounded-none`}>
                 <h3 className={`text-2xl font-serif ${textClass} mb-2`}>{tier.tierName}</h3>
                 <p className={`text-[10px] ${mutedTextClass} uppercase tracking-widest mb-10 h-10`}>
                   {tier.highlight}
@@ -121,9 +122,10 @@ export const PricingBlock: React.FC<PricingBlockProps> = (props) => {
                   {tier.price}
                 </div>
               </div>
+              </StaggerItem>
             )
           })}
-        </div>
+        </StaggerContainer>
         
         <div className="mt-20 flex justify-center">
           <Link 

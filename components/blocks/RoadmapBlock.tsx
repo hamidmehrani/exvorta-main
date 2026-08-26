@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatedSection } from '../ui/Reveal';
+import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/Reveal';
 import { Container } from '../ui/Container';
 
 export function RoadmapBlock(props: any) {
@@ -14,9 +14,10 @@ export function RoadmapBlock(props: any) {
         We are actively building the definitive, unified operating system for global trade.
       </p>
 </div>
-<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+<StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16" staggerChildren={0.12} delayChildren={0.15}>
 {/*  Phase 1: Track  */}
-<div className="bg-mockup-dashboard border border-hairline-dark rounded-2xl p-8 hover:border-hairline-dark/50 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)]">
+<StaggerItem className="h-full">
+<div className="h-full bg-mockup-dashboard border border-hairline-dark rounded-2xl p-8 hover:border-hairline-dark/50 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)] hover:-translate-y-1">
 <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '10px 10px' }}></div>
 <div className="relative z-10 text-left">
 <div className="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ PHASE 1 ]</div>
@@ -24,8 +25,10 @@ export function RoadmapBlock(props: any) {
 <p className="text-xs text-gray-400 leading-relaxed font-light">End-to-end multimodal logistics telemetry and predictive freight visibility.</p>
 </div>
 </div>
+</StaggerItem>
 {/*  Phase 2: CRM  */}
-<div className="bg-mockup-dashboard border border-hairline-dark rounded-2xl p-8 hover:border-hairline-dark/50 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)]">
+<StaggerItem className="h-full">
+<div className="h-full bg-mockup-dashboard border border-hairline-dark rounded-2xl p-8 hover:border-hairline-dark/50 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)] hover:-translate-y-1">
 <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '10px 10px' }}></div>
 <div className="relative z-10 text-left">
 <div className="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ PHASE 2 ]</div>
@@ -33,8 +36,10 @@ export function RoadmapBlock(props: any) {
 <p className="text-xs text-gray-400 leading-relaxed font-light">Trade-specific counterparty risk management and global vendor intelligence.</p>
 </div>
 </div>
+</StaggerItem>
 {/*  Phase 3: Intel  */}
-<div className="bg-mockup-dashboard border border-hairline-dark rounded-2xl p-8 hover:border-hairline-dark/50 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)]">
+<StaggerItem className="h-full">
+<div className="h-full bg-mockup-dashboard border border-hairline-dark rounded-2xl p-8 hover:border-hairline-dark/50 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)] hover:-translate-y-1">
 <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '10px 10px' }}></div>
 <div className="relative z-10 text-left">
 <div className="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ PHASE 3 ]</div>
@@ -42,8 +47,10 @@ export function RoadmapBlock(props: any) {
 <p className="text-xs text-gray-400 leading-relaxed font-light">Proprietary market data, trade flows, and real-time commodities pricing benchmarks.</p>
 </div>
 </div>
+</StaggerItem>
 {/*  The Vision: Suite  */}
-<div className="md:col-span-3 bg-mockup-dashboard border border-hairline-dark rounded-2xl p-8 md:p-12 hover:border-hairline-dark/50 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)]">
+<StaggerItem className="md:col-span-3">
+<div className="bg-mockup-dashboard border border-hairline-dark rounded-2xl p-8 md:p-12 hover:border-hairline-dark/50 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)] hover:-translate-y-1">
 <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '10px 10px' }}></div>
 <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
 <div className="w-full md:w-2/3 text-left">
@@ -70,7 +77,8 @@ export function RoadmapBlock(props: any) {
 </div>
 </div>
 </div>
-</div>
+</StaggerItem>
+</StaggerContainer>
 {/*  Waitlist UI  */}
 <div className="max-w-[115%] w-full max-w-xl mx-auto text-center">
 <div className="flex flex-col sm:flex-row gap-4">

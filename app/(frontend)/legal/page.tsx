@@ -2,6 +2,7 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { generateMeta } from '@/utils/generateMeta'
 import Link from 'next/link'
+import { AnimatedSection, Reveal } from '@/components/ui/Reveal'
 
 export const metadata: Metadata = {
   title: 'Legal | Exvorta',
@@ -19,15 +20,19 @@ const Section = ({
   title: string
   children: React.ReactNode
 }) => (
-  <section id={id} className="border-b border-black/10 py-16">
+  <section id={id} className="border-b border-black/10 py-16 scroll-mt-24">
     <div className="max-w-3xl">
-      <span className="text-[10px] font-mono tracking-[0.3em] text-black/40 uppercase block mb-4">
-        {eyebrow}
-      </span>
-      <h2 className="text-2xl md:text-3xl font-serif font-semibold text-black mb-8">{title}</h2>
-      <div className="space-y-4 text-sm text-black/60 leading-relaxed font-light">
-        {children}
-      </div>
+      <Reveal y={16}>
+        <span className="text-[10px] font-mono tracking-[0.3em] text-black/40 uppercase block mb-4">
+          {eyebrow}
+        </span>
+        <h2 className="text-2xl md:text-3xl font-serif font-semibold text-black mb-8">{title}</h2>
+      </Reveal>
+      <Reveal delay={0.1} y={16}>
+        <div className="space-y-4 text-sm text-black/60 leading-relaxed font-light">
+          {children}
+        </div>
+      </Reveal>
     </div>
   </section>
 )
@@ -36,7 +41,7 @@ export default function LegalPage() {
   return (
     <main className="w-full bg-[#FAFAF8]">
       {/* Hero */}
-      <section className="w-full bg-[#0A0A0A] pt-40 pb-24 px-6 relative overflow-hidden">
+      <AnimatedSection className="w-full bg-[#0A0A0A] pt-40 pb-24 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
         <div className="max-w-7xl mx-auto relative z-10">
           <span className="text-[10px] font-mono tracking-[0.4em] text-white/30 uppercase block mb-8">
@@ -49,22 +54,24 @@ export default function LegalPage() {
             We operate with institutional-grade transparency. These documents govern your relationship with Exvorta and how we handle your data.
           </p>
           {/* Jump links */}
-          <div className="flex flex-wrap gap-4">
-            <a
-              href="#privacy"
-              className="px-5 py-2.5 border border-white/20 text-white/70 text-[10px] font-mono uppercase tracking-widest hover:border-white hover:text-white transition-colors"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="#terms"
-              className="px-5 py-2.5 border border-white/20 text-white/70 text-[10px] font-mono uppercase tracking-widest hover:border-white hover:text-white transition-colors"
-            >
-              Terms of Service
-            </a>
-          </div>
+          <Reveal delay={0.25} y={12}>
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="#privacy"
+                className="px-5 py-2.5 border border-white/20 text-white/70 text-[10px] font-mono uppercase tracking-widest hover:border-white hover:text-white hover:bg-white/5 transition-all duration-300"
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="#terms"
+                className="px-5 py-2.5 border border-white/20 text-white/70 text-[10px] font-mono uppercase tracking-widest hover:border-white hover:text-white hover:bg-white/5 transition-all duration-300"
+              >
+                Terms of Service
+              </a>
+            </div>
+          </Reveal>
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* Last Updated */}
       <div className="bg-black/[0.02] border-b border-black/5 px-6 py-4">
@@ -77,13 +84,15 @@ export default function LegalPage() {
       <div className="max-w-7xl mx-auto px-6 py-12">
 
         {/* ─── PRIVACY POLICY ─── */}
-        <div className="mb-4">
-          <div className="text-[10px] font-mono tracking-[0.3em] text-black/30 uppercase mb-16 flex items-center gap-4">
-            <span className="h-px flex-1 bg-black/10" />
-            SECTION I — PRIVACY POLICY
-            <span className="h-px flex-1 bg-black/10" />
+        <Reveal y={12}>
+          <div className="mb-4">
+            <div className="text-[10px] font-mono tracking-[0.3em] text-black/30 uppercase mb-16 flex items-center gap-4">
+              <span className="h-px flex-1 bg-black/10" />
+              SECTION I — PRIVACY POLICY
+              <span className="h-px flex-1 bg-black/10" />
+            </div>
           </div>
-        </div>
+        </Reveal>
 
         <Section id="privacy" eyebrow="01 · Overview" title="Privacy Policy">
           <p>
@@ -141,13 +150,15 @@ export default function LegalPage() {
         </Section>
 
         {/* ─── TERMS OF SERVICE ─── */}
-        <div className="mt-16 mb-4">
-          <div className="text-[10px] font-mono tracking-[0.3em] text-black/30 uppercase mb-16 flex items-center gap-4">
-            <span className="h-px flex-1 bg-black/10" />
-            SECTION II — TERMS OF SERVICE
-            <span className="h-px flex-1 bg-black/10" />
+        <Reveal y={12}>
+          <div className="mt-16 mb-4">
+            <div className="text-[10px] font-mono tracking-[0.3em] text-black/30 uppercase mb-16 flex items-center gap-4">
+              <span className="h-px flex-1 bg-black/10" />
+              SECTION II — TERMS OF SERVICE
+              <span className="h-px flex-1 bg-black/10" />
+            </div>
           </div>
-        </div>
+        </Reveal>
 
         <Section id="terms" eyebrow="01 · Agreement" title="Terms of Service">
           <p>
@@ -190,26 +201,28 @@ export default function LegalPage() {
 
         {/* Contact CTA */}
         <section className="py-20 border-t border-black/10 mt-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-            <div>
-              <h3 className="text-xl font-serif font-semibold text-black mb-2">Have a legal question?</h3>
-              <p className="text-sm text-black/50">Our team responds within one business day.</p>
+          <Reveal y={16}>
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+              <div>
+                <h3 className="text-xl font-serif font-semibold text-black mb-2">Have a legal question?</h3>
+                <p className="text-sm text-black/50">Our team responds within one business day.</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <a
+                  href="mailto:legal@exvorta.com"
+                  className="px-8 py-4 bg-black text-white text-[10px] font-mono uppercase tracking-[0.2em] hover:bg-gray-900 hover:-translate-y-0.5 transition-all duration-300"
+                >
+                  [ EMAIL US ]
+                </a>
+                <Link
+                  href="/rfq"
+                  className="px-8 py-4 border border-black text-black text-[10px] font-mono uppercase tracking-[0.2em] hover:bg-black hover:text-white hover:-translate-y-0.5 transition-all duration-300"
+                >
+                  [ REQUEST PROPOSAL ]
+                </Link>
+              </div>
             </div>
-            <div className="flex items-center gap-4">
-              <a
-                href="mailto:legal@exvorta.com"
-                className="px-8 py-4 bg-black text-white text-[10px] font-mono uppercase tracking-[0.2em] hover:bg-gray-900 transition-colors"
-              >
-                [ EMAIL US ]
-              </a>
-              <Link
-                href="/rfq"
-                className="px-8 py-4 border border-black text-black text-[10px] font-mono uppercase tracking-[0.2em] hover:bg-black hover:text-white transition-colors"
-              >
-                [ REQUEST PROPOSAL ]
-              </Link>
-            </div>
-          </div>
+          </Reveal>
         </section>
       </div>
     </main>

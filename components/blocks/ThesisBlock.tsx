@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { AnimatedSection } from '@/components/ui/Reveal'
+import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 
 export interface ThesisBlockProps {
   eyebrow?: string
@@ -31,21 +31,27 @@ export const ThesisBlock: React.FC<ThesisBlockProps> = (props) => {
         </div>
         
         {/* Right Column: The Manifesto */}
-        <div className="lg:col-span-9 flex flex-col justify-center">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-black leading-[1.1] tracking-tight mb-12 max-w-4xl">
-            {headline}
-          </h2>
+        <StaggerContainer className="lg:col-span-9 flex flex-col justify-center" staggerChildren={0.12} delayChildren={0.1}>
+          <StaggerItem>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-black leading-[1.1] tracking-tight mb-12 max-w-4xl">
+              {headline}
+            </h2>
+          </StaggerItem>
           {paragraph1 && (
-            <p className="text-xl text-black/60 font-sans leading-relaxed max-w-3xl mb-8">
-              {paragraph1}
-            </p>
+            <StaggerItem>
+              <p className="text-xl text-black/60 font-sans leading-relaxed max-w-3xl mb-8">
+                {paragraph1}
+              </p>
+            </StaggerItem>
           )}
           {paragraph2 && (
-            <p className="text-xl text-black/60 font-sans leading-relaxed max-w-3xl">
-              {paragraph2}
-            </p>
+            <StaggerItem>
+              <p className="text-xl text-black/60 font-sans leading-relaxed max-w-3xl">
+                {paragraph2}
+              </p>
+            </StaggerItem>
           )}
-        </div>
+        </StaggerContainer>
         
       </div>
     </AnimatedSection>

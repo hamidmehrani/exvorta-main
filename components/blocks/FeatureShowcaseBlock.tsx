@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { AnimatedSection } from '@/components/ui/Reveal'
+import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 
 export interface FeatureShowcaseBlockProps {
   label?: string
@@ -90,27 +90,29 @@ export const FeatureShowcaseBlock: React.FC<FeatureShowcaseBlockProps> = (props)
           </h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 w-full border border-white/20">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 w-full border border-white/20" staggerChildren={0.1} delayChildren={0.15}>
           {featuresToRender?.map((f, i) => {
             // Apply borders conditionally based on position in grid
             const isLastRow = i >= featuresToRender.length - 2
             const isRightCol = i % 2 !== 0
-            
+
             let borderClass = 'border-white/20 p-10 flex flex-col justify-between min-h-[340px] '
             if (!isLastRow) borderClass += 'border-b md:border-b '
             if (!isRightCol) borderClass += 'md:border-r '
-            
+
             return (
-              <div key={i} className={`bg-[#0D0D0D] ${borderClass}`}>
-                {renderIcon(i)}
-                <div>
-                  <h3 className="text-2xl font-serif text-white mb-3">{f.title}</h3>
-                  <p className="text-white/50 text-sm max-w-xl">{f.description}</p>
+              <StaggerItem key={i} className="h-full">
+                <div className={`h-full bg-[#0D0D0D] ${borderClass} transition-colors duration-500 hover:bg-white/[0.02]`}>
+                  {renderIcon(i)}
+                  <div>
+                    <h3 className="text-2xl font-serif text-white mb-3">{f.title}</h3>
+                    <p className="text-white/50 text-sm max-w-xl">{f.description}</p>
+                  </div>
                 </div>
-              </div>
+              </StaggerItem>
             )
           })}
-        </div>
+        </StaggerContainer>
       </div>
     </AnimatedSection>
   )

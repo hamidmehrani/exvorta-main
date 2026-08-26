@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { AnimatedSection, AnimatedButton } from '@/components/ui/Reveal';
+import { AnimatedSection, AnimatedButton, StaggerContainer, StaggerItem } from '@/components/ui/Reveal';
 import Link from 'next/link';
 import type { Post } from '@/payload-types';
 import { Container } from '@/components/ui/Container';
@@ -64,10 +64,11 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
       {/* 03. [ARTICLE GRID] - Purpose: News and reports index */}
       <AnimatedSection id="blog-grid" className="w-full bg-[#FCFAF8] pb-32 px-6 pt-32">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" staggerChildren={0.08} delayChildren={0.15}>
             {posts && posts.length > 0 ? (
               posts?.map((post) => (
-                <Link href={`/insights/${post.slug}`} key={post.id} className="w-full flex flex-col group cursor-pointer block">
+                <StaggerItem key={post.id} className="h-full">
+                <Link href={`/insights/${post.slug}`} className="w-full h-full flex flex-col group cursor-pointer block">
                   <div className="w-full aspect-[4/3] bg-black/[0.03] rounded-lg mb-6 border border-black/5 overflow-hidden relative">
                     {typeof post.coverImage === 'object' && post.coverImage?.url ? (
                       <Image
@@ -92,6 +93,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
                     {post.title}
                   </h3>
                 </Link>
+                </StaggerItem>
               ))
             ) : (
               [1, 2, 3, 4, 5, 6]?.map((i) => (
@@ -106,7 +108,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
                 </div>
               ))
             )}
-          </div>
+          </StaggerContainer>
         </Container>
       </AnimatedSection>
       <Hairline className="bg-black/5 w-full" />

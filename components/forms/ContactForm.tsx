@@ -4,6 +4,8 @@ import React, { useRef, useActionState, useEffect } from 'react'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { submitLeadAction } from '@/actions/submitLead'
 import { useFormStatus } from 'react-dom'
+import { m, AnimatePresence } from 'framer-motion'
+import { EASE_OUT } from '@/components/ui/Reveal'
 
 function SubmitButton() {
   const { pending } = useFormStatus()
@@ -66,16 +68,32 @@ export default function ContactForm() {
 
       <SubmitButton />
 
-      {state.success && (
-        <div className="p-4 mt-2 bg-teal/10 border border-teal/20 text-teal rounded-lg text-sm font-medium text-center shadow-sm">
-          Message sent successfully! Our team will reach out shortly.
-        </div>
-      )}
-      {state.error && (
-        <div className="p-4 mt-2 bg-danger/10 border border-danger/20 text-danger rounded-lg text-sm font-medium text-center shadow-sm">
-          {state.error}
-        </div>
-      )}
+      <AnimatePresence>
+        {state.success && (
+          <m.div
+            key="success"
+            initial={{ opacity: 0, y: 12, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.5, ease: EASE_OUT }}
+            className="p-4 mt-2 bg-teal/10 border border-teal/20 text-teal rounded-lg text-sm font-medium text-center shadow-sm"
+          >
+            Message sent successfully! Our team will reach out shortly.
+          </m.div>
+        )}
+        {state.error && (
+          <m.div
+            key="error"
+            initial={{ opacity: 0, y: 12, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.5, ease: EASE_OUT }}
+            className="p-4 mt-2 bg-danger/10 border border-danger/20 text-danger rounded-lg text-sm font-medium text-center shadow-sm"
+          >
+            {state.error}
+          </m.div>
+        )}
+      </AnimatePresence>
     </form>
   )
 }

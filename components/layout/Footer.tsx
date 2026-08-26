@@ -1,7 +1,7 @@
 import React from 'react'
-import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
-import type {  Footer as FooterType  } from '@/payload-types'
+import type { Footer as FooterType } from '@/payload-types'
+import FooterClient from './FooterClient'
 
 interface FooterLinkItem {
   link?: {
@@ -15,6 +15,12 @@ interface FooterLinkItem {
     } | null
   }
   id?: string | null
+}
+
+export type FooterColumn = {
+  id?: string | null
+  title?: string
+  links: Array<{ id?: string | null; label?: string; href: string; external: boolean }>
 }
 
 export default async function Footer() {
@@ -60,67 +66,34 @@ export default async function Footer() {
     },
   ]
 
-  const finalColumns =
-    (footerData?.columns?.length ? footerData.columns : fallbackColumns) as unknown as Array<{
-      id?: string | null
-      title?: string
-      links?: FooterLinkItem[] | null
-    }>
+  const rawColumns = (footerData?.columns?.length ? footerData.columns : fallbackColumns) as unknown as Array<{
+    id?: string | null
+    title?: string
+    links?: FooterLinkItem[] | null
+  }>
 
-  const resolveHref = (item: FooterLinkItem): string => {
-    const link = item.link
-    if (!link) return '#'
-    const refValue = link.reference?.value
-    if (link.type === 'reference' && refValue && typeof refValue === 'object') {
-      return refValue.slug ? `/${refValue.slug}` : '#'
-    }
-    return link.url || '#'
-  }
+  const columns: FooterColumn[] = rawColumns.map((column) => ({
+    id: column.id,
+    title: column.title,
+    links: (column.links || [])
+      .map((item) => {
+        const link = item.link
+        if (!link) return null
+        const refValue = link.reference?.value
+        let href = link.url || ''
+        if (link.type === 'reference' && refValue && typeof refValue === 'object') {
+          href = refValue.slug ? `/${refValue.slug}` : ''
+        }
+        if (!href || href === '#') return null
+        return {
+          id: item.id,
+          label: link.label,
+          href,
+          external: link.type === 'custom' && Boolean(link.openInNewTab),
+        }
+      })
+      .filter((l): l is NonNullable<typeof l> => Boolean(l)),
+  }))
 
-  return (
-    <footer className="w-full bg-[#FAFAF8] border-t border-black/10 py-24 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-24">
-          {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="font-serif text-xl font-semibold tracking-wide text-obsidian uppercase mb-6 block">
-              EXVORTA
-            </Link>
-            <p className="text-xs text-obsidian/40 leading-relaxed font-light max-w-xs">
-              The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE.
-            </p>
-          </div>
-
-          {finalColumns.map((column, colIndex) => (
-            <div key={column.id || colIndex}>
-              <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">
-                {column.title}
-              </h4>
-              <ul className="space-y-4 text-[11px] text-obsidian/60">
-                {column.links?.map((item, linkIndex) => {
-                  const isExternal = item.link?.type === 'custom' && item.link?.openInNewTab
-                  return (
-                    <li key={item.id || linkIndex}>
-                      <Link
-                        href={resolveHref(item)}
-                        className="hover:text-obsidian transition-colors"
-                        target={isExternal ? '_blank' : undefined}
-                        rel={isExternal ? 'noopener noreferrer' : undefined}
-                      >
-                        {item.link?.label}
-                      </Link>
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        <div className="border-t border-black/5 pt-12 text-center">
-          <p className="text-[10px] tracking-widest text-obsidian/30 uppercase">© 2026 Exvorta. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-  )
+  return <FooterClient columns={columns} />
 }

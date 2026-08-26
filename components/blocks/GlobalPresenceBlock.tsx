@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { AnimatedSection } from '@/components/ui/Reveal'
+import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 
 export interface LocationInfo {
   region: string
@@ -53,13 +53,14 @@ export const GlobalPresenceBlock: React.FC<GlobalPresenceBlockProps> = (props) =
         </p>
         
         {/* Terminal Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 w-full border-t border-b border-[#E5E5E5]">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 w-full border-t border-b border-[#E5E5E5]" staggerChildren={0.12} delayChildren={0.15}>
           {locations?.map((loc, index) => {
             const isLast = index === locations.length - 1
             const borderClass = isLast ? "" : "border-b md:border-b-0 md:border-r border-[#E5E5E5]"
-            
+
             return (
-              <div key={index} className={`p-12 flex flex-col ${borderClass}`}>
+              <StaggerItem key={index} className="h-full">
+              <div className={`p-12 flex flex-col h-full ${borderClass}`}>
                 <span className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-6">
                   [ {loc.region} ]
                 </span>
@@ -67,9 +68,10 @@ export const GlobalPresenceBlock: React.FC<GlobalPresenceBlockProps> = (props) =
                   {loc.description}
                 </p>
               </div>
+              </StaggerItem>
             )
           })}
-        </div>
+        </StaggerContainer>
       </div>
     </AnimatedSection>
   )

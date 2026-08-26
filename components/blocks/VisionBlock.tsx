@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { AnimatedSection } from '@/components/ui/Reveal'
+import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 
 export interface VisionPrinciple {
   number?: string
@@ -60,22 +60,24 @@ export const VisionBlock: React.FC<VisionBlockProps> = (props) => {
           {title}
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 w-full border-t border-l border-[#333]">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 w-full border-t border-l border-[#333]" staggerChildren={0.12} delayChildren={0.15}>
           {principles?.map((p, i) => {
             const num = p.number || String(i + 1).padStart(2, '0')
             return (
-              <div key={i} className="bg-transparent border-r border-b border-[#333] p-12 lg:p-16 rounded-none flex flex-col h-full">
-                <div className="font-mono text-xs text-white/30 tracking-widest mb-10 uppercase">
-                  {num} — {p.category}
+              <StaggerItem key={i}>
+                <div className="bg-transparent border-r border-b border-[#333] p-12 lg:p-16 rounded-none flex flex-col h-full transition-colors duration-500 hover:bg-white/[0.02]">
+                  <div className="font-mono text-xs text-white/30 tracking-widest mb-10 uppercase">
+                    {num} — {p.category}
+                  </div>
+                  <h3 className="text-2xl font-serif text-white mb-4">{p.title}</h3>
+                  <p className="text-white/50 leading-relaxed font-sans">
+                    {p.description}
+                  </p>
                 </div>
-                <h3 className="text-2xl font-serif text-white mb-4">{p.title}</h3>
-                <p className="text-white/50 leading-relaxed font-sans">
-                  {p.description}
-                </p>
-              </div>
+              </StaggerItem>
             )
           })}
-        </div>
+        </StaggerContainer>
       </div>
     </AnimatedSection>
   )

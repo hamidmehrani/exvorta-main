@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import type {  Page  } from '@/payload-types'
-import { AnimatedSection } from '@/components/ui/Reveal'
+import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 
 type FeatureGridBlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'featureGrid' }>
 
@@ -35,17 +35,19 @@ export const FeatureGridBlock: React.FC<FeatureGridBlockProps> = (props) => {
             <div className="text-[10px] tracking-widest uppercase text-obsidian/40 mb-4">{props.eyebrow || props.sectionEyebrow || "Architecture Manifesto"}</div>
             <h2 className="text-3xl md:text-4xl font-serif text-obsidian">{props.sectionTitle || "Built for How Traders Actually Work"}</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6" staggerChildren={0.1} delayChildren={0.15}>
             {features?.map((feature, idx) => (
-              <div key={feature.id || idx} className="bg-surface p-8 border border-black/5 rounded-sm hover:shadow-soft transition-shadow relative border-t-2 border-transparent hover:border-black transition-all duration-300">
-                <span className="text-gray-200 text-4xl font-serif leading-none absolute top-6 right-8 opacity-50">
-                  {String(idx + 1).padStart(2, '0')}
-                </span>
-                <h3 className="text-lg font-serif mb-3 text-black font-semibold">{feature.title}</h3>
-                <p className="text-sm text-obsidian/60 leading-relaxed font-light text-gray-600">{feature.description}</p>
-              </div>
+              <StaggerItem key={feature.id || idx} className="h-full">
+                <div className="h-full bg-surface p-8 border border-black/5 rounded-sm hover:shadow-soft transition-shadow relative border-t-2 border-transparent hover:border-black transition-all duration-300 hover:-translate-y-1">
+                  <span className="text-gray-200 text-4xl font-serif leading-none absolute top-6 right-8 opacity-50">
+                    {String(idx + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="text-lg font-serif mb-3 text-black font-semibold">{feature.title}</h3>
+                  <p className="text-sm text-obsidian/60 leading-relaxed font-light text-gray-600">{feature.description}</p>
+                </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
     </AnimatedSection>

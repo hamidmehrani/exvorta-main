@@ -1,8 +1,9 @@
 "use client";
 
-import { AnimatedSection } from '../ui/Reveal';
+import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/Reveal';
 import { Container } from '../ui/Container';
 import { MonoLabel } from '../ui/MonoLabel';
+import { TiltCard } from '../ui/motion/TiltCard';
 
 export function ProductShowcaseBlock(props: any) {
   return (
@@ -11,6 +12,7 @@ export function ProductShowcaseBlock(props: any) {
 <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
 {/*  Left Column: SaaS UI  */}
 <div className="order-2 lg:order-1">
+<TiltCard maxTilt={4} glow={false}>
 <div className="bg-mockup-dashboard rounded-2xl shadow-2xl border border-hairline-dark overflow-hidden flex flex-col h-[640px]">
 {/*  UI Header  */}
 <div className="h-10 border-b border-hairline-dark bg-white/5 flex items-center px-4 shrink-0">
@@ -131,26 +133,33 @@ export function ProductShowcaseBlock(props: any) {
 </div>
 </div>
 </div>
+</TiltCard>
 </div>
 {/*  Right Column: Marketing  */}
 <div className="order-1 lg:order-2">
 <div className="text-[10px] tracking-widest uppercase text-obsidian/40 mb-6">Document Automation</div>
 <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-obsidian mb-8 leading-[1.1]">Trade Documents,<br/>Automated &amp; Perfected.</h2>
 <p className="text-base md:text-lg text-obsidian/60 mb-10 font-light leading-relaxed">Stop wasting hours on manual paperwork. Instantly generate, digitally sign, and manage strictly compliant global trade documents from official templates.</p>
-<ul className="space-y-6">
-<li className="flex items-center space-x-4">
+<StaggerContainer className="space-y-6" staggerChildren={0.1} delayChildren={0.2}>
+<StaggerItem>
+<li className="flex items-center space-x-4 list-none">
 <span className="text-[#059669]">✓</span>
 <span className="text-sm text-obsidian font-medium tracking-tight">Intelligent Template Memory</span>
 </li>
-<li className="flex items-center space-x-4">
+</StaggerItem>
+<StaggerItem>
+<li className="flex items-center space-x-4 list-none">
 <span className="text-[#059669]">✓</span>
 <span className="text-sm text-obsidian font-medium tracking-tight">Digital Signatures</span>
 </li>
-<li className="flex items-center space-x-4">
+</StaggerItem>
+<StaggerItem>
+<li className="flex items-center space-x-4 list-none">
 <span className="text-[#059669]">✓</span>
 <span className="text-sm text-obsidian font-medium tracking-tight">Bank-Grade Compliance &amp; API Ready</span>
 </li>
-</ul><div className="mt-8"><a className="inline-flex items-center text-[11px] font-bold tracking-widest uppercase border-b border-brand-obsidian pb-1 hover:text-emerald-700 hover:border-emerald-700 transition-colors duration-300" href="/rfq">Request Exvorta Docs Access <span className="ms-2">→</span></a></div>
+</StaggerItem>
+</StaggerContainer><div className="mt-8"><a className="inline-flex items-center text-[11px] font-bold tracking-widest uppercase border-b border-brand-obsidian pb-1 hover:text-emerald-700 hover:border-emerald-700 transition-colors duration-300" href="/rfq">Request Exvorta Docs Access <span className="ms-2">→</span></a></div>
 </div>
 </div>
 </div></section>
