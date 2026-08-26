@@ -221,11 +221,19 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
             <p className="font-sans text-[18px] text-[#444846] max-w-md font-light">Fully localized routing and content delivery.</p>
           </AnimatedSection>
           
-          <AnimatedSection className="py-16 flex justify-center items-center w-full">
-            <Link href={project?.liveUrl || "#"} className="inline-flex items-center justify-center text-white font-mono text-[16px] tracking-widest px-16 py-8 rounded-none hover:opacity-90 transition-all duration-300 w-full md:w-auto min-w-[400px] border border-transparent" style={{ backgroundColor: accentColor }}>
-              VIEW LIVE PROJECT ↗
-            </Link>
-          </AnimatedSection>
+          {project?.liveUrl ? (
+            <AnimatedSection className="py-16 flex justify-center items-center w-full">
+              <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center text-white font-mono text-[16px] tracking-widest px-16 py-8 rounded-none hover:opacity-90 transition-all duration-300 w-full md:w-auto min-w-[400px] border border-transparent" style={{ backgroundColor: accentColor }}>
+                VIEW LIVE PROJECT ↗
+              </Link>
+            </AnimatedSection>
+          ) : (
+            <AnimatedSection className="py-16 flex justify-center items-center w-full">
+              <Link href="/rfq" className="inline-flex items-center justify-center text-white font-mono text-[16px] tracking-widest px-16 py-8 rounded-none hover:opacity-90 transition-all duration-300 w-full md:w-auto min-w-[400px] border border-transparent" style={{ backgroundColor: accentColor }}>
+                [ REQUEST A SIMILAR BUILD ] ↗
+              </Link>
+            </AnimatedSection>
+          )}
         </div>
       </section>
     </div>

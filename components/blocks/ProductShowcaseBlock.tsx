@@ -150,7 +150,7 @@ export function ProductShowcaseBlock(props: any) {
 <span className="text-[#059669]">✓</span>
 <span className="text-sm text-obsidian font-medium tracking-tight">Bank-Grade Compliance &amp; API Ready</span>
 </li>
-</ul><div className="mt-8"><a className="inline-flex items-center text-[11px] font-bold tracking-widest uppercase border-b border-brand-obsidian pb-1 hover:text-emerald-700 hover:border-emerald-700 transition-colors duration-300" href="#">Explore Exvorta Docs <span className="ml-2">→</span></a></div>
+</ul><div className="mt-8"><a className="inline-flex items-center text-[11px] font-bold tracking-widest uppercase border-b border-brand-obsidian pb-1 hover:text-emerald-700 hover:border-emerald-700 transition-colors duration-300" href="/rfq">Request Exvorta Docs Access <span className="ms-2">→</span></a></div>
 </div>
 </div>
 </div></section>

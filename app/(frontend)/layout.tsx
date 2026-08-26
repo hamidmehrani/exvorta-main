@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer'
 import PageWrapper from '@/components/layout/PageWrapper'
 import SmoothScrollProvider from '@/components/providers/SmoothScrollProvider'
 import { FramerMotionProvider } from '@/components/providers/FramerMotionProvider'
+import ScrollProgress from '@/components/ui/ScrollProgress'
 import { PageTransition } from '@/components/layout/PageTransition'
 import { LoadingBar } from '@/components/ui/LoadingBar'
 import localFont from 'next/font/local'
@@ -32,6 +33,15 @@ const vazirmatn = localFont({
   variable: '--font-vazirmatn',
   display: 'swap',
   weight: '100 900',
+})
+
+const playfair = localFont({
+  src: [
+    { path: '../../public/fonts/PlayfairDisplay-600.woff2', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/PlayfairDisplay-700.woff2', weight: '700', style: 'normal' },
+  ],
+  variable: '--font-playfair',
+  display: 'swap',
 })
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -92,12 +102,14 @@ export default async function FrontendLayout({
   const hasConsent = cookieStore.get('cookie-consent')?.value === 'accepted'
 
   return (
-    <html lang="en" className={`${inter.variable} ${vazirmatn.variable}`}>
+    <html lang="en" className={`${inter.variable} ${vazirmatn.variable} ${playfair.variable}`}>
       <body>
           <Suspense fallback={null}>
             <LoadingBar />
           </Suspense>
+          <ScrollProgress />
           <FramerMotionProvider>
+            <SmoothScrollProvider>
             <PageTransition>
               <div dir={dir} className={`h-full antialiased`}>
                 <div className="min-h-full flex flex-col bg-cream text-obsidian">
@@ -133,6 +145,7 @@ export default async function FrontendLayout({
                 </div>
               </div>
             </PageTransition>
+            </SmoothScrollProvider>
           </FramerMotionProvider>
       </body>
     </html>

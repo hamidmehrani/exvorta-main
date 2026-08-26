@@ -2,10 +2,14 @@
 import React from 'react'
 import type {  Page  } from '@/payload-types'
 import { AnimatedSection } from '@/components/ui/Reveal'
+import { StaggerText } from '@/components/ui/motion/StaggerText'
+import { MagneticButton } from '@/components/ui/motion/MagneticButton'
+import { useReducedMotion } from '@/lib/animations'
 
 type HeroBlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'hero' }>
 
 export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
+  const prefersReducedMotion = useReducedMotion()
   try {
   const isHome = props.headline?.includes('Digital Infrastructure') || props.eyebrow?.includes('ENGINE') || (!props.headline && !props.eyebrow) // fallback to home if nothing
   const isWebHero = props.eyebrow?.includes('HIGH-PERFORMANCE') || props.headline?.includes('High-Performance') || props.eyebrow?.includes('WEBSITES')
@@ -59,7 +63,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
           
           {/* Dual CTA Buttons */}
           <div className="relative z-10 flex flex-col sm:flex-row items-center gap-4 mb-16">
-            <a className="bg-[#0D0D0D] text-white px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-gray-900 transition-all duration-300 rounded-none" href={props.primaryCTA?.url || "#"}>
+            <a className="bg-[#0D0D0D] text-white px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-gray-900 transition-all duration-300 rounded-none" href={props.primaryCTA?.url || "/rfq"}>
               {props.primaryCTA?.label || '[ REQUEST PROPOSAL ]'}
             </a>
             <a className="border text-black/80 px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-black/5 transition-all duration-300 border-black rounded-none" href="/portfolio">
@@ -89,9 +93,29 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 {/*  Hero Content  */}
 <div className="text-center max-w-4xl mx-auto mb-20">
 <div className="inline-flex items-center justify-center px-3 py-1 mb-8 rounded-full border border-black/10 bg-white/50 text-[10px] tracking-widest uppercase text-obsidian/60"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2"></span> [ {props.eyebrow || (isWebHero ? "HIGH-PERFORMANCE WEBSITES" : "ENGINE V1.0 LIVE")} ]</div>
-<h1 className="text-5xl md:text-7xl lg:text-[84px] leading-[1.1] font-serif font-semibold text-obsidian mb-8 tracking-tight" dangerouslySetInnerHTML={{ __html: props.headline || (isWebHero ? "High-Performance Websites.<br/><span class='text-black/50'>For Global Traders.</span>" : "Digital Infrastructure<br/>for Global Traders") }} />
+{prefersReducedMotion ? (
+  <h1
+    className="text-5xl md:text-7xl lg:text-[84px] leading-[1.1] font-serif font-semibold text-obsidian mb-8 tracking-tight"
+    dangerouslySetInnerHTML={{ __html: props.headline || "Digital Infrastructure<br/>for Global Traders" }}
+  />
+) : (
+  <StaggerText
+    as="h1"
+    text={props.headline || "Digital Infrastructure<br/>for Global Traders"}
+    stagger={0.04}
+    delay={0.15}
+    className="text-5xl md:text-7xl lg:text-[84px] leading-[1.1] font-serif font-semibold text-obsidian mb-8 tracking-tight"
+  />
+)}
 <p className="text-base md:text-lg text-obsidian/60 max-w-2xl mx-auto mb-12 font-light">{props.subheadline || (isWebHero ? "The institutional standard. Bespoke architecture, flawless aesthetics, and engineered for elite B2B trading companies operating at a global scale." : "The definitive digital foundation for elite importers and exporters. Precision-engineered web presence and automated compliance.")}</p>
-<a className="inline-flex items-center justify-center px-8 py-4 bg-obsidian text-white text-xs font-medium tracking-widest uppercase shadow-[0_0_15px_rgba(0,102,255,0.5)] hover:bg-black/80 transition-all" href={props.primaryCTA?.url || "#"}>{props.primaryCTA?.label || "[ REQUEST PROPOSAL ]"}</a>
+<MagneticButton>
+  <a
+    className="inline-flex min-h-[44px] items-center justify-center px-8 py-4 btn-primary"
+    href={props.primaryCTA?.url || "/rfq"}
+  >
+    {props.primaryCTA?.label || "[ REQUEST PROPOSAL ]"}
+  </a>
+</MagneticButton>
 </div>
 {/*  Dashboard Preview - ONLY for Home  */}
 {(!isWebHero) && (
@@ -202,7 +226,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 <div className="text-[10px] text-white/40 tracking-widest uppercase font-mono">LIVE CLEARANCE LEDGER</div>
 <button className="text-[9px] text-white/60 hover:text-white uppercase tracking-widest border border-white/10 px-3 py-1 rounded transition-colors">Export CSV</button>
 </div>
-<div className="flex-1 overflow-auto">
+<div className="flex-1 overflow-auto [scrollbar-width:thin]" style={{ overflowX: 'auto' }}>
 <table className="w-full text-left text-xs whitespace-nowrap">
 <thead className="text-[9px] text-white/30 uppercase tracking-widest bg-[#141414] sticky top-0 z-10">
 <tr>

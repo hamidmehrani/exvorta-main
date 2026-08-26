@@ -28,8 +28,8 @@ export function CTABannerBlock(props: CTABannerProps) {
         {description}
       </p>
       <div className="flex justify-center z-10">
-        <Link 
-          href={primaryCTA.url || "/rfq"} 
+        <Link
+          href={!primaryCTA.url || primaryCTA.url === '#' ? "/rfq" : primaryCTA.url}
           className="bg-white text-black px-12 py-6 text-[11px] uppercase tracking-[0.25em] font-mono hover:bg-gray-200 transition-all duration-300 shadow-none hover:shadow-none flex items-center gap-3 rounded-none"
         >
           {primaryCTA.label}

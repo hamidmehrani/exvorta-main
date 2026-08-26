@@ -63,8 +63,8 @@ async function linkGlobals() {
           title: 'LEGAL & ACCESS',
           links: [
             { link: getPageLink('rfq', 'Request Proposal') },
-            { link: { type: 'custom', label: 'Privacy Policy', url: '#' } },
-            { link: { type: 'custom', label: 'Terms of Service', url: '#' } },
+            { link: { type: 'custom', label: 'Privacy Policy', url: '/legal#privacy' } },
+            { link: { type: 'custom', label: 'Terms of Service', url: '/legal#terms' } },
           ],
         },
       ],
@@ -124,8 +124,8 @@ async function linkGlobals() {
             title: 'LEGAL & ACCESS',
             links: [
               { link: getFallbackLink('rfq', 'Request Proposal') },
-              { link: { type: 'custom', label: 'Privacy Policy', url: '#' } },
-              { link: { type: 'custom', label: 'Terms of Service', url: '#' } },
+              { link: { type: 'custom', label: 'Privacy Policy', url: '/legal#privacy' } },
+              { link: { type: 'custom', label: 'Terms of Service', url: '/legal#terms' } },
             ],
           },
         ],

@@ -10,7 +10,7 @@ const payloadData = {
       subheadline: 'The definitive digital foundation for elite importers and exporters. Precision-engineered web presence and automated compliance.',
       primaryCTA: {
         label: '[ REQUEST PROPOSAL ]',
-        url: '#'
+        url: '/rfq'
       }
     }
   ]

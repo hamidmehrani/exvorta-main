@@ -98,7 +98,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <p className="text-lg text-white/50 font-sans leading-relaxed mb-10">
                 Bespoke digital architecture for global trading entities. We replace fragile templates with hardcoded, high-performance web infrastructure designed entirely for institutional authority and tier-one lead acquisition.
             </p>
-<Button className="w-max bg-white text-black px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-gray-200 transition-all border border-white flex items-center gap-3" href="#">
+<Button className="w-max bg-white text-black px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-gray-200 transition-all border border-white flex items-center gap-3" href="/web">
                 [ VIEW ARCHITECTURE ]
             </Button>
 </div>
@@ -188,7 +188,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <div>
 <div className="text-[8px] font-mono text-black/60 uppercase mb-1">Exporter</div>
 <div className="h-8 border border-brand-obsidian bg-white flex items-center px-3">
-<div className="w-1.5 h-3" style={{backgroundColor: "brand-emerald"}}></div>
+<div className="w-1.5 h-3" style={{backgroundColor: "var(--color-brand-emerald)"}}></div>
 </div>
 </div>
 <div>
@@ -246,7 +246,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <p className="text-sm text-black/40 font-sans leading-relaxed mb-10 italic">
         Currently available exclusively to active Exvorta Web clients.
     </p>
-<Button className="w-max bg-transparent border border-brand-obsidian text-black px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-brand-obsidian hover:text-white transition-all flex items-center gap-3" href="#">
+<Button className="w-max bg-transparent border border-brand-obsidian text-black px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-brand-obsidian hover:text-white transition-all flex items-center gap-3" href="/waitlist">
         [ REQUEST BETA ACCESS ]
         <svg fill="none" height="12" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="12">
 <line x1="5" x2="19" y1="12" y2="12"></line>
@@ -267,7 +267,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </div>
 <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">Exvorta Track.</h2>
 <p className="text-lg text-white/60 font-sans leading-relaxed mb-8 max-w-2xl">Real-time, verifiable visibility into your global trade pipeline. Exvorta Track moves asset tracking from static spreadsheets to a dynamic, hardened data ecosystem, connecting directly with major global carriers and freight forwarders.</p>
-<Button className="w-max bg-transparent border border-white text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center gap-3 group" href="#">
+<Button className="w-max bg-transparent border border-white text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center gap-3 group" href="/waitlist">
                 [ REQUEST ALPHA ACCESS ]
                 <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </Button>
@@ -481,7 +481,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </div>
 <h2 className="text-4xl md:text-5xl font-serif text-black mb-6">Exvorta CRM.</h2>
 <p className="text-lg text-black/60 font-sans leading-relaxed mb-10">Manage every buyer and supplier relationship in one place. Deal pipelines, document history, follow-up reminders — built specifically for how traders actually work.</p>
-<Button className="w-max bg-transparent border border-brand-obsidian text-black px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-brand-obsidian hover:text-white transition-all flex items-center gap-3" href="#">
+<Button className="w-max bg-transparent border border-brand-obsidian text-black px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-brand-obsidian hover:text-white transition-all flex items-center gap-3" href="/waitlist">
                 [ JOIN THE WAITLIST ]
                 <span className="material-symbols-outlined text-sm">terminal</span>
 </Button>
@@ -503,7 +503,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">Exvorta Intel.</h2>
 <p className="text-lg text-white/60 font-sans leading-relaxed mb-6">Intuition does not scale. Exvorta Intel processes millions of global trade data points into actionable, predictive commodity forecasting and supply chain risk analysis.</p>
 <p className="text-md text-white/40 font-sans leading-relaxed mb-10">Monitor macro-economic shifts, track competitor vessel routes, and analyze real-time pricing arbitrage across global ports—all from a single executive terminal.</p>
-<Button className="w-max bg-transparent border border-white text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center gap-3" href="#">
+<Button className="w-max bg-transparent border border-white text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center gap-3" href="/waitlist">
                 [ JOIN THE WAITLIST ]
             </Button>
 </div>
@@ -627,7 +627,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 
 <div className="flex flex-col sm:flex-row items-center justify-center gap-6 relative z-10 w-full sm:w-auto">
 
-<Button className="w-full sm:w-auto bg-white text-black px-10 py-5 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-mono hover:bg-gray-200 transition-all border border-white flex items-center justify-center gap-3" href="/proposal">
+<Button className="w-full sm:w-auto bg-white text-black px-10 py-5 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-mono hover:bg-gray-200 transition-all border border-white flex items-center justify-center gap-3" href="/rfq">
             [ UPGRADE WEB ARCHITECTURE ]
         </Button>
 
