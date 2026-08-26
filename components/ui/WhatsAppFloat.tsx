@@ -1,10 +1,22 @@
-import React from 'react'
+'use client'
+
+import React, { useState, useEffect } from 'react'
 
 interface WhatsAppFloatProps {
-config: { phoneNumber?: string | null; enableWidget?: boolean | null; defaultMessage?: string | null } | null
+  config: { phoneNumber?: string | null; enableWidget?: boolean | null; defaultMessage?: string | null } | null
 }
 
 export function WhatsAppFloat({ config }: WhatsAppFloatProps) {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted || typeof window === 'undefined') {
+    return null
+  }
+
   if (!config?.enableWidget || !config?.phoneNumber) {
     return null
   }
@@ -28,4 +40,4 @@ export function WhatsAppFloat({ config }: WhatsAppFloatProps) {
   )
 }
 
-export default WhatsAppFloat;
+export default WhatsAppFloat
