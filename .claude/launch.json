@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "exvorta",
+      "runtimeExecutable": "./node_modules/.bin/next",
+      "runtimeArgs": ["dev", "-p", "3100"],
+      "port": 3100
+    }
+  ]
+}

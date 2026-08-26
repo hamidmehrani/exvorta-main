@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm build",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "node scripts/fix-payload-loadenv.mjs",
@@ -16,7 +16,7 @@
     "migrate:create": "pnpm payload migrate:create"
   },
   "engines": {
-    "node": ">=20 <23"
+    "node": "22.x"
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.5.2",

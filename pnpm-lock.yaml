@@ -15,22 +15,22 @@ importers:
         specifier: ^0.10.4
         version: 0.10.4
       '@next/third-parties':
-        specifier: ^16.2.7
-        version: 16.3.2(next@15.4.11(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(react@19.2.8)
+        specifier: 15.4.11
+        version: 15.4.11(next@15.4.11(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(react@19.2.8)
       '@payloadcms/db-postgres':
-        specifier: ^3.88.0
+        specifier: 3.88.0
         version: 3.88.0(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.1)(@vercel/postgres@0.10.0)(payload@3.88.0(bufferutil@4.1.0)(graphql@16.14.2)(supports-color@7.2.0)(typescript@5.9.3))(supports-color@7.2.0)
       '@payloadcms/db-vercel-postgres':
-        specifier: ^3.88.0
+        specifier: 3.88.0
         version: 3.88.0(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.1)(@types/pg@8.20.0)(payload@3.88.0(bufferutil@4.1.0)(graphql@16.14.2)(supports-color@7.2.0)(typescript@5.9.3))(supports-color@7.2.0)
       '@payloadcms/live-preview-react':
-        specifier: ^3.85.0
+        specifier: 3.88.0
         version: 3.88.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@payloadcms/next':
-        specifier: ^3.85.0
+        specifier: 3.88.0
         version: 3.88.0(@types/react@19.2.18)(graphql@16.14.2)(monaco-editor@0.56.0)(next@15.4.11(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(payload@3.88.0(bufferutil@4.1.0)(graphql@16.14.2)(supports-color@7.2.0)(typescript@5.9.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@7.2.0)(typescript@5.9.3)
       '@payloadcms/richtext-lexical':
-        specifier: ^3.85.0
+        specifier: 3.88.0
         version: 3.88.0(@faceless-ui/modal@3.0.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(@faceless-ui/scroll-info@2.0.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(@payloadcms/next@3.88.0(@types/react@19.2.18)(graphql@16.14.2)(monaco-editor@0.56.0)(next@15.4.11(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(payload@3.88.0(bufferutil@4.1.0)(graphql@16.14.2)(supports-color@7.2.0)(typescript@5.9.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@7.2.0)(typescript@5.9.3))(@types/react@19.2.18)(bufferutil@4.1.0)(monaco-editor@0.56.0)(next@15.4.11(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(payload@3.88.0(bufferutil@4.1.0)(graphql@16.14.2)(supports-color@7.2.0)(typescript@5.9.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@7.2.0)(typescript@5.9.3)(yjs@13.6.32)
       cheerio:
         specifier: ^1.2.0
@@ -66,7 +66,7 @@ importers:
         specifier: ^4.13.7
         version: 4.13.7(next@15.4.11(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(react@19.2.8)(typescript@5.9.3)
       payload:
-        specifier: ^3.85.0
+        specifier: 3.88.0
         version: 3.88.0(bufferutil@4.1.0)(graphql@16.14.2)(supports-color@7.2.0)(typescript@5.9.3)
       react:
         specifier: ^19.0.0
@@ -82,10 +82,10 @@ importers:
         version: 0.34.5
     devDependencies:
       '@next/bundle-analyzer':
-        specifier: ^15.4.11
+        specifier: 15.4.11
         version: 15.4.11(bufferutil@4.1.0)
       '@next/env':
-        specifier: ^15.4.11
+        specifier: 15.4.11
         version: 15.4.11
       '@tailwindcss/postcss':
         specifier: ^4
@@ -106,7 +106,7 @@ importers:
         specifier: ^9
         version: 9.39.5(jiti@2.7.0)(supports-color@7.2.0)
       eslint-config-next:
-        specifier: ^15.4.11
+        specifier: 15.4.11
         version: 15.4.11(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
       lighthouse:
         specifier: ^12.8.2
@@ -1136,9 +1136,6 @@ packages:
   '@next/env@15.4.11':
     resolution: {integrity: sha512-mIYp/091eYfPFezKX7ZPTWqrmSXq+ih6+LcUyKvLmeLQGhlPtot33kuEOd4U+xAA7sFfj21+OtCpIZx0g5SpvQ==}
 
-  '@next/env@15.5.23':
-    resolution: {integrity: sha512-Mv3Z9hVbFcPnoLevsZ6rnX1TBtyHb5E17yN7HTPDXSXxeNsGBjUFrdbjRXKKXIOhfth7/cg6Ay7PZ2UFawaWsQ==}
-
   '@next/eslint-plugin-next@15.4.11':
     resolution: {integrity: sha512-WSY6ZwahlbR3JLfXrBezo2H4OmCeF2aFpguZuTkGV/n7+C10wYP17gxsCXbKVI6TpWmHZysp/AhwovUObPjfEA==}
 
@@ -1194,10 +1191,10 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@next/third-parties@16.3.2':
-    resolution: {integrity: sha512-8yT1R19bU8knUyvg4uhR9Qt3IHNyjNB+HWqsUlnK4742B/OIUkGbCB16lnH7Nk3A9+Lv7qpPH6pyrXk4joViyg==}
+  '@next/third-parties@15.4.11':
+    resolution: {integrity: sha512-uqV80ECa3/0ox3N1N6nhJ55y4Y7BXe+SN7AVI1OD5uGgL29xAw2iAOHsqfR1DrotKO5diWwCIT2ShyalEqXlPA==}
     peerDependencies:
-      next: ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0-beta.0
+      next: ^13.0.0 || ^14.0.0 || ^15.0.0
       react: ^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0
 
   '@nodelib/fs.scandir@2.1.5':
@@ -5827,8 +5824,6 @@ snapshots:
 
   '@next/env@15.4.11': {}
 
-  '@next/env@15.5.23': {}
-
   '@next/eslint-plugin-next@15.4.11':
     dependencies:
       fast-glob: 3.3.1
@@ -5857,7 +5852,7 @@ snapshots:
   '@next/swc-win32-x64-msvc@15.4.8':
     optional: true
 
-  '@next/third-parties@16.3.2(next@15.4.11(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(react@19.2.8)':
+  '@next/third-parties@15.4.11(next@15.4.11(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(react@19.2.8)':
     dependencies:
       next: 15.4.11(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4)
       react: 19.2.8
@@ -6738,7 +6733,7 @@ snapshots:
 
   '@types/pg-pool@2.0.6':
     dependencies:
-      '@types/pg': 8.6.1
+      '@types/pg': 8.20.0
 
   '@types/pg@8.11.6':
     dependencies:
@@ -9223,7 +9218,7 @@ snapshots:
 
   payload@3.88.0(bufferutil@4.1.0)(graphql@16.14.2)(supports-color@7.2.0)(typescript@5.9.3):
     dependencies:
-      '@next/env': 15.5.23
+      '@next/env': 15.4.11
       '@payloadcms/translations': 3.88.0
       '@types/busboy': 1.5.4
       ajv: 8.18.0

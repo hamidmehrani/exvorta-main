@@ -1,83 +1,16 @@
 'use client'
-
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Script from 'next/script'
-const WhatsAppFloat = dynamic(() => import('@/components/ui/WhatsAppFloat'), { ssr: false })
-const CookieBanner = dynamic(() => import('@/components/legal/CookieBanner'), { ssr: false })
-
-interface CookieConfig {
-  enable?: boolean | null
-  text?: string | null
-  policyUrl?: string | null
-  hasResponded?: boolean
-}
-
-interface WhatsAppWidgetConfig {
-  enableWidget?: boolean | null
-  phoneNumber?: string | null
-  defaultMessage?: string | null
-}
-
-interface UmamiConfig {
-  websiteId: string
-  scriptUrl: string
-  nonce: string
-}
-
-interface DeferredWidgetsProps {
-  cookieConfig: CookieConfig
-  whatsappConfig: WhatsAppWidgetConfig | null
-  umamiConfig: UmamiConfig | null
-}
-
-export default function DeferredWidgets({ cookieConfig, umamiConfig, whatsappConfig }: DeferredWidgetsProps) {
-  const [showWidgets, setShowWidgets] = useState(false)
-
-  useEffect(() => {
-    // Load widgets after 3 seconds OR on first user interaction
-    const timer = setTimeout(() => setShowWidgets(true), 3000)
-
-    const interaction = () => {
-      setShowWidgets(true)
-      clearTimeout(timer)
-      window.removeEventListener('scroll', interaction)
-      window.removeEventListener('click', interaction)
-      window.removeEventListener('mousemove', interaction)
-      window.removeEventListener('touchstart', interaction)
-      window.removeEventListener('keydown', interaction)
-    }
-
-    window.addEventListener('scroll', interaction, { once: true, passive: true })
-    window.addEventListener('click', interaction, { once: true, passive: true })
-    window.addEventListener('mousemove', interaction, { once: true, passive: true })
-    window.addEventListener('touchstart', interaction, { once: true, passive: true })
-    window.addEventListener('keydown', interaction, { once: true, passive: true })
-
-    return () => {
-      clearTimeout(timer)
-      window.removeEventListener('scroll', interaction)
-      window.removeEventListener('click', interaction)
-      window.removeEventListener('mousemove', interaction)
-      window.removeEventListener('touchstart', interaction)
-      window.removeEventListener('keydown', interaction)
-    }
-  }, [])
-
-  if (!showWidgets) return null
-
+const CookieBanner = dynamic(() => import('@/components/legal/CookieBanner'), { ssr: false, loading: () => null })
+export default function DeferredWidgets({ cookieConfig, umamiConfig }: any) {
+  const [show, setShow] = useState(false)
+  useEffect(() => { const t = setTimeout(() => setShow(true), 3000); return () => clearTimeout(t) }, [])
+  if (!show) return null
   return (
     <>
-      <WhatsAppFloat config={whatsappConfig} />
       <CookieBanner config={cookieConfig} />
-      {umamiConfig && (
-        <Script
-          src={umamiConfig.scriptUrl}
-          data-website-id={umamiConfig.websiteId}
-          strategy="lazyOnload"
-          nonce={umamiConfig.nonce}
-        />
-      )}
+      {umamiConfig && <Script src={umamiConfig.scriptUrl} data-website-id={umamiConfig.websiteId} strategy="lazyOnload" nonce={umamiConfig.nonce} />}
     </>
   )
 }
