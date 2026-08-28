@@ -1,15 +1,30 @@
 'use client'
-import React from 'react'
+import React, { useRef } from 'react'
 import type {  Page  } from '@/payload-types'
 import { AnimatedSection } from '@/components/ui/Reveal'
 import { StaggerText } from '@/components/ui/motion/StaggerText'
 import { MagneticButton } from '@/components/ui/motion/MagneticButton'
 import { useReducedMotion } from '@/lib/animations'
+import { m as motion, useScroll, useSpring, useTransform } from 'framer-motion'
+import { easings } from '@/lib/animations'
 
 type HeroBlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'hero' }>
 
 export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
   const prefersReducedMotion = useReducedMotion()
+  const heroRef = useRef<HTMLDivElement>(null)
+
+  // Scroll-driven dashboard parallax + scale (springs scrubbed to scroll progress)
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  })
+  const smooth = useSpring(scrollYProgress, { stiffness: 80, damping: 22, mass: 0.7 })
+  const dashY = useTransform(smooth, [0, 1], [0, -70])
+  const dashScale = useTransform(smooth, [0, 1], [1, 0.94])
+  const dashOpacity = useTransform(smooth, [0, 0.85], [1, 0.15])
+  const contentY = useTransform(smooth, [0, 1], [0, -36])
+
   try {
   const isHome = props.headline?.includes('Digital Infrastructure') || props.eyebrow?.includes('ENGINE') || (!props.headline && !props.eyebrow) // fallback to home if nothing
   const isWebHero = props.eyebrow?.includes('HIGH-PERFORMANCE') || props.headline?.includes('High-Performance') || props.eyebrow?.includes('WEBSITES')
@@ -85,14 +100,23 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
   }
 
   // Fallback to Home Hero for others
+  const heroVariants = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+  }
+  const heroItem = {
+    hidden: prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 18, filter: 'blur(5px)' },
+    show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: easings.cinematic } },
+  }
+
   return (
     <AnimatedSection className="w-full">
       {/*  BEGIN: Hero Section  */}
-<section className="relative pt-32 pb-40 overflow-hidden" data-purpose="hero-section">
+<section ref={heroRef} className="relative pt-32 pb-40 overflow-hidden" data-purpose="hero-section">
 <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative">
 {/*  Hero Content  */}
-<div className="text-center max-w-4xl mx-auto mb-20">
-<div className="inline-flex items-center justify-center px-3 py-1 mb-8 rounded-full border border-black/10 bg-white/50 text-[10px] tracking-widest uppercase text-obsidian/60"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2"></span> [ {props.eyebrow || (isWebHero ? "HIGH-PERFORMANCE WEBSITES" : "ENGINE V1.0 LIVE")} ]</div>
+<motion.div className="text-center max-w-4xl mx-auto mb-20" variants={heroVariants} initial="hidden" animate="show" style={prefersReducedMotion ? undefined : { y: contentY }}>
+<motion.div variants={heroItem} className="inline-flex items-center justify-center px-3 py-1 mb-8 rounded-full border border-black/10 bg-white/50 text-[10px] tracking-widest uppercase text-obsidian/60"><motion.span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2" animate={{ opacity: [1, 0.35, 1] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}></motion.span> [ {props.eyebrow || (isWebHero ? "HIGH-PERFORMANCE WEBSITES" : "ENGINE V1.0 LIVE")} ]</motion.div>
 {prefersReducedMotion ? (
   <h1
     className="text-5xl md:text-7xl lg:text-[84px] leading-[1.1] font-serif font-semibold text-obsidian mb-8 tracking-tight"
@@ -102,12 +126,16 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
   <StaggerText
     as="h1"
     text={props.headline || "Digital Infrastructure<br/>for Global Traders"}
-    stagger={0.04}
-    delay={0.15}
+    stagger={0.028}
+    delay={0.2}
+    duration={0.75}
+    unit="chars"
+    fromMarks
     className="text-5xl md:text-7xl lg:text-[84px] leading-[1.1] font-serif font-semibold text-obsidian mb-8 tracking-tight"
   />
 )}
-<p className="text-base md:text-lg text-obsidian/60 max-w-2xl mx-auto mb-12 font-light">{props.subheadline || (isWebHero ? "The institutional standard. Bespoke architecture, flawless aesthetics, and engineered for elite B2B trading companies operating at a global scale." : "The definitive digital foundation for elite importers and exporters. Precision-engineered web presence and automated compliance.")}</p>
+<motion.p variants={heroItem} className="text-base md:text-lg text-obsidian/60 max-w-2xl mx-auto mb-12 font-light">{props.subheadline || (isWebHero ? "The institutional standard. Bespoke architecture, flawless aesthetics, and engineered for elite B2B trading companies operating at a global scale." : "The definitive digital foundation for elite importers and exporters. Precision-engineered web presence and automated compliance.")}</motion.p>
+<motion.div variants={heroItem}>
 <MagneticButton>
   <a
     className="inline-flex min-h-[44px] items-center justify-center px-8 py-4 btn-primary"
@@ -116,10 +144,18 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
     {props.primaryCTA?.label || "[ REQUEST PROPOSAL ]"}
   </a>
 </MagneticButton>
-</div>
+</motion.div>
+</motion.div>
 {/*  Dashboard Preview - ONLY for Home  */}
 {(!isWebHero) && (
-<div className="relative w-full max-w-[1400px] mx-auto rounded-xl shadow-2xl overflow-hidden bg-dashboard border border-border-dark flex flex-col mt-20" style={{ height: "700px" }}>{/*  Dashboard Header  */}
+<motion.div
+  initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 80, scale: 0.96, filter: 'blur(8px)' }}
+  animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+  transition={{ duration: 1.1, delay: 0.75, ease: easings.cinematic }}
+  style={prefersReducedMotion ? undefined : { y: dashY, scale: dashScale, opacity: dashOpacity }}
+  className="relative w-full max-w-[1400px] mx-auto rounded-xl shadow-2xl overflow-hidden bg-dashboard border border-border-dark flex flex-col mt-20 will-change-transform"
+  {...{ 'data-purpose': 'dashboard-preview' }}
+>{/*  Dashboard Header  */}
 <div className="h-12 border-b border-border-dark flex items-center px-4 justify-between bg-black/40">
 <div className="flex items-center space-x-2 w-32">
 <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
@@ -240,7 +276,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 </tr>
 </thead>
 <tbody className="divide-y divide-white/5 text-white/70 font-mono text-[11px]">
-<tr className="hover:bg-white/5 transition-colors group">
+<motion.tr className="hover:bg-white/5 transition-colors group" initial={prefersReducedMotion ? false : { opacity: 0, x: -14 }} animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }} transition={{ duration: 0.45, delay: 1.35, ease: easings.cinematic }}>
 <td className="px-5 py-3.5 text-white">TRK-9821-X</td>
 <td className="px-5 py-3.5">Atlas Mfg Corp.</td>
 <td className="px-5 py-3.5 text-white/40">8411.82</td>
@@ -248,8 +284,8 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 <td className="px-5 py-3.5">Dubai (AEDXB)</td>
 <td className="px-5 py-3.5 text-right">1,240,500</td>
 <td className="px-5 py-3.5 text-right"><span className="text-[9px] text-success bg-success-bg px-2 py-1 rounded border border-success/20">CLEARED</span></td>
-</tr>
-<tr className="hover:bg-white/5 transition-colors group">
+</motion.tr>
+<motion.tr className="hover:bg-white/5 transition-colors group" initial={prefersReducedMotion ? false : { opacity: 0, x: -14 }} animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }} transition={{ duration: 0.45, delay: 1.45, ease: easings.cinematic }}>
 <td className="px-5 py-3.5 text-white">TRK-3302-B</td>
 <td className="px-5 py-3.5">Zeta Logistics</td>
 <td className="px-5 py-3.5 text-white/40">8544.49</td>
@@ -257,8 +293,8 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 <td className="px-5 py-3.5">Hamburg (DEHAM)</td>
 <td className="px-5 py-3.5 text-right">89,200</td>
 <td className="px-5 py-3.5 text-right"><span className="text-[9px] text-info bg-info-bg px-2 py-1 rounded border border-info/20">IN TRANSIT</span></td>
-</tr>
-<tr className="hover:bg-white/5 transition-colors group">
+</motion.tr>
+<motion.tr className="hover:bg-white/5 transition-colors group" initial={prefersReducedMotion ? false : { opacity: 0, x: -14 }} animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }} transition={{ duration: 0.45, delay: 1.55, ease: easings.cinematic }}>
 <td className="px-5 py-3.5 text-white">TRK-4491-C</td>
 <td className="px-5 py-3.5">Novus Energy</td>
 <td className="px-5 py-3.5 text-white/40">2710.12</td>
@@ -266,8 +302,8 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 <td className="px-5 py-3.5">Singapore (SGSIN)</td>
 <td className="px-5 py-3.5 text-right">4,500,000</td>
 <td className="px-5 py-3.5 text-right"><span className="text-[9px] text-warning bg-warning-bg px-2 py-1 rounded border border-warning/20">PENDING KYC</span></td>
-</tr>
-<tr className="hover:bg-white/5 transition-colors group">
+</motion.tr>
+<motion.tr className="hover:bg-white/5 transition-colors group" initial={prefersReducedMotion ? false : { opacity: 0, x: -14 }} animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }} transition={{ duration: 0.45, delay: 1.65, ease: easings.cinematic }}>
 <td className="px-5 py-3.5 text-white">TRK-1005-D</td>
 <td className="px-5 py-3.5">OmniTech Ltd.</td>
 <td className="px-5 py-3.5 text-white/40">8542.31</td>
@@ -275,8 +311,8 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 <td className="px-5 py-3.5">London (GBHRW)</td>
 <td className="px-5 py-3.5 text-right">2,150,000</td>
 <td className="px-5 py-3.5 text-right"><span className="text-[9px] text-success bg-success-bg px-2 py-1 rounded border border-success/20">CLEARED</span></td>
-</tr>
-<tr className="hover:bg-white/5 transition-colors group">
+</motion.tr>
+<motion.tr className="hover:bg-white/5 transition-colors group" initial={prefersReducedMotion ? false : { opacity: 0, x: -14 }} animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }} transition={{ duration: 0.45, delay: 1.75, ease: easings.cinematic }}>
 <td className="px-5 py-3.5 text-white">TRK-9912-A</td>
 <td className="px-5 py-3.5">Nexus Materials</td>
 <td className="px-5 py-3.5 text-white/40">7208.39</td>
@@ -284,8 +320,8 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 <td className="px-5 py-3.5">Antwerp (BEANR)</td>
 <td className="px-5 py-3.5 text-right">310,000</td>
 <td className="px-5 py-3.5 text-right"><span className="text-[9px] text-info bg-info-bg px-2 py-1 rounded border border-info/20">CUSTOMS HOLD</span></td>
-</tr>
-<tr className="hover:bg-white/5 transition-colors group">
+</motion.tr>
+<motion.tr className="hover:bg-white/5 transition-colors group" initial={prefersReducedMotion ? false : { opacity: 0, x: -14 }} animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }} transition={{ duration: 0.45, delay: 1.85, ease: easings.cinematic }}>
 <td className="px-5 py-3.5 text-white">TRK-2044-F</td>
 <td className="px-5 py-3.5">Aegis Trading</td>
 <td className="px-5 py-3.5 text-white/40">8421.29</td>
@@ -293,14 +329,18 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 <td className="px-5 py-3.5">Tokyo (JPTYO)</td>
 <td className="px-5 py-3.5 text-right">545,000</td>
 <td className="px-5 py-3.5 text-right"><span className="text-[9px] text-success bg-success-bg px-2 py-1 rounded border border-success/20">CLEARED</span></td>
-</tr>
+</motion.tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
 {/*  Right Panel: Live Terminal Log  */}
-<div className="w-80 border-l border-border-dark bg-[#111111] flex flex-col shrink-0">
+<div className="w-80 border-l border-border-dark bg-[#111111] flex flex-col shrink-0 relative overflow-hidden">
+{/*  Ambient scanline sweeping down the terminal  */}
+{!prefersReducedMotion && (
+<motion.div aria-hidden className="pointer-events-none absolute inset-x-0 h-16 z-10" style={{ background: 'linear-gradient(to bottom, transparent, rgba(16,185,129,0.05), transparent)' }} animate={{ top: ['-15%', '115%'] }} transition={{ duration: 5.5, repeat: Infinity, ease: 'linear', repeatDelay: 2.5 }} />
+)}
 <div className="h-12 border-b border-white/5 flex items-center px-4 justify-between bg-black/20 shrink-0">
 <div className="text-[10px] text-white/40 tracking-widest uppercase font-mono flex items-center">
 <span className="w-1.5 h-1.5 bg-success rounded-full mr-2 animate-pulse"></span>
@@ -354,7 +394,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 </div>
 </div>
 </div>
-</div></div>
+</div></motion.div>
 )}
 </div></section><div className="py-12 flex justify-center" data-purpose="social-proof-anchor"><p className="text-[11px] font-sans text-obsidian/40 uppercase tracking-[0.2em] text-center max-w-xl leading-relaxed">Elevating digital infrastructure for modern trading firms across the GCC and Europe.</p></div>
 {/*  END: Hero Section  */}

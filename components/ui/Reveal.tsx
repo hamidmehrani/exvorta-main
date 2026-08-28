@@ -15,16 +15,17 @@ interface RevealProps {
   duration?: number
 }
 
-export function Reveal({ children, delay = 0, className = '', y = 16, duration = 0.5 }: RevealProps) {
+export function Reveal({ children, delay = 0, className = '', y = 20, duration = 0.7 }: RevealProps) {
   const shouldReduceMotion = useReducedMotion()
 
   return (
     <m.div
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y }}
-      whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y, filter: 'blur(6px)' }}
+      whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, margin: '-60px' }}
       transition={{ duration, delay, ease: EASE_OUT }}
       className={className}
+      style={{ willChange: 'opacity, transform, filter' }}
     >
       {children}
     </m.div>
@@ -74,16 +75,17 @@ export function StaggerItem({ children, className = '', y = 16 }: { children: Re
   const shouldReduceMotion = useReducedMotion()
   
   const itemVariants = {
-    hidden: shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y },
-    show: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.5, ease: EASE_OUT } 
+    hidden: shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y, filter: 'blur(4px)' },
+    show: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: { duration: 0.6, ease: EASE_OUT }
     },
   }
 
   return (
-    <m.div variants={itemVariants} className={className}>
+    <m.div variants={itemVariants} className={className} style={{ willChange: 'opacity, transform, filter' }}>
       {children}
     </m.div>
   )
@@ -94,11 +96,12 @@ export function AnimatedSection({ children, className = '', delay = 0, id }: { c
   return (
     <m.section
       id={id}
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-      whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.6, delay, ease: EASE_OUT }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24, filter: 'blur(6px)' }}
+      whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.8, delay, ease: EASE_OUT }}
       className={className}
+      style={{ willChange: 'opacity, transform, filter' }}
     >
       {children}
     </m.section>

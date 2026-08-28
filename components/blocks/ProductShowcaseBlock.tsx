@@ -4,14 +4,35 @@ import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/Reveal';
 import { Container } from '../ui/Container';
 import { MonoLabel } from '../ui/MonoLabel';
 import { TiltCard } from '../ui/motion/TiltCard';
+import { m as motion } from 'framer-motion';
+import { easings, useReducedMotion } from '@/lib/animations';
 
 export function ProductShowcaseBlock(props: any) {
+  const prefersReducedMotion = useReducedMotion();
+
+  const column = {
+    hidden: prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 40, filter: 'blur(6px)' },
+    show: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: { duration: 0.85, ease: easings.cinematic },
+    },
+  };
+
   return (
     <AnimatedSection className="w-full" data-purpose="product-showcase">
-      <section className="py-32 bg-brand-cream border-t border-brand-obsidian/5 relative overflow-hidden" data-purpose="exvorta-docs"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <motion.section
+        className="py-32 bg-brand-cream border-t border-brand-obsidian/5 relative overflow-hidden"
+        data-purpose="exvorta-docs"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: '-80px' }}
+        variants={{ hidden: {}, show: { transition: { staggerChildren: 0.18, delayChildren: 0.1 } } }}
+      ><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
 {/*  Left Column: SaaS UI  */}
-<div className="order-2 lg:order-1">
+<motion.div className="order-2 lg:order-1" variants={column}>
 <TiltCard maxTilt={4} glow={false}>
 <div className="bg-mockup-dashboard rounded-2xl shadow-2xl border border-hairline-dark overflow-hidden flex flex-col h-[640px]">
 {/*  UI Header  */}
@@ -52,7 +73,14 @@ export function ProductShowcaseBlock(props: any) {
 {/*  UI Preview Area  */}
 <div className="flex-1 bg-mockup-card p-8 flex items-center justify-center relative overflow-hidden">
 <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(white 0.5px, transparent 0.5px)', backgroundSize: '20px 20px' }}></div>
-<div className="relative bg-white w-full h-full shadow-2xl p-6 flex flex-col">{/*  Header  */}
+<motion.div
+  className="relative bg-white w-full h-full shadow-2xl p-6 flex flex-col origin-top"
+  initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, rotateX: -18, y: 24 }}
+  whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, rotateX: 0, y: 0 }}
+  viewport={{ once: true, margin: '-80px' }}
+  transition={{ duration: 0.9, delay: 0.35, ease: easings.cinematic }}
+  style={{ transformPerspective: 1200 }}
+>{/*  Header  */}
 <div className="flex justify-between items-start mb-4 pb-2 border-b border-brand-obsidian/10">
 <div className="flex gap-[1px] h-6 items-end">
 <div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[2px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[3px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[2px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[3px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[2px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[2px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[3px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[2px] h-full bg-brand-obsidian"></div>
@@ -127,16 +155,23 @@ export function ProductShowcaseBlock(props: any) {
 </div>
 </div>
 {/*  Trust Badge  */}
-<div className="absolute -bottom-2 -right-2 bg-[#059669] text-white text-[8px] uppercase tracking-widest font-bold px-3 py-1.5 shadow-xl rounded-sm border border-emerald-400/50 z-10">
+<motion.div
+  className="absolute -bottom-2 -right-2 bg-[#059669] text-white text-[8px] uppercase tracking-widest font-bold px-3 py-1.5 shadow-xl rounded-sm border border-emerald-400/50 z-10"
+  initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.6 }}
+  whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+  viewport={{ once: true, margin: '-80px' }}
+  transition={{ duration: 0.45, delay: 1.05, ease: easings.cinematic }}
+>
     ✓ COMPLIANCE VERIFIED
-</div></div>
+</motion.div></motion.div>
 </div>
 </div>
 </div>
 </TiltCard>
-</div>
+</motion.div>
+
 {/*  Right Column: Marketing  */}
-<div className="order-1 lg:order-2">
+<motion.div className="order-1 lg:order-2" variants={column}>
 <div className="text-[10px] tracking-widest uppercase text-obsidian/40 mb-6">Document Automation</div>
 <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-obsidian mb-8 leading-[1.1]">Trade Documents,<br/>Automated &amp; Perfected.</h2>
 <p className="text-base md:text-lg text-obsidian/60 mb-10 font-light leading-relaxed">Stop wasting hours on manual paperwork. Instantly generate, digitally sign, and manage strictly compliant global trade documents from official templates.</p>
@@ -160,9 +195,9 @@ export function ProductShowcaseBlock(props: any) {
 </li>
 </StaggerItem>
 </StaggerContainer><div className="mt-8"><a className="inline-flex items-center text-[11px] font-bold tracking-widest uppercase border-b border-brand-obsidian pb-1 hover:text-emerald-700 hover:border-emerald-700 transition-colors duration-300" href="/rfq">Request Exvorta Docs Access <span className="ms-2">→</span></a></div>
+</motion.div>
 </div>
-</div>
-</div></section>
+</div></motion.section>
     </AnimatedSection>
   );
 }

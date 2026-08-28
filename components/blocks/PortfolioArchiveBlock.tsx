@@ -1,24 +1,20 @@
 "use client";
 
-import React, { useRef, useEffect } from 'react';
-import { m as motion } from "framer-motion";
+import React, { useRef } from 'react';
+import { m as motion, useInView } from "framer-motion";
 import type { Project, Media } from '@/payload-types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { MonoLabel } from '@/components/ui/MonoLabel';
 import { Button } from '@/components/ui/Button';
-import { useAnimationLevel } from '@/lib/animations';
+import { useAnimationLevel, easings } from '@/lib/animations';
 import { MagneticButton } from '@/components/ui/MagneticButton';
 import { AnimatedHeadline } from '@/components/ui/AnimatedHeadline';
 import { LiveWebsiteFrame } from '@/components/ui/LiveWebsiteFrame';
 import { Reveal } from '@/components/ui/Reveal';
 
 // ── Strict Type Definitions ───────────────────────────────────────────────────
-
-interface GsapContext {
-  revert: () => void
-}
 
 export interface InlineProject {
   id?: string;
@@ -84,61 +80,15 @@ function HomepagePortfolioSection({
 
   const safeProjects = Array.isArray(projects) ? projects.filter(isInlineProject) : [];
 
-  useEffect(() => {
-    if (animationLevel === 'none' || !containerRef.current || !gridRef.current) return;
-    
-    let ctx: GsapContext | undefined;
-    Promise.all([
-      import('gsap').then(m => m.gsap || m.default),
-      import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
-    ]).then(([gsap, ScrollTrigger]) => {
-      if (!gsap || !ScrollTrigger) return;
-      gsap.registerPlugin(ScrollTrigger);
-      ctx = gsap.context(() => {
-        const cards = gsap.utils.toArray('.portfolio-card') as HTMLElement[];
-      
-      // Staggered card entrance on scroll
-      gsap.fromTo(cards,
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.1, // 100ms delay per card
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: gridRef.current,
-            start: 'top 85%',
-          }
-        }
-      );
-
-      // Subtle parallax on titles inside cards
-      if (animationLevel === 'full') {
-        cards.forEach(card => {
-          const title = card.querySelector('.card-title');
-          if (title) {
-            gsap.fromTo(title,
-              { y: 15 },
-              {
-                y: -15,
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: card,
-                  start: 'top bottom',
-                  end: 'bottom top',
-                  scrub: true,
-                }
-              }
-            );
-          }
-        });
-      }
-    }, containerRef);
-    })
-    
-    return () => ctx?.revert();
-  }, [animationLevel, safeProjects.length]);
+  const cardVariants = {
+    hidden: { opacity: 0, y: 48, filter: 'blur(6px)' },
+    show: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: { duration: 0.8, ease: easings.cinematic },
+    },
+  };
 
   return (
     <section ref={containerRef} className="w-full py-32 bg-[#FAFAF8] border-t border-black/5" data-purpose="proof-of-execution">
@@ -154,15 +104,30 @@ function HomepagePortfolioSection({
           {subtitle && (
             <p className="mt-4 text-lg text-black/60 font-light max-w-2xl">{subtitle}</p>
           )}
-          <div className="w-full h-[1px] bg-black mt-8"></div>
+          <motion.div
+            className="w-full h-[1px] bg-black mt-8 origin-left"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 1.1, delay: 0.3, ease: easings.cinematic }}
+          />
         </Reveal>
 
         {/* 1 col mobile, 2 col tablet, 3 col desktop as requested */}
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+        <motion.div
+          ref={gridRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={{ hidden: {}, show: { transition: { staggerChildren: animationLevel === 'none' ? 0 : 0.14, delayChildren: 0.1 } } }}
+        >
           {safeProjects?.map((project, index) => (
-            <article 
-              key={project.id || index} 
-              className="portfolio-card group flex flex-col bg-white border border-black/5 rounded-none overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 relative"
+            <motion.article
+              key={project.id || index}
+              variants={cardVariants}
+              className="portfolio-card group flex flex-col bg-white border border-black/5 rounded-none overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 relative"
+              whileHover={animationLevel === 'none' ? undefined : { y: -8 }}
             >
               <LiveWebsiteFrame
                 title={project.title}
@@ -184,29 +149,31 @@ function HomepagePortfolioSection({
 
                 <div className="mt-auto self-start">
                   <MagneticButton>
-                    <a 
-                      href={project.linkUrl || '#'} 
+                    <a
+                      href={project.linkUrl || '#'}
                       className="inline-flex items-center justify-center border border-black rounded-none px-8 py-4 text-[10px] font-mono text-center hover:bg-black hover:text-white transition-colors group/btn"
                     >
-                      {project.linkLabel || 'VIEW CASE STUDY'} 
+                      {project.linkLabel || 'VIEW CASE STUDY'}
                       <span className="ml-2 transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform">↗</span>
                     </a>
                   </MagneticButton>
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
 
         <div className="py-12 flex justify-center border-t border-black/5 pt-20">
-          <MagneticButton>
-            <a 
-              href={ctaUrl || "/portfolio"} 
-              className="bg-[#0D0D0D] text-white px-12 py-5 text-[11px] font-mono font-medium tracking-[0.2em] uppercase rounded-none hover:bg-black transition-all"
-            >
-              {ctaLabel || 'EXPLORE FULL PORTFOLIO ↗'}
-            </a>
-          </MagneticButton>
+          <Reveal delay={0.1}>
+            <MagneticButton>
+              <a
+                href={ctaUrl || "/portfolio"}
+                className="bg-[#0D0D0D] text-white px-12 py-5 text-[11px] font-mono font-medium tracking-[0.2em] uppercase rounded-none hover:bg-black transition-all"
+              >
+                {ctaLabel || 'EXPLORE FULL PORTFOLIO ↗'}
+              </a>
+            </MagneticButton>
+          </Reveal>
         </div>
       </Container>
     </section>
@@ -219,63 +186,18 @@ function HomepagePortfolioSection({
 function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
   const hasProjects = projects && projects.length > 0;
   const containerRef = useRef<HTMLElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
   const animationLevel = useAnimationLevel();
 
-  useEffect(() => {
-    if (animationLevel === 'none' || !containerRef.current || !gridRef.current) return;
-    
-    let ctx: GsapContext | undefined;
-    Promise.all([
-      import('gsap').then(m => m.gsap || m.default),
-      import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
-    ]).then(([gsap, ScrollTrigger]) => {
-      if (!gsap || !ScrollTrigger) return;
-      gsap.registerPlugin(ScrollTrigger);
-      ctx = gsap.context(() => {
-        const cards = gsap.utils.toArray('.portfolio-card') as HTMLElement[];
-        
-        gsap.fromTo(cards,
-          { y: 60, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: gridRef.current,
-              start: 'top 85%',
-            }
-          }
-        );
+  const cardVariants = {
+    hidden: { opacity: 0, y: 48, filter: 'blur(6px)' },
+    show: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: { duration: 0.8, ease: easings.cinematic },
+    },
+  };
 
-        if (animationLevel === 'full') {
-          cards.forEach(card => {
-            const title = card.querySelector('.card-title');
-            if (title) {
-              gsap.fromTo(title,
-                { y: 15 },
-                {
-                  y: -15,
-                  ease: 'none',
-                  scrollTrigger: {
-                    trigger: card,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: true,
-                  }
-                }
-              );
-            }
-          });
-        }
-      }, containerRef);
-    })
-    
-    return () => ctx?.revert();
-  }, [animationLevel, hasProjects]);
-  
   return (
     <main ref={containerRef} className="w-full bg-[#FAFAF8] min-h-screen">
       {/* Hero Section */}
@@ -283,7 +205,7 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
         <Container>
           <div className="max-w-5xl">
             <div className="font-mono text-[11px] uppercase text-gray-500 mb-6 tracking-[0.2em]">[ SELECTED WORKS ]</div>
-            <AnimatedHeadline 
+            <AnimatedHeadline
               text="Latest Web Design Works."
               className="font-serif text-[72px] md:text-[100px] text-[#0D0D0D] mb-8 leading-none font-semibold tracking-tighter"
             />
@@ -298,7 +220,13 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
       <section className="w-full py-32">
         <Container>
           {hasProjects ? (
-            <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: '-80px' }}
+              variants={{ hidden: {}, show: { transition: { staggerChildren: animationLevel === 'none' ? 0 : 0.14, delayChildren: 0.1 } } }}
+            >
               {projects?.map((project, index) => {
                 const heroImageUrl = extractMediaUrl(project.heroImage);
                 const industry = project.metrics?.find((m) => m.label.toLowerCase() === 'industry')?.value || 'Various';
@@ -308,16 +236,18 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
                 const excerpt = typeof projAny.excerpt === 'string' ? projAny.excerpt : 'Premium web design and CMS platform.';
 
                 return (
-                  <article
+                  <motion.article
                     key={project.id || index}
-                    className="portfolio-card group flex flex-col bg-white border border-black/5 rounded-none overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 relative"
+                    variants={cardVariants}
+                    className="portfolio-card group flex flex-col bg-white border border-black/5 rounded-none overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 relative"
+                    whileHover={animationLevel === 'none' ? undefined : { y: -8 }}
                   >
                     <LiveWebsiteFrame
                       title={project.title}
                       imageUrl={extractMediaUrl(project.heroImage, project.slug)}
                       slug={project.slug}
                     />
-                    
+
                     <div className="flex flex-col flex-grow p-8">
                       <h3 className="card-title font-serif text-3xl text-black mb-4 font-medium tracking-tight relative z-10">
                         {project.title}
@@ -345,10 +275,10 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
                         </MagneticButton>
                       </div>
                     </div>
-                  </article>
+                  </motion.article>
                 );
               })}
-            </div>
+            </motion.div>
           ) : (
             <div className="py-32 text-center text-black/40 font-mono text-[10px] uppercase tracking-widest">
               No projects found.

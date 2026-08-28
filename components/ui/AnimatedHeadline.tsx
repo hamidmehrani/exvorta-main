@@ -1,11 +1,8 @@
 'use client'
 
-import React, { useRef, useEffect } from 'react'
-import { useReducedMotion } from '@/lib/animations'
-
-interface GsapContext {
-  revert: () => void
-}
+import React from 'react'
+import { m as motion } from 'framer-motion'
+import { easings } from '@/lib/animations'
 
 interface AnimatedHeadlineProps {
   text: string
@@ -14,17 +11,29 @@ interface AnimatedHeadlineProps {
   delay?: number
 }
 
-// Lightweight React text splitter for GSAP
-function splitText(text: string) {
+// Lightweight React text splitter for per-char masked reveal
+function splitText(text: string, delay = 0) {
   return text.split(' ').map((word, wordIndex) => (
     <span key={wordIndex} className="inline-block whitespace-nowrap mr-[0.25em]">
       {word.split('').map((char, charIndex) => (
         <span
           key={charIndex}
-          className="inline-block character"
-          style={{ transformOrigin: '50% 100%' }}
+          className="inline-block overflow-hidden align-bottom pb-[0.08em] -mb-[0.08em]"
         >
-          {char}
+          <motion.span
+            className="inline-block will-change-transform"
+            style={{ transformOrigin: '50% 100%' }}
+            initial={{ y: '110%', opacity: 0, rotateX: -55 }}
+            whileInView={{ y: '0%', opacity: 1, rotateX: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{
+              duration: 0.8,
+              ease: easings.cinematic,
+              delay: delay + (wordIndex * 4 + charIndex) * 0.018,
+            }}
+          >
+            {char}
+          </motion.span>
         </span>
       ))}
     </span>
@@ -37,67 +46,11 @@ export function AnimatedHeadline({
   className = '',
   delay = 0,
 }: AnimatedHeadlineProps) {
-  const containerRef = useRef<HTMLElement>(null)
-  const prefersReducedMotion = useReducedMotion()
-
-  useEffect(() => {
-    const node = containerRef.current
-    if (prefersReducedMotion || !node) return
-    let ctx: GsapContext | undefined
-    Promise.all([
-      import('gsap').then(m => m.gsap || m.default),
-      import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
-    ]).then(([gsap, ScrollTrigger]) => {
-      if (!gsap || !ScrollTrigger) return;
-      gsap.registerPlugin(ScrollTrigger)
-
-      const chars = node.querySelectorAll('.character')
-      
-      ctx = gsap.context(() => {
-        gsap.fromTo(
-          chars,
-          {
-            y: '100%',
-            opacity: 0,
-            rotateX: -90,
-          },
-          {
-            y: '0%',
-            opacity: 1,
-            rotateX: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            stagger: {
-              each: 0.02,
-            },
-            delay,
-            scrollTrigger: {
-              trigger: node,
-              start: 'top 85%',
-            },
-          }
-        )
-      })
-    })
-
-    return () => {
-      ctx?.revert()
-    }
-  }, [prefersReducedMotion, delay])
-
-  if (prefersReducedMotion) {
-    return <Component className={className}>{text}</Component>
-  }
-
   return (
-    <Component
-      ref={containerRef}
-      className={`${className} overflow-hidden`}
-      style={{ perspective: '1000px' }}
-    >
-      {splitText(text)}
+    <Component className={`${className} overflow-hidden`} style={{ perspective: '1000px' }}>
+      {splitText(text, delay)}
     </Component>
   )
 }
 
-export default AnimatedHeadline;
+export default AnimatedHeadline
