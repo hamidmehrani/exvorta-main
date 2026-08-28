@@ -6,6 +6,10 @@ import type { Project } from '@/payload-types';
 import type { Metadata } from 'next';
 import { generateMeta } from '@/utils/generateMeta';
 
+// Content is managed dynamically in the Payload admin panel,
+// so this route must render per-request instead of being pre-rendered at build time.
+export const dynamic = 'force-dynamic';
+
 type Props = {
   params: Promise<{ slug: string }>;
 };
