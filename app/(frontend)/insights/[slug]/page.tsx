@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
     };
   }
 
-  return generateMeta({ doc: { meta: { title: post.title, description: post.title } }, url: `/insights/${slug}` })
+  return generateMeta({ doc: { meta: { title: post.title, description: post.title } }, image: typeof post.coverImage === 'object' && post.coverImage?.url ? post.coverImage.url : undefined, url: `/insights/${slug}` })
 }
 
 export default async function SingleInsightPage({ params }: Args) {
@@ -74,7 +74,7 @@ export default async function SingleInsightPage({ params }: Args) {
       name: 'Exvorta',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://exvorta.com/logo.png', // Fallback URL, assuming default
+        url: `${process.env.NEXT_PUBLIC_SERVER_URL || 'https://exvorta.com'}/og-default.png`,
       },
     },
     image: typeof post.coverImage === 'object' && post.coverImage ? post.coverImage.url : undefined,

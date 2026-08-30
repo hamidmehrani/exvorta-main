@@ -51,7 +51,8 @@ export const generateMeta = async (args?: GenerateMetaArgs): Promise<Metadata> =
   const ogImage =
     args?.image ||
     docImageUrl ||
-    fallbackOgImageUrl
+    fallbackOgImageUrl ||
+    `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}/og-default.png`
 
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 

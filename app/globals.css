@@ -288,3 +288,10 @@ html[dir="rtl"] body {
   --font-display: var(--font-playfair), Georgia, serif;
   --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
 }
+
+/* Portfolio card hover: sweeping scanline over LiveWebsiteFrame */
+@keyframes framescan {
+  0% { transform: translateY(-100%); }
+  50% { transform: translateY(400%); }
+  100% { transform: translateY(-100%); }
+}

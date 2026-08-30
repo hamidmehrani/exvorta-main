@@ -1,12 +1,36 @@
 "use client";
 
+import React, { useState } from 'react';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/Reveal';
 import { Container } from '../ui/Container';
 import { m as motion } from 'framer-motion';
 import { easings, useReducedMotion } from '@/lib/animations';
+import { submitLead } from '@/actions/submitLead';
 
 export function RoadmapBlock(props: any) {
   const prefersReducedMotion = useReducedMotion();
+  const [email, setEmail] = useState('');
+  const [waitlistState, setWaitlistState] = useState<'idle' | 'pending' | 'done' | 'error'>('idle');
+  const [waitlistError, setWaitlistError] = useState<string | null>(null);
+
+  const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setWaitlistState('pending');
+    setWaitlistError(null);
+    const res = await submitLead({
+      source: 'Waitlist',
+      email,
+      botField: undefined,
+      collection: 'waitlist',
+    });
+    if (res.success) {
+      setWaitlistState('done');
+      setEmail('');
+    } else {
+      setWaitlistState('error');
+      setWaitlistError(res.error || 'Submission failed');
+    }
+  };
 
   const heading = {
     hidden: prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 24, filter: 'blur(6px)' },
@@ -119,12 +143,29 @@ export function RoadmapBlock(props: any) {
   viewport={{ once: true, margin: '-60px' }}
   transition={{ duration: 0.7, delay: 0.2, ease: easings.cinematic }}
 >
-<div className="flex flex-col sm:flex-row gap-4">
-<input className="flex-1 bg-transparent border-t-0 border-x-0 border-b border-brand-obsidian/20 focus:ring-0 focus:border-brand-obsidian text-sm py-3 placeholder:text-brand-obsidian/50" placeholder="Enter official corporate email..." type="email"/>
-<button className="px-10 py-4 bg-brand-obsidian text-white text-[11px] font-medium tracking-widest uppercase hover:bg-black/80 transition-all shadow-[0_0_15px_rgba(255,255,255,0.05)] whitespace-nowrap">
-          [ REQUEST EARLY ACCESS ]
-        </button>
+{waitlistState === 'done' ? (
+<div className="text-center py-3 border border-brand-obsidian/20 bg-brand-obsidian/5">
+<span className="text-sm font-mono tracking-widest uppercase text-brand-obsidian">[ YOU ARE ON THE LIST — CHECK YOUR INBOX ]</span>
 </div>
+) : (
+<form onSubmit={handleWaitlistSubmit} className="flex flex-col sm:flex-row gap-4">
+<input
+  className="flex-1 bg-transparent border-t-0 border-x-0 border-b border-brand-obsidian/20 focus:ring-0 focus:border-brand-obsidian text-sm py-3 placeholder:text-brand-obsidian/50"
+  placeholder="Enter official corporate email..."
+  type="email"
+  required
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  disabled={waitlistState === 'pending'}
+/>
+<button type="submit" disabled={waitlistState === 'pending'} className="px-10 py-4 bg-brand-obsidian text-white text-[11px] font-medium tracking-widest uppercase hover:bg-black/80 transition-all shadow-[0_0_15px_rgba(255,255,255,0.05)] whitespace-nowrap disabled:opacity-60">
+          {waitlistState === 'pending' ? '[ SUBMITTING... ]' : '[ REQUEST EARLY ACCESS ]'}
+        </button>
+</form>
+)}
+{waitlistError && (
+<p className="mt-3 text-center text-sm text-red-600 font-mono">{waitlistError}</p>
+)}
 </motion.div>
 </div>
 </motion.section>

@@ -50,13 +50,13 @@ export function LiveWebsiteFrame({
         {/* URL bar */}
         <div className="flex-1 mx-2 bg-white/70 rounded-sm px-2 py-0.5 flex items-center justify-center">
           <span className="font-mono text-[9px] tracking-[0.15em] text-black/40 uppercase">
-            [ LIVE PREVIEW ]
+            {slug ? `${slug}.com` : '[ LIVE PREVIEW ]'}
           </span>
         </div>
       </div>
 
       {/* ── Screenshot with scroll simulation ─────────────────────────────── */}
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden bg-[#0D0D0D]">
         {hasImage ? (
           <Image
             src={imageUrl!}
@@ -76,6 +76,8 @@ export function LiveWebsiteFrame({
             </span>
           </div>
         )}
+        {/* Hover scanline sweeping down over the preview */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/0 via-white/10 to-white/0 opacity-0 -translate-y-full group-hover:opacity-100 group-hover:animate-[framescan_2.4s_ease-in-out_infinite]" />
         {/* Subtle vignette overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
       </div>

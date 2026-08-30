@@ -17,7 +17,7 @@ import OrganizationSchema from '@/components/seo/OrganizationSchema'
 
 import DeferredWidgets from '@/components/layout/DeferredWidgets'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
-import { cookies, headers } from 'next/headers'
+import { cookies } from 'next/headers'
 import SkipToContent from '@/components/legal/SkipToContent'
 import { generateMeta } from '@/utils/generateMeta'
 
@@ -89,9 +89,7 @@ export default async function FrontendLayout({
   }
 
   const cookieStore = await cookies()
-  const headersList = await headers()
-  const nonce = headersList.get('x-nonce') || ''
-  
+
   const cookieConfig = {
     enable: siteSettings?.enableCookieBanner,
     text: siteSettings?.cookieBannerText,
@@ -136,8 +134,7 @@ export default async function FrontendLayout({
                         whatsappConfig={whatsappConfig}
                         umamiConfig={siteSettings?.umamiWebsiteId ? {
                           websiteId: siteSettings.umamiWebsiteId,
-                          scriptUrl: siteSettings?.umamiScriptUrl || 'https://cloud.umami.is/script.js',
-                          nonce: nonce
+                          scriptUrl: siteSettings?.umamiScriptUrl || 'https://cloud.umami.is/script.js'
                         } : null}
                       />
                     </>

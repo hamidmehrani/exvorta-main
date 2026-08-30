@@ -8,11 +8,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export function ProjectThemedLayout({ project }: { project?: Project }) {
+  const slug = project?.slug || 'spicevo';
   const heroImageUrl = project?.heroImage && typeof project.heroImage === 'object' && project.heroImage.url
     ? project.heroImage.url
-    : 'https://lh3.googleusercontent.com/aida/AP1WRLsluHrudtzDaG50aSD36NdRzN58w6vb8tMpFOdnfIZFgY1dBgREUPWYQlTjj9EbRdLgnplkZYewTF9sMmaeJSXAK3oto-ygLUZfgwWyy7yWx7KwCDhAFMeuV49Vhkho1reIvl0I9GKNryk-9aFBdjJS583MJmCtZCneN1ZtU54xdaArh6k8eLfsYFLn5M0d_X1KdW11WwN2Sz8g_rTEjmd88-HJHGcuK3mzWuDZmmpB05aQ3niGkBjgHbc';
-
-  const slug = project?.slug || 'spicevo';
+    : `/portfolio-${slug}.png`;
   
   // Default fallbacks based on slug
   const bgColors: Record<string, string> = { spicevo: '#FAFAF8', nutave: '#3B2314', stonvi: '#F4F6F7' };

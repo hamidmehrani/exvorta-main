@@ -10,7 +10,7 @@ export default function DeferredWidgets({ cookieConfig, umamiConfig }: any) {
   return (
     <>
       <CookieBanner config={cookieConfig} />
-      {umamiConfig && <Script src={umamiConfig.scriptUrl} data-website-id={umamiConfig.websiteId} strategy="lazyOnload" nonce={umamiConfig.nonce} />}
+      {umamiConfig && <Script src={umamiConfig.scriptUrl} data-website-id={umamiConfig.websiteId} strategy="lazyOnload" />}
     </>
   )
 }

@@ -23,7 +23,7 @@ export const FounderBlock: React.FC<FounderBlockProps> = (props) => {
   const role = props.role || "PRINCIPAL ARCHITECT, EXVORTA"
   
   // Default image URL from HTML if not provided from CMS
-  const defaultImageUrl = "https://lh3.googleusercontent.com/aida/AP1WRLuCABArA0dFLPr7X-kzVh0ePxOiRBVUP80aMVLCo4Zm4Ag2EAEoleoHyv0zWqpOnKnbtnsp02fwaS4F40nXwEtHwo6Hu37pR0UyHPVeXKTKGCk1JgsgwSz0hJbZz5DCEqEuCjqHpnaD22poW7CaU5XQdjCPR66D6sQgWW8JrlQDhNZRuAOZUQKKBc5gsUC-uogWXb3IaFvVe96wEpHZC0o7uvK3SdERtz23Ob1kTgrgftxXjgLLYQOXdFw"
+  const defaultImageUrl = "/founder-portrait.png"
   const hasCMSImage = props.image && typeof props.image === 'object' && props.image.url
 
   return (

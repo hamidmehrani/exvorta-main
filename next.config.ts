@@ -20,18 +20,11 @@ for (const envVar of requiredEnvVars) {
 
 const nextConfig: NextConfig = {
   transpilePackages: ['lenis', 'gsap', 'framer-motion'],
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
       },
     ],
   },

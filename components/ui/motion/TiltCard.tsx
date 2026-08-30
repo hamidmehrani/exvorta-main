@@ -33,6 +33,11 @@ export function TiltCard({ children, className = '', maxTilt = 8, glow = true }:
   const rotateY = useTransform(sx, [0, 1], [-maxTilt, maxTilt])
   const glowX = useTransform(sx, [0, 1], ['0%', '100%'])
   const glowY = useTransform(sy, [0, 1], ['0%', '100%'])
+  const glowBackground = useTransform(
+    [glowX, glowY],
+    ([x, y]: string[]) =>
+      `radial-gradient(400px circle at ${x} ${y}, rgba(5,150,105,0.08), transparent 65%)`,
+  )
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (prefersReducedMotion || !ref.current) return
@@ -62,13 +67,7 @@ export function TiltCard({ children, className = '', maxTilt = 8, glow = true }:
           <motion.div
             aria-hidden
             className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover/tilt:opacity-100"
-            style={{
-              background: useTransform(
-                [glowX, glowY],
-                ([x, y]: string[]) =>
-                  `radial-gradient(400px circle at ${x} ${y}, rgba(5,150,105,0.08), transparent 65%)`,
-              ),
-            }}
+            style={{ background: glowBackground }}
           />
         )}
       </motion.div>

@@ -46,6 +46,41 @@ function isInlineProject(obj: unknown): obj is InlineProject {
   return typeof obj === 'object' && obj !== null && 'title' in obj && !('slug' in obj);
 }
 
+// Known case-study routes + local preview assets, matched from the project title.
+// CMS records hold placeholder values ('#' links, expiring googleusercontent image
+// URLs), so they are only trusted when they point somewhere real.
+const TITLE_SLUG_ROUTES: Record<string, string> = {
+  spicevo: '/portfolio/spicevo',
+  nutave: '/portfolio/nutave',
+  stonvi: '/portfolio/stonvi',
+};
+
+const TITLE_IMAGE_ROUTES: Record<string, string> = {
+  spicevo: '/portfolio-spicevo.png',
+  nutave: '/portfolio-nutave.png',
+  stonvi: '/portfolio-stonvi.png',
+};
+
+function isUsableUrl(url?: string): boolean {
+  return !!url && url !== '#' && !url.startsWith('https://lh3.googleusercontent.com/');
+}
+
+function resolveCaseStudyUrl(project: InlineProject): string {
+  if (isUsableUrl(project.linkUrl)) return project.linkUrl;
+  const match = Object.keys(TITLE_SLUG_ROUTES).find(k =>
+    project.title.toLowerCase().includes(k),
+  );
+  return match ? TITLE_SLUG_ROUTES[match] : '/portfolio';
+}
+
+function resolveProjectImage(project: InlineProject): string {
+  if (isUsableUrl(project.imageUrl)) return project.imageUrl;
+  const match = Object.keys(TITLE_IMAGE_ROUTES).find(k =>
+    project.title.toLowerCase().includes(k),
+  );
+  return match ? TITLE_IMAGE_ROUTES[match] : '';
+}
+
 function extractMediaUrl(media?: number | Media | null, fallbackSlug?: string): string {
   if (typeof media === 'object' && media !== null && 'url' in media && media.url) {
     return media.url;
@@ -53,9 +88,9 @@ function extractMediaUrl(media?: number | Media | null, fallbackSlug?: string): 
   // Per-project placeholder fallbacks
   if (fallbackSlug) {
     const slugFallbacks: Record<string, string> = {
-      spicevo: 'https://lh3.googleusercontent.com/aida/AP1WRLsluHrudtzDaG50aSD36NdRzN58w6vb8tMpFOdnfIZFgY1dBgREUPWYQlTjj9EbRdLgnplkZYewTF9sMmaeJSXAK3oto-ygLUZfgwWyy7yWx7KwCDhAFMeuV49Vhkho1reIvl0I9GKNryk-9aFBdjJS583MJmCtZCneN1ZtU54xdaArh6k8eLfsYFLn5M0d_X1KdW11WwN2Sz8g_rTEjmd88-HJHGcuK3mzWuDZmmpB05aQ3niGkBjgHbc',
-      nutave:  'https://lh3.googleusercontent.com/aida-public/AB6AXuDTcX8iFlHKFQvFN8bJQfOGg-_nzLQXMhBlL202Kmrc73fYxYhLKeFJWoMmZcXKwAtP3M0VlUY3zIeyjilaLKZQ9ArHT75i9gZKSBA_HnCIwE6IINE61ZOlhaXC2qYS880W7rWArYRukR8buTNfzLK6N-4I6FRbjkL5MSw8Cx19KQSo7DxjgWq3uZ1DCBTsKKX5xrVIiytGpYkGJ_rA5hYotAwpH8xIvVrdnKjibZ9X1yW7lSnishAJ',
-      stonvi:  'https://lh3.googleusercontent.com/aida-public/AB6AXuC1fBGp_Q-oYaZ_77-Dl_o0yav-sbdcaXdvuZurZ6Xw_cFmzia2dVyoWlkeHktMpOx-uPNV1RZh1higeAS7Cefvwm-QJaB6nIvs5wwou5LOSJFBWXQAJlgxKQ1VKjkvbDlgruwshK21vYvyIIdaaoE8_CRLUExVLK_itwzJbc0NpEk7ZQU-sGCu96gv237wss-RqkVV4dCDyf37XJ7-ZIY9MEd79b4aps2VhT9qwb6uym6ca-TBxbC6',
+      spicevo: '/portfolio-spicevo.png',
+      nutave:  '/portfolio-nutave.png',
+      stonvi:  '/portfolio-stonvi.png',
     }
     const key = Object.keys(slugFallbacks).find(k => fallbackSlug.toLowerCase().includes(k))
     if (key) return slugFallbacks[key]
@@ -131,7 +166,7 @@ function HomepagePortfolioSection({
             >
               <LiveWebsiteFrame
                 title={project.title}
-                imageUrl={project.imageUrl || ''}
+                imageUrl={resolveProjectImage(project)}
                 industry={project.industry}
                 volume={project.volume}
                 service={project.service}
@@ -150,7 +185,7 @@ function HomepagePortfolioSection({
                 <div className="mt-auto self-start">
                   <MagneticButton>
                     <a
-                      href={project.linkUrl || '#'}
+                      href={resolveCaseStudyUrl(project)}
                       className="inline-flex items-center justify-center border border-black rounded-none px-8 py-4 text-[10px] font-mono text-center hover:bg-black hover:text-white transition-colors group/btn"
                     >
                       {project.linkLabel || 'VIEW CASE STUDY'}

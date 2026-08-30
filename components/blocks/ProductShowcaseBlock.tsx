@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/Reveal';
 import { Container } from '../ui/Container';
 import { MonoLabel } from '../ui/MonoLabel';
@@ -68,7 +69,7 @@ export function ProductShowcaseBlock(props: any) {
 <div className="bg-white/5 border border-hairline-dark rounded px-2 py-1.5 text-[10px] text-white/60">AE JEA (JEBEL ALI)</div>
 </div>
 </div></div>
-<button className="mt-8 w-full bg-brand-obsidian border border-gray-700 py-3 rounded text-[10px] font-bold text-white uppercase tracking-widest shadow-[0_0_15px_rgba(5,150,105,0.2)] hover:border-emerald-500/50 transition-all">Generate Document</button>
+<Link href="/rfq" className="block mt-8 w-full text-center bg-brand-obsidian border border-gray-700 py-3 rounded text-[10px] font-bold text-white uppercase tracking-widest shadow-[0_0_15px_rgba(5,150,105,0.2)] hover:border-emerald-500/50 transition-all">Generate Document</Link>
 </div>
 {/*  UI Preview Area  */}
 <div className="flex-1 bg-mockup-card p-8 flex items-center justify-center relative overflow-hidden">
@@ -194,7 +195,7 @@ export function ProductShowcaseBlock(props: any) {
 <span className="text-sm text-obsidian font-medium tracking-tight">Bank-Grade Compliance &amp; API Ready</span>
 </li>
 </StaggerItem>
-</StaggerContainer><div className="mt-8"><a className="inline-flex items-center text-[11px] font-bold tracking-widest uppercase border-b border-brand-obsidian pb-1 hover:text-emerald-700 hover:border-emerald-700 transition-colors duration-300" href="/rfq">Request Exvorta Docs Access <span className="ms-2">→</span></a></div>
+</StaggerContainer><div className="mt-8"><Link className="inline-flex items-center text-[11px] font-bold tracking-widest uppercase border-b border-brand-obsidian pb-1 hover:text-emerald-700 hover:border-emerald-700 transition-colors duration-300" href="/rfq">Request Exvorta Docs Access <span className="ms-2">→</span></Link></div>
 </motion.div>
 </div>
 </div></motion.section>

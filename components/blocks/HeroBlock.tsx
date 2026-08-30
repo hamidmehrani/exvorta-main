@@ -1,6 +1,7 @@
 'use client'
 import React, { useRef } from 'react'
 import type {  Page  } from '@/payload-types'
+import Link from 'next/link'
 import { AnimatedSection } from '@/components/ui/Reveal'
 import { StaggerText } from '@/components/ui/motion/StaggerText'
 import { MagneticButton } from '@/components/ui/motion/MagneticButton'
@@ -9,6 +10,29 @@ import { m as motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { easings } from '@/lib/animations'
 
 type HeroBlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'hero' }>
+
+const CLEARANCE_LEDGER = [
+  { bol: 'TRK-9821-X', consignee: 'Atlas Mfg Corp.', hs: '8411.82', origin: 'Rotterdam (NLRTM)', destination: 'Dubai (AEDXB)', value: 1240500, status: 'CLEARED' },
+  { bol: 'TRK-3302-B', consignee: 'Zeta Logistics', hs: '8544.49', origin: 'Shanghai (CNSHA)', destination: 'Hamburg (DEHAM)', value: 89200, status: 'IN TRANSIT' },
+  { bol: 'TRK-4491-C', consignee: 'Novus Energy', hs: '2710.12', origin: 'Houston (USHOU)', destination: 'Singapore (SGSIN)', value: 4500000, status: 'PENDING KYC' },
+  { bol: 'TRK-1005-D', consignee: 'OmniTech Ltd.', hs: '8542.31', origin: 'Taipei (TWTPE)', destination: 'London (GBHRW)', value: 2150000, status: 'CLEARED' },
+  { bol: 'TRK-9912-A', consignee: 'Nexus Materials', hs: '7208.39', origin: 'Mumbai (INBOM)', destination: 'Antwerp (BEANR)', value: 310000, status: 'CUSTOMS HOLD' },
+  { bol: 'TRK-2044-F', consignee: 'Aegis Trading', hs: '8421.29', origin: 'Los Angeles (USLAX)', destination: 'Tokyo (JPTYO)', value: 545000, status: 'CLEARED' },
+]
+
+function exportLedgerCsv() {
+  const header = 'BOL #,CONSIGNEE,HS CODE,ORIGIN,DESTINATION,EST. VALUE ($),STATUS'
+  const rows = CLEARANCE_LEDGER.map((r) =>
+    [r.bol, r.consignee, r.hs, r.origin, r.destination, r.value, r.status].join(','),
+  )
+  const blob = new Blob([[header, ...rows].join('\n')], { type: 'text/csv;charset=utf-8' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'exvorta-clearance-ledger.csv'
+  a.click()
+  URL.revokeObjectURL(url)
+}
 
 export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
   const prefersReducedMotion = useReducedMotion()
@@ -78,12 +102,12 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
           
           {/* Dual CTA Buttons */}
           <div className="relative z-10 flex flex-col sm:flex-row items-center gap-4 mb-16">
-            <a className="bg-[#0D0D0D] text-white px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-gray-900 transition-all duration-300 rounded-none" href={props.primaryCTA?.url || "/rfq"}>
+            <Link className="bg-[#0D0D0D] text-white px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-gray-900 transition-all duration-300 rounded-none" href={props.primaryCTA?.url || "/rfq"}>
               {props.primaryCTA?.label || '[ REQUEST PROPOSAL ]'}
-            </a>
-            <a className="border text-black/80 px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-black/5 transition-all duration-300 border-black rounded-none" href="/portfolio">
+            </Link>
+            <Link className="border text-black/80 px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-black/5 transition-all duration-300 border-black rounded-none" href="/portfolio">
               [ VIEW RECENT PROJECTS ]
-            </a>
+            </Link>
           </div>
           
           {/* Legal Micro-copy */}
@@ -137,12 +161,12 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 <motion.p variants={heroItem} className="text-base md:text-lg text-obsidian/60 max-w-2xl mx-auto mb-12 font-light">{props.subheadline || (isWebHero ? "The institutional standard. Bespoke architecture, flawless aesthetics, and engineered for elite B2B trading companies operating at a global scale." : "The definitive digital foundation for elite importers and exporters. Precision-engineered web presence and automated compliance.")}</motion.p>
 <motion.div variants={heroItem}>
 <MagneticButton>
-  <a
+  <Link
     className="inline-flex min-h-[44px] items-center justify-center px-8 py-4 btn-primary"
-    href={props.primaryCTA?.url || "/rfq"}
+    href={props.primaryCTA?.url && props.primaryCTA.url !== '#' ? props.primaryCTA.url : '/rfq'}
   >
     {props.primaryCTA?.label || "[ REQUEST PROPOSAL ]"}
-  </a>
+  </Link>
 </MagneticButton>
 </motion.div>
 </motion.div>
@@ -260,7 +284,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 <div className="flex-1 bg-card border border-border-dark rounded-lg flex flex-col overflow-hidden min-h-[300px]">
 <div className="p-4 border-b border-border-dark flex justify-between items-center bg-black/20 shrink-0">
 <div className="text-[10px] text-white/40 tracking-widest uppercase font-mono">LIVE CLEARANCE LEDGER</div>
-<button className="text-[9px] text-white/60 hover:text-white uppercase tracking-widest border border-white/10 px-3 py-1 rounded transition-colors">Export CSV</button>
+<button type="button" onClick={exportLedgerCsv} aria-label="Export clearance ledger as CSV" className="text-[9px] text-white/60 hover:text-white uppercase tracking-widest border border-white/10 px-3 py-1 rounded transition-colors">Export CSV</button>
 </div>
 <div className="flex-1 overflow-auto [scrollbar-width:thin]" style={{ overflowX: 'auto' }}>
 <table className="w-full text-left text-xs whitespace-nowrap">

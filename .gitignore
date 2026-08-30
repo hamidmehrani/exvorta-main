@@ -54,3 +54,10 @@ repomix-output.xml
 bash_probe.txt
 AUDIT_REPORT.md
 DEBUG_EDIT_REPORT.md
+*.tsbuildinfo
+
+# Local Claude Code / agent tooling (never commit)
+.claude/
+.agents/
+.wrangler_config/
+.mcp.json

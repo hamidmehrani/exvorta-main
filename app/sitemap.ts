@@ -7,12 +7,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Static marketing routes always present, even without a CMS connection
   const staticRoutes = ['', '/about', '/portfolio', '/ecosystem', '/insights', '/contact', '/rfq', '/waitlist']
-  const sitemapEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: route === '' ? 1.0 : 0.8,
-  }))
+  const seenUrls = new Set<string>()
+  const sitemapEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => {
+    const url = `${baseUrl}${route}`
+    seenUrls.add(url)
+    return {
+      url,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: route === '' ? 1.0 : 0.8,
+    }
+  })
 
   // Helper to fetch and map documents
   const fetchAndMapCollection = async (
@@ -28,10 +33,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       })
 
       docs.forEach((doc: { slug?: string | null; updatedAt?: string | null }) => {
-        const slug = doc.slug === 'home' ? '' : (doc.slug ?? '')
+        const slug = (doc.slug === 'home' ? '' : (doc.slug ?? '')).replace(/^\/+|\/+$/g, '')
         if (!slug && pathPrefix !== '/') return // skip unnamed docs
-        const fullPath = slug ? `${pathPrefix}/${slug}` : pathPrefix
-        const url = `${baseUrl}${fullPath}`
+        const fullPath = slug ? `${pathPrefix}/${slug}`.replace(/\/{2,}/g, '/') : pathPrefix
+        const url = `${baseUrl}${fullPath === '/' ? '' : fullPath}`
+        if (seenUrls.has(url)) return // skip duplicates
+        seenUrls.add(url)
 
         sitemapEntries.push({
           url,
@@ -47,7 +54,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   await Promise.all([
     fetchAndMapCollection('pages', '/', 0.8),
-    fetchAndMapCollection('posts', '/posts', 0.6),
+    fetchAndMapCollection('posts', '/insights', 0.6),
   ])
 
   let redirectFromPaths = new Set<string>()
@@ -61,8 +68,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return sitemapEntries.filter((entry) => {
     try {
       const pathname = new URL(entry.url).pathname
-      const pathnameWithoutLocale = pathname.replace(/^\/(en|ar|fa)/, '') || '/'
-      return !redirectFromPaths.has(pathname) && !redirectFromPaths.has(pathnameWithoutLocale)
+      return !redirectFromPaths.has(pathname)
     } catch {
       return true
     }
