@@ -1,3 +1,4 @@
+import { readOnlyPublic } from '../access'
 import { CollectionConfig } from 'payload'
 import { HeroBlock } from '../blocks/HeroBlock'
 import { FeatureGridBlock } from '../blocks/FeatureGridBlock'
@@ -50,6 +51,7 @@ const revalidateHook = ({ doc }: { doc: { slug?: string; _status?: string } }) =
 }
 
 export const Pages: CollectionConfig = {
+  access: readOnlyPublic,
   slug: 'pages',
   hooks: {
     afterChange: [revalidateHook],

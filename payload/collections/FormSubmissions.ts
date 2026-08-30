@@ -1,6 +1,8 @@
+import { readOnlyPublic } from '../access'
 import { CollectionConfig } from 'payload'
 
 export const FormSubmissions: CollectionConfig = {
+  access: readOnlyPublic,
   slug: 'form-submissions',
   admin: {
     useAsTitle: 'name',

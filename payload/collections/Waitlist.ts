@@ -8,7 +8,8 @@ export const Waitlist: CollectionConfig = {
     group: 'Content',
   },
   access: {
-    create: () => true, // Allow unauthenticated submissions from the frontend
+    // Server actions use the Local API (overrideAccess: true); REST stays closed.
+    create: ({ req: { user } }) => Boolean(user),
     read: ({ req: { user } }) => Boolean(user),
     update: ({ req: { user } }) => Boolean(user),
     delete: ({ req: { user } }) => Boolean(user),

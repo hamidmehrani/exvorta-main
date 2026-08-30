@@ -1,6 +1,8 @@
+import { readOnlyPublic } from '../access'
 import { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
+  access: readOnlyPublic,
   slug: 'media',
   admin: {
     group: 'Media',

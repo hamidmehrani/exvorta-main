@@ -2,9 +2,7 @@
 
 import { getPayloadClient } from '@/lib/payload'
 import { headers } from 'next/headers'
-import { sql } from '@payloadcms/db-vercel-postgres'
-
-const RATE_LIMIT = 5
+import { checkRateLimit, verifyTurnstile } from '@/lib/rate-limit'
 
 export interface LeadSubmission {
   source: 'Waitlist' | 'RFQ'
@@ -19,28 +17,11 @@ export interface LeadSubmission {
 export async function submitLead(data: LeadSubmission) {
   const ip = (await headers()).get('x-forwarded-for') || 'unknown'
   const payloadClient = await getPayloadClient()
-  const db = payloadClient.db as { drizzle: { execute: (query: unknown) => Promise<{ rows: { attempt_count: number }[] }> } }
 
   // ── 1. Rate Limiting ────────────────────────────────────────────────────────
-  await db.drizzle.execute(
-    sql`DELETE FROM "rate_limits" WHERE "window_start" < now() - interval '15 minutes'`
-  )
-
-  const existingRecord = await db.drizzle.execute(
-    sql`SELECT "attempt_count" FROM "rate_limits" WHERE "identifier" = ${ip}`
-  )
-
-  if (existingRecord.rows?.length > 0) {
-    if (existingRecord.rows[0].attempt_count >= RATE_LIMIT) {
-      return { success: false, error: 'Too many submissions. Please try again later.' }
-    }
-    await db.drizzle.execute(
-      sql`UPDATE "rate_limits" SET "attempt_count" = "attempt_count" + 1 WHERE "identifier" = ${ip}`
-    )
-  } else {
-    await db.drizzle.execute(
-      sql`INSERT INTO "rate_limits" ("identifier", "attempt_count", "window_start") VALUES (${ip}, 1, now())`
-    )
+  const rate = await checkRateLimit(payloadClient, ip)
+  if (!rate.allowed) {
+    return { success: false, error: 'Too many submissions. Please try again later.' }
   }
 
   // ── 2. Honeypot ─────────────────────────────────────────────────────────────
@@ -53,23 +34,9 @@ export async function submitLead(data: LeadSubmission) {
     process.env.NODE_ENV !== 'production' && process.env.SKIP_TURNSTILE_IN_DEV === 'true'
 
   if (!skipTurnstile) {
-    const token = data.turnstileToken
-    if (!token) {
-      return { success: false, error: 'Security verification failed.' }
-    }
-    try {
-      const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-        method: 'POST',
-        body: `secret=${encodeURIComponent(process.env.TURNSTILE_SECRET_KEY || '')}&response=${encodeURIComponent(token)}`,
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      })
-      const verifyData = await verifyRes.json()
-      if (!verifyData.success) {
-        return { success: false, error: 'Invalid security token.' }
-      }
-    } catch (err) {
-      console.error('[EXVORTA OS] Turnstile verification failed:', err)
-      return { success: false, error: 'Security check failed.' }
+    const ok = await verifyTurnstile(data.turnstileToken)
+    if (!ok) {
+      return { success: false, error: 'Invalid security token.' }
     }
   }
 
@@ -77,7 +44,7 @@ export async function submitLead(data: LeadSubmission) {
   if (!data.email || typeof data.email !== 'string') {
     return { success: false, error: 'Email is required.' }
   }
-  
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!emailRegex.test(data.email) || data.email.length > 254) {
     return { success: false, error: 'Invalid email address.' }

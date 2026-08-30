@@ -1,3 +1,4 @@
+import { readOnlyPublic } from '../access'
 import { CollectionConfig } from 'payload'
 import {
   lexicalEditor,
@@ -5,6 +6,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 export const Projects: CollectionConfig = {
+  access: readOnlyPublic,
   slug: 'projects',
   admin: {
     useAsTitle: 'title',

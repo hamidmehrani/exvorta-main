@@ -62,9 +62,11 @@ export default function ContactForm() {
         <textarea id="message" name="message" required rows={4} className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all resize-y" placeholder="How can we help your business scale?" />
       </div>
 
-      <div className="my-2">
-        <Turnstile siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'} />
-      </div>
+      {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+        <div className="my-2">
+          <Turnstile siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} />
+        </div>
+      )}
 
       <SubmitButton />
 

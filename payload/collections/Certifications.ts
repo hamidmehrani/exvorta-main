@@ -1,6 +1,8 @@
+import { readOnlyPublic } from '../access'
 import { CollectionConfig } from 'payload'
 
 export const Certifications: CollectionConfig = {
+  access: readOnlyPublic,
   slug: 'certifications',
   admin: {
     useAsTitle: 'name',

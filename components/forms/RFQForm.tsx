@@ -37,6 +37,8 @@ export default function RFQForm() {
         mainMarkets: formData.get('mainMarkets') as string,
         budget: formData.get('budget') as string,
         message: formData.get('message') as string,
+        botField: formData.get('bot-field') as string,
+        turnstileToken: turnstileToken,
       })
 
       if (res.success) {

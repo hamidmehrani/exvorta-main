@@ -12,7 +12,9 @@ export const Leads: CollectionConfig = {
     afterChange: [sendLeadEmails],
   },
   access: {
-    create: () => true, // Allow unauthenticated submissions from the frontend
+    // Server actions use the Local API (overrideAccess: true), so the REST
+    // endpoint stays closed — bots can no longer bypass Turnstile/rate-limit.
+    create: ({ req: { user } }) => Boolean(user),
     read: ({ req: { user } }) => Boolean(user),
     update: ({ req: { user } }) => Boolean(user),
     delete: ({ req: { user } }) => Boolean(user),
