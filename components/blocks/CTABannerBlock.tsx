@@ -41,7 +41,11 @@ export function CTABannerBlock(props: CTABannerProps) {
     </AnimatedSection>
   )
   } catch (error) {
-    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in CTABannerBlock</div>
+    console.error('[CTABannerBlock] render error:', error)
+    if (process.env.NODE_ENV !== 'production') {
+      return <div style={{ padding: 20, color: 'red', border: '1px solid red' }}>Error in CTABannerBlock</div>
+    }
+    return null
   }
 }
 

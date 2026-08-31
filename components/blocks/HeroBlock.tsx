@@ -146,7 +146,10 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
   )
   } catch (error) {
     console.error('[HeroBlock] render error:', error)
-    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in HeroBlock</div>
+    if (process.env.NODE_ENV !== 'production') {
+      return <div style={{ padding: 20, color: 'red', border: '1px solid red' }}>Error in HeroBlock</div>
+    }
+    return null
   }
 }
 

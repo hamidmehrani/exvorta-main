@@ -75,6 +75,17 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        // Versioned public assets (fonts, generated PNGs) — long cache,
+        // revalidated via ETag so content changes propagate without busting.
+        source: '/:file.(png|webp|woff2|jpg|jpeg|svg|ico)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
     ]
   },
 }

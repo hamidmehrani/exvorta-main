@@ -139,7 +139,11 @@ export const PricingBlock: React.FC<PricingBlockProps> = (props) => {
     </AnimatedSection>
   )
   } catch (error) {
-    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in PricingBlock</div>
+    console.error('[PricingBlock] render error:', error)
+    if (process.env.NODE_ENV !== 'production') {
+      return <div style={{ padding: 20, color: 'red', border: '1px solid red' }}>Error in PricingBlock</div>
+    }
+    return null
   }
 }
 

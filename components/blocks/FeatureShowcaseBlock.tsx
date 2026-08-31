@@ -117,7 +117,11 @@ export const FeatureShowcaseBlock: React.FC<FeatureShowcaseBlockProps> = (props)
     </AnimatedSection>
   )
   } catch (error) {
-    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in FeatureShowcaseBlock</div>
+    console.error('[FeatureShowcaseBlock] render error:', error)
+    if (process.env.NODE_ENV !== 'production') {
+      return <div style={{ padding: 20, color: 'red', border: '1px solid red' }}>Error in FeatureShowcaseBlock</div>
+    }
+    return null
   }
 }
 

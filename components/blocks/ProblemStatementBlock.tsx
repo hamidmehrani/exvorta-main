@@ -86,7 +86,11 @@ export const ProblemStatementBlock: React.FC<ProblemStatementBlockProps> = ({
     </AnimatedSection>
   )
   } catch (error) {
-    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in ProblemStatementBlock</div>
+    console.error('[ProblemStatementBlock] render error:', error)
+    if (process.env.NODE_ENV !== 'production') {
+      return <div style={{ padding: 20, color: 'red', border: '1px solid red' }}>Error in ProblemStatementBlock</div>
+    }
+    return null
   }
 }
 

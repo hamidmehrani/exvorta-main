@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     console.error(`Failed to fetch project meta for slug: ${resolvedParams.slug}`, error);
   }
 
-  return generateMeta({ doc: { meta: { title: project?.title } }, url: `/portfolio/${resolvedParams.slug}` })
+  return generateMeta({ doc: { meta: { title: project?.title } }, image: `/portfolio-${resolvedParams.slug}.png`, url: `/portfolio/${resolvedParams.slug}` })
 }
 
 export async function generateStaticParams() {

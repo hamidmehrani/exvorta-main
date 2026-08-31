@@ -105,7 +105,11 @@ export const TestimonialBlock: React.FC<TestimonialBlockProps> = (props) => {
     </AnimatedSection>
   )
   } catch (error) {
-    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in TestimonialBlock</div>
+    console.error('[TestimonialBlock] render error:', error)
+    if (process.env.NODE_ENV !== 'production') {
+      return <div style={{ padding: 20, color: 'red', border: '1px solid red' }}>Error in TestimonialBlock</div>
+    }
+    return null
   }
 }
 

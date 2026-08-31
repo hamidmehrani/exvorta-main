@@ -633,6 +633,10 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
             [ UPGRADE WEB ARCHITECTURE ]
         </Button>
 
+<Button className="w-full sm:w-auto bg-transparent border border-white text-white px-10 py-5 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center justify-center gap-3" href="/portfolio">
+            [ SEE THE LIVE PROOF ]
+        </Button>
+
 <Button className="w-full sm:w-auto bg-transparent border border-white text-white px-10 py-5 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center justify-center gap-3" href="/waitlist">
             [ JOIN SOFTWARE WAITLIST ]
         </Button>

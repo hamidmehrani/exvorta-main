@@ -76,7 +76,11 @@ export const FeatureGridBlock: React.FC<FeatureGridBlockProps> = (props) => {
     </AnimatedSection>
   )
   } catch (error) {
-    return <div style={{padding: 20, color: 'red', border: '1px solid red'}}>Error in FeatureGridBlock</div>
+    console.error('[FeatureGridBlock] render error:', error)
+    if (process.env.NODE_ENV !== 'production') {
+      return <div style={{ padding: 20, color: 'red', border: '1px solid red' }}>Error in FeatureGridBlock</div>
+    }
+    return null
   }
 }
 
