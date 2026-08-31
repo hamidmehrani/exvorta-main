@@ -52,10 +52,6 @@ const nextConfig: NextConfig = {
             value: 'nosniff',
           },
           {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
-          {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin',
           },
@@ -65,7 +61,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(), payment=()',
+            value: 'camera=(), microphone=(), geolocation=(), payment=(), browsing-topics=(), interest-cohort=()'
           },
         ],
       },

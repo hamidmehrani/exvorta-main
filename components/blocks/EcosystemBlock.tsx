@@ -70,7 +70,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <AnimatedSection className="w-full bg-brand-obsidian min-h-[75vh] flex items-center justify-center relative px-4 sm:px-6 lg:px-8 py-40 overflow-hidden border-b border-white/20" id="ecosystem-hero">
 <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_80%)] animate-pulse [animation-duration:12s]"></div>
 <Container className="max-w-6xl w-full flex flex-col items-center text-center relative z-10">
-<MonoLabel className="text-[9px] md:text-[10px] font-mono tracking-[0.4em] text-white/40 uppercase mb-10 block">{hero.eyebrow}</MonoLabel>
+<MonoLabel className="text-[9px] md:text-[10px] font-mono tracking-[0.4em] text-white/55 uppercase mb-10 block">{hero.eyebrow}</MonoLabel>
 <h1 className="text-4xl sm:text-5xl md:text-[5.5rem] lg:text-[6.5rem] font-serif font-bold text-white leading-[1.0] tracking-tight mb-8">
       {hero.title} <br/>
 <span className="text-white/60">{hero.subtitle}</span>
@@ -89,7 +89,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 
 <div className="lg:col-span-5 flex flex-col justify-center">
 <div className="flex items-center gap-4 mb-6">
-<MonoLabel className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">[ MODULE 01 ]</MonoLabel>
+<MonoLabel className="text-[10px] font-mono tracking-[0.2em] text-white/55 uppercase">[ MODULE 01 ]</MonoLabel>
 <div className="px-2.5 py-1 border border-brand-emerald flex items-center gap-2 bg-brand-emerald/20">
 <div className="w-1.5 h-1.5 animate-pulse bg-brand-emerald"></div>
 <span className="text-[9px] font-mono tracking-[0.2em] uppercase font-bold text-brand-emerald">LIVE</span>
@@ -263,8 +263,8 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 
 <div className="lg:col-span-5 flex flex-col justify-center text-white">
 <div className="flex items-center gap-3 mb-6">
-<span className="opacity-0 px-3 py-1 border border-white/20 text-white/40 text-[10px] font-mono tracking-widest uppercase">[ COMING SOON ]</span>
-<MonoLabel className="text-white/40 font-mono text-[10px] uppercase tracking-widest">Global Logistics Alpha</MonoLabel>
+<span className="opacity-0 px-3 py-1 border border-white/20 text-white/55 text-[10px] font-mono tracking-widest uppercase">[ COMING SOON ]</span>
+<MonoLabel className="text-white/55 font-mono text-[10px] uppercase tracking-widest">Global Logistics Alpha</MonoLabel>
 </div>
 <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">Exvorta Track.</h2>
 <p className="text-lg text-white/60 font-sans leading-relaxed mb-8 max-w-2xl">Real-time, verifiable visibility into your global trade pipeline. Exvorta Track moves asset tracking from static spreadsheets to a dynamic, hardened data ecosystem, connecting directly with major global carriers and freight forwarders.</p>
@@ -280,21 +280,21 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <div className="w-2.5 h-2.5 bg-white/20"></div>
 <div className="w-2.5 h-2.5 bg-white/20"></div>
 <div className="w-2.5 h-2.5 bg-white/20"></div>
-<div className="ml-auto text-[9px] font-mono text-white/40 uppercase tracking-widest">track.exvorta.com // VESSEL_TRACKER_V2</div>
+<div className="ml-auto text-[9px] font-mono text-white/55 uppercase tracking-widest">track.exvorta.com // VESSEL_TRACKER_V2</div>
 </div>
 
 <div className="p-8 md:p-12 flex flex-col gap-8 flex-grow overflow-x-auto"><div className="flex flex-col gap-6 h-full font-mono text-[10px] text-white/70 min-w-[600px]">
 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 <div className="bg-mockup-card border border-white/20 p-4 flex flex-col gap-2">
-<span className="text-white/40 tracking-widest">[ ACTIVE SHIPMENTS ]</span>
+<span className="text-white/55 tracking-widest">[ ACTIVE SHIPMENTS ]</span>
 <span className="text-brand-emerald text-lg font-bold">12</span>
 </div>
 <div className="bg-mockup-card border border-white/20 p-4 flex flex-col gap-2">
-<span className="text-white/40 tracking-widest">[ IN TRANSIT ]</span>
+<span className="text-white/55 tracking-widest">[ IN TRANSIT ]</span>
 <span className="text-brand-emerald text-lg font-bold">8</span>
 </div>
 <div className="bg-mockup-card border border-white/20 p-4 flex flex-col gap-2">
-<span className="text-white/40 tracking-widest">[ DELIVERED ]</span>
+<span className="text-white/55 tracking-widest">[ DELIVERED ]</span>
 <span className="text-brand-emerald text-lg font-bold">47</span>
 </div>
 </div>
@@ -495,7 +495,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 
 <div className="lg:col-span-5 flex flex-col justify-center text-white">
 <div className="flex items-center gap-4 mb-6">
-<MonoLabel className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">[ MODULE 05 ]</MonoLabel>
+<MonoLabel className="text-[10px] font-mono tracking-[0.2em] text-white/55 uppercase">[ MODULE 05 ]</MonoLabel>
 <div className="px-2.5 py-1 border border-white/20 flex items-center gap-2">
 <div className="w-1.5 h-1.5 bg-white/30"></div>
 <MonoLabel className="text-[9px] font-mono tracking-[0.2em] uppercase font-bold text-white/50">COMING SOON</MonoLabel>
@@ -503,7 +503,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </div>
 <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">Exvorta Intel.</h2>
 <p className="text-lg text-white/60 font-sans leading-relaxed mb-6">Intuition does not scale. Exvorta Intel processes millions of global trade data points into actionable, predictive commodity forecasting and supply chain risk analysis.</p>
-<p className="text-md text-white/40 font-sans leading-relaxed mb-10">Monitor macro-economic shifts, track competitor vessel routes, and analyze real-time pricing arbitrage across global ports—all from a single executive terminal.</p>
+<p className="text-md text-white/55 font-sans leading-relaxed mb-10">Monitor macro-economic shifts, track competitor vessel routes, and analyze real-time pricing arbitrage across global ports—all from a single executive terminal.</p>
 <Button className="w-max bg-transparent border border-white text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center gap-3" href="/waitlist">
                 [ JOIN THE WAITLIST ]
             </Button>
@@ -526,7 +526,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <div className="relative z-10 p-6 h-full flex flex-col justify-between min-w-[600px]">
 
 <div className="h-1/2 relative border border-white/20 p-4 overflow-hidden">
-<div className="text-[8px] font-mono text-white/40 uppercase mb-4 tracking-tighter">PREDICTIVE NEURAL FORECAST // COMMODITY_AGGREGATE</div>
+<div className="text-[8px] font-mono text-white/55 uppercase mb-4 tracking-tighter">PREDICTIVE NEURAL FORECAST // COMMODITY_AGGREGATE</div>
 <svg className="w-full h-32" preserveAspectRatio="none" viewBox="0 0 400 100">
 
 <path d="M0,80 C50,75 80,40 150,50 S250,20 300,30" fill="none" stroke="var(--color-brand-emerald)" strokeWidth="2"></path>
@@ -541,7 +541,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <div className="flex gap-4 h-1/3 mt-4">
 
 <div className="w-1/3 border border-white/20 p-3 flex flex-col">
-<MonoLabel className="text-[7px] font-mono text-white/40 uppercase mb-2 tracking-widest">[ RISK CORRELATION MATRIX ]</MonoLabel>
+<MonoLabel className="text-[7px] font-mono text-white/55 uppercase mb-2 tracking-widest">[ RISK CORRELATION MATRIX ]</MonoLabel>
 <div className="grid grid-cols-2 grid-rows-2 gap-1.5 flex-grow">
 <div className="bg-brand-emerald/20 border border-white/20 animate-pulse"></div>
 <div className="border border-white/20"></div>
@@ -553,21 +553,21 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <div className="flex-1 grid grid-cols-3 gap-3">
 <div className="border border-white/20 p-2.5 flex flex-col justify-between">
 <div className="flex justify-between items-start">
-<MonoLabel className="text-[7px] font-mono text-white/40 uppercase">CRUDE</MonoLabel>
+<MonoLabel className="text-[7px] font-mono text-white/55 uppercase">CRUDE</MonoLabel>
 <span className="text-brand-emerald font-mono text-[10px] font-bold">+2.4%</span>
 </div>
 <svg className="h-4 w-full opacity-60" viewBox="0 0 60 20"><path d="M0,15 L10,12 L20,16 L30,5 L40,10 L50,2 L60,8" fill="none" stroke="var(--color-brand-emerald)" strokeWidth="1"></path></svg>
 </div>
 <div className="border border-white/20 p-2.5 flex flex-col justify-between">
 <div className="flex justify-between items-start">
-<MonoLabel className="text-[7px] font-mono text-white/40 uppercase">COPPER</MonoLabel>
+<MonoLabel className="text-[7px] font-mono text-white/55 uppercase">COPPER</MonoLabel>
 <span className="text-red-400 font-mono text-[10px] font-bold">-0.8%</span>
 </div>
 <svg className="h-4 w-full opacity-60" viewBox="0 0 60 20"><path d="M0,5 L10,8 L20,4 L30,12 L40,8 L50,18 L60,15" fill="none" stroke="#f87171" strokeWidth="1"></path></svg>
 </div>
 <div className="border border-white/20 p-2.5 flex flex-col justify-between">
 <div className="flex justify-between items-start">
-<MonoLabel className="text-[7px] font-mono text-white/40 uppercase">LNG</MonoLabel>
+<MonoLabel className="text-[7px] font-mono text-white/55 uppercase">LNG</MonoLabel>
 <span className="text-brand-emerald font-mono text-[10px] font-bold">+1.1%</span>
 </div>
 <svg className="h-4 w-full opacity-60" viewBox="0 0 60 20"><path d="M0,10 L10,15 L20,12 L30,8 L40,14 L50,5 L60,3" fill="none" stroke="var(--color-brand-emerald)" strokeWidth="1"></path></svg>
@@ -576,8 +576,8 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </div>
 
 <div className="absolute bottom-2 right-4 flex gap-4 pointer-events-none">
-<MonoLabel className="text-[6px] font-mono text-white/40 uppercase">[AI MODEL: ACTIVE // LATENCY &lt;5MS]</MonoLabel>
-<MonoLabel className="text-[6px] font-mono text-white/40 uppercase animate-pulse">[SIGNAL_ACQUISITION_PULSE]</MonoLabel>
+<MonoLabel className="text-[6px] font-mono text-white/55 uppercase">[AI MODEL: ACTIVE // LATENCY &lt;5MS]</MonoLabel>
+<MonoLabel className="text-[6px] font-mono text-white/55 uppercase animate-pulse">[SIGNAL_ACQUISITION_PULSE]</MonoLabel>
 </div>
 </div>
 </div></div>
@@ -602,7 +602,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
         {vision.description}
     </p>
 
-<div className="relative z-10 flex flex-wrap justify-center items-center gap-2 sm:gap-4 text-[8px] font-mono tracking-widest text-white/40 uppercase">
+<div className="relative z-10 flex flex-wrap justify-center items-center gap-2 sm:gap-4 text-[8px] font-mono tracking-widest text-white/55 uppercase">
 <span className="">WEB</span> <span className="w-2 sm:w-4 h-[1px] bg-white/20"></span>
 <span className="">DOCS</span> <span className="w-2 sm:w-4 h-[1px] bg-white/20"></span>
 <span className="">TRACK</span> <span className="w-2 sm:w-4 h-[1px] bg-white/20"></span>
@@ -616,7 +616,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 
 <AnimatedSection className="w-full bg-brand-obsidian py-40 px-4 sm:px-6 lg:px-8 border-b border-white/20 flex flex-col items-center text-center relative overflow-hidden" id="ecosystem-cta">
 
-<MonoLabel className="text-[10px] font-mono tracking-[0.3em] text-white/40 uppercase mb-8 block relative z-10">{cta.eyebrow}</MonoLabel>
+<MonoLabel className="text-[10px] font-mono tracking-[0.3em] text-white/55 uppercase mb-8 block relative z-10">{cta.eyebrow}</MonoLabel>
 
 <h2 className="text-4xl md:text-6xl font-serif text-white mb-8 leading-tight tracking-tight max-w-4xl relative z-10">
         {cta.title}<br/>
@@ -638,7 +638,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
         </Button>
 </div>
 
-<MonoLabel className="text-[9px] font-mono tracking-[0.2em] text-white/40 uppercase mt-12 block relative z-10">
+<MonoLabel className="text-[9px] font-mono tracking-[0.2em] text-white/55 uppercase mt-12 block relative z-10">
         * Web proposals are subject to capacity constraints.
     </MonoLabel>
 </AnimatedSection>

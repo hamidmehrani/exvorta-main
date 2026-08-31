@@ -108,7 +108,7 @@ export function AnimatedSection({ children, className = '', delay = 0, id }: { c
   )
 }
 
-export function AnimatedButton({ children, className = '', href, type }: { children: React.ReactNode; className?: string; href?: string; type?: 'button' | 'submit' | 'reset' }) {
+export function AnimatedButton({ children, className = '', href, type, disabled }: { children: React.ReactNode; className?: string; href?: string; type?: 'button' | 'submit' | 'reset'; disabled?: boolean }) {
   const motionProps = {
     whileHover: { scale: 1.02 },
     whileTap: { scale: 0.98 },
@@ -128,6 +128,7 @@ export function AnimatedButton({ children, className = '', href, type }: { child
   return (
     <m.button
       type={type || 'button'}
+      disabled={disabled}
       {...motionProps}
       className={className}
     >

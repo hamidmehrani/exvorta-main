@@ -109,19 +109,19 @@ export default function RFQForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
           <div className="md:col-span-2">
             <InputWrapper>
-               <input name="name" className={inputClass} placeholder="FULL NAME" type="text" required disabled={isPending} />
-               <label className={labelClass}>FULL NAME *</label>
+               <input id="rfq-name" name="name" className={inputClass} placeholder="FULL NAME" type="text" required disabled={isPending} />
+               <label htmlFor="rfq-name" className={labelClass}>FULL NAME *</label>
                <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
             </InputWrapper>
           </div>
           <InputWrapper>
-            <input name="companyName" className={inputClass} placeholder="COMPANY NAME" type="text" disabled={isPending} />
-            <label className={labelClass}>COMPANY NAME</label>
+            <input id="rfq-companyName" name="companyName" className={inputClass} placeholder="COMPANY NAME" type="text" disabled={isPending} />
+            <label htmlFor="rfq-companyName" className={labelClass}>COMPANY NAME</label>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
           <InputWrapper>
-            <input name="email" className={inputClass} placeholder="WORK EMAIL" type="email" required disabled={isPending} />
-            <label className={labelClass}>WORK EMAIL *</label>
+            <input id="rfq-email" name="email" className={inputClass} placeholder="WORK EMAIL" type="email" required disabled={isPending} />
+            <label htmlFor="rfq-email" className={labelClass}>WORK EMAIL *</label>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
         </div>
@@ -134,23 +134,23 @@ export default function RFQForm() {
         </div>
         <div className="space-y-10">
           <InputWrapper>
-            <select name="businessType" className={inputClass} disabled={isPending} defaultValue="" required>
+            <select id="rfq-businessType" name="businessType" className={inputClass} disabled={isPending} defaultValue="" required>
               <option value="" disabled hidden></option>
               <option value="importer">Importer</option>
               <option value="exporter">Exporter</option>
               <option value="trading_company">Trading Company</option>
             </select>
-            <label className={`${labelClass} peer-valid:top-0 peer-valid:text-[8px] peer-valid:text-black/60`}>BUSINESS TYPE *</label>
+            <label htmlFor="rfq-businessType" className={`${labelClass} peer-valid:top-0 peer-valid:text-[8px] peer-valid:text-black/60`}>BUSINESS TYPE *</label>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
           <InputWrapper>
-            <input name="mainMarkets" className={inputClass} placeholder="MAIN MARKETS" type="text" disabled={isPending} />
-            <label className={labelClass}>MAIN MARKETS</label>
+            <input id="rfq-mainMarkets" name="mainMarkets" className={inputClass} placeholder="MAIN MARKETS" type="text" disabled={isPending} />
+            <label htmlFor="rfq-mainMarkets" className={labelClass}>MAIN MARKETS</label>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
           <InputWrapper>
-            <textarea name="message" className={`${inputClass} resize-none`} placeholder="Briefly describe your main challenge or vision." rows={3} disabled={isPending}></textarea>
-            <label className={labelClass}>PROJECT VISION</label>
+            <textarea id="rfq-message" name="message" className={`${inputClass} resize-none`} placeholder="Briefly describe your main challenge or vision." rows={3} disabled={isPending}></textarea>
+            <label htmlFor="rfq-message" className={labelClass}>PROJECT VISION</label>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
         </div>
@@ -163,13 +163,13 @@ export default function RFQForm() {
         </div>
         <div className="grid grid-cols-1 gap-10">
           <InputWrapper>
-            <select name="budget" className={inputClass} disabled={isPending} defaultValue="" required>
+            <select id="rfq-budget" name="budget" className={inputClass} disabled={isPending} defaultValue="" required>
               <option value="" disabled hidden></option>
               <option value="$800–1.5k">$800–1.5k</option>
               <option value="$1.5–3k">$1.5–3k</option>
               <option value="$3k+">$3k+</option>
             </select>
-            <label className={`${labelClass} peer-valid:top-0 peer-valid:text-[8px] peer-valid:text-black/60`}>ALLOCATED BUDGET *</label>
+            <label htmlFor="rfq-budget" className={`${labelClass} peer-valid:top-0 peer-valid:text-[8px] peer-valid:text-black/60`}>ALLOCATED BUDGET *</label>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
         </div>

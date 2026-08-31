@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from 'react';
-import { m as motion, useInView } from "framer-motion";
+import { m as motion } from "framer-motion";
 import type { Project, Media } from '@/payload-types';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -85,15 +85,10 @@ function extractMediaUrl(media?: number | Media | null, fallbackSlug?: string): 
   if (typeof media === 'object' && media !== null && 'url' in media && media.url) {
     return media.url;
   }
-  // Per-project placeholder fallbacks
+  // Per-project placeholder fallbacks (single source: TITLE_IMAGE_ROUTES)
   if (fallbackSlug) {
-    const slugFallbacks: Record<string, string> = {
-      spicevo: '/portfolio-spicevo.png',
-      nutave:  '/portfolio-nutave.png',
-      stonvi:  '/portfolio-stonvi.png',
-    }
-    const key = Object.keys(slugFallbacks).find(k => fallbackSlug.toLowerCase().includes(k))
-    if (key) return slugFallbacks[key]
+    const key = Object.keys(TITLE_IMAGE_ROUTES).find(k => fallbackSlug.toLowerCase().includes(k))
+    if (key) return TITLE_IMAGE_ROUTES[key]
   }
   return '';
 }
@@ -221,7 +216,7 @@ function HomepagePortfolioSection({
 // ─────────────────────────────────────────────────────────────────────────────
 function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
   const hasProjects = projects && projects.length > 0;
-  const containerRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const animationLevel = useAnimationLevel();
 
   const cardVariants = {
@@ -235,13 +230,14 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
   };
 
   return (
-    <main ref={containerRef} className="w-full bg-[#FAFAF8] min-h-screen">
+    <div ref={containerRef} className="w-full bg-[#FAFAF8] min-h-screen">
       {/* Hero Section */}
       <section className="w-full pt-40 pb-24 border-b border-black/5">
         <Container>
           <div className="max-w-5xl">
             <div className="font-mono text-[11px] uppercase text-gray-500 mb-6 tracking-[0.2em]">[ SELECTED WORKS ]</div>
             <AnimatedHeadline
+              as="h1"
               text="Latest Web Design Works."
               className="font-serif text-[72px] md:text-[100px] text-[#0D0D0D] mb-8 leading-none font-semibold tracking-tighter"
             />
@@ -344,7 +340,7 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
           </div>
         </Container>
       </section>
-    </main>
+    </div>
   );
 }
 

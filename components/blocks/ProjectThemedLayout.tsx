@@ -158,7 +158,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                     <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white/0 via-white/10 to-white/0 opacity-0 -translate-y-full group-hover:opacity-100 group-hover:animate-[framescan_2.6s_ease-in-out_infinite]" />
                   </div>
                 </div>
-                <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.3em] text-white/25">
+                <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.3em] text-white/40">
                   HOVER TO SCROLL THE FULL PAGE — OR VISIT THE LIVE SITE ↗
                 </p>
               </motion.div>

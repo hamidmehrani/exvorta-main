@@ -6,7 +6,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://exvorta.com'
 
   // Static marketing routes always present, even without a CMS connection
-  const staticRoutes = ['', '/about', '/portfolio', '/ecosystem', '/insights', '/contact', '/rfq', '/waitlist']
+  const staticRoutes = ['', '/about', '/web', '/portfolio', '/ecosystem', '/insights', '/contact', '/rfq', '/waitlist']
   const seenUrls = new Set<string>()
   const sitemapEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => {
     const url = `${baseUrl}${route}`
@@ -21,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Helper to fetch and map documents
   const fetchAndMapCollection = async (
-    collection: 'pages' | 'posts',
+    collection: 'pages' | 'posts' | 'projects',
     pathPrefix: string,
     priority: number
   ) => {
@@ -43,7 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         sitemapEntries.push({
           url,
           lastModified: doc.updatedAt ? new Date(doc.updatedAt as string) : new Date(),
-          changeFrequency: collection === 'pages' ? 'weekly' : 'monthly',
+          changeFrequency: collection === 'posts' ? 'weekly' : 'monthly',
           priority: slug === '' ? 1.0 : priority,
         })
       })
@@ -55,6 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   await Promise.all([
     fetchAndMapCollection('pages', '/', 0.8),
     fetchAndMapCollection('posts', '/insights', 0.6),
+    fetchAndMapCollection('projects', '/portfolio', 0.7),
   ])
 
   let redirectFromPaths = new Set<string>()

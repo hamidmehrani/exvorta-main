@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { AnimatedSection, AnimatedButton, StaggerContainer, StaggerItem } from '@/components/ui/Reveal';
+import { WeeklyBriefingForm } from '@/components/blocks/WeeklyBriefingForm';
 import Link from 'next/link';
 import type { Post } from '@/payload-types';
 import { Container } from '@/components/ui/Container';
@@ -125,19 +126,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
           <p className="text-white/50 mb-12">
             Actionable data delivered straight to your executive inbox.
           </p>
-          <form className="w-full flex flex-col sm:flex-row gap-4">
-            <input
-              type="email"
-              placeholder="CORPORATE EMAIL ADDRESS..."
-              className="flex-grow bg-white/[0.03] border border-white/10 px-6 py-5 text-white placeholder:text-white/30 font-mono text-xs tracking-widest outline-none focus:border-white/40 text-center sm:text-left"
-            />
-            <AnimatedButton
-              type="submit"
-              className="bg-white text-black px-8 py-5 text-[11px] uppercase tracking-[0.2em] font-mono hover:bg-gray-200"
-            >
-              [ SUBSCRIBE ]
-            </AnimatedButton>
-          </form>
+          <WeeklyBriefingForm />
         </Container>
       </AnimatedSection>
       <Hairline className="bg-black/5 w-full" />

@@ -38,8 +38,9 @@ export default function LoginForm() {
       )}
 
       <div className="flex flex-col gap-2">
-        <label className="text-sm font-semibold text-text uppercase tracking-wider text-xs">Email Address</label>
+        <label htmlFor="login-email" className="text-sm font-semibold text-text uppercase tracking-wider text-xs">Email Address</label>
         <input 
+          id="login-email"
           type="email" 
           name="email" 
           required 
@@ -49,8 +50,9 @@ export default function LoginForm() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <label className="text-sm font-semibold text-text uppercase tracking-wider text-xs">Password</label>
+        <label htmlFor="login-password" className="text-sm font-semibold text-text uppercase tracking-wider text-xs">Password</label>
         <input 
+          id="login-password"
           type="password" 
           name="password" 
           required 

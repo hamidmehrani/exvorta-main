@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { m as motion, AnimatePresence } from 'framer-motion'
 import { easings } from '@/lib/animations'
 
@@ -134,8 +134,6 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
   const [sortAsc, setSortAsc] = useState(true)
   const [selected, setSelected] = useState<LedgerRow | null>(null)
   const [terminalCount, setTerminalCount] = useState(4)
-  const railRef = useRef<HTMLDivElement>(null)
-  const [railIdx, setRailIdx] = useState(0)
 
   // terminal: reveal lines progressively
   useEffect(() => {
@@ -143,13 +141,6 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
     const id = setInterval(() => {
       setTerminalCount(c => (c >= TERMINAL_SCRIPT.length ? 1 : c + 1))
     }, 3200)
-    return () => clearInterval(id)
-  }, [prefersReducedMotion])
-
-  // sidebar rail auto-cycles (visual liveliness)
-  useEffect(() => {
-    if (prefersReducedMotion) return
-    const id = setInterval(() => setRailIdx(i => (i + 1) % 5), 2800)
     return () => clearInterval(id)
   }, [prefersReducedMotion])
 
@@ -195,14 +186,14 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
         </div>
         <div className="text-[9px] sm:text-[10px] text-white/40 tracking-widest uppercase font-mono truncate">Exvorta OS — Command Center</div>
         <div className="flex items-center gap-2 shrink-0">
-          <span className="hidden sm:inline text-[9px] text-white/30 font-mono">{clock} UTC</span>
+          <span className="hidden sm:inline text-[9px] text-white/45 font-mono">{clock} UTC</span>
           <span className="text-[9px] text-emerald-400 font-mono border border-emerald-400/20 bg-emerald-400/5 px-2 py-0.5 rounded whitespace-nowrap">SYS_ONLINE</span>
         </div>
       </div>
 
       <div className="flex flex-1 overflow-hidden min-h-0">
         {/* ── sidebar rail (desktop) / tab bar (mobile uses bottom tabs) ── */}
-        <div ref={railRef} className="hidden md:flex w-14 border-r border-white/10 bg-black/30 flex-col items-center py-4 space-y-2 shrink-0">
+        <div className="hidden md:flex w-14 border-r border-white/10 bg-black/30 flex-col items-center py-4 space-y-2 shrink-0">
           {TABS.map((t, i) => (
             <button
               key={t.id}
@@ -212,7 +203,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
               className={`w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 relative group ${
                 tab === t.id
                   ? 'bg-emerald-500/15 text-emerald-400 shadow-[0_0_16px_rgba(16,185,129,0.25)]'
-                  : 'text-white/30 hover:text-white/80 hover:bg-white/5'
+                  : 'text-white/45 hover:text-white/80 hover:bg-white/5'
               }`}
             >
               <svg className="w-4.5 h-4.5 w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">{t.icon}</svg>
@@ -314,21 +305,25 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                   </div>
                   <div className="flex-1 overflow-auto [scrollbar-width:thin]">
                     <table className="w-full text-left text-[11px] whitespace-nowrap min-w-[640px]">
-                      <thead className="text-[8px] text-white/30 uppercase tracking-widest bg-[#10151B] sticky top-0 z-10">
-                        <tr>
-                          <th className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 cursor-pointer hover:text-white/60" onClick={() => setSort('bol')}>BOL {sortKey === 'bol' && (sortAsc ? '↑' : '↓')}</th>
+                      <thead className="text-[8px] text-white/45 uppercase tracking-widest bg-[#10151B] sticky top-0 z-10">
+                        <tr aria-sort={sortKey === 'bol' ? (sortAsc ? 'ascending' : 'descending') : undefined}>
+                          <th scope="col" aria-label="Sort by BOL" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 cursor-pointer hover:text-white/60" onClick={() => setSort('bol')}>BOL {sortKey === 'bol' && (sortAsc ? '↑' : '↓')}</th>
                           <th className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5">Consignee</th>
                           <th className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 hidden md:table-cell">HS Code</th>
                           <th className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 hidden lg:table-cell">Route</th>
-                          <th className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 text-right cursor-pointer hover:text-white/60" onClick={() => setSort('value')}>Value {sortKey === 'value' && (sortAsc ? '↑' : '↓')}</th>
-                          <th className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 text-right cursor-pointer hover:text-white/60" onClick={() => setSort('status')}>Status</th>
+                          <th scope="col" aria-label="Sort by value" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 text-right cursor-pointer hover:text-white/60" onClick={() => setSort('value')}>Value {sortKey === 'value' && (sortAsc ? '↑' : '↓')}</th>
+                          <th scope="col" aria-label="Sort by status" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 text-right cursor-pointer hover:text-white/60" onClick={() => setSort('status')}>Status</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5 text-white/70 font-mono">
                         {rows.map((r, i) => (
                           <tr
                             key={r.bol}
+                            tabIndex={0}
+                            role="button"
+                            aria-label={`Inspect shipment ${r.bol}`}
                             onClick={() => setSelected(r)}
+                            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected(r) } }}
                             className={`hover:bg-white/5 cursor-pointer transition-colors ${selected?.bol === r.bol ? 'bg-emerald-500/5' : ''}`}
                             style={prefersReducedMotion ? undefined : { animation: `osrow 0.4s ease both`, animationDelay: `${i * 40}ms` }}
                           >
@@ -347,12 +342,12 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                           </tr>
                         ))}
                         {rows.length === 0 && (
-                          <tr><td colSpan={6} className="px-4 py-8 text-center text-white/30 font-mono text-[10px]">NO MATCHING SHIPMENTS</td></tr>
+                          <tr><td colSpan={6} className="px-4 py-8 text-center text-white/45 font-mono text-[10px]">NO MATCHING SHIPMENTS</td></tr>
                         )}
                       </tbody>
                     </table>
                   </div>
-                  <div className="px-3 sm:px-5 py-1.5 border-t border-white/10 bg-black/20 text-[8px] text-white/30 font-mono tracking-widest uppercase shrink-0">
+                  <div className="px-3 sm:px-5 py-1.5 border-t border-white/10 bg-black/20 text-[8px] text-white/45 font-mono tracking-widest uppercase shrink-0">
                     Click a row to inspect · sorted by {sortKey} {sortAsc ? 'asc' : 'desc'}
                   </div>
                 </motion.div>
@@ -376,7 +371,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                       <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-2 animate-pulse" />
                       Operations Feed — realtime
                     </span>
-                    <span className="text-[8px] text-white/25 font-mono">stream: global</span>
+                    <span className="text-[8px] text-white/40 font-mono">stream: global</span>
                   </div>
                   <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 font-mono text-[10px] sm:text-[11px]">
                     {TERMINAL_SCRIPT.slice(0, terminalCount).map((entry, i) => {
@@ -394,7 +389,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                           transition={{ duration: 0.4, ease: easings.cinematic }}
                           className={`border-l-2 ${color} pl-3 ${i === terminalCount - 1 ? '' : 'opacity-80'}`}
                         >
-                          <div className="text-white/30 mb-0.5">[{time} UTC]</div>
+                          <div className="text-white/45 mb-0.5">[{time} UTC]</div>
                           <div className="text-white/85">{entry.t}</div>
                           <div className={entry.kind === 'ok' ? 'text-emerald-400/80 mt-0.5' : entry.kind === 'warn' ? 'text-amber-400/80 mt-0.5' : entry.kind === 'info' ? 'text-sky-400/80 mt-0.5' : 'text-white/40 mt-0.5'}>{entry.ref}</div>
                         </motion.div>
@@ -482,7 +477,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                           </div>
                         ))}
                       </div>
-                      <div className="flex justify-between text-[7px] text-white/25 font-mono mt-1.5">
+                      <div className="flex justify-between text-[7px] text-white/40 font-mono mt-1.5">
                         <span>JAN</span><span className="hidden sm:inline">MAR</span><span className="hidden sm:inline">MAY</span><span className="hidden sm:inline">JUL</span><span className="hidden sm:inline">SEP</span><span>DEC</span>
                       </div>
                     </div>
@@ -546,7 +541,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                       </motion.div>
                     ))}
                   </div>
-                  <div className="px-3 sm:px-5 py-1.5 border-t border-white/10 bg-black/20 text-[8px] text-white/30 font-mono tracking-widest uppercase shrink-0">
+                  <div className="px-3 sm:px-5 py-1.5 border-t border-white/10 bg-black/20 text-[8px] text-white/45 font-mono tracking-widest uppercase shrink-0">
                     Every document generated, verified and archived automatically
                   </div>
                 </motion.div>
@@ -629,7 +624,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                 </div>
               </div>
               <div className="px-4 sm:px-5 py-3 border-t border-white/10 bg-black/30 shrink-0">
-                <div className="text-[8px] text-white/30 font-mono tracking-widest uppercase text-center">Demo data — your data lives here in your panel</div>
+                <div className="text-[8px] text-white/45 font-mono tracking-widest uppercase text-center">Demo data — your data lives here in your panel</div>
               </div>
             </motion.div>
           </>

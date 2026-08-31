@@ -28,13 +28,6 @@ const inter = localFont({
   weight: '100 900',
 })
 
-const vazirmatn = localFont({
-  src: '../../public/fonts/Vazirmatn-Variable.woff2',
-  variable: '--font-vazirmatn',
-  display: 'swap',
-  weight: '100 900',
-})
-
 const playfair = localFont({
   src: [
     { path: '../../public/fonts/PlayfairDisplay-600.woff2', weight: '600', style: 'normal' },
@@ -100,7 +93,7 @@ export default async function FrontendLayout({
   const hasConsent = cookieStore.get('cookie-consent')?.value === 'accepted'
 
   return (
-    <html lang="en" className={`${inter.variable} ${vazirmatn.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body>
           <Suspense fallback={null}>
             <LoadingBar />

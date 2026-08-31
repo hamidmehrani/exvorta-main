@@ -24,7 +24,7 @@ export function CmsControlBlock(props: Record<string, unknown>) {
     <section className="w-full py-28 bg-[#0D0D0D] border-t border-white/10" data-purpose="cms-control">
       <div className="max-w-7xl mx-auto px-6 w-full">
         <AnimatedSection className="text-center mb-16">
-          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-6">{eyebrow}</div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/45 mb-6">{eyebrow}</div>
           <h2 className="font-serif text-4xl md:text-6xl text-white tracking-tighter leading-[1.08] font-semibold mb-6">
             {headline}
           </h2>

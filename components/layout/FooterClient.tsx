@@ -66,7 +66,7 @@ export default function FooterClient({ columns }: { columns: FooterColumn[] }) {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="border-t border-black/5 pt-12 text-center"
         >
-          <p className="text-[10px] tracking-widest text-obsidian/30 uppercase">© 2026 Exvorta. All rights reserved.</p>
+          <p className="text-[10px] tracking-widest text-obsidian/30 uppercase">© {new Date().getFullYear()} Exvorta. All rights reserved.</p>
         </m.div>
       </div>
     </footer>

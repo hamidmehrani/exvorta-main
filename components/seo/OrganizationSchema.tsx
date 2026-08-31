@@ -27,14 +27,26 @@ export default async function OrganizationSchema() {
   }
 
   const sameAs = (socialLinks?.links || []).map(link => link.url).filter(Boolean) as string[]
+  const siteUrl = process.env.NEXT_PUBLIC_SERVER_URL || ''
+
+  const graph = [
+    {
+      '@type': 'Organization',
+      name: siteName,
+      url: siteUrl,
+      logo: logoUrl || undefined,
+      sameAs: sameAs.length > 0 ? sameAs : undefined,
+    },
+    {
+      '@type': 'WebSite',
+      name: siteName,
+      url: siteUrl,
+    },
+  ]
 
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: siteName,
-    url: process.env.NEXT_PUBLIC_SERVER_URL || '',
-    logo: logoUrl || undefined,
-    sameAs: sameAs.length > 0 ? sameAs : undefined,
+    '@graph': graph,
   }
 
   return (
