@@ -35,38 +35,39 @@ export function LiveWebsiteFrame({
   className = '',
 }: LiveWebsiteFrameProps) {
   const embedUrl = liveUrl || (slug ? `https://${slug}.exvorta.com` : '')
-  const [embedOk, setEmbedOk] = useState<boolean | null>(null) // null = probing
+  type EmbedState = 'probing' | 'ok' | 'blocked'
+  const [embedOk, setEmbedOk] = useState<EmbedState>('probing')
   const frameRef = useRef<HTMLIFrameElement>(null)
   const probeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     if (!embedUrl) return
-    setEmbedOk(null)
+    setEmbedOk('probing')
     // X-Frame-Options/CSP blocks fire onload with an empty/blocked document.
-    // Heuristic: if the iframe hasn't signalled load within 6s, treat as blocked.
+    // Heuristic: if the iframe has not signalled load within 3.5s, treat as blocked.
     let loaded = false
     const onLoad = () => {
       loaded = true
       try {
         // cross-origin access throws — that's fine, means it loaded a real page
         void frameRef.current?.contentWindow?.length
-        setEmbedOk(true)
+        setEmbedOk('ok')
       } catch {
-        setEmbedOk(true)
+        setEmbedOk('ok')
       }
     }
     const el = frameRef.current
     el?.addEventListener('load', onLoad)
     probeTimer.current = setTimeout(() => {
-      if (!loaded) setEmbedOk(false)
-    }, 6000)
+      if (!loaded) setEmbedOk('blocked')
+    }, 3500)
     return () => {
       el?.removeEventListener('load', onLoad)
       if (probeTimer.current) clearTimeout(probeTimer.current)
     }
   }, [embedUrl])
 
-  const showEmbed = !!embedUrl && embedOk !== false
+  const showEmbed = !!embedUrl
 
   return (
     <div
@@ -78,7 +79,7 @@ export function LiveWebsiteFrame({
         <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E] block" />
         <span className="w-2.5 h-2.5 rounded-full bg-[#28C840] block" />
         <div className="flex-1 mx-2 bg-white/70 rounded-sm px-2 py-0.5 flex items-center justify-center gap-1.5 min-w-0">
-          {showEmbed && embedOk === true && (
+          {showEmbed && embedOk === 'ok' && (
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" aria-hidden />
           )}
           <span className="font-mono text-[9px] tracking-[0.15em] text-black/40 uppercase truncate">
@@ -102,33 +103,40 @@ export function LiveWebsiteFrame({
 
       {/* ── Screen ────────────────────────────────────────────────────────── */}
       <div className="relative aspect-[4/3] overflow-hidden bg-[#0D0D0D]">
-        {showEmbed ? (
-          <>
-            <iframe
-              ref={frameRef}
-              src={embedUrl}
-              title={`${title} — live website preview`}
-              loading="lazy"
-              sandbox="allow-scripts allow-same-origin allow-popups"
-              className="absolute inset-0 w-full h-full border-0 bg-white"
-            />
-            {/* blocking probe overlay while we can't confirm the embed rendered */}
-            {embedOk === null && (
-              <div className="absolute inset-0 bg-[#0D0D0D] flex flex-col items-center justify-center gap-3">
-                <div className="w-8 h-8 border-2 border-white/15 border-t-white/50 rounded-full animate-spin" />
-                <span className="font-mono text-[9px] tracking-[0.25em] text-white/30 uppercase">Connecting…</span>
-              </div>
-            )}
-          </>
-        ) : imageUrl ? (
+        {/* Screenshot always renders underneath: instant visual, and becomes
+            the graceful fallback if the live embed turns out to be blocked. */}
+        {imageUrl && (
           <Image
             src={imageUrl}
             alt={`${title} website preview`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover object-top w-full transition-transform duration-[6s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:[transform:translateY(calc(-100%_+_400px))]"
+            className={`object-cover object-top w-full transition-all duration-[6s] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              showEmbed && embedOk === 'ok'
+                ? 'opacity-0'
+                : 'opacity-100 group-hover:[transform:translateY(calc(-100%_+_400px))]'
+            }`}
           />
-        ) : (
+        )}
+        {showEmbed && (
+          <iframe
+            ref={frameRef}
+            src={embedUrl}
+            title={`${title} — live website preview`}
+            loading="lazy"
+            sandbox="allow-scripts allow-same-origin allow-popups"
+            className={`absolute inset-0 w-full h-full border-0 bg-white transition-opacity duration-700 ${
+              embedOk === 'blocked' ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            }`}
+          />
+        )}
+        {showEmbed && embedOk === 'probing' && (
+          <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2 bg-black/70 px-2.5 py-1 rounded">
+            <div className="w-3 h-3 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
+            <span className="font-mono text-[8px] tracking-[0.2em] text-white/50 uppercase">Connecting…</span>
+          </div>
+        )}
+        {!showEmbed && !imageUrl && (
           <div className="absolute inset-0 bg-gradient-to-br from-[#1A1A1A] to-[#0D0D0D] flex flex-col items-center justify-center gap-4">
             <div className="w-12 h-12 border border-white/10 flex items-center justify-center">
               <div className="w-6 h-6 border border-white/20" />
