@@ -109,7 +109,7 @@ export function ProductShowcaseBlock(props: any) {
 </div>
 </div>
 {/*  Grid Row 2: Logistics Info  */}
-<div className="grid grid-cols-4 border-b bg-gray-50/50 border-gray-300">
+<div className="grid grid-cols-2 sm:grid-cols-4 border-b bg-gray-50/50 border-gray-300">
 <div className="p-1.5 border-r border-gray-300">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">VESSEL</div>
 <div className="text-[9px] font-normal">MSC Isabella</div>

@@ -122,7 +122,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks }) => {
             CLIENT LOGIN
           </Link>
           <Link href="/rfq" className="btn-primary min-h-[44px]">
-            [ REQUEST PROPOSAL ]
+            [ START YOUR PROJECT ]
           </Link>
         </div>
 
@@ -185,7 +185,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks }) => {
                   CLIENT LOGIN
                 </Link>
                 <Link href="/rfq" className="min-h-[44px] inline-flex items-center justify-center btn-primary" onClick={closeMenu}>
-                  [ REQUEST PROPOSAL ]
+                  [ START YOUR PROJECT ]
                 </Link>
               </div>
             </nav>

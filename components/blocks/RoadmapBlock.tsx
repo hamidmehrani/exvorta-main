@@ -137,7 +137,7 @@ export function RoadmapBlock(props: any) {
 </StaggerContainer>
 {/*  Waitlist UI  */}
 <motion.div
-  className="max-w-[115%] w-full max-w-xl mx-auto text-center"
+  className="w-full max-w-xl mx-auto text-center"
   initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
   whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
   viewport={{ once: true, margin: '-60px' }}

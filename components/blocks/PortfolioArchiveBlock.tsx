@@ -66,7 +66,7 @@ function isUsableUrl(url?: string): boolean {
 }
 
 function resolveCaseStudyUrl(project: InlineProject): string {
-  if (isUsableUrl(project.linkUrl)) return project.linkUrl;
+  if (isUsableUrl(project.linkUrl) && project.linkUrl) return project.linkUrl;
   const match = Object.keys(TITLE_SLUG_ROUTES).find(k =>
     project.title.toLowerCase().includes(k),
   );
@@ -74,7 +74,7 @@ function resolveCaseStudyUrl(project: InlineProject): string {
 }
 
 function resolveProjectImage(project: InlineProject): string {
-  if (isUsableUrl(project.imageUrl)) return project.imageUrl;
+  if (isUsableUrl(project.imageUrl) && project.imageUrl) return project.imageUrl;
   const match = Object.keys(TITLE_IMAGE_ROUTES).find(k =>
     project.title.toLowerCase().includes(k),
   );

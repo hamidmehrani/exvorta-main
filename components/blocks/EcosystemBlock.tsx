@@ -284,7 +284,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </div>
 
 <div className="p-8 md:p-12 flex flex-col gap-8 flex-grow overflow-x-auto"><div className="flex flex-col gap-6 h-full font-mono text-[10px] text-white/70 min-w-[600px]">
-<div className="grid grid-cols-3 gap-4">
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 <div className="bg-mockup-card border border-white/20 p-4 flex flex-col gap-2">
 <span className="text-white/40 tracking-widest">[ ACTIVE SHIPMENTS ]</span>
 <span className="text-brand-emerald text-lg font-bold">12</span>

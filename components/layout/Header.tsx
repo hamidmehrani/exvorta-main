@@ -15,11 +15,12 @@ export const Header = async () => {
     console.warn('[Header] CMS navigation unavailable, using fallback', error)
   }
 
-  // Mirrors the design spec header: PORTFOLIO · ECOSYSTEM · THE FIRM
+  // Sales-psychology nav: what it is → proof → who we are.
   const fallbackLinks: NonNullable<Navigation['links']> = [
-    { link: { type: 'custom', label: 'PORTFOLIO', url: '/portfolio' }, id: 'fallback-1' },
-    { link: { type: 'custom', label: 'ECOSYSTEM', url: '/ecosystem' }, id: 'fallback-2' },
-    { link: { type: 'custom', label: 'THE FIRM', url: '/about' }, id: 'fallback-3' },
+    { link: { type: 'custom', label: 'EXVORTA WEB', url: '/web' }, id: 'fallback-1' },
+    { link: { type: 'custom', label: 'PORTFOLIO', url: '/portfolio' }, id: 'fallback-2' },
+    { link: { type: 'custom', label: 'ECOSYSTEM', url: '/ecosystem' }, id: 'fallback-3' },
+    { link: { type: 'custom', label: 'THE FIRM', url: '/about' }, id: 'fallback-4' },
   ]
 
   const finalNavLinks = navData?.links?.length ? navData.links : fallbackLinks

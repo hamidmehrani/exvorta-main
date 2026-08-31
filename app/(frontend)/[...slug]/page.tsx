@@ -37,6 +37,17 @@ export async function generateMetadata({
     console.error('Failed to fetch page metadata', error)
   }
 
+  // The layout shell (Suspense for LoadingBar) flushes a 200 before CMS
+  // resolution, so notFound() in the body can't change the HTTP status.
+  // Keep the not-found UI, but tell crawlers the page doesn't exist.
+  const missing = !pageDoc && !['exvorta-web', 'web', 'the-firm', 'about', 'home'].includes(pageSlug)
+  if (missing) {
+    return {
+      title: 'Page Not Found | Exvorta',
+      robots: { index: false, follow: false },
+    }
+  }
+
   return generateMeta({ doc: pageDoc, url: `/${pageSlug}` })
 }
 
@@ -63,6 +74,7 @@ export default async function DynamicPage({
         { id: 'fs-1', blockType: 'featureShowcase', label: '[ ARCHITECTURAL SPECS ]', title: 'Pure Code. Flawless Aesthetics.' },
         { id: 'pr-1', blockType: 'process' },
         { id: 'ps-1', blockType: 'portfolioShowcase' },
+        { id: 'cms-control-1', blockType: 'cmsControl' },
         { id: 'pric-1', blockType: 'pricing' },
         { id: 'test-1', blockType: 'testimonialBlock' },
         { id: 'faq-1', blockType: 'faq' },

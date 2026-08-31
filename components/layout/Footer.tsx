@@ -39,7 +39,7 @@ export default async function Footer() {
   const fallbackColumns: NonNullable<FooterType['columns']> = [
     {
       id: 'col-1',
-      title: 'THE ECOSYSTEM',
+      title: 'WHAT WE BUILD',
       links: [
         { id: 'link-1-1', link: { type: 'custom', label: 'Exvorta Web', url: '/web' } },
         { id: 'link-1-2', link: { type: 'custom', label: 'Ecosystem', url: '/ecosystem' } },
@@ -48,7 +48,7 @@ export default async function Footer() {
     },
     {
       id: 'col-2',
-      title: 'COMPANY',
+      title: 'WHY EXVORTA',
       links: [
         { id: 'link-2-1', link: { type: 'custom', label: 'The Firm', url: '/about' } },
         { id: 'link-2-2', link: { type: 'custom', label: 'Insights', url: '/insights' } },
@@ -57,9 +57,9 @@ export default async function Footer() {
     },
     {
       id: 'col-3',
-      title: 'LEGAL & ACCESS',
+      title: 'GET STARTED',
       links: [
-        { id: 'link-3-1', link: { type: 'custom', label: 'Request Proposal', url: '/rfq' } },
+        { id: 'link-3-1', link: { type: 'custom', label: 'Start Your Project', url: '/rfq' } },
         { id: 'link-3-2', link: { type: 'custom', label: 'Privacy Policy', url: '/legal#privacy' } },
         { id: 'link-3-3', link: { type: 'custom', label: 'Terms of Service', url: '/legal#terms' } },
       ],

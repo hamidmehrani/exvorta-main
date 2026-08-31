@@ -31,6 +31,7 @@ const blockComponents: Record<string, unknown> = {
   process: ProcessBlock, processBlock: ProcessBlock, faq: FAQBlock, faqBlock: FAQBlock, pricing: PricingBlock, pricingBlock: PricingBlock,
   testimonialBlock: TestimonialBlock, thesis: ThesisBlock, vision: VisionBlock, founder: FounderBlock, globalPresence: GlobalPresenceBlock,
   portfolioShowcase: PortfolioShowcaseBlock, teamShowcase: TeamShowcaseBlock, contactForm: ContactFormBlock, rfqForm: RFQFormBlock,
+  cmsControl: dynamic(() => import('./CmsControlBlock').then(m => m.default || m.CmsControlBlock), { ssr: false }),
   waitlistForm: WaitlistFormBlock, roadmap: RoadmapBlock, problemStatement: ProblemStatementBlock,
   portfolioArchive: dynamic(() => import('./PortfolioArchiveBlock').then(m => m.default || m.PortfolioArchiveBlock), { ssr: false }),
   portfolio: dynamic(() => import('./PortfolioArchiveBlock').then(m => m.default || m.PortfolioArchiveBlock), { ssr: false }),
