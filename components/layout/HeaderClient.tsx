@@ -103,7 +103,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks }) => {
       }`}
       data-purpose="site-header"
     >
-      <div className="container-site h-20 flex items-center justify-between">
+      <div className="container-site h-20 flex items-center justify-between gap-4 lg:gap-8">
         {/* Logo */}
         <div className="flex-shrink-0">
           <Link href="/" className="font-serif text-2xl font-semibold tracking-wide text-obsidian uppercase">
@@ -111,23 +111,23 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks }) => {
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-12 text-[11px] font-medium tracking-widest text-obsidian/60 uppercase">
+        {/* Desktop Navigation — full nav only at lg+; below that the drawer handles it */}
+        <nav className="hidden lg:flex items-center gap-12 text-[11px] font-medium tracking-widest text-obsidian/60 uppercase min-w-0">
           {renderLinks()}
         </nav>
 
         {/* CTA */}
-        <div className="hidden md:flex items-center gap-6">
-          <Link href="/login" className="text-[10px] tracking-[0.2em] font-mono text-black/70 hover:text-black uppercase transition-all">
+        <div className="hidden lg:flex items-center gap-6 shrink-0">
+          <Link href="/login" className="text-[10px] tracking-[0.2em] font-mono text-black/70 hover:text-black uppercase transition-all whitespace-nowrap">
             CLIENT LOGIN
           </Link>
-          <Link href="/rfq" className="btn-primary min-h-[44px]">
+          <Link href="/rfq" className="btn-primary min-h-[44px] whitespace-nowrap">
             [ START YOUR PROJECT ]
           </Link>
         </div>
 
-        {/* Mobile menu button */}
-        <div className="md:hidden flex items-center">
+        {/* Mobile menu button — shown up to lg so the menu never squeezes */}
+        <div className="lg:hidden flex items-center">
           <button
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             className="w-11 h-11 flex items-center justify-center text-obsidian hover:text-black/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-obsidian"
@@ -155,7 +155,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks }) => {
             animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, height: 'auto' }}
             exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: easings.cinematic }}
-            className="md:hidden border-t border-black/5 bg-cream absolute top-full left-0 w-full z-40 overflow-hidden"
+            className="lg:hidden border-t border-black/5 bg-cream absolute top-full left-0 w-full z-40 overflow-hidden"
           >
             <nav className="flex flex-col p-6 gap-4">
               {navLinks.map((item, idx) => {

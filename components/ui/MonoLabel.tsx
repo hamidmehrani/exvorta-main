@@ -24,6 +24,9 @@ export function MonoLabel({ children, as: Component = 'div', className = '', ...
     setText(originalText)
     if (prefersReducedMotion || !containerRef.current || !originalText) return
     let ctx: GsapContext | undefined
+    // Safety net: if ScrollTrigger never fires (label already in view, GSAP
+    // load failure, hidden pane), resolve to the real text after 1.2s.
+    const fallbackTimer = setTimeout(() => setText(originalText), 1200)
     Promise.all([
       import('gsap').then(m => m.gsap || m.default),
       import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
@@ -32,7 +35,7 @@ export function MonoLabel({ children, as: Component = 'div', className = '', ...
       gsap.registerPlugin(ScrollTrigger)
 
       const obj = { value: 0 }
-      
+
       ctx = gsap.context(() => {
         gsap.to(obj, {
           value: originalText.length,
@@ -40,7 +43,8 @@ export function MonoLabel({ children, as: Component = 'div', className = '', ...
           ease: 'power2.inOut',
           scrollTrigger: {
             trigger: containerRef.current,
-            start: 'top 90%',
+            start: 'top bottom',
+            once: true,
           },
           onUpdate: () => {
             const progress = Math.floor(obj.value)
@@ -51,12 +55,19 @@ export function MonoLabel({ children, as: Component = 'div', className = '', ...
             }).join('')
             setText(scrambled)
           },
-          onComplete: () => setText(originalText)
+          onComplete: () => {
+            clearTimeout(fallbackTimer)
+            setText(originalText)
+          }
         })
       })
+    }).catch(() => {
+      clearTimeout(fallbackTimer)
+      setText(originalText)
     })
-    
+
     return () => {
+      clearTimeout(fallbackTimer)
       ctx?.revert()
     }
   }, [originalText, prefersReducedMotion])

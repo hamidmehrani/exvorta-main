@@ -60,11 +60,11 @@ export const PortfolioShowcaseBlock: React.FC<PortfolioShowcaseBlockProps> = (pr
               <LiveWebsiteFrame
                 title={projectData.title || "Portfolio Project"}
                 imageUrl={
-                  typeof projectData.featuredImage === 'object' 
-                    ? projectData.featuredImage?.url 
+                  typeof projectData.featuredImage === 'object'
+                    ? projectData.featuredImage?.url
                     : undefined
                 }
-                liveUrl={projectData.liveUrl}
+                liveUrl={projectData.liveUrl || (projectData.slug ? `https://${projectData.slug}.exvorta.com` : undefined)}
                 industry={projectData.clientInfo?.industry || "ENTERPRISE"}
                 volume={projectData.clientInfo?.volume || "N/A"}
                 service={projectData.clientInfo?.service || "DIGITAL INFRASTRUCTURE"}

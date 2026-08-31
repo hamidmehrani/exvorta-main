@@ -19,7 +19,7 @@ export default function FooterClient({ columns }: { columns: FooterColumn[] }) {
             transition={{ duration: 0.55, ease: EASE_OUT }}
             className="col-span-2 md:col-span-1"
           >
-            <Link href="/" className="block mb-6" aria-label="Exvorta home">
+            <Link href="/" className="inline-flex items-center min-h-[44px] mb-4" aria-label="Exvorta home">
               <span className="font-serif text-xl font-semibold tracking-wide text-obsidian uppercase">
                 EXVORTA
               </span>
@@ -40,16 +40,16 @@ export default function FooterClient({ columns }: { columns: FooterColumn[] }) {
               <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">
                 {column.title}
               </h4>
-              <ul className="space-y-4 text-[11px] text-obsidian/60">
+              <ul className="space-y-1 text-[11px] text-obsidian/60">
                 {column.links.map((link) => (
                   <li key={link.id}>
                     <Link
                       href={link.href}
-                      className="group relative inline-block hover:text-obsidian transition-colors duration-300"
+                      className="group relative inline-flex min-h-[40px] items-center hover:text-obsidian transition-colors duration-300"
                       target={link.external ? '_blank' : undefined}
                       rel={link.external ? 'noopener noreferrer' : undefined}
                     >
-                      <span className="absolute inset-x-0 bottom-[-3px] h-px bg-obsidian scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+                      <span className="absolute inset-x-0 bottom-[9px] h-px bg-obsidian scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
                       {link.label}
                     </Link>
                   </li>

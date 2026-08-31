@@ -167,6 +167,7 @@ function HomepagePortfolioSection({
               <LiveWebsiteFrame
                 title={project.title}
                 imageUrl={resolveProjectImage(project)}
+                liveUrl={resolveCaseStudyUrl(project).startsWith('/portfolio/') ? `https://${resolveCaseStudyUrl(project).split('/').pop()}.exvorta.com` : undefined}
                 industry={project.industry}
                 volume={project.volume}
                 service={project.service}
@@ -280,6 +281,7 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
                     <LiveWebsiteFrame
                       title={project.title}
                       imageUrl={extractMediaUrl(project.heroImage, project.slug)}
+                      liveUrl={project.liveUrl || (project.slug ? `https://${project.slug}.exvorta.com` : undefined)}
                       slug={project.slug}
                     />
 
