@@ -8,10 +8,12 @@ import { MonoLabel } from '../ui/MonoLabel';
 import { TiltCard } from '../ui/motion/TiltCard';
 import { m as motion } from 'framer-motion';
 import { easings, useReducedMotion } from '@/lib/animations';
+import { DocTemplateIcon, type DocTemplateIconName } from '@/components/ui/DocTemplateIcon';
 
 const DOC_TEMPLATES = [
   {
     id: 'bol',
+    tagline: 'Core shipping contract',
     name: 'Bill of Lading',
     icon: 'sailing',
     incoterms: 'CIF (Cost, Insurance & Freight)',
@@ -30,6 +32,7 @@ const DOC_TEMPLATES = [
   },
   {
     id: 'co',
+    tagline: 'Customs clearance proof',
     name: 'Certificate of Origin',
     icon: 'workspace_premium',
     incoterms: 'FOB (Free On Board)',
@@ -48,6 +51,7 @@ const DOC_TEMPLATES = [
   },
   {
     id: 'insurance',
+    tagline: 'All-risks cargo cover',
     name: 'Insurance Certificate',
     icon: 'verified_user',
     incoterms: 'CIP (Carriage & Insurance Paid)',
@@ -66,6 +70,7 @@ const DOC_TEMPLATES = [
   },
   {
     id: 'ai-packing',
+    tagline: 'AI-classified · self-validating',
     name: 'AI Packing List',
     icon: 'auto_awesome',
     incoterms: 'DAP (Delivered At Place)',
@@ -84,6 +89,7 @@ const DOC_TEMPLATES = [
   },
   {
     id: 'premium',
+    tagline: 'Executive 6-document suite',
     name: 'Premium Dossier Pack',
     icon: 'diamond',
     incoterms: 'MULTI — Full Contract Suite',
@@ -174,11 +180,14 @@ export function ProductShowcaseBlock(props: any) {
         : 'bg-white/[0.03] border-hairline-dark text-white/60 hover:text-white hover:bg-white/5'
     }`}
   >
-    <span className="flex items-center gap-2 min-w-0">
-      <span className={`material-symbols-outlined text-[13px] ${i === activeDoc ? 'text-brand-emerald' : 'text-white/35'}`}>{t.icon}</span>
-      <span className="truncate">{t.name}</span>
+    <span className="flex items-start gap-2.5 min-w-0">
+      <DocTemplateIcon name={t.icon as DocTemplateIconName} className={`w-4 h-4 shrink-0 mt-px transition-colors ${i === activeDoc ? 'text-brand-emerald' : 'text-white/35'}`} />
+      <span className="min-w-0">
+        <span className="block leading-tight">{t.name}</span>
+        <span className={`block text-[8px] font-sans tracking-wide leading-tight mt-0.5 ${i === activeDoc ? 'text-white/50' : 'text-white/25'}`}>{t.tagline}</span>
+      </span>
     </span>
-    {i === activeDoc && <span className="text-brand-emerald text-[9px]">●</span>}
+    {i === activeDoc && <span className="text-brand-emerald text-[9px] leading-none">●</span>}
   </button>
 ))}
 </div>

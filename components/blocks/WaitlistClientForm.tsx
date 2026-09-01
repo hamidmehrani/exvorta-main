@@ -63,8 +63,8 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
     }
   }
 
-  const inputClass = "bg-transparent border-b border-white/20 px-8 py-5 text-white placeholder:text-transparent font-mono tracking-widest outline-none focus:border-brand-emerald focus:ring-0 transition-colors rounded-none text-center w-full peer relative z-10"
-  const labelClass = "absolute inset-0 flex items-center justify-center text-white/40 font-mono tracking-widest uppercase transition-all duration-300 pointer-events-none peer-focus:scale-110 peer-focus:opacity-0 peer-not-placeholder-shown:scale-110 peer-not-placeholder-shown:opacity-0"
+  const inputClass = "peer w-full bg-white/[0.03] border border-white/15 px-5 pt-6 pb-2.5 text-white text-sm font-mono tracking-widest outline-none focus:border-brand-emerald focus:bg-white/[0.05] focus:ring-0 transition-colors rounded-none placeholder-transparent relative z-10"
+  const labelClass = "absolute start-5 top-2 text-[9px] font-mono tracking-[0.2em] text-white/40 uppercase transition-all duration-200 pointer-events-none peer-focus:text-brand-emerald"
 
   const InputWrapper = ({ children, isFocused }: { children: React.ReactNode, isFocused?: boolean }) => (
     <div className="relative w-full group overflow-hidden bg-brand-obsidian/50 backdrop-blur-sm">
@@ -79,7 +79,7 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: EASE_OUT }}
-      className="w-full max-w-md"
+      className="w-full max-w-xl"
     >
       <form onSubmit={onSubmit} className="flex flex-col gap-6 rounded-none relative">
         <input type="hidden" name="source" value={source || 'Waitlist'} />
@@ -147,7 +147,7 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
               className="flex flex-col gap-4 relative"
             >
               <InputWrapper>
-                <input 
+                <input id="wl-name" 
                   name="name"
                   type="text" 
                   required
@@ -155,11 +155,11 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
                   className={inputClass}
                   disabled={isPending}
                 />
-                <label className={labelClass}>ENTER FULL NAME...</label>
+                <label htmlFor="wl-name" className={labelClass}>ENTER FULL NAME...</label>
               </InputWrapper>
               
               <InputWrapper>
-                <input 
+                <input id="wl-company" 
                   name="company"
                   type="text" 
                   required
@@ -167,11 +167,11 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
                   className={inputClass}
                   disabled={isPending}
                 />
-                <label className={labelClass}>ENTER COMPANY NAME...</label>
+                <label htmlFor="wl-company" className={labelClass}>ENTER COMPANY NAME...</label>
               </InputWrapper>
               
               <InputWrapper>
-                <input 
+                <input id="wl-role" 
                   name="role"
                   type="text" 
                   required
@@ -179,11 +179,11 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
                   className={inputClass}
                   disabled={isPending}
                 />
-                <label className={labelClass}>ENTER YOUR ROLE...</label>
+                <label htmlFor="wl-role" className={labelClass}>ENTER YOUR ROLE...</label>
               </InputWrapper>
               
               <InputWrapper>
-                <input 
+                <input id="wl-email" aria-label="Corporate email" 
                   name="email"
                   type="email" 
                   required
@@ -193,7 +193,7 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
                   className={inputClass}
                   disabled={isPending}
                 />
-                <label className={labelClass}>{placeholder || 'ENTER CORPORATE EMAIL...'}</label>
+                <label htmlFor="wl-email" className={labelClass}>{placeholder || 'ENTER CORPORATE EMAIL...'}</label>
               </InputWrapper>
               
               <div className="mt-4">

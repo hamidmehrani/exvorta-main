@@ -39,9 +39,9 @@ export const RFQFormBlock: React.FC<RFQFormBlockType> = (props) => {
                     ))
                   ) : (
                     <>
-                      <StaggerItem><li className="flex items-start gap-4 list-none"><span className="text-brand-emerald/80">01.</span><span>Discovery</span></li></StaggerItem>
-                      <StaggerItem><li className="flex items-start gap-4 list-none"><span className="text-brand-emerald/80">02.</span><span>Scope Blueprint</span></li></StaggerItem>
-                      <StaggerItem><li className="flex items-start gap-4 list-none"><span className="text-brand-emerald/80">03.</span><span>Execution</span></li></StaggerItem>
+                      <StaggerItem><li className="flex items-start gap-4 list-none"><span className="text-brand-emerald/80">01.</span><span><span className="text-white">Discovery call</span> <span className="text-white/40">— 30 min, this week</span></span></li></StaggerItem>
+                      <StaggerItem><li className="flex items-start gap-4 list-none"><span className="text-brand-emerald/80">02.</span><span><span className="text-white">Scope blueprint &amp; fixed quote</span> <span className="text-white/40">— within 48h</span></span></li></StaggerItem>
+                      <StaggerItem><li className="flex items-start gap-4 list-none"><span className="text-brand-emerald/80">03.</span><span><span className="text-white">Build kickoff</span> <span className="text-white/40">— no obligation until you approve</span></span></li></StaggerItem>
                     </>
                   )}
                 </StaggerContainer>
@@ -55,6 +55,23 @@ export const RFQFormBlock: React.FC<RFQFormBlockType> = (props) => {
           <div className="max-w-2xl mx-auto w-full">
             <Reveal y={24} delay={0.15}>
               <RFQForm />
+            </Reveal>
+            <Reveal y={16} delay={0.3}>
+              <div className="mt-14 pt-8 border-t border-[#E5E5E5] grid grid-cols-1 sm:grid-cols-3 gap-6">
+                {[
+                  ['NO OBLIGATION', 'A quote costs nothing and commits you to nothing.'],
+                  ['24H RESPONSE', 'An engineering director reviews every RFQ personally.'],
+                  ['YOUR DATA STAYS YOURS', 'Encrypted, never sold, never shared. GDPR-grade.'],
+                ].map(([t, d]) => (
+                  <div key={t} className="flex flex-col gap-1.5">
+                    <span className="flex items-center gap-2 text-[9px] font-mono tracking-[0.2em] text-brand-emerald uppercase font-bold">
+                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7" /></svg>
+                      {t}
+                    </span>
+                    <span className="text-xs text-black/45 font-light leading-relaxed">{d}</span>
+                  </div>
+                ))}
+              </div>
             </Reveal>
           </div>
         </div>

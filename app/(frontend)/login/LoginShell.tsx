@@ -36,7 +36,7 @@ export default function LoginShell() {
         <h1 className="text-3xl font-extrabold text-text mb-2 tracking-tight">Client Portal</h1>
         <p className="text-muted mb-6 font-medium">Sign in to access your project workspace.</p>
         <div className="mb-8 w-full flex items-start gap-3 bg-surface-2 border border-border rounded-lg p-4 text-start">
-          <span className="material-symbols-outlined text-[18px] text-steel mt-0.5">info</span>
+          <svg className="w-4 h-4 text-steel shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="9" /><path d="M12 11v5" /><circle cx="12" cy="8" r="0.5" fill="currentColor" stroke="none" /><circle cx="12" cy="8" r="0.9" /></svg>
           <p className="text-[11px] text-muted leading-relaxed">
             Client dashboards are being provisioned. You can sign in now — project
             workspaces unlock for active engagements. Need access? Email

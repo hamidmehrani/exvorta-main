@@ -274,7 +274,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <p className="text-lg text-white/60 font-sans leading-relaxed mb-8 max-w-2xl">Real-time, verifiable visibility into your global trade pipeline. Exvorta Track moves asset tracking from static spreadsheets to a dynamic, hardened data ecosystem, connecting directly with major global carriers and freight forwarders.</p>
 <Button className="w-max bg-transparent border border-white text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center gap-3 group" href="/waitlist">
                 [ REQUEST ALPHA ACCESS ]
-                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
 </Button>
 </div>
 
@@ -371,7 +371,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <div className="w-48 border-r border-brand-obsidian hidden md:flex flex-col bg-brand-cream">
 <div className="p-4 border-b border-brand-obsidian">
 <div className="h-7 bg-white border border-brand-obsidian px-2 flex items-center gap-2">
-<span className="material-symbols-outlined text-[12px] text-black/20">search</span>
+<svg className="w-3 h-3 text-black/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
 <div className="w-[1px] h-3 bg-brand-emerald animate-cursor-blink"></div>
 </div>
 </div>
@@ -488,7 +488,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <p className="text-lg text-black/60 font-sans leading-relaxed mb-10">Manage every buyer and supplier relationship in one place. Deal pipelines, document history, follow-up reminders — built specifically for how traders actually work.</p>
 <Button className="w-max bg-transparent border border-brand-obsidian text-black px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-brand-obsidian hover:text-white transition-all flex items-center gap-3" href="/waitlist">
                 [ JOIN THE WAITLIST ]
-                <span className="material-symbols-outlined text-sm">terminal</span>
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m5 8 4 4-4 4" /><path d="M12 17h7" /></svg>
 </Button>
 </div>
 </Container>

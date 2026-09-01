@@ -331,3 +331,8 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   .lwframe-capture { transition: none; }
 }
+
+/* Waitlist: label turns emerald on input focus */
+input:focus + label[class*="top-2"] {
+  color: #059669 !important;
+}

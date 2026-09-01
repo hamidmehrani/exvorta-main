@@ -25,7 +25,7 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
       <div className="absolute inset-0 z-0 bg-noise mix-blend-overlay rounded-none pointer-events-none" style={{ opacity: 0.03 }}></div>
 
       {/* Content Container */}
-      <div className="w-full max-w-2xl mx-auto flex flex-col items-center text-center relative z-10">
+      <div className="w-full max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
 
         {/* Typography Block */}
         <Reveal y={14}>

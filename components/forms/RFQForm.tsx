@@ -116,12 +116,13 @@ export default function RFQForm() {
           </div>
           <InputWrapper>
             <input id="rfq-companyName" name="companyName" className={inputClass} placeholder="COMPANY NAME" type="text" disabled={isPending} />
-            <label htmlFor="rfq-companyName" className={labelClass}>COMPANY NAME</label>
+            <label htmlFor="rfq-companyName" className={labelClass}>COMPANY NAME (OPTIONAL)</label>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
           <InputWrapper>
-            <input id="rfq-email" name="email" className={inputClass} placeholder="WORK EMAIL" type="email" required disabled={isPending} />
-            <label htmlFor="rfq-email" className={labelClass}>WORK EMAIL *</label>
+            <input id="rfq-email" name="email" className={inputClass} placeholder="YOUR EMAIL" type="email" disabled={isPending} />
+            <label htmlFor="rfq-email" className={labelClass}>YOUR EMAIL</label>
+<span className="block text-[9px] font-mono text-black/30 tracking-wide mt-1">Corporate or Gmail — both fine.</span>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
         </div>
