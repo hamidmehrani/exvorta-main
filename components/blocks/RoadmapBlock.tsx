@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/Reveal';
 import { Container } from '../ui/Container';
 import { m as motion } from 'framer-motion';
@@ -67,6 +68,11 @@ export function RoadmapBlock(props: any) {
 <div className="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ PHASE 1 ]</div>
 <h3 className="text-xl font-serif mb-4 text-white">Exvorta Track</h3>
 <p className="text-xs text-gray-400 leading-relaxed font-light">End-to-end multimodal logistics telemetry and predictive freight visibility.</p>
+<div className="mt-5">
+<Link href="/waitlist" className="inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-white/50 hover:text-brand-emerald transition-colors">
+  JOIN TRACK WAITLIST <span className="text-[10px]">→</span>
+</Link>
+</div>
 </div>
 </motion.div>
 </StaggerItem>
@@ -82,6 +88,11 @@ export function RoadmapBlock(props: any) {
 <div className="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ PHASE 2 ]</div>
 <h3 className="text-xl font-serif mb-4 text-white">Exvorta CRM</h3>
 <p className="text-xs text-gray-400 leading-relaxed font-light">Trade-specific counterparty risk management and global vendor intelligence.</p>
+<div className="mt-5">
+<Link href="/waitlist" className="inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-white/50 hover:text-brand-emerald transition-colors">
+  JOIN CRM WAITLIST <span className="text-[10px]">→</span>
+</Link>
+</div>
 </div>
 </motion.div>
 </StaggerItem>
@@ -97,6 +108,11 @@ export function RoadmapBlock(props: any) {
 <div className="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ PHASE 3 ]</div>
 <h3 className="text-xl font-serif mb-4 text-white">Exvorta Intel</h3>
 <p className="text-xs text-gray-400 leading-relaxed font-light">Proprietary market data, trade flows, and real-time commodities pricing benchmarks.</p>
+<div className="mt-5">
+<Link href="/waitlist" className="inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-white/50 hover:text-brand-emerald transition-colors">
+  JOIN INTEL WAITLIST <span className="text-[10px]">→</span>
+</Link>
+</div>
 </div>
 </motion.div>
 </StaggerItem>
@@ -115,6 +131,11 @@ export function RoadmapBlock(props: any) {
 <p className="text-xs md:text-sm text-gray-400 leading-relaxed font-light">
               The ultimate convergence. A singular, unified digital infrastructure seamlessly integrating your web presence, automated compliance, logistics, and intelligence into one trade OS.
             </p>
+<div className="mt-6">
+<Link href="/waitlist" className="inline-flex items-center gap-3 px-8 py-3.5 bg-white/5 border border-white/20 text-white font-mono text-[10px] uppercase tracking-[0.2em] hover:bg-brand-emerald hover:border-brand-emerald transition-all duration-300">
+  [ JOIN THE SUITE WAITLIST ] <span>→</span>
+</Link>
+</div>
 </div>
 <div className="w-full md:w-1/3 flex items-center justify-center">
 <div className="relative w-48 h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">

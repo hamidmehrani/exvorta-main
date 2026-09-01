@@ -1,5 +1,7 @@
 'use client'
 
+import { sanitizeHeadingHtml } from '@/utils/heading-sanitize'
+
 import React from 'react'
 import Link from 'next/link'
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
@@ -26,7 +28,7 @@ export function CmsControlBlock(props: Record<string, unknown>) {
         <AnimatedSection className="text-center mb-16">
           <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/45 mb-6">{eyebrow}</div>
           <h2 className="font-serif text-4xl md:text-6xl text-white tracking-tighter leading-[1.08] font-semibold mb-6">
-            {headline}
+            <span dangerouslySetInnerHTML={{ __html: sanitizeHeadingHtml(headline) }} />
           </h2>
           <p className="font-sans text-base md:text-lg text-white/50 max-w-2xl mx-auto font-light">
             Every Exvorta deployment ships with a custom content panel engineered for your team.

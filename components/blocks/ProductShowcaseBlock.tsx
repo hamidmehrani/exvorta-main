@@ -9,8 +9,103 @@ import { TiltCard } from '../ui/motion/TiltCard';
 import { m as motion } from 'framer-motion';
 import { easings, useReducedMotion } from '@/lib/animations';
 
+const DOC_TEMPLATES = [
+  {
+    id: 'bol',
+    name: 'Bill of Lading',
+    icon: 'sailing',
+    incoterms: 'CIF (Cost, Insurance & Freight)',
+    hs: '2901.21.00',
+    port: 'AE JEA (JEBEL ALI)',
+    shipper: 'Global Petrochem LLC\nJafza One, Dubai, UAE',
+    consignee: 'Vanguard Resources\nBotlek, Rotterdam, Netherlands',
+    vessel: 'MSC Isabella',
+    voyage: 'V-092A',
+    pol: 'AE JEA',
+    pod: 'NL RTM',
+    desc: 'Petrochemical Raw Materials in ISO Tank Containers.',
+    weight: '24,500.00 KGS',
+    hs2: '2901.21.00',
+    ref: 'EXV-8829-DXB',
+  },
+  {
+    id: 'co',
+    name: 'Certificate of Origin',
+    icon: 'workspace_premium',
+    incoterms: 'FOB (Free On Board)',
+    hs: '0904.11.00',
+    port: 'TR IZM (IZMIR)',
+    shipper: 'Aegean Organic Export Co.\nIzmir Organize Sanayi, Türkiye',
+    consignee: 'Meridian Foods GmbH\nHafenstraße 12, Hamburg, Germany',
+    vessel: 'APL Sentosa',
+    voyage: 'V-0143W',
+    pol: 'TR IZM',
+    pod: 'DE HAM',
+    desc: 'Certified Organic Oregano, Whole Leaf — EU/USDA NOP Organic.',
+    weight: '18,200.00 KGS',
+    hs2: '0904.11.00',
+    ref: 'EXV-4471-IZM',
+  },
+  {
+    id: 'insurance',
+    name: 'Insurance Certificate',
+    icon: 'verified_user',
+    incoterms: 'CIP (Carriage & Insurance Paid)',
+    hs: '9999.00.00',
+    port: 'AE DXB (JEBEL ALI)',
+    shipper: 'Exvorta Trade Services\nDMCC, Dubai, UAE',
+    consignee: 'Novus Energy Pte.\nSingapore 049483',
+    vessel: 'MV Sentinel',
+    voyage: 'V-2201S',
+    pol: 'AE DXB',
+    pod: 'SG SIN',
+    desc: 'Marine Cargo Insurance — All Risks (A) covering 4,500,000 USD shipment value.',
+    weight: 'COVER: 4,500,000 USD',
+    hs2: 'POLICY: MRN-88210',
+    ref: 'EXV-9912-SIN',
+  },
+  {
+    id: 'ai-packing',
+    name: 'AI Packing List',
+    icon: 'auto_awesome',
+    incoterms: 'DAP (Delivered At Place)',
+    hs: '8542.31.00',
+    port: 'TW TPE (TAIPEI)',
+    shipper: 'OmniTech Manufacturing\nHsinchu Science Park, Taiwan',
+    consignee: 'Corvus Distribution Ltd.\nLondon E14, United Kingdom',
+    vessel: 'MV Helios',
+    voyage: 'V-7712H',
+    pol: 'TW TPE',
+    pod: 'GB LHR',
+    desc: 'AI-CLASSIFIED: Semiconductor Components — HS auto-matched 99.2% confidence, dual-use screened.',
+    weight: 'AI: 9,850.00 KGS (est.)',
+    hs2: 'AI MATCH: 8542.31',
+    ref: 'EXV-1005-LHR',
+  },
+  {
+    id: 'premium',
+    name: 'Premium Dossier Pack',
+    icon: 'diamond',
+    incoterms: 'MULTI — Full Contract Suite',
+    hs: 'COMPOSITE',
+    port: 'GLOBAL ROUTING',
+    shipper: 'Enterprise Client\nWhite-Glove Onboarding',
+    consignee: 'All Counterparties\nSingle Source of Truth',
+    vessel: 'MULTI-VESSEL',
+    voyage: 'CONSOLIDATED',
+    pol: 'MULTI-POL',
+    pod: 'MULTI-POD',
+    desc: 'Executive-grade bundle: B/L + CO + Insurance + Packing List, cross-validated, one signature — our most complete product.',
+    weight: 'SUITE: 6 DOCUMENTS',
+    hs2: 'STATUS: ALL CLEAR',
+    ref: 'EXV-SUITE-001',
+  },
+] as const;
+
 export function ProductShowcaseBlock(props: any) {
   const prefersReducedMotion = useReducedMotion();
+  const [activeDoc, setActiveDoc] = React.useState(0);
+  const doc = DOC_TEMPLATES[activeDoc];
 
   const column = {
     hidden: prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 40, filter: 'blur(6px)' },
@@ -67,23 +162,39 @@ export function ProductShowcaseBlock(props: any) {
 <div className="w-[30%] border-r border-hairline-dark bg-mockup-sidebar p-6 flex flex-col">
 <div className="mb-8">
 <label className="text-[9px] text-white/40 uppercase tracking-widest block mb-2">Select Template</label>
-<div className="bg-white/5 border border-hairline-dark rounded px-3 py-2 text-[10px] text-white/80 flex justify-between items-center">
-<span className="">Bill of Lading</span>
-<svg className="w-3 h-3 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+<div className="space-y-1">
+{DOC_TEMPLATES.map((t, i) => (
+  <button
+    key={t.id}
+    type="button"
+    onClick={() => setActiveDoc(i)}
+    className={`w-full flex items-center justify-between px-3 py-2 rounded text-[10px] font-mono text-start transition-all duration-200 border ${
+      i === activeDoc
+        ? 'bg-brand-emerald/15 border-brand-emerald/50 text-white'
+        : 'bg-white/[0.03] border-hairline-dark text-white/60 hover:text-white hover:bg-white/5'
+    }`}
+  >
+    <span className="flex items-center gap-2 min-w-0">
+      <span className={`material-symbols-outlined text-[13px] ${i === activeDoc ? 'text-brand-emerald' : 'text-white/35'}`}>{t.icon}</span>
+      <span className="truncate">{t.name}</span>
+    </span>
+    {i === activeDoc && <span className="text-brand-emerald text-[9px]">●</span>}
+  </button>
+))}
 </div>
 </div>
 <div className="space-y-4 mb-auto"><div className="space-y-4">
 <div className="space-y-1.5">
 <label className="text-[8px] text-white/40 uppercase tracking-widest block">INCOTERMS</label>
-<div className="bg-white/5 border border-hairline-dark rounded px-2 py-1.5 text-[10px] text-white/60">CIF (Cost, Insurance &amp; Freight)</div>
+<div className="bg-white/5 border border-hairline-dark rounded px-2 py-1.5 text-[10px] text-white/60">{doc.incoterms}</div>
 </div>
 <div className="space-y-1.5">
 <label className="text-[8px] text-white/40 uppercase tracking-widest block">HS CODE</label>
-<div className="bg-white/5 border border-hairline-dark rounded px-2 py-1.5 text-[10px] text-white/60">2901.21.00</div>
+<div className="bg-white/5 border border-hairline-dark rounded px-2 py-1.5 text-[10px] text-white/60">{doc.hs}</div>
 </div>
 <div className="space-y-1.5">
 <label className="text-[8px] text-white/40 uppercase tracking-widest block">PORT OF ORIGIN</label>
-<div className="bg-white/5 border border-hairline-dark rounded px-2 py-1.5 text-[10px] text-white/60">AE JEA (JEBEL ALI)</div>
+<div className="bg-white/5 border border-hairline-dark rounded px-2 py-1.5 text-[10px] text-white/60">{doc.port}</div>
 </div>
 </div></div>
 <Link href="/rfq" className="block mt-8 w-full text-center bg-brand-obsidian border border-gray-700 py-3 rounded text-[10px] font-bold text-white uppercase tracking-widest shadow-[0_0_15px_rgba(5,150,105,0.2)] hover:border-emerald-500/50 transition-all">Generate Document</Link>
@@ -105,7 +216,7 @@ export function ProductShowcaseBlock(props: any) {
 </div>
 <div className="text-right">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">Document Reference</div>
-<div className="text-[9px] font-normal font-mono text-brand-obsidian">REF: EXV-8829-DXB</div>
+<div className="text-[9px] font-normal font-mono text-brand-obsidian">REF: {doc.ref}</div>
 </div>
 </div>
 {/*  Grid Row 1: Partners  */}
@@ -113,15 +224,15 @@ export function ProductShowcaseBlock(props: any) {
 <div className="border-r p-1.5 border-gray-300">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium mb-0.5">1. SHIPPER</div>
 <div className="text-[9px] text-brand-obsidian leading-tight font-light">
-      Global Petrochem LLC<br/>
-      Jafza One, Dubai, UAE
+      {doc.shipper.split('\n')[0]}<br/>
+      {doc.shipper.split('\n')[1]}
     </div>
 </div>
 <div className="p-1.5">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium mb-0.5">2. CONSIGNEE</div>
 <div className="text-[9px] text-brand-obsidian leading-tight font-light">
-      Vanguard Resources<br/>
-      Botlek, Rotterdam, Netherlands
+      {doc.consignee.split('\n')[0]}<br/>
+      {doc.consignee.split('\n')[1]}
     </div>
 </div>
 </div>
@@ -129,29 +240,29 @@ export function ProductShowcaseBlock(props: any) {
 <div className="grid grid-cols-2 sm:grid-cols-4 border-b bg-gray-50/50 border-gray-300">
 <div className="p-1.5 border-r border-gray-300">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">VESSEL</div>
-<div className="text-[9px] font-normal">MSC Isabella</div>
+<div className="text-[9px] font-normal">{doc.vessel}</div>
 </div>
 <div className="p-1.5 border-r border-gray-300">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">VOYAGE</div>
-<div className="text-[9px] font-normal">V-092A</div>
+<div className="text-[9px] font-normal">{doc.voyage}</div>
 </div>
 <div className="p-1.5 border-r border-gray-300">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">POL</div>
-<div className="text-[9px] font-normal">AE JEA</div>
+<div className="text-[9px] font-normal">{doc.pol}</div>
 </div>
 <div className="p-1.5">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">POD</div>
-<div className="text-[9px] font-normal">NL RTM</div>
+<div className="text-[9px] font-normal">{doc.pod}</div>
 </div>
 </div>
 {/*  Main Data: Description  */}
 <div className="pt-3 mb-auto">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium mb-1.5">7. DESCRIPTION OF GOODS AND SERVICES</div>
 <div className="space-y-2">
-<p className="text-[10px] text-brand-obsidian leading-relaxed font-light">Petrochemical Raw Materials in ISO Tank Containers.</p>
+<p className="text-[10px] text-brand-obsidian leading-relaxed font-light">{doc.desc}</p>
 <div className="grid grid-cols-2 gap-2 text-[9px] text-gray-600 border-t border-brand-obsidian/5 pt-1.5">
-<div className="font-light">TOTAL GROSS WEIGHT: <span className="text-brand-obsidian font-normal">24,500.00 KGS</span></div>
-<div className="font-light text-right">HS CODE: <span className="text-brand-obsidian font-normal">2901.21.00</span></div>
+<div className="font-light">TOTAL GROSS WEIGHT: <span className="text-brand-obsidian font-normal">{doc.weight}</span></div>
+<div className="font-light text-right">HS CODE: <span className="text-brand-obsidian font-normal">{doc.hs2}</span></div>
 </div>
 </div>
 </div>

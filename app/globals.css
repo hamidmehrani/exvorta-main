@@ -291,3 +291,43 @@ html[dir="ltr"] body {
 html, body {
   overflow-x: clip;
 }
+
+/* ── Exvorta OS panel: luxury scrollbar + scroll affordance ─────────────── */
+.exvorta-os ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.exvorta-os ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 999px;
+}
+.exvorta-os ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.35), rgba(16, 185, 129, 0.15));
+  border-radius: 999px;
+}
+.exvorta-os ::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.55);
+}
+.exvorta-os {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(16, 185, 129, 0.35) rgba(255, 255, 255, 0.03);
+}
+/* fade masks at top/bottom of scroll areas — content dissolves instead of clipping */
+.exvorta-os [class*="overflow-y-auto"],
+.exvorta-os [class*="overflow-auto"] {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 14px, black calc(100% - 14px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, black 14px, black calc(100% - 14px), transparent 100%);
+}
+
+/* LiveWebsiteFrame: precise measured scroll-on-hover */
+.lwframe-capture {
+  transform: translateY(0);
+  transition: transform 3.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.group:hover .lwframe-capture {
+  transform: translateY(calc(-1 * var(--scroll, 0px)));
+}
+@media (prefers-reduced-motion: reduce) {
+  .lwframe-capture { transition: none; }
+}

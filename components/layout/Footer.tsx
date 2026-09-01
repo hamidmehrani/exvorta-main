@@ -51,7 +51,7 @@ export default async function Footer() {
       title: 'WHY EXVORTA',
       links: [
         { id: 'link-2-1', link: { type: 'custom', label: 'The Firm', url: '/about' } },
-        { id: 'link-2-2', link: { type: 'custom', label: 'Insights', url: '/insights' } },
+        { id: 'link-2-2', link: { type: 'custom', label: 'Join Waitlist', url: '/waitlist' } },
         { id: 'link-2-3', link: { type: 'custom', label: 'Contact Us', url: '/contact' } },
       ],
     },

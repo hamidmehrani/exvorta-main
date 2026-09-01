@@ -1,5 +1,6 @@
 'use client'
 
+import { sanitizeHeadingHtml } from '@/utils/heading-sanitize'
 import React from 'react'
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 
@@ -17,7 +18,7 @@ export interface FirmBlockProps {
 
 export const FirmBlock: React.FC<FirmBlockProps> = (props) => {
   const eyebrow = props.eyebrow || "[ HOW WE OPERATE ]"
-  const headline = props.headline || "Methodical.<br/>Relentless.<br/><span class=\"text-white/50\">Pure Execution.</span>"
+  const headline = sanitizeHeadingHtml(props.headline || 'Methodical.<br/>Relentless.<br/><span class="text-brand-emerald">Pure Execution.</span>')
   const description = props.description || "We do not operate like a traditional agency. We function as an outsourced architectural wing for your trading operations. High velocity, zero friction."
   
   const defaultPillars = [
@@ -62,10 +63,10 @@ export const FirmBlock: React.FC<FirmBlockProps> = (props) => {
         <StaggerContainer className="lg:col-span-7 flex flex-col mt-12 lg:mt-0" staggerChildren={0.14} delayChildren={0.2}>
           {pillars?.map((pillar, i) => (
             <StaggerItem key={i}>
-              <div className={`border-t border-white/10 pt-8 pb-12 ${i === pillars.length - 1 ? 'border-b' : ''}`}>
+              <div className={`group/pillar border-t border-white/10 pt-8 pb-12 transition-colors duration-500 hover:border-brand-emerald/40 ${i === pillars.length - 1 ? 'border-b' : ''}`}>
                 <div className="flex items-center gap-6 mb-6">
-                  <span className="text-xs font-mono text-white/30">{pillar.number}</span>
-                  <h3 className="text-2xl font-serif text-white">{pillar.title}</h3>
+                  <span className="text-xs font-mono text-white/30 group-hover/pillar:text-brand-emerald transition-colors duration-300">{pillar.number}</span>
+                  <h3 className="text-2xl font-serif text-white group-hover/pillar:translate-x-1 transition-transform duration-300">{pillar.title}</h3>
                 </div>
                 <p className="text-white/60 leading-relaxed font-sans pl-10">
                   {pillar.description}

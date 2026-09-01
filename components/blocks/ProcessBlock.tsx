@@ -1,5 +1,6 @@
 'use client'
 
+import { sanitizeHeadingHtml } from '@/utils/heading-sanitize'
 import React from 'react'
 import { AnimatedSection, StaggerContainer, StaggerItem, EASE_OUT } from '@/components/ui/Reveal'
 import { m } from 'framer-motion'
@@ -21,7 +22,7 @@ export interface ProcessBlockProps {
 export const ProcessBlock: React.FC<ProcessBlockProps> = (props) => {
   try {
   const eyebrow = props.eyebrow || "[ THE DEPLOYMENT PIPELINE ]"
-  const headline = props.headline || "Zero Friction. Infinite Precision."
+  const headline = sanitizeHeadingHtml(props.headline || 'Zero Friction. Infinite Precision.')
   
   const defaultSteps: ProcessStep[] = [
     {
@@ -59,9 +60,10 @@ export const ProcessBlock: React.FC<ProcessBlockProps> = (props) => {
           <span className="text-[10px] font-mono tracking-[0.3em] text-black/40 uppercase mb-6 block">
             {eyebrow}
           </span>
-          <h2 className="text-4xl md:text-5xl font-serif text-black tracking-tight">
-            {headline}
-          </h2>
+          <h2
+            className="text-4xl md:text-5xl font-serif text-black tracking-tight"
+            dangerouslySetInnerHTML={{ __html: headline }}
+          />
         </div>
         
         <div className="relative max-w-4xl mx-auto">

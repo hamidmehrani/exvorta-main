@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 
 export interface LiveWebsiteFrameProps {
@@ -34,7 +34,26 @@ export function LiveWebsiteFrame({
   className = '',
 }: LiveWebsiteFrameProps) {
   const screenRef = useRef<HTMLDivElement>(null)
+  const imgRef = useRef<HTMLImageElement | null>(null)
+  const [scrollDist, setScrollDist] = useState(0)
   const [copied, setCopied] = useState(false)
+
+  // Measure exactly how far the capture must travel so its bottom edge
+  // lands flush with the viewport bottom — no overshoot, no undershoot.
+  useEffect(() => {
+    const measure = () => {
+      const screen = screenRef.current
+      const img = imgRef.current
+      if (!screen || !img) return
+      const dist = Math.max(0, img.scrollHeight - screen.clientHeight)
+      setScrollDist(dist)
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    if (screenRef.current) ro.observe(screenRef.current)
+    if (imgRef.current) ro.observe(imgRef.current)
+    return () => ro.disconnect()
+  }, [imageUrl])
   const liveHref = liveUrl || (slug ? `https://${slug}.exvorta.com` : '')
   const host = liveHref.replace(/^https:\/\//, '')
   const hasImage = !!imageUrl
@@ -101,13 +120,24 @@ export function LiveWebsiteFrame({
       {/* ── Screen: slow scroll-on-hover reveal of the real page capture ─── */}
       <div ref={screenRef} className="relative aspect-[4/3] overflow-hidden bg-[#0D0D0D]">
         {hasImage ? (
-          <Image
-            src={imageUrl!}
-            alt={`${title} website preview`}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover object-top w-full transition-transform duration-[6s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:[transform:translateY(calc(-100%_+_420px))]"
-          />
+          <div
+            ref={imgRef}
+            className="lwframe-capture absolute inset-x-0 top-0"
+            style={{
+              height: 'max(100%, 133%)',
+              ['--scroll' as string]: `${scrollDist}px`,
+              transitionDuration: `${Math.min(7000, Math.max(2500, scrollDist * 12))}ms`,
+            }}
+          >
+            <Image
+              src={imageUrl!}
+              alt={`${title} website preview`}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover object-top"
+              priority={false}
+            />
+          </div>
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-[#1A1A1A] to-[#0D0D0D] flex flex-col items-center justify-center gap-4">
             <div className="w-12 h-12 border border-white/10 flex items-center justify-center">

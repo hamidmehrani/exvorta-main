@@ -33,10 +33,19 @@ export default function LoginShell() {
           E
         </m.div>
 
-        <h1 className="text-3xl font-extrabold text-text mb-2 tracking-tight">Partner Login</h1>
-        <p className="text-muted mb-8 font-medium">Access your exclusive enterprise dashboard.</p>
+        <h1 className="text-3xl font-extrabold text-text mb-2 tracking-tight">Client Portal</h1>
+        <p className="text-muted mb-6 font-medium">Sign in to access your project workspace.</p>
+        <div className="mb-8 w-full flex items-start gap-3 bg-surface-2 border border-border rounded-lg p-4 text-start">
+          <span className="material-symbols-outlined text-[18px] text-steel mt-0.5">info</span>
+          <p className="text-[11px] text-muted leading-relaxed">
+            Client dashboards are being provisioned. You can sign in now — project
+            workspaces unlock for active engagements. Need access? Email
+            <a href="mailto:ops@exvorta.com" className="text-obsidian underline ml-1">ops@exvorta.com</a>.
+          </p>
+        </div>
 
         <LoginForm />
+        <p className="mt-6 text-[10px] font-mono tracking-[0.2em] text-muted uppercase">Secured · Exvorta Infrastructure</p>
       </m.div>
     </main>
   )

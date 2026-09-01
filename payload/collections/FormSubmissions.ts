@@ -1,11 +1,15 @@
 import { readOnlyPublic } from '../access'
 import { CollectionConfig } from 'payload'
+import { sendRFQEmails } from './FormSubmissions/hooks/sendRFQEmails'
 
 export const FormSubmissions: CollectionConfig = {
   access: readOnlyPublic,
   slug: 'form-submissions',
   admin: {
     useAsTitle: 'name',
+  },
+  hooks: {
+    afterChange: [sendRFQEmails],
   },
   fields: [
     {

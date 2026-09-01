@@ -1,5 +1,7 @@
 'use client'
 
+import { sanitizeHeadingHtml } from '@/utils/heading-sanitize'
+
 import React from 'react'
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 
@@ -34,7 +36,7 @@ export const ThesisBlock: React.FC<ThesisBlockProps> = (props) => {
         <StaggerContainer className="lg:col-span-9 flex flex-col justify-center" staggerChildren={0.12} delayChildren={0.1}>
           <StaggerItem>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-black leading-[1.1] tracking-tight mb-12 max-w-4xl">
-              {headline}
+              <span dangerouslySetInnerHTML={{ __html: sanitizeHeadingHtml(headline) }} />
             </h2>
           </StaggerItem>
           {paragraph1 && (
