@@ -20,22 +20,35 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
   const isAboutHero = props.headline?.includes('Gravity') || props.eyebrow?.includes('IDENTITY') || props.headline?.includes('Digital Gravity')
 
   if (isAboutHero) {
+    const heroVariantsAbout = {
+      hidden: {},
+      show: { transition: { staggerChildren: 0.14, delayChildren: 0.1 } },
+    }
+    const heroItemAbout = {
+      hidden: prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 22, filter: 'blur(6px)' },
+      show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: easings.cinematic } },
+    }
     return (
       <AnimatedSection className="w-full">
         <section className="w-full bg-[#0A0A0A] flex flex-col items-center justify-center text-center relative px-6 py-40 min-h-[85vh] overflow-hidden rounded-none" id="hero">
-          <div className="relative z-10 max-w-7xl mx-auto flex flex-col items-center">
-            <span className="text-[9px] md:text-[10px] font-mono tracking-[0.4em] text-white/40 uppercase mb-10 block">
+          {/* ambient aura */}
+          <div aria-hidden className="pointer-events-none absolute inset-0">
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[420px] rounded-full bg-emerald-400/[0.07] blur-[130px]" />
+          </div>
+          <motion.div variants={heroVariantsAbout} initial="hidden" animate="show" className="relative z-10 max-w-7xl mx-auto flex flex-col items-center">
+            <motion.span variants={heroItemAbout} className="text-[9px] md:text-[10px] font-mono tracking-[0.4em] text-white/40 uppercase mb-10 block">
               {props.eyebrow || '[ THE EXVORTA IDENTITY ]'}
-            </span>
-            <h1
+            </motion.span>
+            <motion.h1
+              variants={heroItemAbout}
               className="text-5xl md:text-[5.5rem] font-serif font-bold text-white leading-[1.05] tracking-tight max-w-5xl mx-auto mb-10"
               dangerouslySetInnerHTML={{ __html: props.headline || 'We Engineer Digital Gravity.<br/><span class="text-white/60">For the World\'s Most Demanding Trade Entities.</span>' }}
             />
-            <p className="max-w-2xl mx-auto text-lg md:text-xl text-white/50 leading-relaxed font-sans mt-6">
+            <motion.p variants={heroItemAbout} className="max-w-2xl mx-auto text-lg md:text-xl text-white/50 leading-relaxed font-sans mt-6">
               {props.subheadline || 'Exvorta is a boutique digital architecture firm. We exist strictly to close the credibility gap between your monumental physical trading velocity and your online infrastructure.'}
-            </p>
-            <div className="text-[9px] font-mono text-white/20 tracking-[0.2em] uppercase mt-16">[ DUBAI · GLOBAL REACH ]</div>
-          </div>
+            </motion.p>
+            <motion.div variants={heroItemAbout} className="text-[9px] font-mono text-white/25 tracking-[0.2em] uppercase mt-16">[ DUBAI · GLOBAL REACH ]</motion.div>
+          </motion.div>
         </section>
       </AnimatedSection>
     )
@@ -102,6 +115,11 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
     <AnimatedSection className="w-full">
       {/*  BEGIN: Hero Section  */}
 <section className="relative pt-32 pb-40 overflow-hidden" data-purpose="hero-section">
+{/* Ambient background: soft emerald aura + fine grid */}
+<div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+  <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-emerald-400/10 blur-[140px]" />
+  <div className="absolute inset-0 opacity-[0.35]" style={{ backgroundImage: 'linear-gradient(to right, rgba(13,13,13,0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(13,13,13,0.045) 1px, transparent 1px)', backgroundSize: '72px 72px', maskImage: 'radial-gradient(ellipse 90% 70% at 50% 20%, black, transparent)', WebkitMaskImage: 'radial-gradient(ellipse 90% 70% at 50% 20%, black, transparent)' }} />
+</div>
 <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative">
 {/*  Hero Content  */}
 <motion.div className="text-center max-w-4xl mx-auto mb-20" variants={heroVariants} initial="hidden" animate="show">
@@ -133,6 +151,11 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
     {props.primaryCTA?.label || "[ START YOUR PROJECT ]"}
   </Link>
 </MagneticButton>
+</motion.div>
+<motion.div variants={heroItem} className="mt-12 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 font-mono text-[9px] tracking-[0.3em] uppercase text-obsidian/45">
+  <span className="flex items-center gap-2"><span className="w-1 h-1 bg-emerald-600 rotate-45" /> 3 live deployments</span>
+  <span className="flex items-center gap-2"><span className="w-1 h-1 bg-emerald-600 rotate-45" /> &lt;1s global load</span>
+  <span className="flex items-center gap-2"><span className="w-1 h-1 bg-emerald-600 rotate-45" /> CMS you own</span>
 </motion.div>
 </motion.div>
 {/*  Dashboard Preview - ONLY for Home  */}

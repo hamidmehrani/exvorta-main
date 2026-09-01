@@ -178,7 +178,7 @@ function HomepagePortfolioSection({
                   </p>
                 )}
 
-                <div className="mt-auto self-start">
+                <div className="mt-auto self-start flex flex-wrap items-center gap-3">
                   <MagneticButton>
                     <a
                       href={resolveCaseStudyUrl(project)}
@@ -188,6 +188,22 @@ function HomepagePortfolioSection({
                       <span className="ml-2 transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform">↗</span>
                     </a>
                   </MagneticButton>
+                  {(() => {
+                    const csUrl = resolveCaseStudyUrl(project);
+                    const liveHref = csUrl.startsWith('/portfolio/') ? `https://${csUrl.split('/').pop()}.exvorta.com` : '';
+                    return liveHref ? (
+                      <a
+                        href={liveHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Open ${project.title} live website`}
+                        className="inline-flex items-center gap-2 rounded-none px-6 py-4 text-[10px] font-mono text-black/60 hover:text-black border border-black/15 hover:border-black transition-colors"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" aria-hidden />
+                        LIVE SITE
+                      </a>
+                    ) : null;
+                  })()}
                 </div>
               </div>
             </motion.article>

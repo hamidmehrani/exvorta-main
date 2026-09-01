@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { AnimatedSection, EASE_OUT } from '@/components/ui/Reveal';
+import { AnimatedSection, Reveal, EASE_OUT } from '@/components/ui/Reveal';
 import { m } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
 import { MonoLabel } from '@/components/ui/MonoLabel';
@@ -70,15 +70,19 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <AnimatedSection className="w-full bg-brand-obsidian min-h-[75vh] flex items-center justify-center relative px-4 sm:px-6 lg:px-8 py-40 overflow-hidden border-b border-white/20" id="ecosystem-hero">
 <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_80%)] animate-pulse [animation-duration:12s]"></div>
 <Container className="max-w-6xl w-full flex flex-col items-center text-center relative z-10">
-<MonoLabel className="text-[9px] md:text-[10px] font-mono tracking-[0.4em] text-white/55 uppercase mb-10 block">{hero.eyebrow}</MonoLabel>
+<Reveal y={16}><MonoLabel className="text-[9px] md:text-[10px] font-mono tracking-[0.4em] text-white/55 uppercase mb-10 block">{hero.eyebrow}</MonoLabel></Reveal>
+<Reveal y={24} delay={0.1}>
 <h1 className="text-4xl sm:text-5xl md:text-[5.5rem] lg:text-[6.5rem] font-serif font-bold text-white leading-[1.0] tracking-tight mb-8">
       {hero.title} <br/>
 <span className="text-white/60">{hero.subtitle}</span>
 </h1>
+</Reveal>
+<Reveal y={16} delay={0.25}>
 <p className="max-w-3xl mx-auto text-lg md:text-xl text-white/50 leading-relaxed font-sans">
       {hero.description}
     </p>
-<MonoLabel className="text-[9px] font-mono text-white/20 tracking-[0.2em] uppercase mt-16 z-10">{hero.badge}</MonoLabel>
+</Reveal>
+<Reveal y={12} delay={0.4}><MonoLabel className="text-[9px] font-mono text-white/25 tracking-[0.2em] uppercase mt-16 z-10">{hero.badge}</MonoLabel></Reveal>
 </Container>
 </AnimatedSection>
 

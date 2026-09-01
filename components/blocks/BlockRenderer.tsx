@@ -36,6 +36,7 @@ const blockComponents: Record<string, unknown> = {
   portfolioArchive: dynamic(() => import('./PortfolioArchiveBlock').then(m => m.default || m.PortfolioArchiveBlock), { ssr: false }),
   portfolio: dynamic(() => import('./PortfolioArchiveBlock').then(m => m.default || m.PortfolioArchiveBlock), { ssr: false }),
   productShowcase: dynamic(() => import('./ProductShowcaseBlock').then(m => m.default || m.ProductShowcaseBlock), { ssr: false }),
+  platformCapabilities: dynamic(() => import('./PlatformCapabilitiesBlock').then(m => m.default || m.PlatformCapabilitiesBlock), { ssr: false }),
   ecosystem: dynamic(() => import('./EcosystemBlock').then(m => m.default || m.EcosystemBlock), { ssr: false }),
   marquee: dynamic(() => import('./MarqueeBlock').then(m => m.default || m.MarqueeBlock), { ssr: false }),
 }

@@ -273,7 +273,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
           </div>
 
           {/* tab content */}
-          <div className="flex-1 overflow-hidden min-h-[380px] sm:min-h-[420px] relative" dir="ltr">
+          <div className="flex-1 overflow-hidden h-[340px] sm:h-[400px] relative" dir="ltr">
             <AnimatePresence mode="wait">
               {/* ══ LEDGER ══ */}
               {tab === 'ledger' && (
@@ -303,7 +303,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                       Export
                     </button>
                   </div>
-                  <div className="flex-1 overflow-auto [scrollbar-width:thin]">
+                  <div className="flex-1 overflow-auto [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.2)_transparent] [overscroll-behavior-x:contain]">
                     <table className="w-full text-left text-[11px] whitespace-nowrap min-w-[640px]">
                       <thead className="text-[8px] text-white/45 uppercase tracking-widest bg-[#10151B] sticky top-0 z-10">
                         <tr aria-sort={sortKey === 'bol' ? (sortAsc ? 'ascending' : 'descending') : undefined}>
@@ -373,7 +373,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                     </span>
                     <span className="text-[8px] text-white/40 font-mono">stream: global</span>
                   </div>
-                  <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 font-mono text-[10px] sm:text-[11px]">
+                  <div className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.2)_transparent] [overscroll-behavior-y:contain] p-3 sm:p-4 space-y-3 font-mono text-[10px] sm:text-[11px]">
                     {TERMINAL_SCRIPT.slice(0, terminalCount).map((entry, i) => {
                       const color =
                         entry.kind === 'ok' ? 'border-emerald-400/40' :
@@ -415,7 +415,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                   <div className="px-3 sm:px-5 py-2 border-b border-white/10 bg-black/10 shrink-0">
                     <span className="text-[9px] text-white/40 tracking-widest uppercase font-mono">Compliance Health — 14 jurisdictions</span>
                   </div>
-                  <div className="flex-1 overflow-y-auto p-3 sm:p-5 space-y-3">
+                  <div className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.2)_transparent] [overscroll-behavior-y:contain] p-3 sm:p-5 space-y-3">
                     {COMPLIANCE.map((c, i) => (
                       <motion.div
                         key={c.name}
@@ -460,7 +460,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                   <div className="px-3 sm:px-5 py-2 border-b border-white/10 bg-black/10 shrink-0">
                     <span className="text-[9px] text-white/40 tracking-widest uppercase font-mono">Trade Analytics — trailing 12 months</span>
                   </div>
-                  <div className="flex-1 overflow-y-auto p-3 sm:p-5 space-y-6 min-h-0">
+                  <div className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.2)_transparent] [overscroll-behavior-y:contain] p-3 sm:p-5 space-y-6 min-h-0">
                     {/* bar chart */}
                     <div>
                       <div className="text-[9px] text-white/40 tracking-widest uppercase mb-3">Throughput (k TEU)</div>
@@ -521,7 +521,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                     <span className="text-[9px] text-white/40 tracking-widest uppercase font-mono">Document Engine — auto-generated</span>
                     <span className="text-[8px] text-emerald-400 font-mono border border-emerald-400/20 px-1.5 py-0.5 rounded">AI</span>
                   </div>
-                  <div className="flex-1 overflow-y-auto p-3 sm:p-5 space-y-2">
+                  <div className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.2)_transparent] [overscroll-behavior-y:contain] p-3 sm:p-5 space-y-2">
                     {DOCS.map((d, i) => (
                       <motion.div
                         key={d.name}
@@ -591,7 +591,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
               </div>
-              <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 font-mono text-[11px]">
+              <div className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.2)_transparent] [overscroll-behavior-y:contain] p-4 sm:p-5 space-y-4 font-mono text-[11px]">
                 <div className={`text-[9px] px-2 py-1 rounded border inline-block ${STATUS_STYLES[selected.status]}`}>{selected.status}</div>
                 {[
                   ['Consignee', selected.consignee],

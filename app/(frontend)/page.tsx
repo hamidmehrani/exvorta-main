@@ -8,6 +8,7 @@ import BlockRenderer from '@/components/blocks/BlockRenderer'
 import LivePreviewListener from '@/components/live-preview/LivePreviewListener'
 
 import { getCachedPage } from '@/lib/payload-cache'
+import { CASE_STUDIES } from '@/components/blocks/case-study-data'
 import { generateMeta } from '@/utils/generateMeta'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -44,6 +45,23 @@ export default async function HomePage() {
           subheadline: 'The definitive digital foundation for elite importers and exporters. Precision-engineered web presence and automated compliance.',
           primaryCTA: { label: '[ REQUEST PROPOSAL ]', url: '/rfq' },
         },
+        {
+          blockType: 'portfolioArchive',
+          sectionLabel: '[ OUR INFRASTRUCTURE WORK ]',
+          headline: 'Proof of Execution.',
+          projects: Object.values(CASE_STUDIES).map(cs => ({
+            title: cs.title,
+            description: cs.excerpt,
+            industry: cs.category.toUpperCase(),
+            volume: cs.stats[0]?.value || '',
+            service: 'WEB DESIGN & CMS',
+            linkLabel: 'VIEW CASE STUDY',
+          })),
+        },
+        { blockType: 'productShowcase' },
+        { blockType: 'roadmap' },
+        { blockType: 'faq' },
+        { blockType: 'ctaBanner' },
       ],
     } as unknown as Page
   }

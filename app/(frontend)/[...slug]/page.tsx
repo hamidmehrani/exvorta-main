@@ -68,12 +68,13 @@ export default async function DynamicPage({
     const fallbackPage = {
       id: 999, title: 'exvorta-web', slug: 'exvorta-web',
       layout: [
-        { id: 'hero-1', blockType: 'hero', eyebrow: '[ HIGH-PERFORMANCE WEBSITES ]', headline: 'High-Performance Websites.<br/><span class="text-white/50">For Global Traders.</span>', subheadline: 'We build high-performance websites that make global trading companies look like the serious players they are.', primaryCTA: { label: '[ REQUEST A CUSTOM SCOPE ]', url: '/rfq' } },
+        { id: 'hero-1', blockType: 'hero', eyebrow: '[ HIGH-PERFORMANCE WEBSITES ]', headline: 'High-Performance Websites.<br/><span class="text-obsidian/40">For Global Traders.</span>', subheadline: 'We build high-performance websites that make global trading companies look like the serious players they are.', primaryCTA: { label: '[ REQUEST A CUSTOM SCOPE ]', url: '/rfq' } },
         { id: 'pg-1', blockType: 'problemStatement', eyebrow: '[ THE CREDIBILITY GAP ]', headline: 'Your business moves millions. Your website looks like a startup.', description: 'International partners judge your reliability...' },
         { id: 'fg-1', blockType: 'featureGrid', theme: 'dark' },
         { id: 'fs-1', blockType: 'featureShowcase', label: '[ ARCHITECTURAL SPECS ]', title: 'Pure Code. Flawless Aesthetics.' },
         { id: 'pr-1', blockType: 'process' },
         { id: 'ps-1', blockType: 'portfolioShowcase' },
+        { id: 'caps-1', blockType: 'platformCapabilities' },
         { id: 'cms-control-1', blockType: 'cmsControl' },
         { id: 'pric-1', blockType: 'pricing' },
         { id: 'test-1', blockType: 'testimonialBlock' },
@@ -139,7 +140,7 @@ export default async function DynamicPage({
           id: 'hero-exvorta-web',
           blockType: 'hero',
           eyebrow: '[ HIGH-PERFORMANCE WEBSITES ]',
-          headline: 'High-Performance Websites.<br/><span class="text-white/50">For Global Traders.</span>',
+          headline: 'High-Performance Websites.<br/><span class="text-obsidian/40">For Global Traders.</span>',
           subheadline: 'The institutional standard. Bespoke architecture, flawless aesthetics, and engineered for elite B2B trading companies operating at a global scale.',
           primaryCTA: { label: '[ REQUEST A CUSTOM SCOPE ]', url: '/rfq' },
         },

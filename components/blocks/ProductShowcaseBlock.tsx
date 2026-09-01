@@ -1,5 +1,6 @@
 "use client";
 
+import React from 'react';
 import Link from 'next/link';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/Reveal';
 import { Container } from '../ui/Container';
@@ -43,7 +44,23 @@ export function ProductShowcaseBlock(props: any) {
 <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
 <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
 </div>
-<div className="mx-auto text-[9px] text-white/30 tracking-[0.2em] font-mono uppercase">EXVORTA_DOCUMENT_WORKFLOW_v4</div>
+<div className="mx-auto flex items-center gap-2">
+<span className="w-1.5 h-1.5 rounded-full bg-brand-emerald animate-pulse"></span>
+<span className="text-[9px] text-white/60 tracking-[0.25em] font-mono uppercase font-medium">Document Engine</span>
+<span className="text-[8px] text-white/25 font-mono px-1.5 py-0.5 border border-white/10 rounded-sm">AI</span>
+</div>
+</div>
+{/*  Pipeline stages strip  */}
+<div className="flex items-center gap-0 px-4 py-2.5 border-b border-hairline-dark bg-white/[0.02] text-[7px] font-mono uppercase tracking-[0.15em]">
+{['Select', 'Prefill', 'Validate', 'Stamp', 'Deliver'].map((stage, i, arr) => (
+  <React.Fragment key={stage}>
+    <div className="flex items-center gap-1.5">
+      <span className={`w-3.5 h-3.5 rounded-full flex items-center justify-center text-[6px] font-bold ${i < 3 ? 'bg-brand-emerald/20 text-brand-emerald border border-brand-emerald/50' : 'bg-white/5 text-white/30 border border-white/10'}`}>{i < 3 ? '✓' : i + 1}</span>
+      <span className={i < 3 ? 'text-white/70' : 'text-white/30'}>{stage}</span>
+    </div>
+    {i < arr.length - 1 && <div className={`flex-1 h-px mx-2 ${i < 2 ? 'bg-brand-emerald/40' : 'bg-white/10'}`} />}
+  </React.Fragment>
+))}
 </div>
 <div className="flex flex-1 overflow-hidden">
 {/*  UI Sidebar  */}
