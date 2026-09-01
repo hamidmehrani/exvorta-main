@@ -22,9 +22,10 @@ interface NavLink {
 
 interface HeaderClientProps {
   navLinks: NavLink[]
+  brand?: { name: string; logoUrl: string | null }
 }
 
-export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks }) => {
+export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { name: 'EXVORTA', logoUrl: null } }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
@@ -106,8 +107,15 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks }) => {
       <div className="container-site h-20 flex items-center justify-between gap-4 lg:gap-8">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <Link href="/" className="font-serif text-2xl font-semibold tracking-wide text-obsidian uppercase">
-            EXVORTA
+          <Link href="/" aria-label={brand.name} className="inline-flex items-center min-h-[44px]">
+            {brand.logoUrl ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img src={brand.logoUrl} alt={brand.name} className="h-8 w-auto max-w-[160px] object-contain" />
+            ) : (
+              <span className="font-serif text-2xl font-semibold tracking-wide text-obsidian uppercase">
+                {brand.name}
+              </span>
+            )}
           </Link>
         </div>
 

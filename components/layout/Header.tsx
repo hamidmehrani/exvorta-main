@@ -4,6 +4,7 @@ import type {  Navigation  } from '@/payload-types'
 import HeaderClient from './HeaderClient'
 
 export const Header = async () => {
+  const brand: { name: string; logoUrl: string | null } = { name: 'EXVORTA', logoUrl: null }
   let navData: Navigation | null = null
   try {
     const payload = await getPayloadClient()
@@ -25,7 +26,18 @@ export const Header = async () => {
 
   const finalNavLinks = navData?.links?.length ? navData.links : fallbackLinks
 
-  return <HeaderClient navLinks={finalNavLinks} />
+  try {
+    const payload = await getPayloadClient()
+    const settings = await payload.findGlobal({ slug: 'site-settings' })
+    if (settings?.siteName) brand.name = settings.siteName.toUpperCase()
+    if (settings?.logo && typeof settings.logo === 'object' && settings.logo.url) {
+      brand.logoUrl = settings.logo.url
+    }
+  } catch {
+    // keep text fallback
+  }
+
+  return <HeaderClient navLinks={finalNavLinks} brand={brand} />
 }
 
 export default Header

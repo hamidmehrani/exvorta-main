@@ -25,6 +25,18 @@ export type FooterColumn = {
 
 export default async function Footer() {
   let footerData: FooterType | null = null
+  const brand: { name: string; logoUrl: string | null } = { name: 'EXVORTA', logoUrl: null }
+
+  try {
+    const payload = await getPayloadClient()
+    const settings = await payload.findGlobal({ slug: 'site-settings' })
+    if (settings?.siteName) brand.name = settings.siteName.toUpperCase()
+    if (settings?.logo && typeof settings.logo === 'object' && settings.logo.url) {
+      brand.logoUrl = settings.logo.url
+    }
+  } catch {
+    // keep text fallback
+  }
 
   try {
     const payload = await getPayloadClient()
@@ -95,5 +107,5 @@ export default async function Footer() {
       .filter((l): l is NonNullable<typeof l> => Boolean(l)),
   }))
 
-  return <FooterClient columns={columns} />
+  return <FooterClient columns={columns} brand={brand} />
 }

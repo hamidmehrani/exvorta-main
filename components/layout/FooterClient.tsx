@@ -6,7 +6,7 @@ import { m } from 'framer-motion'
 import { EASE_OUT } from '@/components/ui/Reveal'
 import type { FooterColumn } from './Footer'
 
-export default function FooterClient({ columns }: { columns: FooterColumn[] }) {
+export default function FooterClient({ columns, brand = { name: 'EXVORTA', logoUrl: null } }: { columns: FooterColumn[]; brand?: { name: string; logoUrl: string | null } }) {
   return (
     <footer className="w-full bg-[#FAFAF8] border-t border-black/10 py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -19,10 +19,15 @@ export default function FooterClient({ columns }: { columns: FooterColumn[] }) {
             transition={{ duration: 0.55, ease: EASE_OUT }}
             className="col-span-2 md:col-span-1"
           >
-            <Link href="/" className="inline-flex items-center min-h-[44px] mb-4" aria-label="Exvorta home">
-              <span className="font-serif text-xl font-semibold tracking-wide text-obsidian uppercase">
-                EXVORTA
-              </span>
+            <Link href="/" className="inline-flex items-center min-h-[44px] mb-4" aria-label={`${brand.name} home`}>
+              {brand.logoUrl ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img src={brand.logoUrl} alt={brand.name} className="h-8 w-auto max-w-[160px] object-contain" />
+              ) : (
+                <span className="font-serif text-xl font-semibold tracking-wide text-obsidian uppercase">
+                  {brand.name}
+                </span>
+              )}
             </Link>
             <p className="text-xs text-obsidian/40 leading-relaxed font-light max-w-xs">
               The definitive digital foundation for elite global traders. Precision-engineered in Dubai, UAE.

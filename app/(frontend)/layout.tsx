@@ -38,7 +38,28 @@ const playfair = localFont({
 })
 
 export async function generateMetadata(): Promise<Metadata> {
-  return generateMeta()
+  const [meta, settings] = await Promise.all([
+    generateMeta(),
+    getPayloadClient()
+      .then((c) => c.findGlobal({ slug: 'site-settings' }))
+      .catch(() => null),
+  ])
+
+  const faviconUrl =
+    settings?.favicon && typeof settings.favicon === 'object' && settings.favicon.url
+      ? settings.favicon.url
+      : null
+
+  return {
+    ...meta,
+    icons: faviconUrl
+      ? {
+          icon: [{ url: faviconUrl }],
+          apple: [{ url: faviconUrl }],
+          shortcut: [{ url: faviconUrl }],
+        }
+      : meta.icons,
+  }
 }
 
 export default async function FrontendLayout({

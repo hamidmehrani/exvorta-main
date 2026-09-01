@@ -30,11 +30,21 @@ export const SiteSettings: GlobalConfig = {
               name: 'logo',
               type: 'upload',
               relationTo: 'media',
+              label: 'Brand Logo',
+              admin: {
+                description:
+                  'Shown in the header & footer. Transparent PNG/SVG recommended, ~64px height. Remove to fall back to the text wordmark.',
+              },
             },
             {
               name: 'favicon',
               type: 'upload',
               relationTo: 'media',
+              label: 'Favicon / App Icon',
+              admin: {
+                description:
+                  'Browser tab + PWA icon. Square PNG 512×512 recommended. Applied site-wide after save.',
+              },
             },
             {
               name: 'theme',
