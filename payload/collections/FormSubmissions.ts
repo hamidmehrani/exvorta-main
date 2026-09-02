@@ -7,6 +7,7 @@ export const FormSubmissions: CollectionConfig = {
   slug: 'form-submissions',
   admin: {
     useAsTitle: 'name',
+    group: 'Content',
   },
   hooks: {
     afterChange: [sendRFQEmails],

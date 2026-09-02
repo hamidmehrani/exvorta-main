@@ -1,17 +1,11 @@
 import React from 'react'
+import { adminPanelConfig } from './panel.config'
 
 /**
- * Unified admin logo — identical across Exvorta, Stonvi, Nutave, Spicevo.
- * Uses CSS custom properties with fallback chains so it adapts to each
- * project's token scheme without per-project edits.
+ * Unified admin logo — shared across all projects, branded via panel.config.
  */
-const BRAND_LETTER = 'E'
-const BRAND_NAME = 'EXVORTA OS'
-
 export const AgencyLogo: React.FC = () => {
-  const accent = 'var(--color-accent, var(--ex-accent, var(--theme-success-400, #059669)))'
-  const bg = 'var(--color-bg, var(--ex-bg, var(--theme-bg, #0A0A0A)))'
-  const text = 'var(--color-text, var(--ex-text, var(--theme-text, #E5E5E5)))'
+  const { brandLetter, brandName, accent, background, text } = adminPanelConfig
 
   return (
     <div className="flex items-center gap-2" style={{ padding: '4px 0' }}>
@@ -22,11 +16,11 @@ export const AgencyLogo: React.FC = () => {
           height: '32px',
           borderRadius: '6px',
           backgroundColor: accent,
-          color: bg,
+          color: background,
           fontSize: '20px',
         }}
       >
-        {BRAND_LETTER}
+        {brandLetter}
       </div>
       <span
         className="font-bold tracking-tight"
@@ -36,7 +30,7 @@ export const AgencyLogo: React.FC = () => {
           fontFamily: 'Inter, sans-serif',
         }}
       >
-        {BRAND_NAME}
+        {brandName}
       </span>
     </div>
   )

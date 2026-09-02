@@ -7,6 +7,7 @@ export const Certifications: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'issuer', 'year'],
+    group: 'Content',
   },
   fields: [
     { name: 'name', type: 'text', required: true, localized: true },

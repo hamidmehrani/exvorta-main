@@ -3,6 +3,9 @@ import { GlobalConfig } from 'payload'
 
 export const SEODefaults: GlobalConfig = {
   slug: 'seo-defaults',
+  admin: {
+    group: 'Global Settings',
+  },
   access: {
     read: () => true,
     update: isAdmin,

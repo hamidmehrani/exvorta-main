@@ -4,6 +4,9 @@ import { link } from '../fields/link'
 
 export const Navigation: GlobalConfig = {
   slug: 'navigation',
+  admin: {
+    group: 'Global Settings',
+  },
   access: {
     read: () => true,
     update: isAdmin,

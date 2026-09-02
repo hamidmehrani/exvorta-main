@@ -7,6 +7,7 @@ export const Testimonials: CollectionConfig = {
   admin: {
     useAsTitle: 'author',
     defaultColumns: ['author', 'company', 'role'],
+    group: 'Content',
   },
   fields: [
     { name: 'quote', type: 'textarea', required: true, localized: true },

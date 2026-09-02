@@ -3,6 +3,9 @@ import { GlobalConfig } from 'payload'
 
 export const SocialLinks: GlobalConfig = {
   slug: 'social-links',
+  admin: {
+    group: 'Global Settings',
+  },
   access: {
     read: () => true,
     update: isAdmin,

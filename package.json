@@ -4,14 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "generate:importmap": "NODE_OPTIONS=\"--no-deprecation --import tsx\" node ./node_modules/payload/bin.js generate:importmap",
+    "build": "pnpm generate:importmap && next build",
     "postinstall": "node scripts/fix-payload-loadenv.mjs",
     "db:up": "docker compose up -d",
     "db:down": "docker compose down",
     "db:reset": "docker compose down -v && docker compose up -d",
-    "payload": "NODE_OPTIONS=--no-deprecation tsx ./node_modules/payload/bin.js",
+    "payload": "NODE_OPTIONS=\"--no-deprecation --import tsx\" node ./node_modules/payload/bin.js",
     "migrate": "pnpm payload migrate",
     "migrate:create": "pnpm payload migrate:create"
   },

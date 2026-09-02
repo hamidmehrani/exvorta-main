@@ -5,7 +5,7 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
   admin: {
-    group: 'System / Settings',
+    group: 'Global Settings',
   },
   access: {
     read: () => true,

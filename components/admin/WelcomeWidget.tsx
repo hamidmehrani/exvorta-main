@@ -1,32 +1,14 @@
 import React from 'react'
 import Link from 'next/link'
+import { adminPanelConfig } from './panel.config'
 import '../../app/(payload)/admin.scss'
 
 /**
- * Unified admin welcome widget — identical component across Exvorta, Stonvi,
- * Nutave, Spicevo. Brand + quick actions are configured per project below.
+ * Unified admin welcome widget — shared across all projects, branded via
+ * panel.config. Shown at the top of the Payload dashboard.
  */
-interface QuickAction {
-  label: string
-  href: string
-}
-
-interface WelcomeWidgetProps {
-  systemName?: string
-  tagline?: string
-  quickActions?: QuickAction[]
-}
-
-const WelcomeWidget: React.FC<WelcomeWidgetProps> = ({
-  systemName = 'EXVORTA OS',
-  tagline = 'Welcome to the Exvorta infrastructure terminal.',
-  quickActions = [
-    { label: 'Manage Pages', href: '/admin/collections/pages' },
-    { label: 'Update Portfolio', href: '/admin/collections/projects' },
-    { label: 'Configure Routing', href: '/admin/globals/navigation' },
-  ],
-}) => {
-  const accent = '#00FF66'
+const WelcomeWidget: React.FC = () => {
+  const { brandName, tagline, quickActions, accent } = adminPanelConfig
 
   return (
     <div
@@ -43,14 +25,13 @@ const WelcomeWidget: React.FC<WelcomeWidgetProps> = ({
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem' }}>
         <div style={{ width: '12px', height: '12px', background: accent, marginRight: '12px' }}></div>
         <h2 style={{ fontSize: '1.25rem', letterSpacing: '0.2em', textTransform: 'uppercase', margin: 0, fontWeight: 'normal' }}>
-          SYSTEM ONLINE: {systemName}
+          SYSTEM ONLINE: {brandName}
         </h2>
       </div>
       <div style={{ color: '#888', fontSize: '0.875rem', lineHeight: '1.6' }}>
-        <p style={{ marginBottom: '1rem' }}>&gt; Initializing CMS modules...</p>
-        <p style={{ marginBottom: '1rem' }}>&gt; Environment: PRODUCTION_READY</p>
         <p style={{ marginBottom: '1rem' }}>&gt; {tagline}</p>
-        <div style={{ marginTop: '2rem', borderTop: '1px dashed #333', paddingTop: '1rem', display: 'flex', gap: '2rem' }}>
+        <p style={{ marginBottom: '1rem' }}>&gt; Content, media and settings below. Use QUICK ACTIONS to jump straight to the essentials.</p>
+        <div style={{ marginTop: '2rem', borderTop: '1px dashed #333', paddingTop: '1rem', display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
           <div>
             <strong style={{ color: '#fff', display: 'block', marginBottom: '0.5rem' }}>{'// QUICK ACTIONS'}</strong>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
@@ -64,10 +45,11 @@ const WelcomeWidget: React.FC<WelcomeWidgetProps> = ({
             </ul>
           </div>
           <div>
-            <strong style={{ color: '#fff', display: 'block', marginBottom: '0.5rem' }}>{'// PROTOCOLS'}</strong>
+            <strong style={{ color: '#fff', display: 'block', marginBottom: '0.5rem' }}>{'// TIPS'}</strong>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              <li style={{ color: '#888' }}>* Ensure image assets are compressed</li>
-              <li style={{ color: '#888' }}>* Verify SEO metadata before publish</li>
+              <li style={{ color: '#888' }}>* Compress images before uploading</li>
+              <li style={{ color: '#888' }}>* Check SEO metadata before publishing</li>
+              <li style={{ color: '#888' }}>* Save drafts, then Publish when ready</li>
             </ul>
           </div>
         </div>

@@ -1,14 +1,11 @@
 import React from 'react'
+import { adminPanelConfig } from './panel.config'
 
 /**
- * Unified admin favicon icon — identical across all four projects.
- * Token-adaptive via fallback chains.
+ * Unified admin favicon icon — shared across all projects, branded via panel.config.
  */
-const BRAND_LETTER = 'E'
-
 export const AgencyIcon: React.FC = () => {
-  const accent = 'var(--color-accent, var(--ex-accent, var(--theme-success-400, #059669)))'
-  const bg = 'var(--color-bg, var(--ex-bg, var(--theme-bg, #0A0A0A)))'
+  const { brandLetter, accent, background } = adminPanelConfig
 
   return (
     <div
@@ -18,11 +15,11 @@ export const AgencyIcon: React.FC = () => {
         height: '32px',
         borderRadius: '6px',
         backgroundColor: accent,
-        color: bg,
+        color: background,
         fontSize: '20px',
       }}
     >
-      {BRAND_LETTER}
+      {brandLetter}
     </div>
   )
 }

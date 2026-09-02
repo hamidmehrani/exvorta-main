@@ -2,6 +2,9 @@ import { GlobalConfig } from 'payload'
 
 export const Ecosystem: GlobalConfig = {
   slug: 'ecosystem',
+  admin: {
+    group: 'Content',
+  },
   access: {
     read: () => true,
   },

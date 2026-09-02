@@ -77,6 +77,7 @@ export interface Config {
     redirects: Redirect;
     categories: Category;
     projects: Project;
+    certifications: Certification;
     'form-submissions': FormSubmission;
     waitlist: Waitlist;
     'payload-kv': PayloadKv;
@@ -96,6 +97,7 @@ export interface Config {
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    certifications: CertificationsSelect<false> | CertificationsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     waitlist: WaitlistSelect<false> | WaitlistSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -270,12 +272,17 @@ export interface HeroBlock {
   blockType: 'hero';
 }
 /**
+ * All images & files served via Cloudinary CDN. Alt text is auto-generated from the filename — refine it for SEO.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
   id: number;
-  alt: string;
+  /**
+   * Auto-filled from filename. Edit for better SEO/accessibility.
+   */
+  alt?: string | null;
   caption?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -288,6 +295,32 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    hero?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -835,7 +868,10 @@ export interface PortfolioArchiveBlock {
         service?: string | null;
         linkUrl?: string | null;
         linkLabel?: string | null;
-        imageUrl?: string | null;
+        /**
+         * Optional. Desktop capture of the live site. Leave empty to use the built-in branded preview.
+         */
+        image?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -941,8 +977,10 @@ export interface FounderBlock {
   bio?: string | null;
   roleTitle?: string | null;
   roleCompany?: string | null;
-  imageSrc?: string | null;
-  imageAlt?: string | null;
+  /**
+   * Pick from Media or upload directly here. Portrait ratio recommended. Leave empty to use the built-in placeholder.
+   */
+  image?: (number | null) | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'founder';
@@ -1064,6 +1102,22 @@ export interface Redirect {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certifications".
+ */
+export interface Certification {
+  id: number;
+  name: string;
+  issuer?: string | null;
+  year?: string | null;
+  referenceId?: string | null;
+  url?: string | null;
+  logo?: (number | null) | Media;
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -1162,6 +1216,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'projects';
         value: number | Project;
+      } | null)
+    | ({
+        relationTo: 'certifications';
+        value: number | Certification;
       } | null)
     | ({
         relationTo: 'form-submissions';
@@ -1741,7 +1799,7 @@ export interface PortfolioArchiveBlockSelect<T extends boolean = true> {
         service?: T;
         linkUrl?: T;
         linkLabel?: T;
-        imageUrl?: T;
+        image?: T;
         id?: T;
       };
   ctaLabel?: T;
@@ -1840,8 +1898,7 @@ export interface FounderBlockSelect<T extends boolean = true> {
   bio?: T;
   roleTitle?: T;
   roleCompany?: T;
-  imageSrc?: T;
-  imageAlt?: T;
+  image?: T;
   id?: T;
   blockName?: T;
 }
@@ -1878,6 +1935,40 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        hero?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1977,6 +2068,21 @@ export interface ProjectsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certifications_select".
+ */
+export interface CertificationsSelect<T extends boolean = true> {
+  name?: T;
+  issuer?: T;
+  year?: T;
+  referenceId?: T;
+  url?: T;
+  logo?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions_select".
  */
 export interface FormSubmissionsSelect<T extends boolean = true> {
@@ -2053,7 +2159,13 @@ export interface SiteSetting {
    */
   maintenanceMode?: boolean | null;
   siteName: string;
+  /**
+   * Shown in the header & footer. Transparent PNG/SVG recommended, ~64px height. Remove to fall back to the text wordmark.
+   */
   logo?: (number | null) | Media;
+  /**
+   * Browser tab + PWA icon. Square PNG 512×512 recommended. Applied site-wide after save.
+   */
   favicon?: (number | null) | Media;
   theme?: {
     /**

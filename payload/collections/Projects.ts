@@ -10,6 +10,7 @@ export const Projects: CollectionConfig = {
   slug: 'projects',
   admin: {
     useAsTitle: 'title',
+    group: 'Content',
   },
   fields: [
     {

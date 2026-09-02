@@ -3,6 +3,9 @@ import { GlobalConfig } from 'payload'
 
 export const WhatsAppConfig: GlobalConfig = {
   slug: 'whatsapp-config',
+  admin: {
+    group: 'Global Settings',
+  },
   access: {
     read: () => true,
     update: isAdmin,

@@ -10,6 +10,7 @@ export const Posts: CollectionConfig = {
   slug: 'posts',
   admin: {
     useAsTitle: 'title',
+    group: 'Content',
   },
   fields: [
     {

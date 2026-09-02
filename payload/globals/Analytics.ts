@@ -2,6 +2,9 @@ import { GlobalConfig } from 'payload'
 
 export const Analytics: GlobalConfig = {
   slug: 'analytics',
+  admin: {
+    group: 'Global Settings',
+  },
   fields: [
     {
       name: 'gtmId',
