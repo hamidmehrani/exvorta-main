@@ -107,7 +107,17 @@ export const cloudinaryStorage = (options: CloudinaryStorageOptions): Plugin => 
                   }
                   
                   req.payload.logger.error(error, `Cloudinary upload failed permanently after ${attempt} retries`)
-                  throw error
+                  const { APIError } = await import('payload')
+                  const hint =
+                    err?.http_code === 401
+                      ? 'Cloudinary credentials rejected (check CLOUDINARY_API_KEY/SECRET).'
+                      : err?.http_code === 404 || err?.message?.includes('cloud_name')
+                        ? 'Cloudinary cloud not found (check CLOUDINARY_CLOUD_NAME).'
+                        : err?.http_code && err.http_code >= 500
+                          ? 'Cloudinary is temporarily unavailable — try again shortly.'
+                          : err?.message || 'Unknown Cloudinary error'
+                  throw new APIError(`Upload failed: ${hint}`, err?.http_code === 401 ? 401 : 500)
+
                 }
               }
             },
