@@ -35,12 +35,13 @@ export const FounderBlock: Block = {
       localized: true,
     },
     {
-      name: 'imageSrc',
-      type: 'text',
-    },
-    {
-      name: 'imageAlt',
-      type: 'text',
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Portrait Image',
+      admin: {
+        description: 'Pick from Media or upload directly here. Portrait ratio recommended. Leave empty to use the built-in placeholder.',
+      },
     }
   ],
 }

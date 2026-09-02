@@ -25,6 +25,10 @@ export const FounderBlock: React.FC<FounderBlockProps> = (props) => {
   // Default image URL from HTML if not provided from CMS
   const defaultImageUrl = "/founder-portrait.png"
   const hasCMSImage = props.image && typeof props.image === 'object' && props.image.url
+  // Legacy rows: imageSrc as a plain URL string (pre-upload field)
+  const legacyImageUrl = !hasCMSImage && typeof props.imageSrc === 'string' && props.imageSrc.trim() !== '' && props.imageSrc !== '#'
+    ? props.imageSrc
+    : null
 
   return (
     <AnimatedSection className="w-full py-32 relative overflow-hidden bg-white text-black" id="founder">
@@ -67,6 +71,9 @@ export const FounderBlock: React.FC<FounderBlockProps> = (props) => {
                   media={props.image}
                   className="w-full h-full object-cover grayscale contrast-125 rounded-none"
                 />
+              ) : legacyImageUrl ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img src={legacyImageUrl} alt={`${name}, ${role}`} className="w-full h-full object-cover grayscale contrast-125 rounded-none" />
               ) : (
                 <div className="relative w-full h-full">
                   <Image

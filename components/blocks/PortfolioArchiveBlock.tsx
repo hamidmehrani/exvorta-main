@@ -26,6 +26,7 @@ export interface InlineProject {
   linkLabel?: string;
   linkUrl?: string;
   imageUrl?: string;
+  image?: { url?: string | null } | number | null;
 }
 
 export interface PortfolioArchiveBlockProps {
@@ -74,6 +75,8 @@ function resolveCaseStudyUrl(project: InlineProject): string {
 }
 
 function resolveProjectImage(project: InlineProject): string {
+  const uploaded = project.image && typeof project.image === 'object' ? project.image.url : null;
+  if (isUsableUrl(uploaded ?? undefined) && uploaded) return uploaded;
   if (isUsableUrl(project.imageUrl) && project.imageUrl) return project.imageUrl;
   const match = Object.keys(TITLE_IMAGE_ROUTES).find(k =>
     project.title.toLowerCase().includes(k),

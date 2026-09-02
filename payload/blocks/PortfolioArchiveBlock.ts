@@ -41,7 +41,13 @@ export const PortfolioArchiveBlock: Block = {
         { name: 'service', type: 'text' },
         { name: 'linkUrl', type: 'text' },
         { name: 'linkLabel', type: 'text' },
-        { name: 'imageUrl', type: 'text' },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Preview Image',
+          admin: { description: 'Optional. Desktop capture of the live site. Leave empty to use the built-in branded preview.' },
+        },
       ],
     },
     {
