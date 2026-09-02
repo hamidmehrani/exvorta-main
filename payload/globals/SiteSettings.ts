@@ -1,11 +1,32 @@
 import { GlobalConfig } from 'payload'
 import { isAdmin } from '../access/isAdmin'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
+  admin: {
+    group: 'System / Settings',
+  },
   access: {
     read: () => true,
     update: isAdmin,
+  },
+  hooks: {
+    afterChange: [
+      ({ doc }) => {
+        try {
+          revalidateTag('global-site-settings')
+          revalidatePath('/', 'layout')
+        } catch (e: any) {
+          if (e?.message && e.message.includes('static generation store missing')) {
+            // ignore when running in standalone CLI script
+          } else {
+            console.error('Failed to revalidate layout:', e)
+          }
+        }
+        return doc
+      },
+    ],
   },
   fields: [
     {

@@ -74,6 +74,7 @@ export default buildConfig({
     components: {
       graphics: {
         Logo: '@/components/admin/AgencyLogo',
+        Icon: '@/components/admin/AgencyIcon',
       },
       beforeDashboard: ['@/components/admin/WelcomeWidget'],
     },
