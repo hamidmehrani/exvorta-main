@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { m } from 'framer-motion'
 import { EASE_OUT } from '@/components/ui/Reveal'
 import type { FooterColumn } from './Footer'
@@ -21,8 +22,13 @@ export default function FooterClient({ columns, brand = { name: 'EXVORTA', logoU
           >
             <Link href="/" className="inline-flex items-center min-h-[44px] mb-4" aria-label={`${brand.name} home`}>
               {brand.logoUrl ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img src={brand.logoUrl} alt={brand.name} className="h-8 w-auto max-w-[160px] object-contain" />
+                <Image
+                  src={brand.logoUrl}
+                  alt={brand.name}
+                  width={160}
+                  height={32}
+                  className="h-8 w-auto max-w-[160px] object-contain"
+                />
               ) : (
                 <span className="font-serif text-xl font-semibold tracking-wide text-obsidian uppercase">
                   {brand.name}
@@ -42,10 +48,10 @@ export default function FooterClient({ columns, brand = { name: 'EXVORTA', logoU
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.55, delay: colIndex * 0.08, ease: EASE_OUT }}
             >
-              <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">
+              <h4 className="text-[12px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">
                 {column.title}
               </h4>
-              <ul className="space-y-1 text-[11px] text-obsidian/60">
+              <ul className="space-y-2 text-[12px] text-obsidian/70">
                 {column.links.map((link) => (
                   <li key={link.id}>
                     <Link
@@ -71,7 +77,7 @@ export default function FooterClient({ columns, brand = { name: 'EXVORTA', logoU
           transition={{ duration: 0.8, delay: 0.3 }}
           className="border-t border-black/5 pt-12 text-center"
         >
-          <p className="text-[10px] tracking-widest text-obsidian/30 uppercase">© {new Date().getFullYear()} Exvorta. All rights reserved.</p>
+          <p className="text-[12px] tracking-widest text-obsidian/40 uppercase">© {new Date().getFullYear()} Exvorta. All rights reserved.</p>
         </m.div>
       </div>
     </footer>

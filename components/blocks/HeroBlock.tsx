@@ -8,7 +8,16 @@ import { MagneticButton } from '@/components/ui/motion/MagneticButton'
 import { useReducedMotion } from '@/lib/animations'
 import { m as motion } from 'framer-motion'
 import { easings } from '@/lib/animations'
-import { ExvortaOsPanel } from '@/components/blocks/ExvortaOsPanel'
+import dynamic from 'next/dynamic'
+import { Scanline } from '@/components/ui/terminal-motion'
+import { CaretBlink } from '@/components/ui/terminal-motion'
+
+// 638-line interactive panel below the fold: client-only + not part of the
+// main bundle so the hero LCP stays fast.
+const ExvortaOsPanel = dynamic(
+  () => import('@/components/blocks/ExvortaOsPanel').then((mod) => mod.ExvortaOsPanel),
+  { ssr: false, loading: () => <div className="h-[420px]" aria-hidden="true" /> },
+)
 
 type HeroBlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'hero' }>
 
@@ -123,7 +132,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative">
 {/*  Hero Content  */}
 <motion.div className="text-center max-w-4xl mx-auto mb-20" variants={heroVariants} initial="hidden" animate="show">
-<motion.div variants={heroItem} className="inline-flex items-center justify-center px-3 py-1 mb-8 rounded-full border border-black/10 bg-white/50 text-[10px] tracking-widest uppercase text-obsidian/60"><motion.span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2" animate={{ opacity: [1, 0.35, 1] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}></motion.span> [ {props.eyebrow || (isWebHero ? "HIGH-PERFORMANCE WEBSITES" : "ENGINE V1.0 LIVE")} ]</motion.div>
+<motion.div variants={heroItem} className="inline-flex items-center justify-center px-3 py-1 mb-8 rounded-full border border-black/10 bg-white/50 text-[10px] tracking-widest uppercase text-obsidian/60"><motion.span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2" animate={{ opacity: [1, 0.35, 1] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}></motion.span> [ {props.eyebrow || (isWebHero ? "HIGH-PERFORMANCE WEBSITES" : "ENGINE V1.0 LIVE")} ]<CaretBlink className="!w-[0.5em] !h-[0.9em]" /></motion.div>
 {prefersReducedMotion ? (
   <h1
     className="text-5xl md:text-7xl lg:text-[84px] leading-[1.1] font-serif font-semibold text-obsidian mb-8 tracking-tight"
@@ -152,7 +161,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
   </Link>
 </MagneticButton>
 </motion.div>
-<motion.div variants={heroItem} className="mt-12 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 font-mono text-[9px] tracking-[0.3em] uppercase text-obsidian/45">
+<motion.div variants={heroItem} className="mt-12 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 font-mono text-[12px] tracking-[0.3em] uppercase text-obsidian/50">
   <span className="flex items-center gap-2"><span className="w-1 h-1 bg-emerald-600 rotate-45" /> 3 live deployments</span>
   <span className="flex items-center gap-2"><span className="w-1 h-1 bg-emerald-600 rotate-45" /> &lt;1s global load</span>
   <span className="flex items-center gap-2"><span className="w-1 h-1 bg-emerald-600 rotate-45" /> CMS you own</span>
@@ -160,9 +169,11 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 </motion.div>
 {/*  Dashboard Preview - ONLY for Home  */}
 {(!isWebHero) && (
-  <ExvortaOsPanel prefersReducedMotion={prefersReducedMotion} />
+  <Scanline>
+    <ExvortaOsPanel prefersReducedMotion={prefersReducedMotion} />
+  </Scanline>
 )}
-</div></section><div className="py-12 flex justify-center" data-purpose="social-proof-anchor"><p className="text-[11px] font-sans text-obsidian/40 uppercase tracking-[0.2em] text-center max-w-xl leading-relaxed">Elevating digital infrastructure for modern trading firms across the GCC and Europe.</p></div>
+</div></section><div className="py-12 flex justify-center" data-purpose="social-proof-anchor"><p className="text-[12px] font-sans text-obsidian/50 uppercase tracking-[0.2em] text-center max-w-xl leading-relaxed">Elevating digital infrastructure for modern trading firms across the GCC and Europe.</p></div>
 {/*  END: Hero Section  */}
 
     </AnimatedSection>

@@ -3,9 +3,13 @@ import RFQFormBlock from '@/components/blocks/RFQFormBlock'
 import type { Metadata } from 'next'
 import { generateMeta } from '@/utils/generateMeta'
 
-export const metadata: Metadata = {
-  title: 'Request for Quote',
-  description: 'Submit your operational requirements.',
+export async function generateMetadata(): Promise<Metadata> {
+  return generateMeta({
+    title: 'Request for Quote',
+    description:
+      'Get a scoped proposal for your export website in 48 hours — share your requirements and receive architecture, timeline and pricing.',
+    url: '/rfq',
+  })
 }
 
 export default function RFQPage() {

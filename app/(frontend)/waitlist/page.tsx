@@ -3,9 +3,13 @@ import WaitlistFormBlock from '@/components/blocks/WaitlistFormBlock'
 import type { Metadata } from 'next'
 import { generateMeta } from '@/utils/generateMeta'
 
-export const metadata: Metadata = {
-  title: 'Waitlist',
-  description: 'Join the waitlist for the Exvorta Suite.',
+export async function generateMetadata(): Promise<Metadata> {
+  return generateMeta({
+    title: 'Join the Waitlist',
+    description:
+      'Reserve your place in the Exvorta Suite rollout — one operating system for web, docs, tracking, CRM and trade intel.',
+    url: '/waitlist',
+  })
 }
 
 export default function WaitlistPage() {

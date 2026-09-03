@@ -171,7 +171,7 @@ export function RoadmapBlock(props: any) {
 ) : (
 <form onSubmit={handleWaitlistSubmit} className="flex flex-col sm:flex-row gap-4">
 <input
-  className="flex-1 bg-transparent border-t-0 border-x-0 border-b border-brand-obsidian/20 focus:ring-0 focus:border-brand-obsidian text-sm py-3 placeholder:text-brand-obsidian/50"
+  className="flex-1 bg-transparent border-t-0 border-x-0 border-b border-brand-obsidian/20 focus:ring-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-emerald focus:border-brand-obsidian text-sm py-3 placeholder:text-brand-obsidian/50"
   placeholder="Enter official corporate email..."
   type="email"
   required

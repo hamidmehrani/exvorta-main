@@ -6,7 +6,7 @@ import { getPayloadClient } from '@/lib/payload';
 import type { Project } from '@/payload-types';
 
 export async function generateMetadata(): Promise<Metadata> {
-  return generateMeta({ title: 'Portfolio', description: 'Latest Web Design Works. Premium websites and CMS platforms engineered for global exporters.' })
+  return generateMeta({ title: 'Portfolio', description: 'Latest Web Design Works. Premium websites and CMS platforms engineered for global exporters.', url: '/portfolio' })
 }
 
 export default async function PortfolioArchivePage() {

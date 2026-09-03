@@ -6,7 +6,7 @@ import { getPayloadClient } from '@/lib/payload';
 import type { Ecosystem } from '@/payload-types';
 
 export async function generateMetadata(): Promise<Metadata> {
-  return generateMeta({ title: 'Ecosystem', description: 'The Exvorta Suite - A Unifying Core for Global Trading Infrastructure.' })
+  return generateMeta({ title: 'Ecosystem', description: 'The Exvorta Suite - A Unifying Core for Global Trading Infrastructure.', url: '/ecosystem' })
 }
 
 export default async function EcosystemPage() {

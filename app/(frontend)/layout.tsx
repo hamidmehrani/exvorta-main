@@ -16,6 +16,7 @@ import type { SiteSetting, Analytics, WhatsappConfig } from '@/payload-types'
 import OrganizationSchema from '@/components/seo/OrganizationSchema'
 
 import DeferredWidgets from '@/components/layout/DeferredWidgets'
+import CursorGlow from '@/components/ui/CursorGlow'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { cookies } from 'next/headers'
 import SkipToContent from '@/components/legal/SkipToContent'
@@ -140,10 +141,11 @@ export default async function FrontendLayout({
                     </div>
                   ) : (
                     <>
+                      <CursorGlow />
                       <Header />
                       <PageWrapper>{children}</PageWrapper>
                       <Footer />
-                      <DeferredWidgets 
+                      <DeferredWidgets
                         cookieConfig={cookieConfig}
                         whatsappConfig={whatsappConfig}
                         umamiConfig={siteSettings?.umamiWebsiteId ? {

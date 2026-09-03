@@ -93,9 +93,9 @@ export function StaggerText({
   }
 
   const unitVariants = {
-    hidden: fromMarks
-      ? { y: '110%', opacity: 0, filter: 'blur(4px)' }
-      : { y: '0.6em', opacity: 0, filter: 'blur(6px)' },
+    // SSR-safe: initial state is VISIBLE (no opacity/y). The hidden state is
+    // applied on hydration just before animate runs, so the LCP headline is
+    // never invisible when JS fails or is slow (no-JS users see full text).
     show: {
       y: '0%',
       opacity: 1,
@@ -168,7 +168,7 @@ export function StaggerText({
   return (
     <Tag
       variants={container}
-      initial="hidden"
+      initial={false}
       {...(mode === 'animate' ? { animate: 'show' } : { whileInView: 'show', viewport: { once: true, margin: '-80px' } })}
       className={className}
       aria-label={aria}

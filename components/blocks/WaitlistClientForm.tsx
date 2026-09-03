@@ -63,7 +63,7 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
     }
   }
 
-  const inputClass = "peer w-full bg-white/[0.03] border border-white/15 px-5 pt-6 pb-2.5 text-white text-sm font-mono tracking-widest outline-none focus:border-brand-emerald focus:bg-white/[0.05] focus:ring-0 transition-colors rounded-none placeholder-transparent relative z-10"
+  const inputClass = "peer w-full bg-white/[0.03] border border-white/15 px-5 pt-6 pb-2.5 text-white text-sm font-mono tracking-widest outline-none focus:border-brand-emerald focus:bg-white/[0.05] focus:ring-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-emerald transition-colors rounded-none placeholder-transparent relative z-10"
   const labelClass = "absolute start-5 top-2 text-[9px] font-mono tracking-[0.2em] text-white/40 uppercase transition-all duration-200 pointer-events-none peer-focus:text-brand-emerald"
 
   const InputWrapper = ({ children, isFocused }: { children: React.ReactNode, isFocused?: boolean }) => (

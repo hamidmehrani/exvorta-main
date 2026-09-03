@@ -53,7 +53,7 @@ export default function RFQForm() {
     }
   }
 
-  const inputClass = `peer bg-transparent border-b border-hairline-light text-black placeholder:text-transparent rounded-none px-0 py-4 pt-6 text-sm focus:ring-0 focus:border-brand-emerald focus:outline-none uppercase font-mono tracking-widest w-full transition-colors duration-300 ${error ? 'border-red-500' : ''}`
+  const inputClass = `peer bg-transparent border-b border-hairline-light text-black placeholder:text-transparent rounded-none px-0 py-4 pt-6 text-sm focus:ring-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-emerald focus:border-brand-emerald uppercase font-mono tracking-widest w-full transition-colors duration-300 ${error ? 'border-red-500' : ''}`
   const labelClass = `absolute left-0 top-6 text-black/40 text-[10px] uppercase font-mono tracking-widest transition-all duration-300 pointer-events-none peer-focus:top-0 peer-focus:text-[8px] peer-focus:text-brand-emerald peer-focus:opacity-100 peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[8px] peer-[:not(:placeholder-shown)]:text-black/60 peer-valid:top-0 peer-valid:text-[8px] peer-valid:text-black/60`
 
   if (success) {

@@ -18,15 +18,6 @@ export function SmoothScrollProvider({
 
   useEffect(() => {
     setMounted(true)
-    if (typeof window !== 'undefined') {
-      Promise.all([
-        import('gsap').then(m => m.gsap || m.default),
-        import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
-      ]).then(([gsap, ScrollTrigger]) => {
-        if (!gsap || !ScrollTrigger) return;
-        gsap.registerPlugin(ScrollTrigger)
-      }).catch(e => console.warn('GSAP load failed', e))
-    }
   }, [])
 
   if (!mounted || prefersReducedMotion) {

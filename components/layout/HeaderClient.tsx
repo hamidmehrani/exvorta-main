@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { m as motion, AnimatePresence, useReducedMotion as useFramerReducedMotion } from 'framer-motion'
 import type { Page } from '@/payload-types'
 import { easings, useAnimationLevel } from '@/lib/animations'
@@ -109,8 +110,14 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { 
         <div className="flex-shrink-0">
           <Link href="/" aria-label={brand.name} className="inline-flex items-center min-h-[44px]">
             {brand.logoUrl ? (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img src={brand.logoUrl} alt={brand.name} className="h-8 w-auto max-w-[160px] object-contain" />
+              <Image
+                src={brand.logoUrl}
+                alt={brand.name}
+                width={160}
+                height={32}
+                priority
+                className="h-8 w-auto max-w-[160px] object-contain"
+              />
             ) : (
               <span className="font-serif text-2xl font-semibold tracking-wide text-obsidian uppercase">
                 {brand.name}
