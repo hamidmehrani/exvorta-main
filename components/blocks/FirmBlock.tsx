@@ -3,6 +3,7 @@
 import { sanitizeHeadingHtml } from '@/utils/heading-sanitize'
 import React from 'react'
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
+import { StaggerText } from '@/components/ui/motion'
 
 export interface FirmBlockProps {
   eyebrow?: string
@@ -50,9 +51,14 @@ export const FirmBlock: React.FC<FirmBlockProps> = (props) => {
           <span className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase mb-8 block">
             {eyebrow}
           </span>
-          <h2 
+          <StaggerText
+            as="h2"
+            text={headline}
+            unit="words"
+            stagger={0.06}
+            duration={0.75}
+            mode="inView"
             className="text-4xl md:text-5xl font-serif text-white leading-tight mb-8"
-            dangerouslySetInnerHTML={{ __html: headline }}
           />
           <p className="text-lg text-white/50 font-sans leading-relaxed">
             {description}

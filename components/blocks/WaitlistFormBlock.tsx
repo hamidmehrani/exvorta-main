@@ -47,7 +47,7 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
           </p>
         </Reveal>
 
-        <Reveal y={20} delay={0.2} className="w-full">
+        <Reveal y={20} delay={0.2} className="w-full max-w-2xl mx-auto">
           <WaitlistClientForm
             placeholder={placeholder || ''}
             buttonText={buttonText || ''}
@@ -57,10 +57,10 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
 
         {/* What you get — module grid */}
         <Reveal y={20} delay={0.3} className="w-full mt-16">
-          <StaggerContainer delayChildren={0.15} staggerChildren={0.1} className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10 border border-white/10 text-start">
+          <StaggerContainer delayChildren={0.15} staggerChildren={0.1} className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10 border border-white/10 text-start max-w-2xl mx-auto w-full">
             {PERKS.map((p) => (
-              <StaggerItem key={p.title}>
-                <div className="bg-brand-obsidian p-5 flex flex-col gap-1.5 hover:bg-white/[0.04] transition-colors">
+              <StaggerItem key={p.title} className="h-full">
+                <div className="bg-brand-obsidian p-5 flex flex-col gap-1.5 hover:bg-white/[0.04] transition-colors h-full">
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-[11px] text-white font-medium tracking-wide">{p.title}</span>
                     <span className="font-mono text-[8px] tracking-[0.15em] text-brand-emerald/80 uppercase">{p.phase}</span>

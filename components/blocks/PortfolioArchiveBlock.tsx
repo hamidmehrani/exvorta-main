@@ -10,9 +10,9 @@ import { MonoLabel } from '@/components/ui/MonoLabel';
 import { Button } from '@/components/ui/Button';
 import { useAnimationLevel, easings } from '@/lib/animations';
 import { MagneticButton } from '@/components/ui/MagneticButton';
-import { AnimatedHeadline } from '@/components/ui/AnimatedHeadline';
 import { LiveWebsiteFrame } from '@/components/ui/LiveWebsiteFrame';
 import { Reveal } from '@/components/ui/Reveal';
+import { StaggerText } from '@/components/ui/motion';
 
 // ── Strict Type Definitions ───────────────────────────────────────────────────
 
@@ -255,9 +255,12 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
         <Container>
           <div className="max-w-5xl">
             <div className="font-mono text-[11px] uppercase text-gray-500 mb-6 tracking-[0.2em]">[ SELECTED WORKS ]</div>
-            <AnimatedHeadline
+            <StaggerText
               as="h1"
               text="Latest Web Design Works."
+              mode="animate"
+              unit="chars"
+              duration={0.7}
               className="font-serif text-[72px] md:text-[100px] text-[#0D0D0D] mb-8 leading-none font-semibold tracking-tighter"
             />
             <p className="font-sans text-xl md:text-2xl text-black/60 max-w-2xl font-light">

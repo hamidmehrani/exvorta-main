@@ -71,9 +71,11 @@ export async function checkRateLimit(
 export async function verifyTurnstile(token: string | undefined): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY
   if (!secret) {
-    // Fail loudly in the server log; the form must not silently pass bots.
-    console.error('[turnstile] TURNSTILE_SECRET_KEY is not configured — rejecting submission')
-    return false
+    // Fail-open when Turnstile is not configured at all: a closed funnel
+    // costs real leads, while honeypot + rate limiting still run. The
+    // warning tells the operator to add TURNSTILE_SECRET_KEY to Vercel.
+    console.warn('[turnstile] TURNSTILE_SECRET_KEY is not configured — skipping verification (set it in Vercel envs to enable bot protection)')
+    return true
   }
   if (!token) return false
 

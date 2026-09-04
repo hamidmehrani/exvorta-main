@@ -3,7 +3,9 @@
 import { sanitizeHeadingHtml } from '@/utils/heading-sanitize'
 
 import React from 'react'
-import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
+import { AnimatedSection, StaggerContainer, StaggerItem, EASE_OUT } from '@/components/ui/Reveal'
+import { m } from 'framer-motion'
+import { StaggerText } from '@/components/ui/motion'
 
 export interface ThesisBlockProps {
   eyebrow?: string
@@ -25,7 +27,14 @@ export const ThesisBlock: React.FC<ThesisBlockProps> = (props) => {
         
         {/* Left Column: The Anchor */}
         <div className="lg:col-span-3 flex flex-col justify-start">
-          <div className="w-12 h-[1px] bg-black/20 mb-8"></div>
+          <m.div
+            aria-hidden
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.9, ease: EASE_OUT }}
+            className="w-12 h-[1px] bg-black/20 mb-8 origin-left"
+          ></m.div>
           <span 
             className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase leading-relaxed"
             dangerouslySetInnerHTML={{ __html: eyebrow }}
@@ -35,9 +44,15 @@ export const ThesisBlock: React.FC<ThesisBlockProps> = (props) => {
         {/* Right Column: The Manifesto */}
         <StaggerContainer className="lg:col-span-9 flex flex-col justify-center" staggerChildren={0.12} delayChildren={0.1}>
           <StaggerItem>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-black leading-[1.1] tracking-tight mb-12 max-w-4xl">
-              <span dangerouslySetInnerHTML={{ __html: sanitizeHeadingHtml(headline) }} />
-            </h2>
+            <StaggerText
+              as="h2"
+              text={sanitizeHeadingHtml(headline)}
+              unit="words"
+              stagger={0.055}
+              duration={0.7}
+              mode="inView"
+              className="text-4xl md:text-5xl lg:text-6xl font-serif text-black leading-[1.1] tracking-tight mb-12 max-w-4xl"
+            />
           </StaggerItem>
           {paragraph1 && (
             <StaggerItem>

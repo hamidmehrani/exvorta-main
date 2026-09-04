@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
+import { StaggerText } from '@/components/ui/motion'
 
 export interface LocationInfo {
   region: string
@@ -45,9 +46,15 @@ export const GlobalPresenceBlock: React.FC<GlobalPresenceBlockProps> = (props) =
         <span className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-6 block text-center">
           {eyebrow}
         </span>
-        <h2 className="text-4xl md:text-5xl font-serif text-black text-center mb-8">
-          {title}
-        </h2>
+        <StaggerText
+          as="h2"
+          text={title}
+          unit="words"
+          stagger={0.08}
+          duration={0.75}
+          mode="inView"
+          className="text-4xl md:text-5xl font-serif text-black text-center mb-8"
+        />
         <p className="text-lg text-black/50 font-sans text-center max-w-2xl mx-auto mb-24">
           {description}
         </p>

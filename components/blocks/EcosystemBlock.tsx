@@ -6,6 +6,8 @@ import { Container } from '@/components/ui/Container';
 import { MonoLabel } from '@/components/ui/MonoLabel';
 import { Button } from '@/components/ui/Button';
 import { Hairline } from '@/components/ui/Hairline';
+import { StaggerText } from '@/components/ui/motion';
+import { Parallax } from '@/components/ui/motion';
 // import Link from 'next/link';
 
 import type {  Ecosystem  } from '@/payload-types';
@@ -71,22 +73,27 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_80%)] animate-pulse [animation-duration:12s]"></div>
 <Container className="max-w-6xl w-full flex flex-col items-center text-center relative z-10">
 <Reveal y={16}><MonoLabel className="text-[9px] md:text-[10px] font-mono tracking-[0.4em] text-white/55 uppercase mb-10 block">{hero.eyebrow}</MonoLabel></Reveal>
-<Reveal y={24} delay={0.1}>
-<h1 className="text-4xl sm:text-5xl md:text-[5.5rem] lg:text-[6.5rem] font-serif font-bold text-white leading-[1.0] tracking-tight mb-8">
-      {hero.title} <br/>
-<span className="text-white/60">{hero.subtitle}</span>
-</h1>
+<Reveal y={24} delay={0.1} className="w-full">
+<StaggerText
+  as="h1"
+  text={`${hero.title} <br/> <span class="text-white/60">${hero.subtitle}</span>`}
+  unit="chars"
+  stagger={0.024}
+  duration={0.8}
+  className="text-4xl sm:text-5xl md:text-[5.5rem] lg:text-[6.5rem] font-serif font-bold text-white leading-[1.0] tracking-tight mb-8"
+/>
 </Reveal>
-<Reveal y={16} delay={0.25}>
+<m.div aria-hidden initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 1.2, delay: 0.5, ease: EASE_OUT }} className="w-40 h-px bg-brand-emerald/60 origin-center mb-10" />
+<Reveal y={16} delay={0.45}>
 <p className="max-w-3xl mx-auto text-lg md:text-xl text-white/50 leading-relaxed font-sans">
       {hero.description}
     </p>
 </Reveal>
-<Reveal y={12} delay={0.4}><MonoLabel className="text-[9px] font-mono text-white/25 tracking-[0.2em] uppercase mt-16 z-10">{hero.badge}</MonoLabel></Reveal>
+<Reveal y={12} delay={0.55}><MonoLabel className="text-[9px] font-mono text-white/25 tracking-[0.2em] uppercase mt-16 z-10">{hero.badge}</MonoLabel></Reveal>
 </Container>
 </AnimatedSection>
 
-<AnimatedSection className="w-full bg-brand-cream py-32 md:py-48 px-4 sm:px-6 lg:px-8 border-b border-brand-obsidian" id="ecosystem-problem"><Container className="max-w-5xl mx-auto flex flex-col items-center text-center"><MonoLabel className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-12 block relative"><div className="absolute -top-12 left-1/2 w-[1px] h-8 bg-black/10"></div> {problem.eyebrow} </MonoLabel><h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-black leading-[1.1] tracking-tight mb-12"> {problem.title} </h2><p className="text-xl md:text-2xl text-black/60 font-sans leading-relaxed max-w-4xl mx-auto font-light"> {problem.description} </p></Container></AnimatedSection>
+<AnimatedSection className="w-full bg-brand-cream py-32 md:py-48 px-4 sm:px-6 lg:px-8 border-b border-brand-obsidian" id="ecosystem-problem"><Container className="max-w-5xl mx-auto flex flex-col items-center text-center"><MonoLabel className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-12 block relative"><div className="absolute -top-12 left-1/2 w-[1px] h-8 bg-black/10"></div> {problem.eyebrow} </MonoLabel><StaggerText as="h2" text={problem.title || ''} unit="words" stagger={0.09} duration={0.7} className="text-4xl md:text-5xl lg:text-6xl font-serif text-black leading-[1.1] tracking-tight mb-12" /><p className="text-xl md:text-2xl text-black/60 font-sans leading-relaxed max-w-4xl mx-auto font-light"> {problem.description} </p></Container></AnimatedSection>
 
 <AnimatedSection className="w-full bg-brand-obsidian py-32 md:py-48 px-4 sm:px-6 lg:px-8 border-b border-white/20 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.03)_0%,transparent_70%)]" id="product-web">
 <Container className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -109,7 +116,9 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </div>
 
 <div className="lg:col-span-7">
-<div className="bg-mockup-card border border-white/20 aspect-[4/3] overflow-hidden relative group">
+<Parallax speed={24}>
+<Reveal y={36} duration={0.9}>
+<div className="bg-mockup-card border border-white/20 aspect-[4/3] overflow-hidden relative group shadow-[0_30px_80px_-30px_rgba(0,0,0,0.5)]">
 
 <div className="h-10 bg-white/[0.03] border-b border-white/20 flex items-center px-4 justify-between">
 <div className="flex gap-1.5">
@@ -158,6 +167,8 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </div>
 </div>
 </div>
+</Reveal>
+</Parallax>
 </div>
 </Container>
 </AnimatedSection>
@@ -166,7 +177,9 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <Container className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
 
 <div className="lg:col-span-7">
-<div className="bg-white border border-brand-obsidian aspect-[4/3] overflow-hidden relative group">
+<Parallax speed={24}>
+<Reveal y={36} duration={0.9}>
+<div className="bg-white border border-brand-obsidian aspect-[4/3] overflow-hidden relative group shadow-[0_30px_80px_-30px_rgba(0,0,0,0.25)]">
 
 <div className="h-10 bg-brand-cream border-b border-brand-obsidian flex items-center px-4 justify-between">
 <div className="flex gap-1.5">
@@ -238,6 +251,8 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </div>
 </div>
 </div>
+</Reveal>
+</Parallax>
 </div>
 
 <div className="lg:col-span-5 flex flex-col justify-center">
@@ -278,7 +293,10 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </Button>
 </div>
 
-<div className="lg:col-span-7 relative w-full aspect-[4/3] bg-mockup-card border border-white/20 overflow-hidden flex flex-col">
+<div className="lg:col-span-7">
+<Parallax speed={24}>
+<Reveal y={36} duration={0.9}>
+<div className="relative w-full aspect-[4/3] bg-mockup-card border border-white/20 overflow-hidden flex flex-col shadow-[0_30px_80px_-30px_rgba(0,0,0,0.5)]">
 
 <div className="w-full h-12 border-b border-white/20 flex items-center px-4 sm:px-6 lg:px-8 gap-2 bg-mockup-sidebar">
 <div className="w-2.5 h-2.5 bg-white/20"></div>
@@ -347,6 +365,9 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </div>
 </div></div>
 </div>
+</Reveal>
+</Parallax>
+</div>
 </Container>
 </AnimatedSection>
 
@@ -354,7 +375,9 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <Container className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
 
 <div className="lg:col-span-7">
-<div className="bg-white border border-brand-obsidian aspect-[4/3] overflow-hidden relative group flex flex-col">
+<Parallax speed={24}>
+<Reveal y={36} duration={0.9}>
+<div className="bg-white border border-brand-obsidian aspect-[4/3] overflow-hidden relative group flex flex-col shadow-[0_30px_80px_-30px_rgba(0,0,0,0.25)]">
 
 <div className="h-10 bg-brand-cream border-b border-brand-obsidian flex items-center px-4 justify-between">
 <div className="flex gap-1.5">
@@ -478,6 +501,8 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </div>
 </div>
 </div>
+</Reveal>
+</Parallax>
 </div>
 
 <div className="lg:col-span-5 flex flex-col justify-center">
@@ -513,7 +538,10 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
             </Button>
 </div>
 
-<div className="lg:col-span-7 relative w-full aspect-[4/3] bg-mockup-card border border-white/20 overflow-hidden flex flex-col">
+<div className="lg:col-span-7">
+<Parallax speed={24}>
+<Reveal y={36} duration={0.9}>
+<div className="relative w-full aspect-[4/3] bg-mockup-card border border-white/20 overflow-hidden flex flex-col shadow-[0_30px_80px_-30px_rgba(0,0,0,0.5)]">
 <div className="w-full h-10 border-b border-white/20 flex items-center justify-between px-4 bg-mockup-card">
 <div className="flex items-center gap-2">
 <div className="w-1.5 h-1.5 bg-brand-emerald animate-pulse"></div>
@@ -585,6 +613,9 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </div>
 </div>
 </div></div>
+</Reveal>
+</Parallax>
+</div>
 </Container>
 </AnimatedSection>
 
@@ -597,10 +628,15 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </div>
 </div>
 
-<h2 className="relative z-10 text-4xl sm:text-5xl md:text-[5.5rem] lg:text-[7rem] font-serif font-bold text-white leading-[1.0] tracking-tight mb-8">
-        {vision.title} <br/>
-<span className="text-white/40">{vision.subtitle}</span>
-</h2>
+<StaggerText
+  as="h2"
+  text={`${vision.title} <br/> <span class="text-white/40">${vision.subtitle}</span>`}
+  unit="chars"
+  stagger={0.024}
+  duration={0.8}
+  mode="inView"
+  className="relative z-10 text-4xl sm:text-5xl md:text-[5.5rem] lg:text-[7rem] font-serif font-bold text-white leading-[1.0] tracking-tight mb-8"
+/>
 
 <p className="relative z-10 max-w-3xl mx-auto text-lg md:text-xl text-white/50 leading-relaxed font-sans mb-16">
         {vision.description}
@@ -622,10 +658,15 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 
 <MonoLabel className="text-[10px] font-mono tracking-[0.3em] text-white/55 uppercase mb-8 block relative z-10">{cta.eyebrow}</MonoLabel>
 
-<h2 className="text-4xl md:text-6xl font-serif text-white mb-8 leading-tight tracking-tight max-w-4xl relative z-10">
-        {cta.title}<br/>
-<span className="text-white/50">{cta.subtitle}</span>
-</h2>
+<StaggerText
+  as="h2"
+  text={`${cta.title} <br/> <span class="text-white/50">${cta.subtitle}</span>`}
+  unit="words"
+  stagger={0.08}
+  duration={0.75}
+  mode="inView"
+  className="text-4xl md:text-6xl font-serif text-white mb-8 leading-tight tracking-tight max-w-4xl relative z-10"
+/>
 
 <p className="text-lg md:text-xl text-white/60 font-sans leading-relaxed max-w-3xl mb-16 relative z-10">
         {cta.description}

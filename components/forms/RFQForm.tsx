@@ -25,7 +25,13 @@ export default function RFQForm() {
     e.preventDefault()
     setIsPending(true)
     setError(null)
-    
+
+    if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && !turnstileToken) {
+      setIsPending(false)
+      setError('Security check not complete — please wait for verification.')
+      return
+    }
+
     const formData = new FormData(e.currentTarget)
     
     try {
@@ -96,8 +102,12 @@ export default function RFQForm() {
     >
       <input type="hidden" name="bot-field" />
       {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
-        <div className="opacity-0 h-0 w-0 overflow-hidden pointer-events-none absolute">
-          <Turnstile siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} onSuccess={setTurnstileToken} />
+        <div className="flex justify-center">
+          <Turnstile
+            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+            onSuccess={setTurnstileToken}
+            onExpire={() => setTurnstileToken(undefined)}
+          />
         </div>
       )}
 
@@ -120,7 +130,7 @@ export default function RFQForm() {
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
           <InputWrapper>
-            <input id="rfq-email" name="email" className={inputClass} placeholder="YOUR EMAIL" type="email" disabled={isPending} />
+            <input id="rfq-email" name="email" className={inputClass} placeholder="YOUR EMAIL" type="email" required disabled={isPending} />
             <label htmlFor="rfq-email" className={labelClass}>YOUR EMAIL</label>
 <span className="block text-[9px] font-mono text-black/30 tracking-wide mt-1">Corporate or Gmail — both fine.</span>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>

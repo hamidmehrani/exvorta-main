@@ -1,7 +1,9 @@
 'use client'
 
 import React from 'react'
-import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
+import { AnimatedSection, StaggerContainer, StaggerItem, EASE_OUT } from '@/components/ui/Reveal'
+import { m } from 'framer-motion'
+import { StaggerText } from '@/components/ui/motion'
 
 export interface VisionPrinciple {
   number?: string
@@ -56,9 +58,23 @@ export const VisionBlock: React.FC<VisionBlockProps> = (props) => {
         <span className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase mb-6 block text-center">
           {eyebrow}
         </span>
-        <h2 className="text-4xl md:text-5xl font-serif text-white text-center mb-24">
-          {title}
-        </h2>
+        <StaggerText
+          as="h2"
+          text={title}
+          unit="words"
+          stagger={0.08}
+          duration={0.75}
+          mode="inView"
+          className="text-4xl md:text-5xl font-serif text-white text-center mb-8"
+        />
+        <m.div
+          aria-hidden
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 1.0, delay: 0.2, ease: EASE_OUT }}
+          className="w-24 h-px bg-brand-emerald/50 mx-auto mb-24 origin-center"
+        ></m.div>
         
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 w-full border-t border-l border-[#333]" staggerChildren={0.12} delayChildren={0.15}>
           {principles?.map((p, i) => {

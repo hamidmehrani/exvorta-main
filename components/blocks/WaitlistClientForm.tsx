@@ -31,7 +31,13 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
     e.preventDefault()
     setIsPending(true)
     setError(null)
-    
+
+    if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && !turnstileToken) {
+      setIsPending(false)
+      setError('Security check not complete — please wait for verification.')
+      return
+    }
+
     const formData = new FormData(e.currentTarget)
     const emailVal = formData.get('email') as string
     const botField = formData.get('bot-field') as string
@@ -85,10 +91,11 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
         <input type="hidden" name="source" value={source || 'Waitlist'} />
         <input type="hidden" name="bot-field" />
         {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
-          <div className="opacity-0 h-0 w-0 overflow-hidden pointer-events-none absolute">
-            <Turnstile 
-              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} 
+          <div className="flex justify-center">
+            <Turnstile
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
               onSuccess={(token) => setTurnstileToken(token)}
+              onExpire={() => setTurnstileToken(undefined)}
             />
           </div>
         )}
@@ -125,17 +132,10 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
                 </MonoLabel>
               </div>
               <div className="flex flex-col items-center mt-4">
-                <MonoLabel className="text-[10px] text-white/30 uppercase tracking-[0.3em]">Waitlist Position</MonoLabel>
-                <div className="flex items-baseline mt-2">
-                  <span className="text-3xl font-mono text-brand-emerald font-bold">#</span>
-                  <m.span 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-4xl font-mono text-white tracking-widest tabular-nums"
-                  >
-                    0412
-                  </m.span>
-                </div>
+                <MonoLabel className="text-[10px] text-white/30 uppercase tracking-[0.3em]">Next Step</MonoLabel>
+                <MonoLabel className="text-xs text-white/60 uppercase tracking-widest mt-2 max-w-sm">
+                  Watch your inbox — alpha invitations are sent in waves.
+                </MonoLabel>
               </div>
             </m.div>
           ) : (

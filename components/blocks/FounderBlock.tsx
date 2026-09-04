@@ -2,7 +2,8 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { AnimatedSection } from '@/components/ui/Reveal'
+import { AnimatedSection, Reveal } from '@/components/ui/Reveal'
+import { StaggerText } from '@/components/ui/motion'
 import { CMSImage } from '@/components/ui/CMSImage'
 
 export interface FounderBlockProps {
@@ -41,8 +42,16 @@ export const FounderBlock: React.FC<FounderBlockProps> = (props) => {
           
           {/* Left Column: Editorial Quote & Signature */}
           <div className="lg:col-span-3 flex flex-col pr-16">
-            <blockquote className="text-3xl md:text-4xl lg:text-5xl font-serif text-black leading-tight mb-12 italic">
-              {quote}
+            <blockquote>
+            <StaggerText
+              as="p"
+              text={quote}
+              unit="words"
+              stagger={0.045}
+              duration={0.7}
+              mode="inView"
+              className="text-3xl md:text-4xl lg:text-5xl font-serif text-black leading-tight mb-12 italic"
+            />
             </blockquote>
             
             <div className="mt-4">
@@ -64,7 +73,7 @@ export const FounderBlock: React.FC<FounderBlockProps> = (props) => {
           </div>
           
           {/* Right Column: Portrait */}
-          <div className="lg:col-span-2 mt-12 lg:mt-0">
+          <Reveal className="lg:col-span-2 mt-12 lg:mt-0" y={40} duration={0.9}>
             <div className="relative aspect-[3/4] w-full overflow-hidden border border-black/10 rounded-none shadow-none bg-black/5 flex items-center justify-center">
               {hasCMSImage ? (
                 <CMSImage
@@ -86,8 +95,8 @@ export const FounderBlock: React.FC<FounderBlockProps> = (props) => {
                 </div>
               )}
             </div>
-          </div>
-          
+          </Reveal>
+
         </div>
       </div>
     </AnimatedSection>
