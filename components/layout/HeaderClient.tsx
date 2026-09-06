@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { m as motion, AnimatePresence, useReducedMotion as useFramerReducedMotion } from 'framer-motion'
 import type { Page } from '@/payload-types'
 import { easings, useAnimationLevel } from '@/lib/animations'
+import ExvortaLogo from '@/components/brand/ExvortaLogo'
 
 interface NavLink {
   link: {
@@ -119,9 +120,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { 
                 className="h-8 w-auto max-w-[160px] object-contain"
               />
             ) : (
-              <span className="font-serif text-2xl font-semibold tracking-wide text-obsidian uppercase">
-                {brand.name}
-              </span>
+              <ExvortaLogo size={34} />
             )}
           </Link>
         </div>

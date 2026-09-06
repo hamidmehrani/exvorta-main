@@ -1,36 +1,44 @@
 import React from 'react'
 import { adminPanelConfig } from './panel.config'
+import ExvortaLogo from '@/components/brand/ExvortaLogo'
 
 /**
  * Unified admin logo — shared across all projects, branded via panel.config.
+ * Carries the Exvorta brand mark beside the site's own brand name.
  */
 export const AgencyLogo: React.FC = () => {
-  const { brandLetter, brandName, accent, background, text } = adminPanelConfig
+  const { brandName, text } = adminPanelConfig
 
   return (
-    <div className="flex items-center gap-2" style={{ padding: '4px 0' }}>
-      <div
-        className="flex items-center justify-center font-bold"
-        style={{
-          width: '32px',
-          height: '32px',
-          borderRadius: '6px',
-          backgroundColor: accent,
-          color: background,
-          fontSize: '20px',
-        }}
-      >
-        {brandLetter}
-      </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '4px 0' }}>
+      <ExvortaLogo size={28} />
       <span
-        className="font-bold tracking-tight"
         style={{
           fontSize: '20px',
+          fontWeight: 700,
           color: text,
           fontFamily: 'Inter, sans-serif',
+          letterSpacing: '-0.01em',
         }}
       >
         {brandName}
+      </span>
+      <span
+        style={{
+          fontSize: '10px',
+          fontWeight: 700,
+          letterSpacing: '0.12em',
+          color: '#00966B',
+          border: '1px solid rgba(0, 150, 107, 0.35)',
+          background: 'rgba(0, 150, 107, 0.08)',
+          borderRadius: '999px',
+          padding: '3px 10px',
+          lineHeight: 1.4,
+          textTransform: 'uppercase',
+          fontFamily: 'Inter, sans-serif',
+        }}
+      >
+        Powered by Exvorta
       </span>
     </div>
   )

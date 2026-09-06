@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { adminPanelConfig } from './panel.config'
+import ExvortaLogo from '@/components/brand/ExvortaLogo'
 import '../../app/(payload)/admin.scss'
 
 /**
@@ -22,8 +23,8 @@ const WelcomeWidget: React.FC = () => {
         color: accent,
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem' }}>
-        <div style={{ width: '12px', height: '12px', background: accent, marginRight: '12px' }}></div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+        <ExvortaLogo size={30} />
         <h2 style={{ fontSize: '1.25rem', letterSpacing: '0.2em', textTransform: 'uppercase', margin: 0, fontWeight: 'normal' }}>
           SYSTEM ONLINE: {brandName}
         </h2>

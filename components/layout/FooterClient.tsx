@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { m } from 'framer-motion'
 import { EASE_OUT } from '@/components/ui/Reveal'
 import type { FooterColumn } from './Footer'
+import ExvortaLogo from '@/components/brand/ExvortaLogo'
 
 export default function FooterClient({ columns, brand = { name: 'EXVORTA', logoUrl: null } }: { columns: FooterColumn[]; brand?: { name: string; logoUrl: string | null } }) {
   return (
@@ -30,9 +31,7 @@ export default function FooterClient({ columns, brand = { name: 'EXVORTA', logoU
                   className="h-8 w-auto max-w-[160px] object-contain"
                 />
               ) : (
-                <span className="font-serif text-xl font-semibold tracking-wide text-obsidian uppercase">
-                  {brand.name}
-                </span>
+                <ExvortaLogo size={32} />
               )}
             </Link>
             <p className="text-xs text-obsidian/40 leading-relaxed font-light max-w-xs">

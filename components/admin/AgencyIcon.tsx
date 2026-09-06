@@ -1,25 +1,26 @@
 import React from 'react'
-import { adminPanelConfig } from './panel.config'
+import ExvortaLogo from '@/components/brand/ExvortaLogo'
 
 /**
- * Unified admin favicon icon — shared across all projects, branded via panel.config.
+ * Unified admin favicon icon — shared across all projects.
+ * Uses the Exvorta brand mark.
  */
 export const AgencyIcon: React.FC = () => {
-  const { brandLetter, accent, background } = adminPanelConfig
-
   return (
     <div
-      className="flex items-center justify-center font-bold"
       style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         width: '32px',
         height: '32px',
-        borderRadius: '6px',
-        backgroundColor: accent,
-        color: background,
-        fontSize: '20px',
+        borderRadius: '8px',
+        background: '#FAFAF8',
+        border: '1px solid rgba(0,0,0,0.08)',
+        overflow: 'hidden',
       }}
     >
-      {brandLetter}
+      <ExvortaLogo size={24} />
     </div>
   )
 }

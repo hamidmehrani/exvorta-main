@@ -4,6 +4,7 @@ import React from 'react'
 import LoginForm from '@/components/forms/LoginForm'
 import { m, AnimatePresence } from 'framer-motion'
 import { EASE_OUT } from '@/components/ui/Reveal'
+import ExvortaLogo from '@/components/brand/ExvortaLogo'
 
 export default function LoginShell() {
   return (
@@ -23,14 +24,14 @@ export default function LoginShell() {
         transition={{ duration: 0.7, ease: EASE_OUT }}
         className="w-full max-w-md p-10 bg-surface border border-border rounded-2xl shadow-2xl relative z-10 flex flex-col items-center text-center"
       >
-        {/* Brand Icon */}
+        {/* Brand Mark */}
         <m.div
           initial={{ scale: 0.6, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.15, duration: 0.5, ease: EASE_OUT }}
-          className="w-12 h-12 rounded bg-primary flex items-center justify-center font-bold text-bg text-2xl mb-6"
+          className="w-16 h-16 rounded-2xl bg-[#FAFAF8] border border-black/10 flex items-center justify-center mb-6 overflow-hidden"
         >
-          E
+          <ExvortaLogo size={40} />
         </m.div>
 
         <h1 className="text-3xl font-extrabold text-text mb-2 tracking-tight">Client Portal</h1>
