@@ -11,7 +11,7 @@ export const AgencyLogo: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '4px 0' }}>
-      <ExvortaLogo size={28} />
+      <ExvortaLogo size={28} tone="dark" />
       <span
         style={{
           fontSize: '20px',

@@ -20,7 +20,7 @@ export const AgencyIcon: React.FC = () => {
         overflow: 'hidden',
       }}
     >
-      <ExvortaLogo size={24} />
+      <ExvortaLogo size={22} wordmark={false} />
     </div>
   )
 }

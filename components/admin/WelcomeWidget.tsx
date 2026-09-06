@@ -24,7 +24,7 @@ const WelcomeWidget: React.FC = () => {
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
-        <ExvortaLogo size={30} />
+        <ExvortaLogo size={30} tone="dark" />
         <h2 style={{ fontSize: '1.25rem', letterSpacing: '0.2em', textTransform: 'uppercase', margin: 0, fontWeight: 'normal' }}>
           SYSTEM ONLINE: {brandName}
         </h2>
