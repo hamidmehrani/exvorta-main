@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { AnimatedSection } from '@/components/ui/Reveal'
-import LiveWebsiteFrame from '@/components/ui/LiveWebsiteFrame'
+import MonitorFrame from '@/components/ui/MonitorFrame'
 
 export interface PortfolioShowcaseBlockProps {
   label?: string
@@ -54,21 +54,17 @@ export const PortfolioShowcaseBlock: React.FC<PortfolioShowcaseBlockProps> = (pr
             </Link>
           </div>
           
-          {/* Right Column */}
+          {/* Right Column — professional monitor running the live site */}
           <div className="md:col-span-7">
             {hasValidProject ? (
-              <LiveWebsiteFrame
-                title={projectData.title || "Portfolio Project"}
-                imageUrl={
+              <MonitorFrame
+                url={projectData.liveUrl || (projectData.slug ? `https://${projectData.slug}.exvorta.com` : 'https://spicevo.exvorta.com')}
+                title={projectData.title || 'Portfolio Project'}
+                poster={
                   typeof projectData.featuredImage === 'object'
                     ? projectData.featuredImage?.url
                     : undefined
                 }
-                liveUrl={projectData.liveUrl || (projectData.slug ? `https://${projectData.slug}.exvorta.com` : undefined)}
-                industry={projectData.clientInfo?.industry || "ENTERPRISE"}
-                volume={projectData.clientInfo?.volume || "N/A"}
-                service={projectData.clientInfo?.service || "DIGITAL INFRASTRUCTURE"}
-                slug={projectData.slug}
               />
             ) : (
               <div className="w-full aspect-video border border-black bg-[#E5E5E5] flex items-center justify-center relative overflow-hidden">

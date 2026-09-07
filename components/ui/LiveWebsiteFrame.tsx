@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import LiveIframe from './LiveIframe'
 
 export interface LiveWebsiteFrameProps {
   title: string
@@ -12,6 +13,8 @@ export interface LiveWebsiteFrameProps {
   volume?: string
   service?: string
   slug?: string
+  /** Render a real live iframe of the site (hover auto-scrolls the actual page) instead of a static capture. */
+  live?: boolean
   /** Extra classes for the outer wrapper */
   className?: string
 }
@@ -31,6 +34,7 @@ export function LiveWebsiteFrame({
   volume,
   service,
   slug,
+  live = false,
   className = '',
 }: LiveWebsiteFrameProps) {
   const screenRef = useRef<HTMLDivElement>(null)
@@ -117,9 +121,11 @@ export function LiveWebsiteFrame({
         )}
       </div>
 
-      {/* ── Screen: slow scroll-on-hover reveal of the real page capture ─── */}
+      {/* ── Screen: live site (hover auto-scroll) or slow scroll-on-hover capture ── */}
       <div ref={screenRef} className="relative aspect-[4/3] overflow-hidden bg-[#0D0D0D]">
-        {hasImage ? (
+        {live && liveHref ? (
+          <LiveIframe url={liveHref} title={title} poster={hasImage ? imageUrl : undefined} />
+        ) : hasImage ? (
           <div
             ref={imgRef}
             className="lwframe-capture absolute inset-x-0 top-0"

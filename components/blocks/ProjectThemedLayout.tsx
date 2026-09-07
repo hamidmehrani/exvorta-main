@@ -3,12 +3,11 @@
 import React from 'react';
 import type { Project } from '@/payload-types';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal';
-import { CMSImage } from '@/components/ui/CMSImage';
-import Image from 'next/image';
 import Link from 'next/link';
 import { m as motion } from 'framer-motion';
 import { easings, useReducedMotion } from '@/lib/animations';
 import { getCaseStudy, type CaseStudyData } from '@/components/blocks/case-study-data';
+import LiveSitePreview from '@/components/ui/LiveSitePreview';
 
 export function ProjectThemedLayout({ project }: { project?: Project }) {
   const slug = project?.slug || 'spicevo';
@@ -122,42 +121,11 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                 transition={{ duration: 1.0, delay: 0.25, ease: easings.cinematic }}
                 style={{ transformPerspective: 1400 }}
               >
-                <div className="border border-white/10 bg-[#141414] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.8)]">
-                  {/* browser chrome */}
-                  <div className="flex items-center gap-2 px-4 py-3 bg-[#0D0D0D] border-b border-white/10">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
-                    <div className="flex-1 mx-3 bg-white/5 px-3 py-1 flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 border border-white/25 rounded-full inline-block" />
-                      <span className="font-mono text-[10px] text-white/40">{cs.domain}</span>
-                    </div>
-                  </div>
-                  <div className="relative aspect-[16/10] overflow-hidden group">
-                    {heroSrc ? (
-                      cmsHero ? (
-                        <CMSImage
-                          media={cmsHero}
-                          className="w-full h-full object-cover object-top transition-transform duration-[8s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:[transform:translateY(calc(-100%_+_520px))]"
-                        />
-                      ) : (
-                        <Image
-                          src={heroSrc}
-                          alt={`${cs.title} website preview`}
-                          fill
-                          sizes="(max-width: 1024px) 100vw, 58vw"
-                          className="object-cover object-top transition-transform duration-[8s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:[transform:translateY(calc(-100%_+_520px))]"
-                        />
-                      )
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#1A1A1A] to-[#0D0D0D]">
-                        <span className="font-mono text-[10px] tracking-[0.3em] text-white/20 uppercase">[ LIVE PREVIEW ]</span>
-                      </div>
-                    )}
-                    {/* hover scanline */}
-                    <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white/0 via-white/10 to-white/0 opacity-0 -translate-y-full group-hover:opacity-100 group-hover:animate-[framescan_2.6s_ease-in-out_infinite]" />
-                  </div>
-                </div>
+                <LiveSitePreview
+                  url={liveUrl}
+                  title={cs.title}
+                  poster={heroSrc || undefined}
+                />
                 <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.3em] text-white/40">
                   HOVER TO SCROLL THE FULL PAGE — OR VISIT THE LIVE SITE ↗
                 </p>
