@@ -10,12 +10,20 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    ALTER TABLE "pages_blocks_founder" ADD COLUMN IF NOT EXISTS "image_id" integer;
    ALTER TABLE "proj_archive" ADD COLUMN IF NOT EXISTS "image_id" integer;
+   ALTER TABLE "_pages_v_blocks_founder" ADD COLUMN IF NOT EXISTS "image_id" integer;
+   ALTER TABLE "_proj_archive_v" ADD COLUMN IF NOT EXISTS "image_id" integer;
 
    ALTER TABLE "pages_blocks_founder" DROP CONSTRAINT IF EXISTS "pages_blocks_founder_image_id_media_id_fk";
    ALTER TABLE "pages_blocks_founder" ADD CONSTRAINT "pages_blocks_founder_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
 
    ALTER TABLE "proj_archive" DROP CONSTRAINT IF EXISTS "proj_archive_image_id_media_id_fk";
    ALTER TABLE "proj_archive" ADD CONSTRAINT "proj_archive_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+
+   ALTER TABLE "_pages_v_blocks_founder" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_founder_image_id_media_id_fk";
+   ALTER TABLE "_pages_v_blocks_founder" ADD CONSTRAINT "_pages_v_blocks_founder_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+
+   ALTER TABLE "_proj_archive_v" DROP CONSTRAINT IF EXISTS "_proj_archive_v_image_id_media_id_fk";
+   ALTER TABLE "_proj_archive_v" ADD CONSTRAINT "_proj_archive_v_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   `)
 }
 
