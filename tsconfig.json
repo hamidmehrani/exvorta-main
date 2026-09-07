@@ -41,6 +41,7 @@
   "exclude": [
     "node_modules",
     "scripts",
+    "migrations",
     "payload-generated-schema.ts"
   ]
 }
