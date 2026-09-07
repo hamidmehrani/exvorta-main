@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Image from 'next/image'
 import LiveIframe from './LiveIframe'
 
@@ -38,26 +38,8 @@ export function LiveWebsiteFrame({
   className = '',
 }: LiveWebsiteFrameProps) {
   const screenRef = useRef<HTMLDivElement>(null)
-  const imgRef = useRef<HTMLImageElement | null>(null)
-  const [scrollDist, setScrollDist] = useState(0)
   const [copied, setCopied] = useState(false)
 
-  // Measure exactly how far the capture must travel so its bottom edge
-  // lands flush with the viewport bottom — no overshoot, no undershoot.
-  useEffect(() => {
-    const measure = () => {
-      const screen = screenRef.current
-      const img = imgRef.current
-      if (!screen || !img) return
-      const dist = Math.max(0, img.scrollHeight - screen.clientHeight)
-      setScrollDist(dist)
-    }
-    measure()
-    const ro = new ResizeObserver(measure)
-    if (screenRef.current) ro.observe(screenRef.current)
-    if (imgRef.current) ro.observe(imgRef.current)
-    return () => ro.disconnect()
-  }, [imageUrl])
   const liveHref = liveUrl || (slug ? `https://${slug}.exvorta.com` : '')
   const host = liveHref.replace(/^https:\/\//, '')
   const hasImage = !!imageUrl
@@ -126,15 +108,7 @@ export function LiveWebsiteFrame({
         {live && liveHref ? (
           <LiveIframe url={liveHref} title={title} poster={hasImage ? imageUrl : undefined} />
         ) : hasImage ? (
-          <div
-            ref={imgRef}
-            className="lwframe-capture absolute inset-x-0 top-0"
-            style={{
-              height: 'max(100%, 133%)',
-              ['--scroll' as string]: `${scrollDist}px`,
-              transitionDuration: `${Math.min(7000, Math.max(2500, scrollDist * 12))}ms`,
-            }}
-          >
+          <div className="absolute inset-0">
             <Image
               src={imageUrl!}
               alt={`${title} website preview`}
@@ -167,8 +141,6 @@ export function LiveWebsiteFrame({
             </svg>
           </a>
         )}
-        {/* Hover scanline sweeping down over the preview */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/0 via-white/10 to-white/0 opacity-0 -translate-y-full group-hover:opacity-100 group-hover:animate-[framescan_2.4s_ease-in-out_infinite]" />
         {/* Subtle vignette overlay */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
       </div>

@@ -173,7 +173,12 @@ export function StaggerText({
       className={className}
       aria-label={aria}
     >
-      {words.map(renderWord)}
+      {words.map((word, index) => (
+        <React.Fragment key={`word-frag-${index}`}>
+          {renderWord(word, index)}
+          {index < words.length - 1 ? ' ' : null}
+        </React.Fragment>
+      ))}
     </Tag>
   )
 }

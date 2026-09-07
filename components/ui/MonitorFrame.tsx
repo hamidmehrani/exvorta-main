@@ -13,45 +13,56 @@ export interface MonitorFrameProps {
 /**
  * MonitorFrame
  *
- * A professional desktop-monitor presentation: slim dark bezel, brushed
- * stand, weighted base, ambient screen glow and a soft desk reflection.
- * The screen renders a live, hover-scrollable view of the deployed site.
+ * An editorial, architectural presentation of a deployed site — thin
+ * hairline ink frame, quiet mono caption strip and a flat drafting-table
+ * stand. Matches the brand's Swiss B&W design language: no gloss, no
+ * glow, no consumer-hardware theatrics.
  */
 export function MonitorFrame({ url, title, poster, className = '' }: MonitorFrameProps) {
   const host = url.replace(/^https?:\/\//, '').replace(/\/$/, '')
 
   return (
     <div className={`select-none ${className}`}>
-      <div className="relative">
-        {/* Ambient screen glow */}
-        <div aria-hidden className="absolute -inset-8 bg-black/25 blur-3xl rounded-[48px] -z-10" />
+      {/* Caption strip — above the frame, like a drawing index */}
+      <div className="flex items-center justify-between border-b border-black/15 pb-3 mb-6">
+        <span className="font-mono text-[9px] tracking-[0.3em] text-black/40 uppercase">
+          FIG. 01 — {title}
+        </span>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group/visit inline-flex items-center gap-1.5 font-mono text-[9px] tracking-[0.25em] text-black/40 uppercase hover:text-black transition-colors"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden />
+          LIVE ↗
+        </a>
+      </div>
 
-        {/* Bezel */}
-        <div className="relative rounded-[16px] bg-gradient-to-b from-[#1E1E1E] to-[#0B0B0B] p-[10px] ring-1 ring-white/10 shadow-[0_60px_120px_-40px_rgba(0,0,0,0.8)]">
-          {/* Screen */}
-          <div className="relative rounded-[9px] overflow-hidden bg-black ring-1 ring-black/70">
-            <LiveSitePreview url={url} title={title} poster={poster} variant="embedded" />
-          </div>
-
-          {/* Chin */}
-          <div className="h-8 flex items-center justify-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden />
-            <span className="font-mono text-[8px] tracking-[0.35em] text-white/25 uppercase truncate">
-              {host} — LIVE
-            </span>
-          </div>
+      {/* Frame — flat hairline ink border, quiet shadow */}
+      <div className="relative border border-black/20 bg-white shadow-[0_1px_0_rgba(0,0,0,0.04)] group">
+        {/* Minimal chrome bar */}
+        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-black/10 bg-[#FAFAF8]">
+          <span className="font-mono text-[8px] tracking-[0.2em] text-black/30 uppercase truncate">
+            {host}
+          </span>
+          <span className="flex-1" />
+          <span className="flex items-center gap-1.5" aria-hidden>
+            <span className="w-1 h-1 rounded-full bg-black/15" />
+            <span className="w-1 h-1 rounded-full bg-black/15" />
+            <span className="w-1 h-1 rounded-full bg-black/15" />
+          </span>
         </div>
 
-        {/* Stand */}
-        <div className="mx-auto w-28 h-14 [clip-path:polygon(22%_0,78%_0,100%_100%,0_100%)] bg-gradient-to-b from-[#161616] to-[#0A0A0A]" />
-        <div className="mx-auto w-60 h-[10px] rounded-full bg-[#0E0E0E] ring-1 ring-white/10 shadow-[0_24px_40px_-14px_rgba(0,0,0,0.7)]" />
-
-        {/* Desk reflection */}
-        <div
-          aria-hidden
-          className="mx-auto mt-3 h-24 w-3/4 bg-gradient-to-b from-white/[0.06] to-transparent blur-md [mask-image:linear-gradient(to_bottom,black,transparent_70%)]"
-        />
+        {/* Screen — static, calm live view */}
+        <div className="relative aspect-[16/10] overflow-hidden bg-[#0D0D0D]">
+          <LiveSitePreview url={url} title={title} poster={poster} variant="embedded" />
+        </div>
       </div>
+
+      {/* Stand — two quiet drafting lines */}
+      <div className="mx-auto w-px h-10 bg-black/25" aria-hidden />
+      <div className="mx-auto w-40 h-px bg-black/25" aria-hidden />
     </div>
   )
 }

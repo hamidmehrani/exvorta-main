@@ -33,17 +33,17 @@ export function LiveSitePreview({
 
   return (
     <div
-      className={`${standalone ? 'border border-white/10 bg-[#141414] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.8)]' : ''} ${className}`}
+      className={`${standalone ? 'border border-black/20 bg-white shadow-[0_1px_0_rgba(0,0,0,0.04)]' : ''} ${className}`}
     >
       {standalone && (
-        <div className="flex items-center gap-2 px-4 py-3 bg-[#0D0D0D] border-b border-white/10">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
-          <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
-          <div className="flex-1 mx-3 bg-white/5 px-3 py-1 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" aria-hidden />
-            <span className="font-mono text-[10px] text-white/40 truncate">{host}</span>
-          </div>
+        <div className="flex items-center gap-2 px-4 py-2.5 bg-[#FAFAF8] border-b border-black/10">
+          <span className="font-mono text-[8px] tracking-[0.2em] text-black/30 uppercase truncate">{host}</span>
+          <span className="flex-1" />
+          <span className="flex items-center gap-1.5" aria-hidden>
+            <span className="w-1 h-1 rounded-full bg-black/15" />
+            <span className="w-1 h-1 rounded-full bg-black/15" />
+            <span className="w-1 h-1 rounded-full bg-black/15" />
+          </span>
         </div>
       )}
       <div className={`relative ${aspectClass} overflow-hidden group bg-[#0D0D0D]`}>
