@@ -22,12 +22,30 @@ const ctx = await browser.newContext({
 
 for (const [name, url] of SITES) {
   const page = await ctx.newPage();
+
+  // Pre-accept cookie consent so the banner never renders in captures.
+  await ctx.addCookies([
+    { name: 'cookie-consent', value: 'accepted', url, httpOnly: true, sameSite: 'Lax', secure: url.startsWith('https') },
+  ]);
+
   try {
     await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 });
   } catch {
     console.log(`${name}: networkidle timeout — continuing`);
   }
   await page.waitForTimeout(2500);
+
+  // Belt & braces: strip any consent UI that may still be present.
+  await page.addStyleTag({
+    content: `[class*="cookie" i], [id*="cookie" i], [class*="consent" i], [id*="consent" i], [class*="gdpr" i], [data-consent] { display: none !important; }`,
+  });
+  await page.evaluate(() => {
+    document
+      .querySelectorAll(
+        '[class*="cookie" i], [id*="cookie" i], [class*="consent" i], [id*="consent" i], [class*="gdpr" i], [data-consent]',
+      )
+      .forEach((el) => el.remove());
+  });
 
   // Pre-scroll to trigger lazy-loaded images, then return to top.
   await page.evaluate(async () => {
