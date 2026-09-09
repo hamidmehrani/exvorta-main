@@ -116,10 +116,9 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
             {/* Right: browser-framed live screenshot */}
             <div className="col-span-1 lg:col-span-7">
               <motion.div
-                initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 48, rotateX: 10 }}
-                animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, rotateX: 0 }}
-                transition={{ duration: 1.0, delay: 0.25, ease: easings.cinematic }}
-                style={{ transformPerspective: 1400 }}
+                initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 32 }}
+                animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.25, ease: easings.cinematic }}
               >
                 <LiveSitePreview
                   url={liveUrl}
@@ -127,7 +126,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                   poster={heroSrc || undefined}
                 />
                 <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.3em] text-white/40">
-                  LIVE PREVIEW — VISIT THE FULL SITE ↗
+                  FIG. 01 — LIVE DEPLOYMENT — {cs.domain}
                 </p>
               </motion.div>
             </div>

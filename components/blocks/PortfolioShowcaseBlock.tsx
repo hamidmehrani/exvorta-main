@@ -67,10 +67,12 @@ export const PortfolioShowcaseBlock: React.FC<PortfolioShowcaseBlockProps> = (pr
                 }
               />
             ) : (
-              <div className="w-full aspect-video border border-black bg-[#E5E5E5] flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-black/5 mix-blend-multiply"></div>
-                <span className="text-xs font-mono text-black/30 tracking-widest uppercase relative z-10">
-                  [ CINEMATIC B&W IMAGE PLACEHOLDER ]
+              <div className="w-full aspect-[16/10] border border-black/15 bg-[#0D0D0D] flex flex-col items-center justify-center gap-3">
+                <div className="w-14 h-10 border border-white/10 rounded-[2px] flex items-center justify-center">
+                  <div className="w-7 h-5 border border-white/20 rounded-[1px]" />
+                </div>
+                <span className="font-mono text-[9px] tracking-[0.3em] text-white/30 uppercase">
+                  [ DEPLOYMENT PREVIEW — {title} ]
                 </span>
               </div>
             )}
