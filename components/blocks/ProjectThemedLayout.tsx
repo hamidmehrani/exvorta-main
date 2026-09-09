@@ -127,7 +127,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                   poster={heroSrc || undefined}
                 />
                 <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.3em] text-white/40">
-                  HOVER TO SCROLL THE FULL PAGE — OR VISIT THE LIVE SITE ↗
+                  LIVE PREVIEW — VISIT THE FULL SITE ↗
                 </p>
               </motion.div>
             </div>

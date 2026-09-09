@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import LiveIframe from './LiveIframe'
 
 export interface LiveWebsiteFrameProps {
   title: string
@@ -13,7 +12,7 @@ export interface LiveWebsiteFrameProps {
   volume?: string
   service?: string
   slug?: string
-  /** Render a real live iframe of the site (hover auto-scrolls the actual page) instead of a static capture. */
+  /** Kept for API compatibility; the frame always renders the captured image. */
   live?: boolean
   /** Extra classes for the outer wrapper */
   className?: string
@@ -34,15 +33,35 @@ export function LiveWebsiteFrame({
   volume,
   service,
   slug,
-  live = false,
   className = '',
 }: LiveWebsiteFrameProps) {
   const screenRef = useRef<HTMLDivElement>(null)
+  const imgRef = useRef<HTMLImageElement | null>(null)
+  const [scrollDist, setScrollDist] = useState(0)
   const [copied, setCopied] = useState(false)
 
   const liveHref = liveUrl || (slug ? `https://${slug}.exvorta.com` : '')
   const host = liveHref.replace(/^https:\/\//, '')
   const hasImage = !!imageUrl
+
+  // Measure how far the capture must travel so its bottom edge lands flush
+  // with the viewport bottom. The capture div itself is uncapped (grows with
+  // the image); the CSS drift caps travel so tall pages still pan calmly.
+  useEffect(() => {
+    const measure = () => {
+      const screen = screenRef.current
+      const img = imgRef.current?.querySelector('img') as HTMLImageElement | null
+      if (!screen || !img) return
+      const renderedH = img.clientWidth ? (img.clientHeight || (img.naturalHeight / img.naturalWidth) * img.clientWidth) : 0
+      const dist = Math.max(0, Math.min(renderedH, img.scrollHeight) - screen.clientHeight)
+      setScrollDist(dist)
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    if (screenRef.current) ro.observe(screenRef.current)
+    if (imgRef.current) ro.observe(imgRef.current)
+    return () => ro.disconnect()
+  }, [imageUrl])
 
   const copyUrl = async () => {
     try {
@@ -103,18 +122,23 @@ export function LiveWebsiteFrame({
         )}
       </div>
 
-      {/* ── Screen: live site (hover auto-scroll) or slow scroll-on-hover capture ── */}
+      {/* ── Screen: slow scroll-on-hover desktop capture ── */}
       <div ref={screenRef} className="relative aspect-[4/3] overflow-hidden bg-[#0D0D0D]">
-        {live && liveHref ? (
-          <LiveIframe url={liveHref} title={title} poster={hasImage ? imageUrl : undefined} />
-        ) : hasImage ? (
-          <div className="absolute inset-0">
+        {hasImage ? (
+          <div
+            ref={imgRef}
+            className="lwframe-capture absolute inset-x-0 top-0"
+            style={{
+              ['--scroll' as string]: `${scrollDist}px`,
+            }}
+          >
             <Image
               src={imageUrl!}
               alt={`${title} website preview`}
-              fill
+              width={1425}
+              height={4000}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover object-top"
+              className="h-auto w-full"
               priority={false}
             />
           </div>

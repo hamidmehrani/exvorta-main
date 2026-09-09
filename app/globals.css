@@ -319,14 +319,17 @@ html, body {
   mask-image: linear-gradient(to bottom, transparent 0, black 14px, black calc(100% - 14px), transparent 100%);
 }
 
-/* LiveWebsiteFrame: precise measured scroll-on-hover */
+/* LiveWebsiteFrame: gentle drift-on-hover — eases partway into the capture,
+   then settles back on hover-out. Short distance + long ease keeps it calm. */
 .lwframe-capture {
   transform: translateY(0);
-  transition: transform 3.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 2.8s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 .group:hover .lwframe-capture {
-  transform: translateY(calc(-1 * var(--scroll, 0px)));
+  /* Cap the drift so very tall captures (4000px+) still get the same calm,
+     ~one-fold travel as short ones. */
+  transform: translateY(calc(-1 * min(calc(0.38 * var(--scroll, 0px)), 850px)));
 }
 @media (prefers-reduced-motion: reduce) {
   .lwframe-capture { transition: none; }

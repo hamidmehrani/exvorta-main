@@ -47,7 +47,14 @@ export function LiveSitePreview({
         </div>
       )}
       <div className={`relative ${aspectClass} overflow-hidden group bg-[#0D0D0D]`}>
-        <LiveIframe url={url} title={title} poster={poster} />
+        {/* Capture layer is 2.5x the frame so the drift pans real page content;
+            --scroll = 150% of frame height (60% of the 250% layer). */}
+        <div
+          className="lwframe-capture absolute inset-x-0 top-0"
+          style={{ height: '250%', ['--scroll' as string]: '150%' }}
+        >
+          <LiveIframe url={url} title={title} poster={poster} />
+        </div>
         {/* Live ribbon — bottom-left, appears on hover */}
         <a
           href={url}
