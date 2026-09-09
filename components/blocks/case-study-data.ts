@@ -21,6 +21,13 @@ export interface CaseStudyData {
   products: { name: string; description: string }[]
   metrics: { label: string; value: string }[]
   testimonial?: { quote: string; author: string; role: string }
+  /** Section 01 (The Brief) — per-project narrative; falls back to generic copy. */
+  brief?: {
+    headline: string
+    intro: string
+    problem: string
+    answer: string
+  }
 }
 
 export const CASE_STUDIES: Record<string, CaseStudyData> = {
@@ -54,6 +61,15 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
       { label: 'LEAD TIME', value: '15–25 Days' },
       { label: 'INCOTERMS', value: 'FOB / CFR / CIF' },
     ],
+    brief: {
+      headline: 'Architectural materials. Spec-grade credibility.',
+      intro:
+        'Stonvi sells to architects, contractors and distributors — buyers who specify, not browse. Every claim on the site had to survive a technical review.',
+      problem:
+        'Ceramic exporters compete on price lists. Stonvi\u2019s genuine differentiators — R9\u2013R11 slip ratings, 20mm structural cladding, 12 factory partners — were invisible behind a generic brochure site.',
+      answer:
+        'A submittal-grade web presence: documented specs per range, downloadable certifications, and factory-direct logistics framed the way specifiers actually evaluate suppliers.',
+    },
   },
   spicevo: {
     title: 'Spicevo',
@@ -85,6 +101,15 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
       { label: 'TRACEABILITY', value: '100% Farm-to-Container' },
       { label: 'AUDITS', value: 'Annual Third-Party' },
     ],
+    brief: {
+      headline: 'Certified organic. Provable to the last container.',
+      intro:
+        'Spicevo\u2019s buyers are food manufacturers and private-label retailers with procurement teams that audit every claim before the first order.',
+      problem:
+        'The organic certification advantage — EU Organic, USDA NOP, ISO 22000 — was buried in PDF attachments, so the brand read like every commodity spice trader.',
+      answer:
+        'Certifications moved front-and-center, traceability became the story, and 480+ MT of annual export volume became verifiable proof instead of a claim.',
+    },
   },
   nutave: {
     title: 'Nutave',
@@ -120,6 +145,15 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
         'The BRC Grade A certification means our compliance team approves them without a site audit. It streamlines our procurement completely.',
       author: 'Director of Sourcing',
       role: 'Premium EU Supermarket Chain',
+    },
+    brief: {
+      headline: 'BRC Grade A. Audit-free onboarding.',
+      intro:
+        'Nutave sells to retail chains and food manufacturers whose compliance teams gate every new supplier — certification is the currency of the relationship.',
+      problem:
+        'A decade of food-safety credentials (BRC A, ISO 22000, Halal, Kosher) was locked inside email threads, so new buyers defaulted to slower, audit-heavy onboarding.',
+      answer:
+        'The site turned compliance into the headline: certification status, product specs and private-label capability presented for instant procurement approval.',
     },
   },
 }

@@ -6,7 +6,7 @@ import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/
 import Link from 'next/link';
 import { m as motion } from 'framer-motion';
 import { easings, useReducedMotion } from '@/lib/animations';
-import { getCaseStudy, type CaseStudyData } from '@/components/blocks/case-study-data';
+import { getCaseStudy, CASE_STUDIES, type CaseStudyData } from '@/components/blocks/case-study-data';
 import LiveSitePreview from '@/components/ui/LiveSitePreview';
 
 export function ProjectThemedLayout({ project }: { project?: Project }) {
@@ -157,15 +157,19 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
             <StaggerItem>
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] mb-8" style={{ color: accent }}>[ 01 — THE BRIEF ]</div>
               <h2 className="font-serif text-[40px] md:text-[56px] tracking-tighter leading-[1.08] mb-10 font-semibold max-w-4xl">
-                A commodity product. A non-commodity buyer.
+                {cs.brief?.headline || 'A commodity product. A non-commodity buyer.'}
               </h2>
             </StaggerItem>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
               <StaggerItem className="lg:col-span-5">
                 <p className="font-sans text-[17px] leading-relaxed text-black/70 font-light">
-                  {cs.title} competes in a market where every offer looks identical — same fairs, same
-                  price lists, same PDFs. The buyer&apos;s real question is never &quot;what do you sell&quot;
-                  but <em>&quot;can I trust this container to arrive exactly as specified.&quot;</em>
+                  {cs.brief?.intro || (
+                    <>
+                      {cs.title} competes in a market where every offer looks identical — same fairs, same
+                      price lists, same PDFs. The buyer&apos;s real question is never &quot;what do you sell&quot;
+                      but <em>&quot;can I trust this container to arrive exactly as specified.&quot;</em>
+                    </>
+                  )}
                 </p>
               </StaggerItem>
               <StaggerItem className="lg:col-span-7">
@@ -173,15 +177,15 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                   <div className="border border-black/10 p-6 bg-white/40">
                     <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-black/40 mb-3">THE PROBLEM</div>
                     <p className="font-sans text-sm text-black/70 leading-relaxed">
-                      Credibility gap: institutional buyers judged the company by a website that
-                      undersold its certifications, capacity, and compliance depth.
+                      {cs.brief?.problem ||
+                        'Credibility gap: institutional buyers judged the company by a website that undersold its certifications, capacity, and compliance depth.'}
                     </p>
                   </div>
                   <div className="border p-6" style={{ borderColor: accent, backgroundColor: `${accent}08` }}>
                     <div className="font-mono text-[9px] uppercase tracking-[0.25em] mb-3" style={{ color: accent }}>THE EXVORTA ANSWER</div>
                     <p className="font-sans text-sm text-black/80 leading-relaxed">
-                      A spec-grade web presence: every claim verifiable, every certificate one click
-                      away, every product documented like an architectural submittal.
+                      {cs.brief?.answer ||
+                        'A spec-grade web presence: every claim verifiable, every certificate one click away, every product documented like an architectural submittal.'}
                     </p>
                   </div>
                 </div>
@@ -267,9 +271,9 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                 {/* Admin panel mock */}
                 <div className="border border-black/10 bg-[#141414] shadow-[0_30px_60px_-25px_rgba(0,0,0,0.35)] overflow-hidden">
                   <div className="flex items-center gap-2 px-4 py-3 bg-[#0D0D0D] border-b border-white/10">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
+                    <span className="w-2 h-2 rounded-full bg-white/20" />
+                    <span className="w-2 h-2 rounded-full bg-white/15" />
+                    <span className="w-2 h-2 rounded-full bg-white/10" />
                     <span className="ml-3 font-mono text-[10px] text-white/40">{cs.domain}/admin — YOUR PANEL</span>
                   </div>
                   <div className="flex">
@@ -362,6 +366,38 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
           </AnimatedSection>
         </div>
       </section>
+
+      {/* ═══════════════ NEXT CASE STUDY ═══════════════ */}
+      {(() => {
+        const keys = Object.keys(CASE_STUDIES);
+        const idx = keys.findIndex((k) => slug.toLowerCase().includes(k));
+        const nextKey = keys[(idx + 1 + keys.length) % keys.length] || keys[0];
+        const next = CASE_STUDIES[nextKey];
+        if (!next || next.title === cs.title) return null;
+        return (
+          <Link
+            href={`/portfolio/${nextKey}`}
+            className="group block bg-[#0D0D0D] border-t border-white/10 py-20 px-6 md:px-12 transition-colors hover:bg-[#141414]"
+          >
+            <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+              <div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/30 mb-4">NEXT CASE STUDY</div>
+                <div className="font-serif text-[36px] md:text-[52px] tracking-tighter leading-none font-semibold text-white">
+                  {next.title}
+                </div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.25em] mt-3" style={{ color: next.accent }}>
+                  {next.category}
+                </div>
+              </div>
+              <span
+                className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/50 transition-all group-hover:text-white group-hover:translate-x-2"
+              >
+                VIEW CASE STUDY →
+              </span>
+            </div>
+          </Link>
+        );
+      })()}
     </div>
   );
 }
