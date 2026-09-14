@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getPayloadClient } from '@/lib/payload'
 import type { SeoDefault } from '@/payload-types'
 import { getCachedSeoDefaults } from '@/lib/payload-cache'
+import { getSiteUrl } from '@/lib/site-url'
 
 export interface MetaDocShape {
   meta?: {
@@ -29,7 +30,8 @@ export const generateMeta = async (args?: GenerateMetaArgs): Promise<Metadata> =
 
   const fallbackTitle = seoDefaults?.fallbackTitle || 'Exvorta'
   const fallbackDescription =
-    seoDefaults?.fallbackDescription || 'Enterprise white-labeled foundation engine'
+    seoDefaults?.fallbackDescription ||
+    'The definitive digital foundation for elite importers and exporters. Precision-engineered web applications, enterprise CMS, and automated trade workflows.'
 
   let fallbackOgImageUrl = ''
   if (
@@ -41,6 +43,9 @@ export const generateMeta = async (args?: GenerateMetaArgs): Promise<Metadata> =
     fallbackOgImageUrl = seoDefaults.defaultOgImage.url
   }
 
+  // Determine authoritative base URL (guarantees a public https:// URL in production for crawlers)
+  const baseUrl = getSiteUrl()
+
   const title = args?.title || args?.doc?.meta?.title || fallbackTitle
   const description = args?.description || args?.doc?.meta?.description || fallbackDescription
   const docImage = args?.doc?.meta?.image
@@ -48,20 +53,28 @@ export const generateMeta = async (args?: GenerateMetaArgs): Promise<Metadata> =
     docImage && typeof docImage === 'object' && typeof docImage.url === 'string'
       ? docImage.url
       : undefined
-  const ogImage =
+
+  const rawOgImage =
     args?.image ||
     docImageUrl ||
     fallbackOgImageUrl ||
-    `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}/og-default.png`
+    '/og-image.png'
 
-  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+  // Ensure absolute URL with https:// protocol for LinkedIn, Telegram, Twitter, WhatsApp crawlers
+  const ogImageUrl = rawOgImage.startsWith('http://') || rawOgImage.startsWith('https://')
+    ? rawOgImage
+    : `${baseUrl.replace(/\/$/, '')}${rawOgImage.startsWith('/') ? '' : '/'}${rawOgImage}`
 
   // Ensure single suffix
   const computedTitle = title.includes(fallbackTitle) && title !== fallbackTitle
-    ? title 
-    : title === fallbackTitle 
-      ? fallbackTitle 
+    ? title
+    : title === fallbackTitle
+      ? `${fallbackTitle} | Digital Infrastructure for Global Traders`
       : `${title} | ${fallbackTitle}`
+
+  const canonicalUrl = args?.url
+    ? `${baseUrl.replace(/\/$/, '')}${args.url.startsWith('/') ? '' : '/'}${args.url}`
+    : baseUrl
 
   return {
     title: {
@@ -69,20 +82,30 @@ export const generateMeta = async (args?: GenerateMetaArgs): Promise<Metadata> =
     },
     description,
     openGraph: {
-      title,
+      type: 'website',
+      locale: 'en_US',
+      title: computedTitle,
       description,
-      images: ogImage ? [{ url: ogImage }] : [],
-      url: args?.url ? `${baseUrl}${args.url}` : baseUrl,
+      url: canonicalUrl,
       siteName: fallbackTitle,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `${computedTitle}`,
+          type: 'image/png',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: computedTitle,
       description,
-      images: ogImage ? [ogImage] : [],
+      images: [ogImageUrl],
     },
     alternates: {
-      canonical: args?.url ? `${baseUrl}${args.url}` : './',
+      canonical: canonicalUrl,
     },
     metadataBase: new URL(baseUrl),
   }

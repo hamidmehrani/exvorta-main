@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next'
 import { getPayloadClient } from '@/lib/payload'
+import { getSiteUrl } from '@/lib/site-url'
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://exvorta.com'
+  const baseUrl = getSiteUrl()
 
   const payload = await getPayloadClient()
   let maintenanceMode = false

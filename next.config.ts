@@ -34,6 +34,17 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error'] } : false,
   },
+  async redirects() {
+    return [
+      // Canonical host: www → apex (301, permanent). Vercel handles http→https.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.exvorta.com' }],
+        destination: 'https://exvorta.com/:path*',
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {

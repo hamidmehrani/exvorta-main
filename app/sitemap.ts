@@ -1,9 +1,13 @@
 import { MetadataRoute } from 'next'
 import { getPayloadClient } from '@/lib/payload'
+import { getSiteUrl } from '@/lib/site-url'
+
+// Disallowed in robots.txt — must never appear in the sitemap (crawl-directive consistency)
+const ROBOTS_DISALLOWED = new Set(['/insights'])
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayloadClient()
-  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://exvorta.com'
+  const baseUrl = getSiteUrl()
 
   // Static marketing routes always present, even without a CMS connection
   const staticRoutes = ['', '/about', '/web', '/portfolio', '/ecosystem', '/contact', '/rfq', '/waitlist']
@@ -68,6 +72,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return sitemapEntries.filter((entry) => {
     try {
       const pathname = new URL(entry.url).pathname
+      if (ROBOTS_DISALLOWED.has(pathname)) return false
       return !redirectFromPaths.has(pathname)
     } catch {
       return true

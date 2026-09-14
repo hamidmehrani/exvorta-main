@@ -2,6 +2,11 @@ import React from 'react'
 import { getPayloadClient } from '@/lib/payload'
 import type { SiteSetting, SocialLink } from '@/payload-types'
 
+import { getSiteUrl } from '@/lib/site-url'
+
+const FALLBACK_SITE_NAME = 'Exvorta'
+const FALLBACK_SITE_URL = 'https://exvorta.com'
+
 export default async function OrganizationSchema() {
   let siteSettings: SiteSetting | null = null
   let socialLinks: SocialLink | null = null
@@ -19,7 +24,7 @@ export default async function OrganizationSchema() {
     return null
   }
 
-  const siteName = siteSettings?.siteName || 'Agency Boilerplate'
+  const siteName = siteSettings?.siteName || FALLBACK_SITE_NAME
   let logoUrl = ''
 
   if (siteSettings?.logo && typeof siteSettings.logo === 'object' && 'url' in siteSettings.logo) {
@@ -27,7 +32,7 @@ export default async function OrganizationSchema() {
   }
 
   const sameAs = (socialLinks?.links || []).map(link => link.url).filter(Boolean) as string[]
-  const siteUrl = process.env.NEXT_PUBLIC_SERVER_URL || ''
+  const siteUrl = getSiteUrl() || FALLBACK_SITE_URL
 
   const graph = [
     {
