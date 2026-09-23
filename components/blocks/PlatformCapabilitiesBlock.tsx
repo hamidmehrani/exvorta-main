@@ -59,7 +59,7 @@ export function PlatformCapabilitiesBlock() {
   return (
     <AnimatedSection className="w-full">
       <section
-        className="py-32 bg-[#0D0D0D] text-white border-t border-white/10 relative overflow-hidden"
+        className="py-16 sm:py-24 lg:py-32 bg-[#0D0D0D] text-white border-t border-white/10 relative overflow-hidden"
         data-purpose="platform-capabilities"
       >
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(white 0.5px, transparent 0.5px)', backgroundSize: '22px 22px' }} />

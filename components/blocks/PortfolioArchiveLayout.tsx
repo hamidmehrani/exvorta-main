@@ -69,7 +69,7 @@ export function PortfolioArchiveLayout({ projects }: { projects?: Project[] }) {
             const liveUrl = project.metrics?.find(m => m.label?.toLowerCase() === 'live url' || m.label?.toLowerCase() === 'website')?.value;
             
             return (
-              <motion.article key={project.id || index} variants={item} className="w-full border-b border-brand-obsidian py-24">
+              <motion.article key={project.id || index} variants={item} className="w-full border-b border-brand-obsidian py-14 sm:py-20 lg:py-24">
                 <Container>
                   <div className="grid grid-cols-1 lg:grid-cols-10 gap-12 lg:gap-8 items-center">
                     <div className="lg:col-span-4 flex flex-col space-y-12">
@@ -105,7 +105,7 @@ export function PortfolioArchiveLayout({ projects }: { projects?: Project[] }) {
             );
           })
         ) : (
-          <div className="py-32 text-center text-brand-obsidian/40 font-mono text-[10px] uppercase tracking-widest">
+          <div className="py-16 sm:py-24 lg:py-32 text-center text-brand-obsidian/40 font-mono text-[10px] uppercase tracking-widest">
             No projects found.
           </div>
         )}

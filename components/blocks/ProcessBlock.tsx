@@ -54,7 +54,7 @@ export const ProcessBlock: React.FC<ProcessBlockProps> = (props) => {
   const steps = (props.steps && props.steps.length > 0) ? props.steps : defaultSteps
 
   return (
-    <AnimatedSection className="w-full bg-[#FCFAF8] py-32 px-6 border-b border-[#E5E5E5]">
+    <AnimatedSection className="w-full bg-[#FCFAF8] py-16 sm:py-24 lg:py-32 px-6 border-b border-[#E5E5E5]">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-32">
           <span className="text-[10px] font-mono tracking-[0.3em] text-black/40 uppercase mb-6 block">

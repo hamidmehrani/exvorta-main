@@ -53,7 +53,7 @@ export const VisionBlock: React.FC<VisionBlockProps> = (props) => {
   const principles = (props.principles && props.principles.length > 0) ? props.principles : defaultPrinciples
 
   return (
-    <AnimatedSection className="w-full bg-[#0A0A0A] py-32 md:py-48 px-6" id="values">
+    <AnimatedSection className="w-full bg-[#0A0A0A] py-16 sm:py-24 md:py-32 lg:py-48 px-6" id="values">
       <div className="max-w-7xl mx-auto w-full">
         <span className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase mb-6 block text-center">
           {eyebrow}

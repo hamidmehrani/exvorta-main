@@ -22,7 +22,7 @@ export const ThesisBlock: React.FC<ThesisBlockProps> = (props) => {
   const paragraph2 = props.paragraph2 || "We established Exvorta to provide elite trading firms with digital infrastructure that matches their physical scale. No templates. No shortcuts. Just pure, unadulterated performance architecture."
 
   return (
-    <AnimatedSection className="w-full bg-[#FCFAF8] py-32 md:py-48 px-6">
+    <AnimatedSection className="w-full bg-[#FCFAF8] py-16 sm:py-24 md:py-32 lg:py-48 px-6">
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
         
         {/* Left Column: The Anchor */}

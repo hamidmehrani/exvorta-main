@@ -12,7 +12,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
   return (
     <div className="w-full flex flex-col z-10 relative">
       {/* 01. [HERO] - Purpose: Trade Intelligence Identity */}
-      <AnimatedSection id="blog-hero" className="w-full bg-[#0A0A0A] pt-40 pb-20 px-6 relative overflow-hidden">
+      <AnimatedSection id="blog-hero" className="w-full bg-[#0A0A0A] pt-28 sm:pt-40 pb-12 sm:pb-16 lg:pb-20 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none z-0"></div>
         <Container className="relative z-10 flex flex-col items-center text-center">
           <MonoLabel className="text-white/40 mb-8 block">
@@ -43,7 +43,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
       <Hairline className="bg-white/10 w-full" />
 
       {/* 02. [FEATURED POST] - Purpose: High-priority insight */}
-      <AnimatedSection id="blog-featured" className="w-full bg-[#FCFAF8] py-24 px-6">
+      <AnimatedSection id="blog-featured" className="w-full bg-[#FCFAF8] py-14 sm:py-20 lg:py-24 px-6">
         <Container className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="w-full aspect-[16/10] bg-black/[0.03] rounded-xl border border-black/5 flex items-center justify-center animate-pulse">
             <MonoLabel className="text-black/30">
@@ -63,7 +63,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
       <Hairline className="bg-black/5 w-full" />
 
       {/* 03. [ARTICLE GRID] - Purpose: News and reports index */}
-      <AnimatedSection id="blog-grid" className="w-full bg-[#FCFAF8] pb-32 px-6 pt-32">
+      <AnimatedSection id="blog-grid" className="w-full bg-[#FCFAF8] pb-16 sm:pb-24 lg:pb-32 px-6 pt-32">
         <Container>
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" staggerChildren={0.08} delayChildren={0.15}>
             {posts && posts.length > 0 ? (
@@ -84,7 +84,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
                   </div>
                   <div className="flex items-center justify-between mb-4">
                     <MonoLabel className="text-black/40">
-                      {post.publishedDate ? new Date(post.publishedDate).toLocaleDateString() : 'UNKNOWN DATE'}
+                      {post.publishedDate ? new Date(post.publishedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'UNKNOWN DATE'}
                     </MonoLabel>
                     <MonoLabel className="text-black/40">
                       {typeof post.category === 'object' && post.category !== null && 'title' in post.category ? String((post.category as Record<string, unknown>).title) : 'UNCATEGORIZED'}
@@ -115,7 +115,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
       <Hairline className="bg-black/5 w-full" />
 
       {/* 04. [NEWSLETTER] - Purpose: Retention */}
-      <AnimatedSection id="blog-newsletter" className="w-full bg-[#0A0A0A] py-32 px-6">
+      <AnimatedSection id="blog-newsletter" className="w-full bg-[#0A0A0A] py-16 sm:py-24 lg:py-32 px-6">
         <Container className="max-w-3xl flex flex-col items-center text-center">
           <MonoLabel className="text-white/40 mb-6 block">
             [ WEEKLY BRIEFING ]
@@ -132,7 +132,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
       <Hairline className="bg-black/5 w-full" />
 
       {/* 05. [TOPICS] - Purpose: Taxonomy & SEO */}
-      <AnimatedSection id="blog-topics" className="w-full bg-[#FCFAF8] py-24 px-6">
+      <AnimatedSection id="blog-topics" className="w-full bg-[#FCFAF8] py-14 sm:py-20 lg:py-24 px-6">
         <Container className="max-w-5xl flex flex-col items-center text-center">
           <MonoLabel className="text-black/40 mb-10 block">
             [ EXPLORE ARCHIVES ]
@@ -152,7 +152,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
       <Hairline className="bg-black/5 w-full" />
 
       {/* 06. [PROMO] - Purpose: Product pipeline awareness */}
-      <AnimatedSection id="blog-promo" className="w-full bg-[#0A0A0A] py-24 px-6">
+      <AnimatedSection id="blog-promo" className="w-full bg-[#0A0A0A] py-14 sm:py-20 lg:py-24 px-6">
         <Container className="max-w-5xl bg-[#111] border border-white/10 p-12 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex flex-col text-center md:text-left">
             <h3 className="text-2xl font-serif text-white mb-2">
@@ -173,7 +173,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
       <Hairline className="bg-white/5 w-full" />
 
       {/* 07. [FINAL CTA] - Purpose: Lead generation */}
-      <AnimatedSection id="blog-cta" className="w-full bg-[#0A0A0A] py-40 px-6">
+      <AnimatedSection id="blog-cta" className="w-full bg-[#0A0A0A] py-14 sm:py-20 lg:py-24 sm:py-32 lg:py-40 px-6">
         <Container className="max-w-4xl text-center flex flex-col items-center">
           <MonoLabel className="text-white/40 mb-8 block">
             [ INITIATE PARTNERSHIP ]

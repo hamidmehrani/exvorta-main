@@ -10,9 +10,9 @@ import ExvortaLogo from '@/components/brand/ExvortaLogo'
 
 export default function FooterClient({ columns, brand = { name: 'EXVORTA', logoUrl: null } }: { columns: FooterColumn[]; brand?: { name: string; logoUrl: string | null } }) {
   return (
-    <footer className="w-full bg-[#FAFAF8] border-t border-black/10 py-24 px-4 sm:px-6 lg:px-8">
+    <footer className="w-full bg-[#FAFAF8] border-t border-black/10 py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-24">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 mb-16 sm:mb-24">
           {/* Brand */}
           <m.div
             initial={{ opacity: 0, y: 16 }}

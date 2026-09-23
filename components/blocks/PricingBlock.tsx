@@ -77,7 +77,7 @@ export const PricingBlock: React.FC<PricingBlockProps> = (props) => {
   const tiersToRender = (props.tiers && props.tiers.length > 0) ? props.tiers : defaultTiers
 
   return (
-    <AnimatedSection className="w-full bg-[#FCFAF8] py-32 px-6 border-b border-[#E5E5E5]">
+    <AnimatedSection className="w-full bg-[#FCFAF8] py-16 sm:py-24 lg:py-32 px-6 border-b border-[#E5E5E5]">
       <div className="max-w-7xl mx-auto w-full">
         <span className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-6 block text-center">
           {eyebrow}

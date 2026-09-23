@@ -22,8 +22,8 @@ export function MonitorFrame({ url, title, poster, className = '' }: MonitorFram
   return (
     <div className={`select-none ${className}`}>
       {/* Caption strip — above the frame, like a drawing index */}
-      <div className="flex items-center justify-between border-b border-black/15 pb-3 mb-6">
-        <span className="font-mono text-[9px] tracking-[0.3em] text-black/40 uppercase">
+      <div className="flex items-center justify-between gap-3 border-b border-black/15 pb-3 mb-6">
+        <span className="font-mono text-[9px] tracking-[0.15em] sm:tracking-[0.3em] text-black/40 uppercase truncate min-w-0">
           FIG. 01 — {title}
         </span>
         <a

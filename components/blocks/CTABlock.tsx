@@ -14,7 +14,7 @@ export const CTABlock: React.FC<CTABlockProps> = (props) => {
   return (
     <AnimatedSection className="w-full">
 
-<section className="py-32" data-purpose="the-pitch">
+<section className="py-16 sm:py-24 lg:py-32" data-purpose="the-pitch">
 <div className="max-w-4xl mx-auto px-4 text-center">
 {prefersReducedMotion ? (
   <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-obsidian mb-8 leading-tight"><span dangerouslySetInnerHTML={{ __html: sanitizeHeadingHtml(headline) }} /></h2>

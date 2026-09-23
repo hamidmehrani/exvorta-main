@@ -15,7 +15,7 @@ export function CTABannerBlock(props: CTABannerProps) {
   const primaryCTA = props.primaryCTA || { label: "[ REQUEST A PROPOSAL ]", url: "/rfq" }
 
   return (
-    <AnimatedSection className="w-full bg-[#0A0A0A] py-40 px-6 flex flex-col justify-center items-center relative overflow-hidden rounded-none" id="cta">
+    <AnimatedSection className="w-full bg-[#0A0A0A] py-14 sm:py-20 lg:py-24 sm:py-32 lg:py-40 px-6 flex flex-col justify-center items-center relative overflow-hidden rounded-none" id="cta">
       <div className="absolute top-0 left-0 w-full h-[1px] bg-white/10"></div>
       <span className="text-[10px] font-mono tracking-[0.3em] text-white/40 uppercase mb-8 block text-center z-10">
         {label}

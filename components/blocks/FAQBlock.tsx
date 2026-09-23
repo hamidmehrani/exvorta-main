@@ -80,7 +80,7 @@ export const FAQBlock: React.FC<FAQBlockProps> = (props) => {
   const [openIndex, setOpenIndex] = useState<number>(0)
 
   return (
-    <AnimatedSection className="w-full bg-[#0D0D0D] py-32 px-6 border-b border-[#0D0D0D]">
+    <AnimatedSection className="w-full bg-[#0D0D0D] py-16 sm:py-24 lg:py-32 px-6 border-b border-[#0D0D0D]">
       <FAQJsonLd questions={questions} />
       <div className="max-w-4xl mx-auto w-full">
         <span className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase mb-8 block">

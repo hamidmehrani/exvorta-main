@@ -55,7 +55,7 @@ export const TestimonialBlock: React.FC<TestimonialBlockProps> = (props) => {
 
   if (testimonials.length > 0) {
     return (
-      <AnimatedSection className="w-full bg-white py-32 px-6 border-b border-hairline-light overflow-hidden">
+      <AnimatedSection className="w-full bg-white py-16 sm:py-24 lg:py-32 px-6 border-b border-hairline-light overflow-hidden">
         <div className="max-w-7xl mx-auto w-full">
           <span className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-12 block text-center">
             {eyebrow}
@@ -71,7 +71,7 @@ export const TestimonialBlock: React.FC<TestimonialBlockProps> = (props) => {
   }
 
   return (
-    <AnimatedSection className="w-full bg-white py-32 px-6 border-b border-hairline-light">
+    <AnimatedSection className="w-full bg-white py-16 sm:py-24 lg:py-32 px-6 border-b border-hairline-light">
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
         {/* Left Column: The Market Proof */}

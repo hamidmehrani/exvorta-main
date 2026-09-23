@@ -43,7 +43,7 @@ export const FirmBlock: React.FC<FirmBlockProps> = (props) => {
   const pillars = (props.pillars && props.pillars.length > 0) ? props.pillars : defaultPillars
 
   return (
-    <AnimatedSection className="w-full bg-[#0A0A0A] py-32 md:py-48 px-6">
+    <AnimatedSection className="w-full bg-[#0A0A0A] py-16 sm:py-24 md:py-32 lg:py-48 px-6">
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-16">
         
         {/* Left Column: Core Statement */}

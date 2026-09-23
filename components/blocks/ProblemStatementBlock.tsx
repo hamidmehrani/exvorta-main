@@ -24,7 +24,7 @@ export const ProblemStatementBlock: React.FC<ProblemStatementBlockProps> = ({
     const renderStatements = (statements && statements.length > 0) ? statements : defaultLightStatements;
 
     return (
-      <AnimatedSection className="w-full bg-white py-32 px-6 border-b border-[#E5E5E5]" id="problem">
+      <AnimatedSection className="w-full bg-white py-16 sm:py-24 lg:py-32 px-6 border-b border-[#E5E5E5]" id="problem">
         <div className="max-w-7xl mx-auto w-full">
           <span className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-16 block">
             {eyebrow || '[ THE EXVORTA SOLUTION ]'}
@@ -59,7 +59,7 @@ export const ProblemStatementBlock: React.FC<ProblemStatementBlockProps> = ({
   const renderDarkStatements = (statements && statements.length > 0) ? statements : defaultDarkStatements;
 
   return (
-    <AnimatedSection className="w-full border-t border-b border-[#0D0D0D] py-32 bg-[#0A0A0A]" id="problem">
+    <AnimatedSection className="w-full border-t border-b border-[#0D0D0D] py-16 sm:py-24 lg:py-32 bg-[#0A0A0A]" id="problem">
       <div className="max-w-7xl mx-auto px-6 w-full">
         <div className="max-w-3xl mx-auto text-center mb-24">
           <span className="block text-[10px] tracking-[0.3em] uppercase text-white/40 mb-6 font-mono">

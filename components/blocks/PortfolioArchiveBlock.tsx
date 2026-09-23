@@ -124,14 +124,14 @@ function HomepagePortfolioSection({
   };
 
   return (
-    <section ref={containerRef} className="w-full py-32 bg-[#FAFAF8] border-t border-black/5" data-purpose="proof-of-execution">
+    <section ref={containerRef} className="w-full py-16 sm:py-24 lg:py-32 bg-[#FAFAF8] border-t border-black/5" data-purpose="proof-of-execution">
       <Container>
         {/* Header matched to reference design */}
         <Reveal y={20} className="mb-20">
           <div className="font-mono text-[11px] tracking-[0.25em] text-gray-500 uppercase mb-4">
             {sectionLabel || '[ OUR INFRASTRUCTURE WORK ]'}
           </div>
-          <h2 className="text-7xl md:text-8xl lg:text-[120px] font-serif text-[#0D0D0D] tracking-tighter leading-none mb-8">
+          <h2 className="text-5xl sm:text-6xl md:text-8xl lg:text-[120px] font-serif text-[#0D0D0D] tracking-tighter leading-none mb-8">
             {headline || 'Proof of Execution.'}
           </h2>
           {subtitle && (
@@ -252,7 +252,7 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
   return (
     <div ref={containerRef} className="w-full bg-[#FAFAF8] min-h-screen">
       {/* Hero Section */}
-      <section className="w-full pt-40 pb-24 border-b border-black/5">
+      <section className="w-full pt-28 sm:pt-40 pb-24 border-b border-black/5">
         <Container>
           <div className="max-w-5xl">
             <div className="font-mono text-[11px] uppercase text-gray-500 mb-6 tracking-[0.2em]">[ SELECTED WORKS ]</div>
@@ -262,7 +262,7 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
               mode="animate"
               unit="chars"
               duration={0.7}
-              className="font-serif text-[72px] md:text-[100px] text-[#0D0D0D] mb-8 leading-none font-semibold tracking-tighter"
+              className="font-serif text-5xl sm:text-[64px] md:text-[100px] text-[#0D0D0D] mb-8 leading-none font-semibold tracking-tighter"
             />
             <p className="font-sans text-xl md:text-2xl text-black/60 max-w-2xl font-light">
               Premium websites and CMS platforms engineered for global exporters.
@@ -272,7 +272,7 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
       </section>
 
       {/* Project Blocks Grid */}
-      <section className="w-full py-32">
+      <section className="w-full py-16 sm:py-24 lg:py-32">
         <Container>
           {hasProjects ? (
             <motion.div
@@ -337,7 +337,7 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
               })}
             </motion.div>
           ) : (
-            <div className="py-32 text-center text-black/40 font-mono text-[10px] uppercase tracking-widest">
+            <div className="py-16 sm:py-24 lg:py-32 text-center text-black/40 font-mono text-[10px] uppercase tracking-widest">
               No projects found.
             </div>
           )}
@@ -345,11 +345,11 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full bg-[#111] text-white py-32 border-t border-black">
+      <section className="w-full bg-[#111] text-white py-16 sm:py-24 lg:py-32 border-t border-black">
         <Container>
           <div className="flex flex-col items-center text-center">
             <MonoLabel className="text-white/40 mb-8 border-white/20">[ NEXT STEPS ]</MonoLabel>
-            <h2 className="font-serif text-[60px] md:text-[96px] text-white mb-8 leading-none font-semibold">
+            <h2 className="font-serif text-4xl sm:text-5xl md:text-[96px] text-white mb-8 leading-none font-semibold">
               Initiate a Project.
             </h2>
             <p className="font-sans text-lg text-white/60 max-w-2xl mb-12 mx-auto font-light">

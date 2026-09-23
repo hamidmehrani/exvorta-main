@@ -41,7 +41,7 @@ export function RoadmapBlock(props: any) {
   return (
     <AnimatedSection className="w-full">
       <motion.section
-        className="py-24 bg-brand-cream text-brand-obsidian border-t border-hairline-light"
+        className="py-14 sm:py-20 lg:py-24 bg-brand-cream text-brand-obsidian border-t border-hairline-light"
         data-purpose="roadmap"
         initial="hidden"
         whileInView="show"

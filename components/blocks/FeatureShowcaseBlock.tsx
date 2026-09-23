@@ -79,7 +79,7 @@ export const FeatureShowcaseBlock: React.FC<FeatureShowcaseBlockProps> = (props)
   }
 
   return (
-    <AnimatedSection className="w-full py-24 bg-[#0D0D0D] border-b border-[#0D0D0D]">
+    <AnimatedSection className="w-full py-14 sm:py-20 lg:py-24 bg-[#0D0D0D] border-b border-[#0D0D0D]">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <span className="text-white/40 text-[10px] font-mono tracking-[0.2em] mb-6 block">

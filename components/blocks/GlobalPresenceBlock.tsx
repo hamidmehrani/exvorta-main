@@ -40,7 +40,7 @@ export const GlobalPresenceBlock: React.FC<GlobalPresenceBlockProps> = (props) =
   const locations = (props.locations && props.locations.length > 0) ? props.locations : defaultLocations
 
   return (
-    <AnimatedSection className="w-full bg-[#FCFAF8] py-32 md:py-40 px-6 border-y border-[#E5E5E5]" id="global-presence">
+    <AnimatedSection className="w-full bg-[#FCFAF8] py-16 sm:py-24 md:py-32 lg:py-40 px-6 border-y border-[#E5E5E5]" id="global-presence">
       <div className="max-w-7xl mx-auto w-full flex flex-col">
         {/* Header Block */}
         <span className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-6 block text-center">

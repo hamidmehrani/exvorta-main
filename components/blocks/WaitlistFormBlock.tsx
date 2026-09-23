@@ -16,7 +16,7 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
   source,
 }) => {
   return (
-    <AnimatedSection className="w-full bg-brand-obsidian flex flex-col items-center justify-center relative px-6 py-32 flex-grow overflow-hidden rounded-none border-t border-white/10">
+    <AnimatedSection className="w-full bg-brand-obsidian flex flex-col items-center justify-center relative px-6 py-16 sm:py-24 lg:py-32 flex-grow overflow-hidden rounded-none border-t border-white/10">
       {/* Background effect */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_50%)] rounded-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px', opacity: 0.1 }}></div>
       {/* Emerald aura */}

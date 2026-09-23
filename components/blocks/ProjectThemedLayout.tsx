@@ -151,7 +151,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
       </main>
 
       {/* ═══════════════ SECTION 1: THE BRIEF — why they needed us ═══════════════ */}
-      <section className="py-28 border-t border-white/10" style={{ backgroundColor: cs.heroBg }} id="the-brief">
+      <section className="py-14 sm:py-20 lg:py-28 border-t border-white/10" style={{ backgroundColor: cs.heroBg }} id="the-brief">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 text-[#0D0D0D]">
           <StaggerContainer staggerChildren={0.12} delayChildren={0.05}>
             <StaggerItem>
@@ -196,7 +196,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
       </section>
 
       {/* ═══════════════ SECTION 2: WHAT WE SHIPPED — capabilities ═══════════════ */}
-      <section className="bg-[#0D0D0D] py-28 border-t border-white/10" id="what-we-shipped">
+      <section className="bg-[#0D0D0D] py-14 sm:py-20 lg:py-28 border-t border-white/10" id="what-we-shipped">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12">
           <StaggerContainer staggerChildren={0.1} delayChildren={0.05}>
             <StaggerItem>
@@ -240,7 +240,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
       </section>
 
       {/* ═══════════════ SECTION 3: YOU OWN THE PANEL (CMS control) ═══════════════ */}
-      <section className="py-28 border-t border-white/10" style={{ backgroundColor: cs.heroBg }} id="own-the-panel">
+      <section className="py-14 sm:py-20 lg:py-28 border-t border-white/10" style={{ backgroundColor: cs.heroBg }} id="own-the-panel">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 text-[#0D0D0D]">
           <StaggerContainer staggerChildren={0.1}>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -316,7 +316,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
 
       {/* ═══════════════ SECTION 4: testimonial (when available) ═══════════════ */}
       {cs.testimonial && (
-        <section className="bg-[#0D0D0D] py-28 border-t border-white/10">
+        <section className="bg-[#0D0D0D] py-14 sm:py-20 lg:py-28 border-t border-white/10">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <AnimatedSection>
               <div className="font-serif text-3xl md:text-4xl leading-snug italic text-white/90 mb-10">
@@ -334,7 +334,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
       )}
 
       {/* ═══════════════ FINAL CTA: two doors ═══════════════ */}
-      <section className="py-32 border-t border-white/10" style={{ backgroundColor: cs.heroBg }}>
+      <section className="py-16 sm:py-24 lg:py-32 border-t border-white/10" style={{ backgroundColor: cs.heroBg }}>
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 text-[#0D0D0D]">
           <AnimatedSection className="text-center mb-16">
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] mb-6" style={{ color: accent }}>[ NEXT STEPS ]</div>

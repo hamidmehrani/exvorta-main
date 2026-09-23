@@ -35,7 +35,7 @@ export function CountUp({ value, duration = 2, className = '' }: CountUpProps) {
 
   const displayValue = useTransform(springValue, (current) => {
     if (numberValue === 0) return stringValue
-    return `${prefix}${Math.floor(current).toLocaleString()}${suffix}`
+    return `${prefix}${Math.floor(current).toLocaleString('en-US')}${suffix}`
   })
 
   return (

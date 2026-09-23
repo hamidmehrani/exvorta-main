@@ -71,7 +71,7 @@ export const VideoBlock: React.FC<{
   const poster = typeof coverImage === 'object' && coverImage ? coverImage : undefined
 
   return (
-    <AnimatedSection className="w-full py-32 px-6">
+    <AnimatedSection className="w-full py-16 sm:py-24 lg:py-32 px-6">
       <div className="max-w-6xl mx-auto w-full">
         <VideoEmbed url={url} poster={poster} />
       </div>

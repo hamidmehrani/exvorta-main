@@ -9,7 +9,7 @@ export const TeamShowcaseBlock: React.FC<Props> = (props) => {
   const { sectionEyebrow, members } = props
 
   return (
-    <AnimatedSection className="w-full py-32 relative overflow-hidden bg-white text-black" id="founder">
+    <AnimatedSection className="w-full py-16 sm:py-24 lg:py-32 relative overflow-hidden bg-white text-black" id="founder">
       <div className="max-w-7xl mx-auto px-6 w-full flex flex-col min-h-[40vh] bg-transparent">
         {sectionEyebrow && (
           <span className="text-xs font-mono tracking-widest text-black/40 uppercase">

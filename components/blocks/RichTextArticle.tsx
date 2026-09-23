@@ -18,16 +18,16 @@ type RichTextArticleProps = {
 
 export const RichTextArticle: React.FC<RichTextArticleProps> = ({ post, content, children }) => {
   return (
-    <div className="w-full bg-[#FCFAF8] text-obsidian pb-32">
+    <div className="w-full bg-[#FCFAF8] text-obsidian pb-16 sm:pb-24 lg:pb-32">
       {/* Hero Section */}
-      <section className="w-full pt-40 pb-20 px-6">
+      <section className="w-full pt-28 sm:pt-40 pb-12 sm:pb-16 lg:pb-20 px-6">
         <Container className="max-w-4xl mx-auto flex flex-col">
           {post && (
             <>
               <Reveal y={12} className="mb-6">
                 <div className="flex items-center space-x-4">
                   <MonoLabel className="text-black/50">
-                    {post.publishedDate ? new Date(post.publishedDate).toLocaleDateString() : 'UNKNOWN DATE'}
+                    {post.publishedDate ? new Date(post.publishedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'UNKNOWN DATE'}
                   </MonoLabel>
                   <span className="text-black/30">&bull;</span>
                   <MonoLabel className="text-black/50">

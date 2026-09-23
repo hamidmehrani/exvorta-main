@@ -23,7 +23,7 @@ export function CmsControlBlock(props: Record<string, unknown>) {
   const headline = (props.headline as string) || 'Your website. Your panel. Zero dependency.'
 
   return (
-    <section className="w-full py-28 bg-[#0D0D0D] border-t border-white/10" data-purpose="cms-control">
+    <section className="w-full py-14 sm:py-20 lg:py-28 bg-[#0D0D0D] border-t border-white/10" data-purpose="cms-control">
       <div className="max-w-7xl mx-auto px-6 w-full">
         <AnimatedSection className="text-center mb-16">
           <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/45 mb-6">{eyebrow}</div>

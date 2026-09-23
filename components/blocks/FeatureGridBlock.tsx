@@ -33,7 +33,7 @@ export const FeatureGridBlock: React.FC<FeatureGridBlockProps> = (props) => {
 
   return (
     <AnimatedSection className="w-full">
-      <section className="py-24 border-t border-black/5" data-purpose="manifesto">
+      <section className="py-14 sm:py-20 lg:py-24 border-t border-black/5" data-purpose="manifesto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <motion.div

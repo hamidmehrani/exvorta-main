@@ -126,55 +126,56 @@ export function ProductShowcaseBlock(props: any) {
   return (
     <AnimatedSection className="w-full" data-purpose="product-showcase">
       <motion.section
-        className="py-32 bg-brand-cream border-t border-brand-obsidian/5 relative overflow-hidden"
+        className="py-16 sm:py-24 lg:py-32 bg-brand-cream border-t border-brand-obsidian/5 relative overflow-hidden"
         data-purpose="exvorta-docs"
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: '-80px' }}
         variants={{ hidden: {}, show: { transition: { staggerChildren: 0.18, delayChildren: 0.1 } } }}
       ><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 {/*  Left Column: SaaS UI  */}
-<motion.div className="order-2 lg:order-1" variants={column}>
+<motion.div className="order-2 lg:order-1 w-full min-w-0" variants={column}>
 <TiltCard maxTilt={4} glow={false}>
-<div className="bg-mockup-dashboard rounded-2xl shadow-2xl border border-hairline-dark overflow-hidden flex flex-col h-[640px]">
+<div className="bg-mockup-dashboard rounded-2xl shadow-2xl border border-hairline-dark overflow-hidden flex flex-col sm:h-[760px] lg:h-[740px]">
 {/*  UI Header  */}
-<div className="h-10 border-b border-hairline-dark bg-white/5 flex items-center px-4 shrink-0">
-<div className="flex space-x-1.5">
+<div className="h-10 shrink-0 border-b border-hairline-dark bg-white/5 flex items-center px-4">
+<div className="flex space-x-1.5 shrink-0">
 <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
 <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
 <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
 </div>
-<div className="mx-auto flex items-center gap-2">
-<span className="w-1.5 h-1.5 rounded-full bg-brand-emerald animate-pulse"></span>
-<span className="text-[9px] text-white/60 tracking-[0.25em] font-mono uppercase font-medium">Document Engine</span>
-<span className="text-[8px] text-white/25 font-mono px-1.5 py-0.5 border border-white/10 rounded-sm">AI</span>
+<div className="mx-auto flex items-center gap-2 min-w-0">
+<span className="w-1.5 h-1.5 rounded-full bg-brand-emerald animate-pulse shrink-0"></span>
+<span className="text-[9px] text-white/60 tracking-[0.15em] sm:tracking-[0.25em] font-mono uppercase font-medium truncate">Document Engine</span>
+<span className="hidden sm:inline text-[8px] text-white/25 font-mono px-1.5 py-0.5 border border-white/10 rounded-sm shrink-0">AI</span>
 </div>
 </div>
 {/*  Pipeline stages strip  */}
-<div className="flex items-center gap-0 px-4 py-2.5 border-b border-hairline-dark bg-white/[0.02] text-[7px] font-mono uppercase tracking-[0.15em]">
+<div className="flex items-center gap-0 px-3 sm:px-4 py-2.5 border-b border-hairline-dark bg-white/[0.02] text-[7px] font-mono uppercase tracking-[0.15em] shrink-0">
 {['Select', 'Prefill', 'Validate', 'Stamp', 'Deliver'].map((stage, i, arr) => (
   <React.Fragment key={stage}>
-    <div className="flex items-center gap-1.5">
+    <div className="flex items-center gap-1.5 shrink-0">
       <span className={`w-3.5 h-3.5 rounded-full flex items-center justify-center text-[6px] font-bold ${i < 3 ? 'bg-brand-emerald/20 text-brand-emerald border border-brand-emerald/50' : 'bg-white/5 text-white/30 border border-white/10'}`}>{i < 3 ? '✓' : i + 1}</span>
-      <span className={i < 3 ? 'text-white/70' : 'text-white/30'}>{stage}</span>
+      <span className={`hidden sm:inline ${i < 3 ? 'text-white/70' : 'text-white/30'}`}>{stage}</span>
     </div>
-    {i < arr.length - 1 && <div className={`flex-1 h-px mx-2 ${i < 2 ? 'bg-brand-emerald/40' : 'bg-white/10'}`} />}
+    {i < arr.length - 1 && <div className={`flex-1 h-px mx-1.5 sm:mx-2 ${i < 2 ? 'bg-brand-emerald/40' : 'bg-white/10'}`} />}
   </React.Fragment>
 ))}
 </div>
-<div className="flex flex-1 overflow-hidden">
+<div className="flex flex-col sm:flex-1 lg:flex-row overflow-hidden min-h-0">
 {/*  UI Sidebar  */}
-<div className="w-[30%] border-r border-hairline-dark bg-mockup-sidebar p-6 flex flex-col">
-<div className="mb-8">
+<div className="w-full lg:w-[32%] shrink-0 border-b lg:border-b-0 lg:border-r border-hairline-dark bg-mockup-sidebar p-4 sm:p-5 lg:p-5 xl:p-6 flex flex-col min-w-0">
+<div className="mb-4 lg:mb-5 lg:flex-1 lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:[scrollbar-width:thin]">
 <label className="text-[9px] text-white/40 uppercase tracking-widest block mb-2">Select Template</label>
-<div className="space-y-1">
+<div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 sm:-mx-5 sm:px-5 lg:mx-0 lg:px-0 lg:pb-0 lg:block lg:space-y-1 lg:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 {DOC_TEMPLATES.map((t, i) => (
   <button
     key={t.id}
     type="button"
     onClick={() => setActiveDoc(i)}
-    className={`w-full flex items-center justify-between px-3 py-2 rounded text-[10px] font-mono text-start transition-all duration-200 border ${
+    aria-pressed={i === activeDoc}
+    className={`shrink-0 lg:w-full flex items-center justify-between gap-2 px-3 py-2 lg:py-1.5 xl:py-2 rounded text-[10px] font-mono text-start whitespace-nowrap lg:whitespace-normal transition-all duration-200 border ${
       i === activeDoc
         ? 'bg-brand-emerald/15 border-brand-emerald/50 text-white'
         : 'bg-white/[0.03] border-hairline-dark text-white/60 hover:text-white hover:bg-white/5'
@@ -183,44 +184,44 @@ export function ProductShowcaseBlock(props: any) {
     <span className="flex items-start gap-2.5 min-w-0">
       <DocTemplateIcon name={t.icon as DocTemplateIconName} className={`w-4 h-4 shrink-0 mt-px transition-colors ${i === activeDoc ? 'text-brand-emerald' : 'text-white/35'}`} />
       <span className="min-w-0">
-        <span className="block leading-tight">{t.name}</span>
-        <span className={`block text-[8px] font-sans tracking-wide leading-tight mt-0.5 ${i === activeDoc ? 'text-white/50' : 'text-white/25'}`}>{t.tagline}</span>
+        <span className="block leading-tight break-words lg:text-[9px] xl:text-[10px]">{t.name}</span>
+        <span className={`hidden lg:block truncate text-[7px] xl:text-[8px] font-sans tracking-wide leading-tight mt-0.5 ${i === activeDoc ? 'text-white/50' : 'text-white/25'}`}>{t.tagline}</span>
       </span>
     </span>
-    {i === activeDoc && <span className="text-brand-emerald text-[9px] leading-none">●</span>}
+    {i === activeDoc && <span className="text-brand-emerald text-[9px] leading-none shrink-0">●</span>}
   </button>
 ))}
 </div>
 </div>
-<div className="space-y-4 mb-auto"><div className="space-y-4">
-<div className="space-y-1.5">
+<div className="grid grid-cols-2 gap-2 lg:block lg:space-y-3 xl:space-y-4 shrink-0">
+<div className="space-y-1.5 min-w-0">
 <label className="text-[8px] text-white/40 uppercase tracking-widest block">INCOTERMS</label>
-<div className="bg-white/5 border border-hairline-dark rounded px-2 py-1.5 text-[10px] text-white/60">{doc.incoterms}</div>
+<div className="bg-white/5 border border-hairline-dark rounded px-2 py-1.5 text-[10px] text-white/60 break-words">{doc.incoterms}</div>
 </div>
-<div className="space-y-1.5">
+<div className="space-y-1.5 min-w-0">
 <label className="text-[8px] text-white/40 uppercase tracking-widest block">HS CODE</label>
-<div className="bg-white/5 border border-hairline-dark rounded px-2 py-1.5 text-[10px] text-white/60">{doc.hs}</div>
+<div className="bg-white/5 border border-hairline-dark rounded px-2 py-1.5 text-[10px] text-white/60 break-words">{doc.hs}</div>
 </div>
-<div className="space-y-1.5">
+<div className="space-y-1.5 min-w-0">
 <label className="text-[8px] text-white/40 uppercase tracking-widest block">PORT OF ORIGIN</label>
-<div className="bg-white/5 border border-hairline-dark rounded px-2 py-1.5 text-[10px] text-white/60">{doc.port}</div>
+<div className="bg-white/5 border border-hairline-dark rounded px-2 py-1.5 text-[10px] text-white/60 break-words">{doc.port}</div>
 </div>
-</div></div>
-<Link href="/rfq" className="block mt-8 w-full text-center bg-brand-obsidian border border-gray-700 py-3 rounded text-[10px] font-bold text-white uppercase tracking-widest shadow-[0_0_15px_rgba(5,150,105,0.2)] hover:border-emerald-500/50 transition-all">Generate Document</Link>
+</div>
+<Link href="/rfq" className="shrink-0 block mt-4 lg:mt-6 xl:mt-8 w-full text-center bg-brand-obsidian border border-gray-700 py-3 rounded text-[10px] font-bold text-white uppercase tracking-widest shadow-[0_0_15px_rgba(5,150,105,0.2)] hover:border-emerald-500/50 transition-all">Generate Document</Link>
 </div>
 {/*  UI Preview Area  */}
-<div className="flex-1 bg-mockup-card p-8 flex items-center justify-center relative overflow-hidden">
+<div className="sm:flex-1 min-h-0 bg-mockup-card p-3.5 pb-12 sm:p-5 sm:pb-5 lg:p-8 flex items-center justify-center relative overflow-hidden">
 <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(white 0.5px, transparent 0.5px)', backgroundSize: '20px 20px' }}></div>
 <motion.div
-  className="relative bg-white w-full h-full shadow-2xl p-6 flex flex-col origin-top"
+  className="relative bg-white w-full h-full shadow-2xl p-4 sm:p-5 lg:p-6 flex flex-col origin-top"
   initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, rotateX: -18, y: 24 }}
   whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, rotateX: 0, y: 0 }}
   viewport={{ once: true, margin: '-80px' }}
   transition={{ duration: 0.9, delay: 0.35, ease: easings.cinematic }}
   style={{ transformPerspective: 1200 }}
 >{/*  Header  */}
-<div className="flex justify-between items-start mb-4 pb-2 border-b border-brand-obsidian/10">
-<div className="flex gap-[1px] h-6 items-end">
+<div className="flex justify-between items-start gap-3 mb-3 sm:mb-4 pb-2 border-b border-brand-obsidian/10">
+<div className="flex gap-[1px] h-4 sm:h-6 items-end">
 <div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[2px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[3px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[2px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[3px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[2px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[2px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[3px] h-full bg-brand-obsidian"></div><div className="w-[1px] h-full bg-brand-obsidian"></div><div className="w-[2px] h-full bg-brand-obsidian"></div>
 </div>
 <div className="text-right">
@@ -246,26 +247,26 @@ export function ProductShowcaseBlock(props: any) {
 </div>
 </div>
 {/*  Grid Row 2: Logistics Info  */}
-<div className="grid grid-cols-2 sm:grid-cols-4 border-b bg-gray-50/50 border-gray-300">
-<div className="p-1.5 border-r border-gray-300">
+<div className="grid grid-cols-4 border-b bg-gray-50/50 border-gray-300">
+<div className="p-1.5 border-r border-gray-300 min-w-0">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">VESSEL</div>
-<div className="text-[9px] font-normal">{doc.vessel}</div>
+<div className="text-[8px] sm:text-[9px] font-normal leading-tight break-words">{doc.vessel}</div>
 </div>
-<div className="p-1.5 border-r border-gray-300">
+<div className="p-1.5 border-r border-gray-300 min-w-0">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">VOYAGE</div>
-<div className="text-[9px] font-normal">{doc.voyage}</div>
+<div className="text-[8px] sm:text-[9px] font-normal leading-tight break-words">{doc.voyage}</div>
 </div>
-<div className="p-1.5 border-r border-gray-300">
+<div className="p-1.5 border-r border-gray-300 min-w-0">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">POL</div>
-<div className="text-[9px] font-normal">{doc.pol}</div>
+<div className="text-[8px] sm:text-[9px] font-normal leading-tight break-words">{doc.pol}</div>
 </div>
-<div className="p-1.5">
+<div className="p-1.5 min-w-0">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium">POD</div>
-<div className="text-[9px] font-normal">{doc.pod}</div>
+<div className="text-[8px] sm:text-[9px] font-normal leading-tight break-words">{doc.pod}</div>
 </div>
 </div>
 {/*  Main Data: Description  */}
-<div className="pt-3 mb-auto">
+<div className="pt-2 sm:pt-3 mb-auto">
 <div className="text-[6px] text-gray-500 uppercase tracking-[0.15em] font-medium mb-1.5">7. DESCRIPTION OF GOODS AND SERVICES</div>
 <div className="space-y-2">
 <p className="text-[10px] text-brand-obsidian leading-relaxed font-light">{doc.desc}</p>
@@ -276,7 +277,7 @@ export function ProductShowcaseBlock(props: any) {
 </div>
 </div>
 {/*  Footer: Signature  */}
-<div className="flex justify-between items-end mt-6 border-t border-brand-obsidian/10 pt-3">
+<div className="flex justify-between items-end gap-3 mt-3 sm:mt-6 border-t border-brand-obsidian/10 pt-3">
 <div className="w-10 h-10 border border-brand-obsidian/5 p-0.5">
 <div className="grid grid-cols-6 gap-[1px] w-6 h-6 bg-white">
 <div className="bg-brand-obsidian"></div><div className="bg-white"></div><div className="bg-brand-obsidian"></div><div className="bg-brand-obsidian"></div><div className="bg-white"></div><div className="bg-brand-obsidian"></div>
@@ -292,16 +293,17 @@ export function ProductShowcaseBlock(props: any) {
 <div className="font-serif italic text-blue-900/90 text-sm font-semibold transform -rotate-2 origin-right leading-none">Alex Mercer</div>
 </div>
 </div>
+</motion.div>
 {/*  Trust Badge  */}
 <motion.div
-  className="absolute -bottom-2 -right-2 bg-[#059669] text-white text-[8px] uppercase tracking-widest font-bold px-3 py-1.5 shadow-xl rounded-sm border border-emerald-400/50 z-10"
+  className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 bg-[#059669] text-white text-[8px] uppercase tracking-widest font-bold px-3 py-1.5 shadow-xl rounded-sm border border-emerald-400/50 z-20 pointer-events-none"
   initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.6 }}
   whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
   viewport={{ once: true, margin: '-80px' }}
   transition={{ duration: 0.45, delay: 1.05, ease: easings.cinematic }}
 >
     ✓ COMPLIANCE VERIFIED
-</motion.div></motion.div>
+</motion.div>
 </div>
 </div>
 </div>

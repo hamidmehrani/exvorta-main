@@ -31,9 +31,9 @@ export const PortfolioShowcaseBlock: React.FC<PortfolioShowcaseBlockProps> = (pr
   const hasValidProject = !!projectData
 
   return (
-    <AnimatedSection className="w-full py-32 bg-white border-b border-[#E5E5E5]">
+    <AnimatedSection className="w-full py-16 sm:py-24 lg:py-32 bg-white border-b border-[#E5E5E5]">
       <div className="max-w-7xl mx-auto px-6 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-24 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8 lg:gap-x-16 items-center">
           
           {/* Left Column */}
           <div className="md:col-span-5 flex flex-col items-start">
@@ -67,11 +67,11 @@ export const PortfolioShowcaseBlock: React.FC<PortfolioShowcaseBlockProps> = (pr
                 }
               />
             ) : (
-              <div className="w-full aspect-[16/10] border border-black/15 bg-[#0D0D0D] flex flex-col items-center justify-center gap-3">
+              <div className="w-full aspect-[16/10] border border-black/15 bg-[#0D0D0D] flex flex-col items-center justify-center gap-3 px-4">
                 <div className="w-14 h-10 border border-white/10 rounded-[2px] flex items-center justify-center">
                   <div className="w-7 h-5 border border-white/20 rounded-[1px]" />
                 </div>
-                <span className="font-mono text-[9px] tracking-[0.3em] text-white/30 uppercase">
+                <span className="font-mono text-[8px] sm:text-[9px] tracking-[0.12em] sm:tracking-[0.3em] text-white/30 uppercase text-center break-words">
                   [ DEPLOYMENT PREVIEW — {title} ]
                 </span>
               </div>
