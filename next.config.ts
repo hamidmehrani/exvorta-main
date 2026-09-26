@@ -2,19 +2,31 @@ import { withPayload } from '@payloadcms/next/withPayload'
 import type { NextConfig } from 'next'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
-// Warn (don't crash) on missing env vars so CI builds succeed;
-// runtime still fails safely where secrets are actually used.
-const requiredEnvVars = [
-  'DATABASE_URI',
-  'PAYLOAD_SECRET',
+// Categorized Environment Validation
+const isProduction = process.env.NODE_ENV === 'production' && process.env.CI !== 'true'
+
+// Critical variables required for core system execution in production
+const criticalEnvVars = ['DATABASE_URI', 'PAYLOAD_SECRET', 'ADMIN_EMAIL']
+for (const envVar of criticalEnvVars) {
+  if (!process.env[envVar]) {
+    if (isProduction) {
+      throw new Error(`[FATAL] Missing critical environment variable: ${envVar}. Deployment cannot proceed without it.`)
+    } else {
+      console.warn(`⚠️ Missing critical environment variable in development: ${envVar}`)
+    }
+  }
+}
+
+// Operational variables that degrade gracefully or are optional
+const optionalEnvVars = [
   'CLOUDINARY_CLOUD_NAME',
   'CLOUDINARY_API_KEY',
   'CLOUDINARY_API_SECRET',
+  'NEXT_PUBLIC_SERVER_URL',
 ]
-
-for (const envVar of requiredEnvVars) {
+for (const envVar of optionalEnvVars) {
   if (!process.env[envVar]) {
-    console.warn(`⚠️ Missing environment variable: ${envVar} — configure it before deploying`)
+    console.warn(`⚠️ Missing optional/integration environment variable: ${envVar} (falling back to defaults)`)
   }
 }
 
