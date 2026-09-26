@@ -16,6 +16,7 @@ export interface LiveWebsiteFrameProps {
   live?: boolean
   /** Extra classes for the outer wrapper */
   className?: string
+  priority?: boolean
 }
 
 /**
@@ -34,6 +35,7 @@ export function LiveWebsiteFrame({
   service,
   slug,
   className = '',
+  priority = false,
 }: LiveWebsiteFrameProps) {
   const liveHref = liveUrl || (slug ? `https://${slug}.exvorta.com` : '')
 
@@ -50,6 +52,7 @@ export function LiveWebsiteFrame({
       imageUrl={imageUrl}
       tone="light"
       className={className}
+      priority={priority}
       footer={
         metaRows.length > 0 ? (
           <div className="bg-white border-t border-black/5 px-4 py-3 space-y-1.5 font-mono text-[9px] uppercase tracking-widest">

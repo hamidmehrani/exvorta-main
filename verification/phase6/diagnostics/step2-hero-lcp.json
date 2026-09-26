@@ -1,0 +1,61 @@
+{
+  "route": "/",
+  "phase5Baseline": {
+    "perf": 62,
+    "lcp": 7672,
+    "tbt": 364,
+    "fcp": 1510,
+    "elementRenderDelay": 1238.9
+  },
+  "runs": [
+    {
+      "run": 1,
+      "perf": 63,
+      "lcp": 7457,
+      "tbt": 343,
+      "fcp": 1511
+    },
+    {
+      "run": 2,
+      "perf": 64,
+      "lcp": 7418,
+      "tbt": 319,
+      "fcp": 1512
+    },
+    {
+      "run": 3,
+      "perf": 79,
+      "lcp": 4145,
+      "tbt": 293,
+      "fcp": 1513
+    }
+  ],
+  "phase6Median": {
+    "perf": 64,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 7418,
+    "tbt": 319,
+    "fcp": 1512,
+    "cls": 0,
+    "lcpSnippet": "<p class=\"text-base md:text-lg text-obsidian/60 max-w-2xl mx-auto mb-12 font-light\" style=\"opacity: 1; filter: blur(0px); transform: none;\">",
+    "subparts": [
+      {
+        "subpart": "timeToFirstByte",
+        "label": "Time to first byte",
+        "duration": 2814.959
+      },
+      {
+        "subpart": "elementRenderDelay",
+        "label": "Element render delay",
+        "duration": 324.674
+      }
+    ]
+  },
+  "delta": {
+    "perfDiff": 2,
+    "lcpDiffMs": -254,
+    "tbtDiffMs": -45
+  }
+}

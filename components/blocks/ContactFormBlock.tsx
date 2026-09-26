@@ -10,18 +10,18 @@ export interface ContactFormBlockProps {
 
 export const ContactFormBlock: React.FC<ContactFormBlockProps> = ({ title, subtitle }) => {
   return (
-    <AnimatedSection className="w-full bg-[#FCFAF8] min-h-screen">
+    <AnimatedSection priority className="w-full bg-[#FCFAF8] min-h-screen">
       <div className="w-full mx-auto flex flex-col md:flex-row min-h-[calc(100vh-5rem)] border-b border-[#E5E5E5]">
         {/* Left Column */}
         <div className="w-full md:w-[40%] bg-[#0D0D0D] p-8 md:p-16 lg:p-24 flex flex-col justify-center border-r border-[#E5E5E5] relative">
           <div className="max-w-md mx-auto w-full">
-            <StaggerContainer delayChildren={0.1} staggerChildren={0.12}>
-              <StaggerItem>
+            <StaggerContainer priority delayChildren={0.1} staggerChildren={0.12}>
+              <StaggerItem priority>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold mb-6 leading-tight text-white">
                   {title || 'Start the Conversation.'}
                 </h1>
               </StaggerItem>
-              <StaggerItem>
+              <StaggerItem priority>
                 <p className="text-base text-gray-300 font-sans font-light mb-16 leading-relaxed">
                   {subtitle || 'Questions about scope, timelines, or infrastructure? Our team responds within one business day.'}
                 </p>

@@ -15,6 +15,7 @@ export interface BrowserFrameProps {
   /** Rendered under the screen (meta rows, captions…). */
   footer?: React.ReactNode
   className?: string
+  priority?: boolean
 }
 
 /**
@@ -34,6 +35,7 @@ export function BrowserFrame({
   aspectClass = 'aspect-[16/10]',
   footer,
   className = '',
+  priority = false,
 }: BrowserFrameProps) {
   const dark = tone === 'dark'
   const screenRef = useRef<HTMLDivElement>(null)
@@ -143,10 +145,11 @@ export function BrowserFrame({
               width={1080}
               height={4000}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px"
-              className={`h-auto w-full transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}
-              onLoad={() => setLoaded(true)}
-              priority={false}
-              loading="lazy"
+              className={priority ? 'h-auto w-full' : `h-auto w-full transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+              onLoad={priority ? undefined : () => setLoaded(true)}
+              priority={priority}
+              loading={priority ? 'eager' : 'lazy'}
+              fetchPriority={priority ? 'high' : 'auto'}
             />
           </div>
         ) : (

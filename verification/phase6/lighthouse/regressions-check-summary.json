@@ -1,0 +1,150 @@
+{
+  "ecosystem": {
+    "runs": [
+      {
+        "run": 1,
+        "perf": 43,
+        "a11y": 100,
+        "bp": 96,
+        "seo": 100,
+        "lcp": 7925,
+        "tbt": 1519,
+        "errorsInConsole": [
+          {
+            "source": "exception",
+            "description": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at rD (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:35061)\n    at oW (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:84336)\n    at ib (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114389)\n    at http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114234\n    at iv (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114242)\n    at io (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:110544)\n    at iX (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:132762)\n    at iB (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:130973)\n    at iq (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:131318)\n    at http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:130602",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 35060
+            }
+          }
+        ]
+      },
+      {
+        "run": 2,
+        "perf": 42,
+        "a11y": 100,
+        "bp": 96,
+        "seo": 100,
+        "lcp": 7992,
+        "tbt": 1764,
+        "errorsInConsole": [
+          {
+            "source": "exception",
+            "description": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at rD (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:35061)\n    at oW (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:84336)\n    at ib (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114389)\n    at http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114234\n    at iv (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114242)\n    at io (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:110544)\n    at iX (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:132762)\n    at iB (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:130973)\n    at iq (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:131318)\n    at http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:130602",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 35060
+            }
+          }
+        ]
+      },
+      {
+        "run": 3,
+        "perf": 44,
+        "a11y": 100,
+        "bp": 96,
+        "seo": 100,
+        "lcp": 7796,
+        "tbt": 1393,
+        "errorsInConsole": [
+          {
+            "source": "exception",
+            "description": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at rD (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:35061)\n    at oW (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:84336)\n    at ib (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114389)\n    at http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114234\n    at iv (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114242)\n    at io (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:110544)\n    at iX (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:132762)\n    at iB (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:130973)\n    at iq (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:131318)\n    at http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:130602",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 35060
+            }
+          }
+        ]
+      }
+    ],
+    "medianPerf": 43,
+    "medianBp": 96,
+    "medianLcp": 7925,
+    "medianTbt": 1519,
+    "allConsoleErrors": [
+      {
+        "source": "exception",
+        "description": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at rD (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:35061)\n    at oW (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:84336)\n    at ib (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114389)\n    at http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114234\n    at iv (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114242)\n    at io (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:110544)\n    at iX (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:132762)\n    at iB (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:130973)\n    at iq (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:131318)\n    at http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:130602",
+        "sourceLocation": {
+          "type": "source-location",
+          "url": "http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js",
+          "urlProvider": "network",
+          "line": 0,
+          "column": 35060
+        }
+      },
+      {
+        "source": "exception",
+        "description": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at rD (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:35061)\n    at oW (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:84336)\n    at ib (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114389)\n    at http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114234\n    at iv (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114242)\n    at io (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:110544)\n    at iX (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:132762)\n    at iB (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:130973)\n    at iq (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:131318)\n    at http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:130602",
+        "sourceLocation": {
+          "type": "source-location",
+          "url": "http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js",
+          "urlProvider": "network",
+          "line": 0,
+          "column": 35060
+        }
+      },
+      {
+        "source": "exception",
+        "description": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at rD (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:35061)\n    at oW (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:84336)\n    at ib (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114389)\n    at http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114234\n    at iv (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:114242)\n    at io (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:110544)\n    at iX (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:132762)\n    at iB (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:130973)\n    at iq (http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:131318)\n    at http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js:1:130602",
+        "sourceLocation": {
+          "type": "source-location",
+          "url": "http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js",
+          "urlProvider": "network",
+          "line": 0,
+          "column": 35060
+        }
+      }
+    ]
+  },
+  "rfq": {
+    "runs": [
+      {
+        "run": 1,
+        "perf": 41,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 7937,
+        "tbt": 1775,
+        "errorsInConsole": []
+      },
+      {
+        "run": 2,
+        "perf": 43,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 7887,
+        "tbt": 1239,
+        "errorsInConsole": []
+      },
+      {
+        "run": 3,
+        "perf": 43,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 7736,
+        "tbt": 1190,
+        "errorsInConsole": []
+      }
+    ],
+    "medianPerf": 43,
+    "medianBp": 100,
+    "medianLcp": 7887,
+    "medianTbt": 1239,
+    "allConsoleErrors": []
+  }
+}

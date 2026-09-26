@@ -121,7 +121,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
   }
 
   return (
-    <AnimatedSection className="w-full">
+    <AnimatedSection priority className="w-full">
       {/*  BEGIN: Hero Section  */}
 <section className="relative pt-32 pb-40 overflow-hidden" data-purpose="hero-section">
 {/* Ambient background: soft emerald aura + fine grid */}
@@ -131,7 +131,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
 </div>
 <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative">
 {/*  Hero Content  */}
-<motion.div className="text-center max-w-4xl mx-auto mb-20" variants={heroVariants} initial="hidden" animate="show">
+<motion.div className="text-center max-w-4xl mx-auto mb-20" variants={heroVariants} initial={false} animate="show">
 <motion.div variants={heroItem} className="inline-flex items-center justify-center px-3 py-1 mb-8 rounded-full border border-black/10 bg-white/50 text-[10px] tracking-widest uppercase text-obsidian/60"><motion.span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2" animate={{ opacity: [1, 0.35, 1] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}></motion.span> [ {props.eyebrow || (isWebHero ? "HIGH-PERFORMANCE WEBSITES" : "ENGINE V1.0 LIVE")} ]<CaretBlink className="!w-[0.5em] !h-[0.9em]" /></motion.div>
 {prefersReducedMotion ? (
   <h1

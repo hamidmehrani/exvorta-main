@@ -12,7 +12,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
   return (
     <div className="w-full flex flex-col z-10 relative">
       {/* 01. [HERO] - Purpose: Trade Intelligence Identity */}
-      <AnimatedSection id="blog-hero" className="w-full bg-[#0A0A0A] pt-28 sm:pt-40 pb-12 sm:pb-16 lg:pb-20 px-6 relative overflow-hidden">
+      <AnimatedSection priority id="blog-hero" className="w-full bg-[#0A0A0A] pt-28 sm:pt-40 pb-12 sm:pb-16 lg:pb-20 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none z-0"></div>
         <Container className="relative z-10 flex flex-col items-center text-center">
           <MonoLabel className="text-white/40 mb-8 block">

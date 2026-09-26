@@ -64,7 +64,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
             {/* Left: brand story */}
             <div className="col-span-1 lg:col-span-5 flex flex-col">
-              <AnimatedSection>
+              <AnimatedSection priority>
                 <div className="flex items-center gap-3 mb-8">
                   <span className="inline-block w-10 h-[2px]" style={{ backgroundColor: accent }} />
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">CASE STUDY — {cs.title.toUpperCase()}</span>
@@ -116,7 +116,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
             {/* Right: browser-framed live screenshot */}
             <div className="col-span-1 lg:col-span-7">
               <motion.div
-                initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 32 }}
+                initial={false}
                 animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.25, ease: easings.cinematic }}
               >
@@ -124,6 +124,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                   url={liveUrl}
                   title={cs.title}
                   poster={heroSrc || undefined}
+                  priority={true}
                 />
                 <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.3em] text-white/40">
                   FIG. 01 — LIVE DEPLOYMENT — {cs.domain}

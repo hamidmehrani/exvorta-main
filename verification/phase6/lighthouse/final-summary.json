@@ -1,0 +1,416 @@
+[
+  {
+    "route": "home",
+    "path": "/",
+    "mobile": {
+      "perf": 66,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 7398,
+      "tbt": 300,
+      "cls": 0,
+      "fcp": 1510,
+      "si": 4846,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "section.relative > div.max-w-[1400px] > div.text-center > p.text-base"
+    },
+    "desktop": {
+      "perf": 90,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1567,
+      "tbt": 19,
+      "cls": 0.057,
+      "fcp": 370,
+      "si": 2168,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "section.relative > div.max-w-[1400px] > div.text-center > h1.text-5xl"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": false,
+    "comparisonVsPhase5": {
+      "mobilePerf": {
+        "phase5": 62,
+        "phase6": 66,
+        "delta": 4,
+        "status": "IMPROVED"
+      },
+      "desktopPerf": {
+        "phase5": 92,
+        "phase6": 90,
+        "delta": -2,
+        "status": "REGRESSED"
+      }
+    }
+  },
+  {
+    "route": "portfolio",
+    "path": "/portfolio",
+    "mobile": {
+      "perf": 67,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 8072,
+      "tbt": 279,
+      "cls": 0,
+      "fcp": 1210,
+      "si": 4705,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto"
+    },
+    "desktop": {
+      "perf": 90,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1580,
+      "tbt": 89,
+      "cls": 0.05,
+      "fcp": 374,
+      "si": 2050,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": false,
+    "comparisonVsPhase5": {
+      "mobilePerf": {
+        "phase5": 67,
+        "phase6": 67,
+        "delta": 0,
+        "status": "UNCHANGED"
+      },
+      "desktopPerf": {
+        "phase5": 93,
+        "phase6": 90,
+        "delta": -3,
+        "status": "REGRESSED"
+      }
+    }
+  },
+  {
+    "route": "portfolio-nutave",
+    "path": "/portfolio/nutave",
+    "mobile": {
+      "perf": 67,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 7199,
+      "tbt": 312,
+      "cls": 0,
+      "fcp": 1516,
+      "si": 3789,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.grid > div.col-span-1 > section > p.font-sans"
+    },
+    "desktop": {
+      "perf": 94,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1399,
+      "tbt": 19,
+      "cls": 0,
+      "fcp": 372,
+      "si": 1669,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": false,
+    "comparisonVsPhase5": {
+      "mobilePerf": {
+        "phase5": 72,
+        "phase6": 67,
+        "delta": -5,
+        "status": "REGRESSED"
+      },
+      "desktopPerf": {
+        "phase5": 75,
+        "phase6": 94,
+        "delta": 19,
+        "status": "IMPROVED"
+      }
+    }
+  },
+  {
+    "route": "ecosystem",
+    "path": "/ecosystem",
+    "mobile": {
+      "perf": 55,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 7426,
+      "tbt": 569,
+      "cls": 0,
+      "fcp": 1511,
+      "si": 6508,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+    },
+    "desktop": {
+      "perf": 92,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1458,
+      "tbt": 43,
+      "cls": 0,
+      "fcp": 368,
+      "si": 2004,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "section#ecosystem-hero > div.container-site > div.w-full > h1.text-4xl"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": false,
+    "comparisonVsPhase5": {
+      "mobilePerf": {
+        "phase5": 43,
+        "phase6": 55,
+        "delta": 12,
+        "status": "IMPROVED"
+      },
+      "desktopPerf": {
+        "phase5": 59,
+        "phase6": 92,
+        "delta": 33,
+        "status": "IMPROVED"
+      }
+    }
+  },
+  {
+    "route": "insights",
+    "path": "/insights",
+    "mobile": {
+      "perf": 81,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 3841,
+      "tbt": 272,
+      "cls": 0.002,
+      "fcp": 1522,
+      "si": 4057,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.w-full > section#blog-hero > div.container-site > h1.text-5xl"
+    },
+    "desktop": {
+      "perf": 98,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 676,
+      "tbt": 0,
+      "cls": 0.058,
+      "fcp": 373,
+      "si": 1302,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "N/A"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": true,
+    "comparisonVsPhase5": {
+      "mobilePerf": {
+        "phase5": 81,
+        "phase6": 81,
+        "delta": 0,
+        "status": "UNCHANGED"
+      },
+      "desktopPerf": {
+        "phase5": 89,
+        "phase6": 98,
+        "delta": 9,
+        "status": "TARGET MET"
+      }
+    }
+  },
+  {
+    "route": "contact",
+    "path": "/contact",
+    "mobile": {
+      "perf": 80,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 3927,
+      "tbt": 303,
+      "cls": 0.032,
+      "fcp": 1514,
+      "si": 2940,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.max-w-md > div > div > p.text-base"
+    },
+    "desktop": {
+      "perf": 92,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1328,
+      "tbt": 147,
+      "cls": 0.005,
+      "fcp": 391,
+      "si": 1386,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.max-w-md > div > div > h1.text-4xl"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": false,
+    "comparisonVsPhase5": {
+      "mobilePerf": {
+        "phase5": 68,
+        "phase6": 80,
+        "delta": 12,
+        "status": "IMPROVED"
+      },
+      "desktopPerf": {
+        "phase5": 92,
+        "phase6": 92,
+        "delta": 0,
+        "status": "UNCHANGED"
+      }
+    }
+  },
+  {
+    "route": "rfq",
+    "path": "/rfq",
+    "mobile": {
+      "perf": 76,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 4084,
+      "tbt": 338,
+      "cls": 0.097,
+      "fcp": 1364,
+      "si": 2655,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+    },
+    "desktop": {
+      "perf": 97,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1184,
+      "tbt": 22,
+      "cls": 0,
+      "fcp": 376,
+      "si": 1037,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "N/A"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": true,
+    "comparisonVsPhase5": {
+      "mobilePerf": {
+        "phase5": 50,
+        "phase6": 76,
+        "delta": 26,
+        "status": "IMPROVED"
+      },
+      "desktopPerf": {
+        "phase5": 92,
+        "phase6": 97,
+        "delta": 5,
+        "status": "TARGET MET"
+      }
+    }
+  },
+  {
+    "route": "waitlist",
+    "path": "/waitlist",
+    "mobile": {
+      "perf": 52,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 7264,
+      "tbt": 932,
+      "cls": 0.057,
+      "fcp": 1528,
+      "si": 4269,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "section.w-full > div.w-full > div > p.text-base"
+    },
+    "desktop": {
+      "perf": 96,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1224,
+      "tbt": 34,
+      "cls": 0.02,
+      "fcp": 373,
+      "si": 1376,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "N/A"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": true,
+    "comparisonVsPhase5": {
+      "mobilePerf": {
+        "phase5": 65,
+        "phase6": 52,
+        "delta": -13,
+        "status": "REGRESSED"
+      },
+      "desktopPerf": {
+        "phase5": 92,
+        "phase6": 96,
+        "delta": 4,
+        "status": "TARGET MET"
+      }
+    }
+  },
+  {
+    "route": "legal",
+    "path": "/legal",
+    "mobile": {
+      "perf": 87,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 3456,
+      "tbt": 92,
+      "cls": 0.097,
+      "fcp": 1517,
+      "si": 2978,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+    },
+    "desktop": {
+      "perf": 98,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 741,
+      "tbt": 0,
+      "cls": 0,
+      "fcp": 373,
+      "si": 1351,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": true,
+    "comparisonVsPhase5": {
+      "mobilePerf": {
+        "phase5": 88,
+        "phase6": 87,
+        "delta": -1,
+        "status": "REGRESSED"
+      },
+      "desktopPerf": {
+        "phase5": 98,
+        "phase6": 98,
+        "delta": 0,
+        "status": "TARGET MET"
+      }
+    }
+  }
+]

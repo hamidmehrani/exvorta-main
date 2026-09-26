@@ -362,3 +362,20 @@ section[class*="bg-[#0D0D0D]"] :focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .terminal-caret { animation: none; }
 }
+
+/* Ecosystem stamp toggle & grid background */
+@keyframes stamp-toggle {
+  0%, 45% { content: "DRAFT"; opacity: 1; }
+  50% { opacity: 0; }
+  55%, 100% { content: "READY"; opacity: 1; }
+}
+.animated-stamp::before {
+  content: "DRAFT";
+  animation: stamp-toggle 6s infinite;
+}
+.grid-bg-brand-emerald {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(5, 150, 105, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(5, 150, 105, 0.05) 1px, transparent 1px);
+}

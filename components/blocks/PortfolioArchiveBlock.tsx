@@ -249,6 +249,11 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
     },
   };
 
+  const firstCardVariants = {
+    hidden: { opacity: 1, y: 0, filter: 'blur(0px)' },
+    show: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  };
+
   return (
     <div ref={containerRef} className="w-full bg-[#FAFAF8] min-h-screen">
       {/* Hero Section */}
@@ -293,7 +298,8 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
                 return (
                   <motion.article
                     key={project.id || index}
-                    variants={cardVariants}
+                    variants={index === 0 ? firstCardVariants : cardVariants}
+                    initial={index === 0 ? false : undefined}
                     className="portfolio-card group flex flex-col bg-white border border-black/5 rounded-none overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 relative"
                     whileHover={animationLevel === 'none' ? undefined : { y: -8 }}
                   >
@@ -302,6 +308,7 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
                       imageUrl={extractMediaUrl(project.heroImage, project.slug)}
                       liveUrl={project.liveUrl || (project.slug ? `https://${project.slug}.exvorta.com` : undefined)}
                       slug={project.slug}
+                      priority={index === 0}
                       live
                     />
 

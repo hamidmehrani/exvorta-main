@@ -81,10 +81,8 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
 
   return (
     <m.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8, ease: EASE_OUT }}
+      initial={false}
+      animate={{ opacity: 1, scale: 1 }}
       className="w-full max-w-xl"
     >
       <form onSubmit={onSubmit} className="flex flex-col gap-6 rounded-none relative">

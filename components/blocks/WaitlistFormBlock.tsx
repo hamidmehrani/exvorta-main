@@ -16,7 +16,7 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
   source,
 }) => {
   return (
-    <AnimatedSection className="w-full bg-brand-obsidian flex flex-col items-center justify-center relative px-6 py-16 sm:py-24 lg:py-32 flex-grow overflow-hidden rounded-none border-t border-white/10">
+    <AnimatedSection priority className="w-full bg-brand-obsidian flex flex-col items-center justify-center relative px-6 py-16 sm:py-24 lg:py-32 flex-grow overflow-hidden rounded-none border-t border-white/10">
       {/* Background effect */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_50%)] rounded-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px', opacity: 0.1 }}></div>
       {/* Emerald aura */}
@@ -28,26 +28,26 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
       <div className="w-full max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
 
         {/* Typography Block */}
-        <Reveal y={14}>
+        <Reveal priority y={14}>
           <div className="text-[10px] font-mono tracking-[0.3em] text-white/40 uppercase mb-8">
             [ EXVORTA ECOSYSTEM ]
           </div>
         </Reveal>
 
-        <Reveal y={22}>
+        <Reveal priority y={22}>
           <h1 className="text-4xl md:text-5xl font-serif font-semibold text-white mb-6 leading-tight">
             Request Alpha Access.
           </h1>
         </Reveal>
 
-        <Reveal y={16} delay={0.12}>
+        <Reveal priority y={16} delay={0.12}>
           <p className="text-base md:text-lg text-white/50 font-light leading-relaxed mb-10 max-w-lg mx-auto">
             The Exvorta Suite is in closed beta. Enter your corporate email to
             reserve your position — early partners shape the roadmap.
           </p>
         </Reveal>
 
-        <Reveal y={20} delay={0.2} className="w-full max-w-2xl mx-auto">
+        <Reveal priority y={20} delay={0.2} className="w-full max-w-2xl mx-auto">
           <WaitlistClientForm
             placeholder={placeholder || ''}
             buttonText={buttonText || ''}

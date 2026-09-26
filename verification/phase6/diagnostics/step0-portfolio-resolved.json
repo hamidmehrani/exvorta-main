@@ -1,0 +1,74 @@
+{
+  "baseline": {
+    "perfScore": 67,
+    "lcpMs": 8629,
+    "tbtMs": 183,
+    "lcpLoadStart": 6805,
+    "timeToFirstByte": 2800,
+    "lazyLoadedAuditScore": 0,
+    "lazyLoadedSavingsLcp": 1300,
+    "lcpElementSnippet": "<img alt=\"Stonvi website preview\" loading=\"lazy\" width=\"1080\" height=\"4000\" decoding=\"async\" data-nimg=\"1\" class=\"h-auto w-full transition-opacity duration-700 opacity-100\" sizes=\"(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px\" srcset=\"/_next/image?url=%2Fportfolio-stonvi.webp&amp;w=384&amp;q=75 384w, /_next/image?ur…\" src=\"http://localhost:3000/_next/image?url=%2Fportfolio-stonvi.webp&amp;w=750&amp;q=75\" style=\"color: transparent;\">"
+  },
+  "runs": [
+    {
+      "run": 1,
+      "perf": 68,
+      "lcp": 8445,
+      "tbt": 250,
+      "lazyScore": 1
+    },
+    {
+      "run": 2,
+      "perf": 68,
+      "lcp": 8568,
+      "tbt": 201,
+      "lazyScore": 1
+    },
+    {
+      "run": 3,
+      "perf": 73,
+      "lcp": 6389,
+      "tbt": 209,
+      "lazyScore": 1
+    }
+  ],
+  "phase6Median": {
+    "perfScore": 68,
+    "lcpMs": 8568,
+    "tbtMs": 201,
+    "fcpMs": 1514,
+    "cls": 0,
+    "lcpLoadStart": 7271,
+    "timeToFirstByte": 1938,
+    "lazyLoadedAuditScore": 1,
+    "lazyLoadedSavingsLcp": 0,
+    "lcpElementSnippet": "<img alt=\"Stonvi website preview\" fetchpriority=\"high\" loading=\"eager\" width=\"1080\" height=\"4000\" decoding=\"async\" data-nimg=\"1\" class=\"h-auto w-full\" sizes=\"(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px\" srcset=\"/_next/image?url=%2Fportfolio-stonvi.webp&amp;w=384&amp;q=75 384w, /_next/image?ur…\" src=\"http://localhost:3000/_next/image?url=%2Fportfolio-stonvi.webp&amp;w=750&amp;q=75\" style=\"color: transparent;\">",
+    "lcpBreakdownSubparts": [
+      {
+        "subpart": "timeToFirstByte",
+        "label": "Time to first byte",
+        "duration": 1421.298
+      },
+      {
+        "subpart": "resourceLoadDelay",
+        "label": "Resource load delay",
+        "duration": 8.716
+      },
+      {
+        "subpart": "resourceLoadDuration",
+        "label": "Resource load duration",
+        "duration": 12.739
+      },
+      {
+        "subpart": "elementRenderDelay",
+        "label": "Element render delay",
+        "duration": 115.054
+      }
+    ]
+  },
+  "delta": {
+    "perfDiff": 1,
+    "lcpDiffMs": -61,
+    "lazyAuditResolved": true
+  }
+}

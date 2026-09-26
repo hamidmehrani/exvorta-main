@@ -1,0 +1,104 @@
+{
+  "ecosystem": {
+    "phase5Baseline": {
+      "perf": 43,
+      "bp": 96,
+      "consoleErrors": 1
+    },
+    "runs": [
+      {
+        "run": 1,
+        "perf": 58,
+        "bp": 100,
+        "tbt": 483,
+        "lcp": 7440,
+        "consoleErrors": 0
+      },
+      {
+        "run": 2,
+        "perf": 59,
+        "bp": 100,
+        "tbt": 448,
+        "lcp": 7451,
+        "consoleErrors": 0
+      },
+      {
+        "run": 3,
+        "perf": 62,
+        "bp": 100,
+        "tbt": 418,
+        "lcp": 7433,
+        "consoleErrors": 0
+      }
+    ],
+    "phase6Median": {
+      "perf": 59,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 7451,
+      "tbt": 448,
+      "cls": 0,
+      "fcp": 1512,
+      "si": 5812,
+      "consoleErrorsCount": 0,
+      "consoleErrors": []
+    },
+    "delta": {
+      "perfDiff": 16,
+      "bpDiff": 4,
+      "consoleErrorsDiff": -1,
+      "resolved": true
+    }
+  },
+  "rfq": {
+    "phase5Baseline": {
+      "perf": 43,
+      "bp": 100,
+      "tbt": 1775
+    },
+    "runs": [
+      {
+        "run": 1,
+        "perf": 50,
+        "bp": 100,
+        "tbt": 604,
+        "lcp": 7303,
+        "consoleErrors": 0
+      },
+      {
+        "run": 2,
+        "perf": 64,
+        "bp": 100,
+        "tbt": 314,
+        "lcp": 7168,
+        "consoleErrors": 0
+      },
+      {
+        "run": 3,
+        "perf": 65,
+        "bp": 100,
+        "tbt": 243,
+        "lcp": 7324,
+        "consoleErrors": 0
+      }
+    ],
+    "phase6Median": {
+      "perf": 64,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 7168,
+      "tbt": 314,
+      "cls": 0.097,
+      "fcp": 1522,
+      "si": 4131,
+      "consoleErrorsCount": 0,
+      "consoleErrors": []
+    },
+    "delta": {
+      "perfDiff": 21,
+      "tbtDiff": -1461
+    }
+  }
+}

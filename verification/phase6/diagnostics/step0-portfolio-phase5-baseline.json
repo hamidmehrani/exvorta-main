@@ -1,0 +1,39 @@
+{
+  "route": "/portfolio",
+  "perfScore": 67,
+  "lcpMs": 8629,
+  "tbtMs": 183,
+  "subparts": [
+    {
+      "subpart": "timeToFirstByte",
+      "label": "Time to first byte",
+      "durationMs": 2800.31
+    },
+    {
+      "subpart": "resourceLoadDelay",
+      "label": "Resource load delay",
+      "durationMs": 285.768
+    },
+    {
+      "subpart": "resourceLoadDuration",
+      "label": "Resource load duration",
+      "durationMs": 8.907
+    },
+    {
+      "subpart": "elementRenderDelay",
+      "label": "Element render delay",
+      "durationMs": 818.825
+    }
+  ],
+  "metrics": {
+    "firstContentfulPaint": 1510,
+    "largestContentfulPaint": 8629,
+    "lcpLoadStart": 6805,
+    "lcpLoadEnd": 6824,
+    "timeToFirstByte": 2800,
+    "observedLargestContentfulPaint": 3914
+  },
+  "lcpElementSnippet": "<img alt=\"Stonvi website preview\" loading=\"lazy\" width=\"1080\" height=\"4000\" decoding=\"async\" data-nimg=\"1\" class=\"h-auto w-full transition-opacity duration-700 opacity-100\" sizes=\"(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px\" srcset=\"/_next/image?url=%2Fportfolio-stonvi.webp&amp;w=384&amp;q=75 384w, /_next/image?ur…\" src=\"http://localhost:3000/_next/image?url=%2Fportfolio-stonvi.webp&amp;w=750&amp;q=75\" style=\"color: transparent;\">",
+  "lazyLoadedAuditScore": 0,
+  "lazyLoadedSavingsLcp": 1300
+}
