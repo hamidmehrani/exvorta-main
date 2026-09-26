@@ -61,7 +61,6 @@ export function BrowserFrame({
     measure()
     const ro = new ResizeObserver(measure)
     if (screenRef.current) ro.observe(screenRef.current)
-    if (captureRef.current) ro.observe(captureRef.current)
     return () => ro.disconnect()
   }, [imageUrl])
 

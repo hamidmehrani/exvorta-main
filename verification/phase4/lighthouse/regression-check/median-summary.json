@@ -1,0 +1,92 @@
+{
+  "home": {
+    "runs": [
+      {
+        "run": 1,
+        "perf": 56,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 533,
+        "fcp": 1527,
+        "lcp": 8037,
+        "si": 6048
+      },
+      {
+        "run": 2,
+        "perf": 62,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 400,
+        "fcp": 1519,
+        "lcp": 8093,
+        "si": 4899
+      },
+      {
+        "run": 3,
+        "perf": 62,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 389,
+        "fcp": 1518,
+        "lcp": 8061,
+        "si": 4775
+      }
+    ],
+    "medianPerf": 62,
+    "medianTbt": 400,
+    "medianFcp": 1519,
+    "medianLcp": 8061,
+    "medianSi": 4899,
+    "medianA11y": 100,
+    "medianBp": 100,
+    "medianSeo": 100
+  },
+  "portfolio": {
+    "runs": [
+      {
+        "run": 1,
+        "perf": 60,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 396,
+        "fcp": 1514,
+        "lcp": 7798,
+        "si": 6271
+      },
+      {
+        "run": 2,
+        "perf": 65,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 302,
+        "fcp": 1524,
+        "lcp": 8607,
+        "si": 4782
+      },
+      {
+        "run": 3,
+        "perf": 67,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 255,
+        "fcp": 1517,
+        "lcp": 8882,
+        "si": 4552
+      }
+    ],
+    "medianPerf": 65,
+    "medianTbt": 302,
+    "medianFcp": 1517,
+    "medianLcp": 8607,
+    "medianSi": 4782,
+    "medianA11y": 100,
+    "medianBp": 100,
+    "medianSeo": 100
+  }
+}

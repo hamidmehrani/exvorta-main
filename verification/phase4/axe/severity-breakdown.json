@@ -1,0 +1,156 @@
+{
+  "timestamp": "2026-09-26T15:57:43.986Z",
+  "methodology": "WCAG 2.1 Level AA automated scan using axe-core v4.10.2 via @axe-core/playwright",
+  "totals": {
+    "critical": 0,
+    "serious": 0,
+    "moderate": 0,
+    "minor": 0,
+    "incomplete": 250,
+    "passes": 376
+  },
+  "byRoute": {
+    "contact": {
+      "path": "/contact",
+      "violationsTotal": 0,
+      "bySeverity": {
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      },
+      "violations": [],
+      "incompleteCount": 1,
+      "incompleteNodes": 22,
+      "passesCount": 42
+    },
+    "ecosystem": {
+      "path": "/ecosystem",
+      "violationsTotal": 0,
+      "bySeverity": {
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      },
+      "violations": [],
+      "incompleteCount": 1,
+      "incompleteNodes": 55,
+      "passesCount": 39
+    },
+    "home": {
+      "path": "/",
+      "violationsTotal": 0,
+      "bySeverity": {
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      },
+      "violations": [],
+      "incompleteCount": 1,
+      "incompleteNodes": 50,
+      "passesCount": 49
+    },
+    "insights": {
+      "path": "/insights",
+      "violationsTotal": 0,
+      "bySeverity": {
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      },
+      "violations": [],
+      "incompleteCount": 1,
+      "incompleteNodes": 15,
+      "passesCount": 43
+    },
+    "legal": {
+      "path": "/legal",
+      "violationsTotal": 0,
+      "bySeverity": {
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      },
+      "violations": [],
+      "incompleteCount": 1,
+      "incompleteNodes": 13,
+      "passesCount": 38
+    },
+    "portfolio-nutave": {
+      "path": "/portfolio/nutave",
+      "violationsTotal": 0,
+      "bySeverity": {
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      },
+      "violations": [],
+      "incompleteCount": 1,
+      "incompleteNodes": 21,
+      "passesCount": 40
+    },
+    "portfolio": {
+      "path": "/portfolio",
+      "violationsTotal": 0,
+      "bySeverity": {
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      },
+      "violations": [],
+      "incompleteCount": 1,
+      "incompleteNodes": 32,
+      "passesCount": 40
+    },
+    "rfq": {
+      "path": "/rfq",
+      "violationsTotal": 0,
+      "bySeverity": {
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      },
+      "violations": [],
+      "incompleteCount": 1,
+      "incompleteNodes": 24,
+      "passesCount": 43
+    },
+    "waitlist": {
+      "path": "/waitlist",
+      "violationsTotal": 0,
+      "bySeverity": {
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      },
+      "violations": [],
+      "incompleteCount": 1,
+      "incompleteNodes": 18,
+      "passesCount": 42
+    }
+  },
+  "incompleteBreakdown": {
+    "rule": "color-contrast",
+    "impact": "serious",
+    "explanation": "Axe-core flags elements where background color cannot be statically computed (e.g. CSS background-blend-mode, canvas particles, semi-transparent gradients, or dynamic DOM layers) as incomplete/needs-review. These are not confirmed violations.",
+    "countsByRoute": {
+      "contact": 22,
+      "ecosystem": 55,
+      "home": 50,
+      "insights": 15,
+      "legal": 13,
+      "portfolio-nutave": 21,
+      "portfolio": 32,
+      "rfq": 24,
+      "waitlist": 18
+    }
+  }
+}

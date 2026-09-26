@@ -324,12 +324,12 @@ html, body {
 .lwframe-capture {
   transform: translateY(0);
   transition: transform 2.8s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
 }
 .group:hover .lwframe-capture {
   /* Cap the drift so very tall captures (4000px+) still get the same calm,
      ~one-fold travel as short ones. */
   transform: translateY(calc(-1 * min(calc(0.38 * var(--scroll, 0px)), 850px)));
+  will-change: transform;
 }
 @media (prefers-reduced-motion: reduce) {
   .lwframe-capture { transition: none; }

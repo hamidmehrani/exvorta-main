@@ -26,7 +26,7 @@ The following items require administrative access to third-party dashboards or e
   }
   ```
 - **Status:** **PENDING DNS VERIFICATION**.
-- **Audit Verification (Phase 3 Safe Check):** Queried `GET https://api.resend.com/emails` with active `RESEND_API_KEY`. Response confirmed `{"object":"list","has_more":false,"data":[]}` — exactly 0 emails were dispatched historically. No external client email addresses received unauthorized messages. Raw proof saved to `verification/phase3/resend-emails-check.json`.
+- **Audit Verification (Phase 3 & Phase 4 Safe Checks):** Queried `GET https://api.resend.com/emails` with active `RESEND_API_KEY`. Response confirmed `{"object":"list","has_more":false,"data":[]}` — exactly 0 emails were dispatched historically. No external client email addresses received unauthorized messages. Raw proofs saved to `verification/phase3/resend-emails-check.json` and `verification/phase4/resend-emails-check.json`. Resend domains list is empty (`verification/phase4/resend-emails-check.json`).
 - **Action Required:**
   1. Log into [Resend Dashboard](https://resend.com/domains).
   2. Check the status of `exvorta.com`.
