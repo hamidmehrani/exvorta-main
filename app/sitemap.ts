@@ -3,14 +3,25 @@ import { getPayloadClient } from '@/lib/payload'
 import { getSiteUrl } from '@/lib/site-url'
 
 // Disallowed in robots.txt — must never appear in the sitemap (crawl-directive consistency)
-const ROBOTS_DISALLOWED = new Set(['/insights'])
+const ROBOTS_DISALLOWED = new Set(['/admin', '/login', '/api'])
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayloadClient()
   const baseUrl = getSiteUrl()
 
   // Static marketing routes always present, even without a CMS connection
-  const staticRoutes = ['', '/about', '/web', '/portfolio', '/ecosystem', '/contact', '/rfq', '/waitlist']
+  const staticRoutes = [
+    '',
+    '/about',
+    '/web',
+    '/portfolio',
+    '/ecosystem',
+    '/insights',
+    '/contact',
+    '/rfq',
+    '/waitlist',
+    '/legal',
+  ]
   const seenUrls = new Set<string>()
   const sitemapEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => {
     const url = `${baseUrl}${route}`
@@ -59,6 +70,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   await Promise.all([
     fetchAndMapCollection('pages', '/', 0.8),
     fetchAndMapCollection('projects', '/portfolio', 0.7),
+    fetchAndMapCollection('posts', '/insights', 0.8),
   ])
 
   let redirectFromPaths = new Set<string>()
