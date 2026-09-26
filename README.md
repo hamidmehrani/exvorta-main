@@ -30,11 +30,55 @@
 
 ## Quick Start (Local Development)
 
+### 🚀 Quick Start
+
 ### Prerequisites
-- Node.js 22 LTS (`.nvmrc` provided; engines field enforces `>=20 <23` — do NOT use Node 26)
-- pnpm 10+ (`corepack enable`)
-- A Neon account (or use Docker)
-- **Developers in Iran / filtered networks:** you need a VPN for both `pnpm install` and any Neon connection (`payload migrate`, `next dev` DB fetches). DNS filtering causes `getaddrinfo EAI_AGAIN` errors otherwise.
+- Node.js v20.x or later
+- pnpm v12.x or later
+- Access to Neon PostgreSQL
+- Cloudinary account
+- Resend account
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+
+3. Set up environment variables:
+   ```bash
+   cp .env.example .env.local
+   # Edit .env.local with your credentials
+   ```
+
+4. Run database migrations:
+   ```bash
+   pnpm db:migrate
+   ```
+
+5. Start development server:
+   ```bash
+   pnpm dev
+   ```
+
+## 🔐 Security Checklist
+
+- [ ] Set RESEND_API_KEY
+- [ ] Configure TURNSTILE_SECRET_KEY
+- [ ] Verify EMAIL_FROM_DOMAIN in Resend
+- [ ] Rotate CLOUDINARY credentials
+- [ ] Enable Rate Limiting
+- [ ] Review CORS policies
+- [ ] Enable Content Security Policy
+
+## 📊 Environment Variables
+
+See [.env.example](.env.example) for complete list.
+
+---
+
 
 ### 1. Clone & Install
 ```bash

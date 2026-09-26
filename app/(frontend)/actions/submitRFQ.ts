@@ -1,3 +1,20 @@
+import { z } from 'zod';
+
+// Strict validation schema
+const RFQSchema = z.object({
+  name: z.string().min(2).max(100).trim(),
+  email: z.string().email().max(254),
+  companyName: z.string().max(100).optional(),
+  businessType: z.enum(['importer', 'exporter', 'trading_company']),
+  mainMarkets: z.string().max(200).optional(),
+  budget: z.enum(['$800–1.5k', '$1.5–3k', '$3k+']),
+  message: z.string().max(5000).optional(),
+  botField: z.literal('').optional(),
+  turnstileToken: z.string().optional(),
+});
+
+type RFQData = z.infer<typeof RFQSchema>;
+
 'use server'
 
 import { headers } from 'next/headers'

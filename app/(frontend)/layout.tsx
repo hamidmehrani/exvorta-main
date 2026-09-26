@@ -81,7 +81,7 @@ export default async function FrontendLayout({
       slug: 'site-settings',
     }) as SiteSetting
   } catch (e) {
-    console.warn("site-settings fetch failed, using default", e);
+    console.warn('[Layout] site-settings fetch failed, using defaults')
     siteSettings = { id: 0, siteName: 'Exvorta', enableCookieBanner: false, maintenanceMode: false };
   }
 
@@ -90,7 +90,7 @@ export default async function FrontendLayout({
       slug: 'analytics',
     }) as Analytics
   } catch (e) {
-    console.warn("analytics fetch failed, using default", e);
+    console.warn('[Layout] analytics fetch failed, using defaults')
     analyticsConfig = { id: 0, gtmId: null, gaId: null };
   }
 
@@ -99,7 +99,7 @@ export default async function FrontendLayout({
       slug: 'whatsapp-config',
     })) as WhatsappConfig
   } catch (e) {
-    console.warn("whatsapp-config fetch failed, using default", e);
+    console.warn('[Layout] whatsapp-config fetch failed, using defaults')
     whatsappConfig = { enableWidget: false, phoneNumber: '', defaultMessage: '' };
   }
 
@@ -126,7 +126,10 @@ export default async function FrontendLayout({
             <PageTransition>
               <div dir={dir} className={`h-full antialiased`}>
                 <div className="min-h-full flex flex-col bg-cream text-obsidian">
-                  <SkipToContent />
+                  {/* Skip Navigation Links */}
+<SkipToContent />
+{/* Fallback skip links */}
+<link rel="preload" href="/styles/skip-links.css" as="style" onload="this.rel='stylesheet'" />
                   <OrganizationSchema />
                   {hasConsent && analyticsConfig?.gaId && <GoogleAnalytics gaId={analyticsConfig.gaId} />}
                   {hasConsent && analyticsConfig?.gtmId && <GoogleTagManager gtmId={analyticsConfig.gtmId} />}

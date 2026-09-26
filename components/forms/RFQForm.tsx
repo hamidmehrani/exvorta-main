@@ -100,7 +100,19 @@ export default function RFQForm() {
       animate={error ? { x: [-10, 10, -10, 10, 0] } : {}}
       transition={{ duration: 0.4 }}
     >
-      <input type="hidden" name="bot-field" />
+      {/* Invisible honeypot field - visible to bots but not human users */}
+      <div className="hidden">
+        <label htmlFor="email-field" tabIndex={-1}>Do not fill this out: </label>
+        <input
+          id="email-field"
+          name="honeypot-email"
+          type="text"
+          autoComplete="off"
+          aria-hidden="true"
+          tabIndex={-1}
+          disabled
+        />
+      </div>
       {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
         <div className="flex justify-center">
           <Turnstile
@@ -131,7 +143,7 @@ export default function RFQForm() {
           </InputWrapper>
           <InputWrapper>
             <input id="rfq-email" name="email" className={inputClass} placeholder="YOUR EMAIL" type="email" required disabled={isPending} />
-            <label htmlFor="rfq-email" className={labelClass}>YOUR EMAIL</label>
+            <label htmlFor="rfq-email" className={labelClass}>YOUR EMAIL <span className="sr-only">(required)</span></label>
 <span className="block text-[9px] font-mono text-black/30 tracking-wide mt-1">Corporate or Gmail — both fine.</span>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>

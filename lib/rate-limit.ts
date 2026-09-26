@@ -1,8 +1,8 @@
 import { sql } from '@payloadcms/db-vercel-postgres/drizzle'
 import type { Payload } from 'payload'
 
-export const RATE_LIMIT_WINDOW_MINUTES = 15
-export const RATE_LIMIT_MAX_ATTEMPTS = 5
+export const RATE_LIMIT_WINDOW_MINUTES = 30
+export const RATE_LIMIT_MAX_ATTEMPTS = 20
 
 export type RateLimitResult = {
   allowed: boolean
