@@ -21,6 +21,7 @@ import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { cookies } from 'next/headers'
 import SkipToContent from '@/components/legal/SkipToContent'
 import { generateMeta } from '@/utils/generateMeta'
+import { reportWarning } from '@/lib/error-reporting'
 
 const inter = localFont({
   src: '../../public/fonts/Inter-Variable.woff2',
@@ -70,28 +71,49 @@ export default async function FrontendLayout({
 }) {
   const dir = 'ltr'
 
-  // Fetch SiteSettings for Cookie Banner
+  // Fetch SiteSettings for Cookie Banner & Maintenance State
   const payload = await getPayloadClient()
   let siteSettings: SiteSetting | null = null
   let analyticsConfig: Analytics | null = null
   let whatsappConfig: Pick<WhatsappConfig, 'enableWidget' | 'phoneNumber' | 'defaultMessage'> | null = null
 
   try {
-    siteSettings = await payload.findGlobal({
+    siteSettings = (await payload.findGlobal({
       slug: 'site-settings',
-    }) as SiteSetting
+    })) as SiteSetting
   } catch (e) {
-    console.warn('[Layout] site-settings fetch failed, using defaults')
-    siteSettings = { id: 0, siteName: 'Exvorta', enableCookieBanner: false, maintenanceMode: false };
+    reportWarning('[Layout] site-settings fetch failed, using defaults', { error: String(e) })
+    siteSettings = { id: 0, siteName: 'Exvorta', enableCookieBanner: false, maintenanceMode: false }
+  }
+
+  // Maintenance mode: completely isolate the page — hide Header, Footer, scripts, and layout chrome
+  if (siteSettings?.maintenanceMode) {
+    return (
+      <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+        <body className="bg-cream text-obsidian min-h-screen">
+          <main className="flex flex-col items-center justify-center min-h-screen p-6 bg-cream text-obsidian">
+            <div className="text-center p-12 border-2 border-border-dark rounded-none max-w-xl w-full bg-surface relative overflow-hidden">
+              <div className="absolute top-0 start-0 w-full h-2 bg-obsidian" />
+              <h1 className="text-5xl font-serif font-bold text-obsidian mb-4 tracking-tighter uppercase">
+                Maintenance
+              </h1>
+              <p className="text-obsidian/60 text-sm font-mono uppercase tracking-widest">
+                We are currently updating our systems. Please check back shortly.
+              </p>
+            </div>
+          </main>
+        </body>
+      </html>
+    )
   }
 
   try {
-    analyticsConfig = await payload.findGlobal({
+    analyticsConfig = (await payload.findGlobal({
       slug: 'analytics',
-    }) as Analytics
+    })) as Analytics
   } catch (e) {
-    console.warn('[Layout] analytics fetch failed, using defaults')
-    analyticsConfig = { id: 0, gtmId: null, gaId: null };
+    reportWarning('[Layout] analytics fetch failed, using defaults', { error: String(e) })
+    analyticsConfig = { id: 0, gtmId: null, gaId: null }
   }
 
   try {
@@ -99,10 +121,11 @@ export default async function FrontendLayout({
       slug: 'whatsapp-config',
     })) as WhatsappConfig
   } catch (e) {
-    console.warn('[Layout] whatsapp-config fetch failed, using defaults')
-    whatsappConfig = { enableWidget: false, phoneNumber: '', defaultMessage: '' };
+    reportWarning('[Layout] whatsapp-config fetch failed, using defaults', { error: String(e) })
+    whatsappConfig = { enableWidget: false, phoneNumber: '', defaultMessage: '' }
   }
 
+  // Standard Next.js cookies API for consent
   const cookieStore = await cookies()
 
   const cookieConfig = {
@@ -117,52 +140,41 @@ export default async function FrontendLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body>
-          <Suspense fallback={null}>
-            <LoadingBar />
-          </Suspense>
-          <ScrollProgress />
-          <FramerMotionProvider>
-            <SmoothScrollProvider>
+        <Suspense fallback={null}>
+          <LoadingBar />
+        </Suspense>
+        <ScrollProgress />
+        <FramerMotionProvider>
+          <SmoothScrollProvider>
             <PageTransition>
-              <div dir={dir} className={`h-full antialiased`}>
+              <div dir={dir} className="h-full antialiased">
                 <div className="min-h-full flex flex-col bg-cream text-obsidian">
-                  {/* Skip Navigation Links */}
-<SkipToContent />
-{/* Fallback skip links */}
-<link rel="preload" href="/styles/skip-links.css" as="style" onload="this.rel='stylesheet'" />
+                  <SkipToContent />
                   <OrganizationSchema />
                   {hasConsent && analyticsConfig?.gaId && <GoogleAnalytics gaId={analyticsConfig.gaId} />}
                   {hasConsent && analyticsConfig?.gtmId && <GoogleTagManager gtmId={analyticsConfig.gtmId} />}
-                  
-                  {siteSettings?.maintenanceMode ? (
-                    <div className="flex flex-col items-center justify-center min-h-screen bg-cream text-obsidian">
-                      <div className="text-center p-12 border-2 border-border-dark rounded-none max-w-xl w-full bg-surface relative overflow-hidden">
-                        <div className="absolute top-0 start-0 w-full h-2 bg-obsidian" />
-                        <h1 className="text-5xl font-serif font-bold text-obsidian mb-4 tracking-tighter uppercase">Maintenance</h1>
-                        <p className="text-obsidian/60 mb-8 text-sm font-mono uppercase tracking-widest">We are currently updating our systems. Please check back shortly.</p>
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      <CursorGlow />
-                      <Header />
-                      <PageWrapper>{children}</PageWrapper>
-                      <Footer />
-                      <DeferredWidgets
-                        cookieConfig={cookieConfig}
-                        whatsappConfig={whatsappConfig}
-                        umamiConfig={siteSettings?.umamiWebsiteId ? {
-                          websiteId: siteSettings.umamiWebsiteId,
-                          scriptUrl: siteSettings?.umamiScriptUrl || 'https://cloud.umami.is/script.js'
-                        } : null}
-                      />
-                    </>
-                  )}
+
+                  <CursorGlow />
+                  <Header />
+                  <PageWrapper>{children}</PageWrapper>
+                  <Footer />
+                  <DeferredWidgets
+                    cookieConfig={cookieConfig}
+                    whatsappConfig={whatsappConfig}
+                    umamiConfig={
+                      siteSettings?.umamiWebsiteId
+                        ? {
+                            websiteId: siteSettings.umamiWebsiteId,
+                            scriptUrl: siteSettings?.umamiScriptUrl || 'https://cloud.umami.is/script.js',
+                          }
+                        : null
+                    }
+                  />
                 </div>
               </div>
             </PageTransition>
-            </SmoothScrollProvider>
-          </FramerMotionProvider>
+          </SmoothScrollProvider>
+        </FramerMotionProvider>
       </body>
     </html>
   )
