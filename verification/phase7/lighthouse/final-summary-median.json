@@ -1,0 +1,929 @@
+{
+  "methodology": {
+    "runsPerPlatform": 3,
+    "selectionCriterion": "median by performance score",
+    "averageSpread": 7.33,
+    "noiseThreshold": 4,
+    "noiseThresholdRationale": "Empirically derived from the average 3-run spread (7.33 pts). Differences within ±4 points are within normal run-to-run variance on 4x throttled mobile emulation."
+  },
+  "routes": [
+    {
+      "route": "home",
+      "path": "/",
+      "mobile": {
+        "median": {
+          "perf": 60,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 7478,
+          "tbt": 439,
+          "cls": 0,
+          "fcp": 1516,
+          "si": 5725,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "section.relative > div.max-w-[1400px] > div.text-center > p.text-base"
+        },
+        "spread": 10,
+        "minPerf": 59,
+        "maxPerf": 69,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 60,
+            "lcp": 7478,
+            "tbt": 439,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 59,
+            "lcp": 7506,
+            "tbt": 508,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 69,
+            "lcp": 5421,
+            "tbt": 374,
+            "cls": 0
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 90,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 1608,
+          "tbt": 88,
+          "cls": 0,
+          "fcp": 376,
+          "si": 1966,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "section.relative > div.max-w-[1400px] > div.text-center > h1.text-5xl"
+        },
+        "spread": 22,
+        "minPerf": 68,
+        "maxPerf": 90,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 90,
+            "lcp": 1608,
+            "tbt": 88,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 90,
+            "lcp": 1519,
+            "tbt": 143,
+            "cls": 0.057
+          },
+          {
+            "run": 3,
+            "perf": 68,
+            "lcp": 1621,
+            "tbt": 440,
+            "cls": 0.057
+          }
+        ]
+      },
+      "comparisonVsPhase5": {
+        "mobile": {
+          "phase5Baseline": 59,
+          "phase5Source": "3-run median (step1-median-summary.json)",
+          "phase7Median": 60,
+          "delta": 1,
+          "status": "UNCHANGED (within noise)"
+        },
+        "desktop": {
+          "phase5Baseline": 92,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 90,
+          "delta": -2,
+          "status": "UNCHANGED (within noise)"
+        }
+      }
+    },
+    {
+      "route": "portfolio",
+      "path": "/portfolio",
+      "mobile": {
+        "median": {
+          "perf": 67,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 8517,
+          "tbt": 257,
+          "cls": 0,
+          "fcp": 1212,
+          "si": 4586,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto"
+        },
+        "spread": 12,
+        "minPerf": 65,
+        "maxPerf": 77,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 65,
+            "lcp": 8383,
+            "tbt": 323,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 77,
+            "lcp": 4901,
+            "tbt": 208,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 67,
+            "lcp": 8517,
+            "tbt": 257,
+            "cls": 0
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 89,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 1737,
+          "tbt": 111,
+          "cls": 0,
+          "fcp": 375,
+          "si": 1781,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto"
+        },
+        "spread": 2,
+        "minPerf": 88,
+        "maxPerf": 90,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 89,
+            "lcp": 1737,
+            "tbt": 111,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 88,
+            "lcp": 1650,
+            "tbt": 99,
+            "cls": 0.05
+          },
+          {
+            "run": 3,
+            "perf": 90,
+            "lcp": 1548,
+            "tbt": 77,
+            "cls": 0
+          }
+        ]
+      },
+      "comparisonVsPhase5": {
+        "mobile": {
+          "phase5Baseline": 69,
+          "phase5Source": "3-run median (step1-median-summary.json)",
+          "phase7Median": 67,
+          "delta": -2,
+          "status": "UNCHANGED (within noise)"
+        },
+        "desktop": {
+          "phase5Baseline": 93,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 89,
+          "delta": -4,
+          "status": "UNCHANGED (within noise)"
+        }
+      }
+    },
+    {
+      "route": "portfolio-nutave",
+      "path": "/portfolio/nutave",
+      "mobile": {
+        "median": {
+          "perf": 70,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 7146,
+          "tbt": 235,
+          "cls": 0,
+          "fcp": 1511,
+          "si": 3634,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.grid > div.col-span-1 > section > p.font-sans"
+        },
+        "spread": 12,
+        "minPerf": 68,
+        "maxPerf": 80,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 68,
+            "lcp": 7130,
+            "tbt": 252,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 80,
+            "lcp": 4226,
+            "tbt": 264,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 70,
+            "lcp": 7146,
+            "tbt": 235,
+            "cls": 0
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 95,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 1339,
+          "tbt": 44,
+          "cls": 0.057,
+          "fcp": 371,
+          "si": 1021,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto"
+        },
+        "spread": 6,
+        "minPerf": 89,
+        "maxPerf": 95,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 95,
+            "lcp": 1339,
+            "tbt": 44,
+            "cls": 0.057
+          },
+          {
+            "run": 2,
+            "perf": 95,
+            "lcp": 1331,
+            "tbt": 32,
+            "cls": 0.057
+          },
+          {
+            "run": 3,
+            "perf": 89,
+            "lcp": 1505,
+            "tbt": 101,
+            "cls": 0.057
+          }
+        ]
+      },
+      "comparisonVsPhase5": {
+        "mobile": {
+          "phase5Baseline": 70,
+          "phase5Source": "3-run median (step1-median-summary.json)",
+          "phase7Median": 70,
+          "delta": 0,
+          "status": "UNCHANGED (within noise)"
+        },
+        "desktop": {
+          "phase5Baseline": 75,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 95,
+          "delta": 20,
+          "status": "TARGET MET"
+        }
+      }
+    },
+    {
+      "route": "ecosystem",
+      "path": "/ecosystem",
+      "mobile": {
+        "median": {
+          "perf": 58,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 6801,
+          "tbt": 428,
+          "cls": 0,
+          "fcp": 1509,
+          "si": 7856,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+        },
+        "spread": 8,
+        "minPerf": 53,
+        "maxPerf": 61,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 61,
+            "lcp": 7444,
+            "tbt": 464,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 58,
+            "lcp": 6801,
+            "tbt": 428,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 53,
+            "lcp": 7411,
+            "tbt": 597,
+            "cls": 0
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 90,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 1447,
+          "tbt": 25,
+          "cls": 0,
+          "fcp": 373,
+          "si": 2360,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "section#ecosystem-hero > div.container-site > div.w-full > h1.text-4xl"
+        },
+        "spread": 5,
+        "minPerf": 88,
+        "maxPerf": 93,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 93,
+            "lcp": 1307,
+            "tbt": 31,
+            "cls": 0.085
+          },
+          {
+            "run": 2,
+            "perf": 90,
+            "lcp": 1447,
+            "tbt": 25,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 88,
+            "lcp": 1411,
+            "tbt": 67,
+            "cls": 0.085
+          }
+        ]
+      },
+      "comparisonVsPhase5": {
+        "mobile": {
+          "phase5Baseline": 43,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 58,
+          "delta": 15,
+          "status": "IMPROVED"
+        },
+        "desktop": {
+          "phase5Baseline": 59,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 90,
+          "delta": 31,
+          "status": "IMPROVED"
+        }
+      }
+    },
+    {
+      "route": "insights",
+      "path": "/insights",
+      "mobile": {
+        "median": {
+          "perf": 93,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 3100,
+          "tbt": 83,
+          "cls": 0.003,
+          "fcp": 1509,
+          "si": 2581,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.w-full > section#blog-hero > div.container-site > h1.text-5xl"
+        },
+        "spread": 1,
+        "minPerf": 92,
+        "maxPerf": 93,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 93,
+            "lcp": 3100,
+            "tbt": 83,
+            "cls": 0.003
+          },
+          {
+            "run": 2,
+            "perf": 92,
+            "lcp": 3130,
+            "tbt": 70,
+            "cls": 0.003
+          },
+          {
+            "run": 3,
+            "perf": 93,
+            "lcp": 3021,
+            "tbt": 98,
+            "cls": 0.003
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 96,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 744,
+          "tbt": 15,
+          "cls": 0.058,
+          "fcp": 382,
+          "si": 1733,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.w-full > section#blog-hero > div.container-site > h1.text-5xl"
+        },
+        "spread": 2,
+        "minPerf": 95,
+        "maxPerf": 97,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 95,
+            "lcp": 948,
+            "tbt": 41,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 96,
+            "lcp": 744,
+            "tbt": 15,
+            "cls": 0.058
+          },
+          {
+            "run": 3,
+            "perf": 97,
+            "lcp": 850,
+            "tbt": 0,
+            "cls": 0
+          }
+        ]
+      },
+      "comparisonVsPhase5": {
+        "mobile": {
+          "phase5Baseline": 81,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 93,
+          "delta": 12,
+          "status": "TARGET MET"
+        },
+        "desktop": {
+          "phase5Baseline": 89,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 96,
+          "delta": 7,
+          "status": "TARGET MET"
+        }
+      }
+    },
+    {
+      "route": "contact",
+      "path": "/contact",
+      "mobile": {
+        "median": {
+          "perf": 66,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 6989,
+          "tbt": 365,
+          "cls": 0.032,
+          "fcp": 1362,
+          "si": 3827,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.max-w-md > div > div > p.text-base"
+        },
+        "spread": 7,
+        "minPerf": 60,
+        "maxPerf": 67,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 66,
+            "lcp": 6989,
+            "tbt": 365,
+            "cls": 0.032
+          },
+          {
+            "run": 2,
+            "perf": 67,
+            "lcp": 6990,
+            "tbt": 350,
+            "cls": 0.032
+          },
+          {
+            "run": 3,
+            "perf": 60,
+            "lcp": 6876,
+            "tbt": 291,
+            "cls": 0.032
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 96,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 1181,
+          "tbt": 23,
+          "cls": 0.005,
+          "fcp": 376,
+          "si": 1368,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.max-w-md > div > div > h1.text-4xl"
+        },
+        "spread": 3,
+        "minPerf": 93,
+        "maxPerf": 96,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 96,
+            "lcp": 1181,
+            "tbt": 23,
+            "cls": 0.005
+          },
+          {
+            "run": 2,
+            "perf": 96,
+            "lcp": 1209,
+            "tbt": 45,
+            "cls": 0.005
+          },
+          {
+            "run": 3,
+            "perf": 93,
+            "lcp": 1288,
+            "tbt": 46,
+            "cls": 0
+          }
+        ]
+      },
+      "comparisonVsPhase5": {
+        "mobile": {
+          "phase5Baseline": 68,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 66,
+          "delta": -2,
+          "status": "UNCHANGED (within noise)"
+        },
+        "desktop": {
+          "phase5Baseline": 92,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 96,
+          "delta": 4,
+          "status": "TARGET MET"
+        }
+      }
+    },
+    {
+      "route": "rfq",
+      "path": "/rfq",
+      "mobile": {
+        "median": {
+          "perf": 73,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 5148,
+          "tbt": 328,
+          "cls": 0,
+          "fcp": 1516,
+          "si": 2708,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+        },
+        "spread": 19,
+        "minPerf": 59,
+        "maxPerf": 78,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 78,
+            "lcp": 4081,
+            "tbt": 240,
+            "cls": 0.097
+          },
+          {
+            "run": 2,
+            "perf": 59,
+            "lcp": 7237,
+            "tbt": 366,
+            "cls": 0.097
+          },
+          {
+            "run": 3,
+            "perf": 73,
+            "lcp": 5148,
+            "tbt": 328,
+            "cls": 0
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 96,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 1300,
+          "tbt": 28,
+          "cls": 0.036,
+          "fcp": 371,
+          "si": 1238,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+        },
+        "spread": 2,
+        "minPerf": 94,
+        "maxPerf": 96,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 96,
+            "lcp": 1300,
+            "tbt": 28,
+            "cls": 0.036
+          },
+          {
+            "run": 2,
+            "perf": 94,
+            "lcp": 1238,
+            "tbt": 65,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 96,
+            "lcp": 1207,
+            "tbt": 33,
+            "cls": 0
+          }
+        ]
+      },
+      "comparisonVsPhase5": {
+        "mobile": {
+          "phase5Baseline": 50,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 73,
+          "delta": 23,
+          "status": "IMPROVED"
+        },
+        "desktop": {
+          "phase5Baseline": 92,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 96,
+          "delta": 4,
+          "status": "TARGET MET"
+        }
+      }
+    },
+    {
+      "route": "waitlist",
+      "path": "/waitlist",
+      "mobile": {
+        "median": {
+          "perf": 78,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 4088,
+          "tbt": 345,
+          "cls": 0.057,
+          "fcp": 1366,
+          "si": 2264,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "section.w-full > div.w-full > div > p.text-base"
+        },
+        "spread": 7,
+        "minPerf": 72,
+        "maxPerf": 79,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 72,
+            "lcp": 5142,
+            "tbt": 333,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 78,
+            "lcp": 4088,
+            "tbt": 345,
+            "cls": 0.057
+          },
+          {
+            "run": 3,
+            "perf": 79,
+            "lcp": 3927,
+            "tbt": 320,
+            "cls": 0.057
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 94,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 1265,
+          "tbt": 19,
+          "cls": 0,
+          "fcp": 374,
+          "si": 1897,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "section.w-full > div.w-full > div > h1.text-4xl"
+        },
+        "spread": 2,
+        "minPerf": 94,
+        "maxPerf": 96,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 94,
+            "lcp": 1302,
+            "tbt": 29,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 94,
+            "lcp": 1265,
+            "tbt": 19,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 96,
+            "lcp": 1203,
+            "tbt": 47,
+            "cls": 0.02
+          }
+        ]
+      },
+      "comparisonVsPhase5": {
+        "mobile": {
+          "phase5Baseline": 65,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 78,
+          "delta": 13,
+          "status": "IMPROVED"
+        },
+        "desktop": {
+          "phase5Baseline": 92,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 94,
+          "delta": 2,
+          "status": "UNCHANGED (within noise)"
+        }
+      }
+    },
+    {
+      "route": "legal",
+      "path": "/legal",
+      "mobile": {
+        "median": {
+          "perf": 87,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 3310,
+          "tbt": 71,
+          "cls": 0.097,
+          "fcp": 1508,
+          "si": 4134,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+        },
+        "spread": 4,
+        "minPerf": 85,
+        "maxPerf": 89,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 85,
+            "lcp": 3524,
+            "tbt": 70,
+            "cls": 0.097
+          },
+          {
+            "run": 2,
+            "perf": 87,
+            "lcp": 3310,
+            "tbt": 71,
+            "cls": 0.097
+          },
+          {
+            "run": 3,
+            "perf": 89,
+            "lcp": 3311,
+            "tbt": 46,
+            "cls": 0.097
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 96,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "lcp": 741,
+          "tbt": 0,
+          "cls": 0.085,
+          "fcp": 372,
+          "si": 1534,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+        },
+        "spread": 8,
+        "minPerf": 91,
+        "maxPerf": 99,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 91,
+            "lcp": 740,
+            "tbt": 0,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 99,
+            "lcp": 737,
+            "tbt": 0,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 96,
+            "lcp": 741,
+            "tbt": 0,
+            "cls": 0.085
+          }
+        ]
+      },
+      "comparisonVsPhase5": {
+        "mobile": {
+          "phase5Baseline": 88,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 87,
+          "delta": -1,
+          "status": "UNCHANGED (within noise)"
+        },
+        "desktop": {
+          "phase5Baseline": 98,
+          "phase5Source": "single run (final-summary.json)",
+          "phase7Median": 96,
+          "delta": -2,
+          "status": "TARGET MET"
+        }
+      }
+    }
+  ]
+}

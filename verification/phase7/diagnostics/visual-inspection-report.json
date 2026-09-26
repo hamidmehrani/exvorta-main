@@ -1,0 +1,83 @@
+[
+  {
+    "route": "home",
+    "path": "/",
+    "hasDesignRef": true,
+    "designRefPath": "Exvorta designs/exvorta_home page/home-page.png",
+    "animationActive": true,
+    "fullPageCapture": "home-full.png",
+    "details": "Entrance motion observed smoothly transitioning from initial mount to fully settled state."
+  },
+  {
+    "route": "portfolio",
+    "path": "/portfolio",
+    "hasDesignRef": true,
+    "designRefPath": "Exvorta designs/exvorta_portfolio/portfolio.png",
+    "animationActive": true,
+    "fullPageCapture": "portfolio-full.png",
+    "details": "Entrance motion observed smoothly transitioning from initial mount to fully settled state."
+  },
+  {
+    "route": "nutave",
+    "path": "/portfolio/nutave",
+    "hasDesignRef": true,
+    "designRefPath": "Exvorta designs/exvorta_nutave/nutave.png",
+    "animationActive": true,
+    "fullPageCapture": "nutave-full.png",
+    "details": "Entrance motion observed smoothly transitioning from initial mount to fully settled state."
+  },
+  {
+    "route": "ecosystem",
+    "path": "/ecosystem",
+    "hasDesignRef": true,
+    "designRefPath": "Exvorta designs/exvorta_ecosystem/ecosystem.png",
+    "animationActive": true,
+    "fullPageCapture": "ecosystem-full.png",
+    "details": "Entrance motion observed smoothly transitioning from initial mount to fully settled state."
+  },
+  {
+    "route": "insights",
+    "path": "/insights",
+    "hasDesignRef": true,
+    "designRefPath": "Exvorta designs/exvorta_insights/insight.png",
+    "animationActive": true,
+    "fullPageCapture": "insights-full.png",
+    "details": "Entrance motion observed smoothly transitioning from initial mount to fully settled state."
+  },
+  {
+    "route": "contact",
+    "path": "/contact",
+    "hasDesignRef": false,
+    "designRefPath": null,
+    "animationActive": true,
+    "fullPageCapture": "contact-full.png",
+    "details": "Entrance motion observed smoothly transitioning from initial mount to fully settled state."
+  },
+  {
+    "route": "rfq",
+    "path": "/rfq",
+    "hasDesignRef": true,
+    "designRefPath": "Exvorta designs/exvorta_rfq/screenrfq.png",
+    "animationActive": true,
+    "fullPageCapture": "rfq-full.png",
+    "details": "Entrance motion observed smoothly transitioning from initial mount to fully settled state."
+  },
+  {
+    "route": "waitlist",
+    "path": "/waitlist",
+    "hasDesignRef": true,
+    "designRefPath": "Exvorta designs/exvorta_waitlist/screen.png",
+    "animationActive": true,
+    "fullPageCapture": "waitlist-full.png",
+    "details": "Entrance motion observed smoothly transitioning from initial mount to fully settled state."
+  },
+  {
+    "route": "legal",
+    "path": "/legal",
+    "hasDesignRef": false,
+    "designRefPath": null,
+    "animationActive": true,
+    "fullPageCapture": "legal-full.png",
+    "details": "Entrance motion observed smoothly transitioning from initial mount to fully settled state."
+  }
+]
