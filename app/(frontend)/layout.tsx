@@ -11,7 +11,8 @@ import { LoadingBar } from '@/components/ui/LoadingBar'
 import localFont from 'next/font/local'
 import '../globals.css'
 
-import { getPayloadClient } from '@/lib/payload'
+import { getCachedSiteSettings, getCachedAnalytics, getCachedWhatsappConfig } from '@/lib/payload-cache'
+
 import type { SiteSetting, Analytics, WhatsappConfig } from '@/payload-types'
 import OrganizationSchema from '@/components/seo/OrganizationSchema'
 
@@ -42,9 +43,7 @@ const playfair = localFont({
 export async function generateMetadata(): Promise<Metadata> {
   const [meta, settings] = await Promise.all([
     generateMeta(),
-    getPayloadClient()
-      .then((c) => c.findGlobal({ slug: 'site-settings' }))
-      .catch(() => null),
+    getCachedSiteSettings(),
   ])
 
   const faviconUrl =
@@ -71,20 +70,12 @@ export default async function FrontendLayout({
 }) {
   const dir = 'ltr'
 
-  // Fetch SiteSettings for Cookie Banner & Maintenance State
-  const payload = await getPayloadClient()
-  let siteSettings: SiteSetting | null = null
-  let analyticsConfig: Analytics | null = null
-  let whatsappConfig: Pick<WhatsappConfig, 'enableWidget' | 'phoneNumber' | 'defaultMessage'> | null = null
-
-  try {
-    siteSettings = (await payload.findGlobal({
-      slug: 'site-settings',
-    })) as SiteSetting
-  } catch (e) {
-    reportWarning('[Layout] site-settings fetch failed, using defaults', { error: String(e) })
-    siteSettings = { id: 0, siteName: 'Exvorta', enableCookieBanner: false, maintenanceMode: false }
-  }
+  // Fetch SiteSettings for Cookie Banner & Maintenance State in parallel using data cache
+  const [siteSettings, analyticsConfig, whatsappConfig] = await Promise.all([
+    getCachedSiteSettings(),
+    getCachedAnalytics(),
+    getCachedWhatsappConfig(),
+  ])
 
   // Maintenance mode: completely isolate the page — hide Header, Footer, scripts, and layout chrome
   if (siteSettings?.maintenanceMode) {
@@ -105,24 +96,6 @@ export default async function FrontendLayout({
         </body>
       </html>
     )
-  }
-
-  try {
-    analyticsConfig = (await payload.findGlobal({
-      slug: 'analytics',
-    })) as Analytics
-  } catch (e) {
-    reportWarning('[Layout] analytics fetch failed, using defaults', { error: String(e) })
-    analyticsConfig = { id: 0, gtmId: null, gaId: null }
-  }
-
-  try {
-    whatsappConfig = (await payload.findGlobal({
-      slug: 'whatsapp-config',
-    })) as WhatsappConfig
-  } catch (e) {
-    reportWarning('[Layout] whatsapp-config fetch failed, using defaults', { error: String(e) })
-    whatsappConfig = { enableWidget: false, phoneNumber: '', defaultMessage: '' }
   }
 
   // Standard Next.js cookies API for consent

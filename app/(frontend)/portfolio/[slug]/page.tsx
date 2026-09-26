@@ -6,9 +6,10 @@ import type { Project } from '@/payload-types';
 import type { Metadata } from 'next';
 import { generateMeta } from '@/utils/generateMeta';
 
-// Content is managed dynamically in the Payload admin panel,
-// so this route must render per-request instead of being pre-rendered at build time.
-export const dynamic = 'force-dynamic';
+import { getCachedProject } from '@/lib/payload-cache';
+
+export const dynamic = 'auto';
+export const revalidate = 300;
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -16,24 +17,19 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
-  let project: Project | null = null;
-  try {
-    const payload = await getPayloadClient();
-    const { docs } = await payload.find({
-      collection: 'projects',
-      where: {
-        slug: {
-          equals: resolvedParams.slug,
-        },
-      },
-      limit: 1,
-    });
-    project = docs?.[0] as Project;
-  } catch (error) {
-    console.error(`Failed to fetch project meta for slug: ${resolvedParams.slug}`, error);
-  }
+  const project = await getCachedProject(resolvedParams.slug);
 
-  return generateMeta({ doc: { meta: { title: project?.title } }, image: `/portfolio-${resolvedParams.slug}.png`, url: `/portfolio/${resolvedParams.slug}` })
+  const title = project?.title || 'Case Study';
+  const description =
+    project?.excerpt ||
+    `${title} — High-performance export web platform engineered by Exvorta.`;
+
+  return generateMeta({
+    title,
+    description,
+    image: `/portfolio-${resolvedParams.slug}.png`,
+    url: `/portfolio/${resolvedParams.slug}`,
+  });
 }
 
 export async function generateStaticParams() {
@@ -55,28 +51,7 @@ export async function generateStaticParams() {
 
 export default async function ProjectSinglePage({ params }: Props) {
   const resolvedParams = await params;
-  const payload = await getPayloadClient();
-  
-  let project: Project | null = null;
-  
-  try {
-    const { docs } = await payload.find({
-      collection: 'projects',
-      where: {
-        slug: {
-          equals: resolvedParams.slug,
-        },
-      },
-      depth: 1,
-      limit: 1,
-    });
-    
-    if (docs && docs.length > 0) {
-      project = docs[0] as Project;
-    }
-  } catch (error) {
-    console.error(`Failed to fetch project with slug: ${resolvedParams.slug}`, error);
-  }
+  let project = await getCachedProject(resolvedParams.slug);
 
   if (!project) {
     if (resolvedParams.slug === 'spicevo') {
