@@ -39,8 +39,20 @@ export default function ContactForm() {
 
   return (
     <form ref={formRef} action={formAction} className="w-full max-w-lg flex flex-col gap-4 text-start">
-      {/* Invisible Honeypot Field */}
-      <input type="text" name="bot-field" className="hidden" tabIndex={-1} autoComplete="off" />
+      {/* Required lead source for Payload CMS Leads collection */}
+      <input type="hidden" name="source" value="RFQ" />
+
+      {/* Honeypot field for bot trapping — completely hidden from human visitors */}
+      <div aria-hidden="true" className="absolute opacity-0 -z-50 pointer-events-none h-0 w-0 overflow-hidden" tabIndex={-1}>
+        <label htmlFor="contact-bot-field">Do not fill this field</label>
+        <input
+          id="contact-bot-field"
+          type="text"
+          name="bot-field"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
       
       <div>
         <label htmlFor="name" className="block text-xs font-semibold text-text uppercase tracking-wider mb-2">Name</label>

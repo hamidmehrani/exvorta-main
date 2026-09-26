@@ -1,6 +1,7 @@
 'use server'
 
 import { submitLead, LeadSubmission } from './submitLead'
+import { reportError } from '@/lib/error-reporting'
 
 export async function submitWaitlist(data: LeadSubmission) {
   // 1. Save to the existing system (Turnstile, Rate Limiting, Payload DB)
@@ -26,7 +27,7 @@ export async function submitWaitlist(data: LeadSubmission) {
         }),
       });
     } catch (error) {
-      console.error('[EXVORTA OS] Error sending waitlist webhook:', error);
+      reportError(error instanceof Error ? error : new Error(String(error)), { context: 'submitWaitlistWebhook' });
     }
   }
 

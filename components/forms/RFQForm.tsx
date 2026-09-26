@@ -100,17 +100,15 @@ export default function RFQForm() {
       animate={error ? { x: [-10, 10, -10, 10, 0] } : {}}
       transition={{ duration: 0.4 }}
     >
-      {/* Invisible honeypot field - visible to bots but not human users */}
-      <div className="hidden">
-        <label htmlFor="email-field" tabIndex={-1}>Do not fill this out: </label>
+      {/* Honeypot field for bot trapping — completely hidden from human visitors */}
+      <div aria-hidden="true" className="absolute opacity-0 -z-50 pointer-events-none h-0 w-0 overflow-hidden" tabIndex={-1}>
+        <label htmlFor="rfq-bot-field">Do not fill this field</label>
         <input
-          id="email-field"
-          name="honeypot-email"
+          id="rfq-bot-field"
+          name="bot-field"
           type="text"
           autoComplete="off"
-          aria-hidden="true"
           tabIndex={-1}
-          disabled
         />
       </div>
       {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (

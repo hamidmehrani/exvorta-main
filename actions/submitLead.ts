@@ -3,6 +3,7 @@
 import { getPayloadClient } from '@/lib/payload'
 import { headers } from 'next/headers'
 import { checkRateLimit, verifyTurnstile } from '@/lib/rate-limit'
+import { reportError } from '@/lib/error-reporting'
 
 export interface LeadSubmission {
   source: 'Waitlist' | 'RFQ'
@@ -72,7 +73,7 @@ export async function submitLead(data: LeadSubmission) {
     })
     return { success: true, error: null }
   } catch (err) {
-    console.error('[EXVORTA OS] Lead creation error:', err)
+    reportError(err instanceof Error ? err : new Error(String(err)), { context: 'submitLead', email: data.email, source: data.source })
     return { success: false, error: 'Failed to submit the form. Please try again.' }
   }
 }

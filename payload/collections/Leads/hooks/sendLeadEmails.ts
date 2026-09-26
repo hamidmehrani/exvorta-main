@@ -1,32 +1,48 @@
 import { CollectionAfterChangeHook } from 'payload'
 import { Resend } from 'resend'
+import { reportWarning, reportError } from '@/lib/error-reporting'
+
+const isPlaceholder = (val: string | undefined): boolean => {
+  if (!val) return true
+  const lower = val.toLowerCase().trim()
+  return (
+    lower.includes('your_') ||
+    lower.includes('your-') ||
+    lower.includes('yourdomain') ||
+    lower.includes('placeholder')
+  )
+}
 
 export const sendLeadEmails: CollectionAfterChangeHook = async ({ doc, operation }) => {
   if (operation !== 'create') return doc
 
-  // ── Brutalist OS Notification ────────────────────────────────────────────────
-  const identifier = doc.company ? `${doc.email} / ${doc.company}` : doc.email
-  console.log(`\n╔═══════════════════════════════════════════════════╗`)
-  console.log(`║  🔔 [EXVORTA OS] NEW LEAD CAPTURED                ║`)
-  console.log(`║  Source  : ${String(doc.source).padEnd(39)}║`)
-  console.log(`║  Identity: ${String(identifier).substring(0, 39).padEnd(39)}║`)
-  console.log(`║  Status  : ${String(doc.status).padEnd(39)}║`)
-  console.log(`╚═══════════════════════════════════════════════════╝\n`)
-
-  // ── Email Automation (optional — requires ENABLE_LEAD_EMAILS=true + RESEND_API_KEY) ───
+  // Email Automation (requires ENABLE_LEAD_EMAILS=true + RESEND_API_KEY)
   if (process.env.ENABLE_LEAD_EMAILS !== 'true') {
     return doc
   }
 
+  const isProd = process.env.NODE_ENV === 'production'
   const apiKey = process.env.RESEND_API_KEY
-  if (!apiKey) {
-    console.warn('[EXVORTA OS] RESEND_API_KEY is missing. Skipping email automation.')
+  if (!apiKey || isPlaceholder(apiKey)) {
+    if (isProd) {
+      throw new Error('[EXVORTA OS] Fatal: RESEND_API_KEY is missing or configured with a placeholder in production.')
+    }
+    reportWarning('[EXVORTA OS] RESEND_API_KEY is missing or placeholder. Skipping lead email automation in development.')
     return doc
   }
 
+  const adminEmail = process.env.ADMIN_EMAIL
+  if (!adminEmail || isPlaceholder(adminEmail)) {
+    if (isProd) {
+      throw new Error('[EXVORTA OS] Fatal: ADMIN_EMAIL is missing or configured with a placeholder in production.')
+    }
+    reportWarning('[EXVORTA OS] ADMIN_EMAIL is missing or placeholder in dev. Skipping admin notification.')
+    return doc
+  }
+
+  const fromDomain = process.env.EMAIL_FROM_DOMAIN || 'exvorta.com'
+  const identifier = doc.company ? `${doc.email} / ${doc.company}` : doc.email
   const resend = new Resend(apiKey)
-  const adminEmail = process.env.ADMIN_EMAIL || 'admin@yourdomain.com'
-  const fromDomain = process.env.EMAIL_FROM_DOMAIN || 'yourdomain.com'
 
   try {
     // 1. Auto-reply to lead
@@ -65,7 +81,11 @@ export const sendLeadEmails: CollectionAfterChangeHook = async ({ doc, operation
       `,
     })
   } catch (err) {
-    console.error('[EXVORTA OS] Failed to send lead emails:', err)
+    reportError(err instanceof Error ? err : new Error(String(err)), {
+      context: 'sendLeadEmails',
+      leadId: doc.id,
+      email: doc.email,
+    })
   }
 
   return doc
