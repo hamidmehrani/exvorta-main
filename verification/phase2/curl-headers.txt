@@ -1,0 +1,41 @@
+=== CURL ROUTE / ===
+HTTP/1.1 200 OK
+X-DNS-Prefetch-Control: on
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: SAMEORIGIN
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://www.google-analytics.com https://static.hotjar.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https: blob: res.cloudinary.com images.unsplash.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.resend.com https://challenges.cloudflare.com wss: ws:; frame-src https://challenges.cloudflare.com www.youtube.com player.vimeo.com; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; block-all-mixed-content
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), browsing-topics=()
+Accept-CH: Sec-CH-Prefers-Color-Scheme
+Vary: Sec-CH-Prefers-Color-Scheme, RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding
+Critical-CH: Sec-CH-Prefers-Color-Scheme
+link: </_next/static/media/2d39ca87528a10fe-s.p.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2", </_next/static/media/55c55f0601d81cf3-s.p.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2", </_next/static/media/a4129c4f34f1b5c0-s.p.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2", </_next/static/css/04de6f72e90397db.css>; rel=preload; as="style", </_next/static/css/cb85090e82b2c7cd.css>; rel=preload; as="style"
+Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate
+Content-Type: text/html; charset=utf-8
+Date: Sat, 26 Sep 2026 12:17:22 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+
+=== CURL ROUTE /insights ===
+HTTP/1.1 200 OK
+X-DNS-Prefetch-Control: on
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: SAMEORIGIN
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://www.google-analytics.com https://static.hotjar.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https: blob: res.cloudinary.com images.unsplash.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.resend.com https://challenges.cloudflare.com wss: ws:; frame-src https://challenges.cloudflare.com www.youtube.com player.vimeo.com; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; block-all-mixed-content
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), browsing-topics=()
+Accept-CH: Sec-CH-Prefers-Color-Scheme
+Vary: Sec-CH-Prefers-Color-Scheme, RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding
+Critical-CH: Sec-CH-Prefers-Color-Scheme
+link: </_next/static/media/2d39ca87528a10fe-s.p.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2", </_next/static/media/55c55f0601d81cf3-s.p.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2", </_next/static/media/a4129c4f34f1b5c0-s.p.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2", </_next/static/css/04de6f72e90397db.css>; rel=preload; as="style", </_next/static/css/cb85090e82b2c7cd.css>; rel=preload; as="style"
+Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate
+Content-Type: text/html; charset=utf-8
+Date: Sat, 26 Sep 2026 12:17:23 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+

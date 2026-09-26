@@ -1,0 +1,37 @@
+=== HONEYPOT AND SOURCE VERIFICATION TEST ===
+
+[Test 1] Submitting lead with populated honeypot (bot-field)...
+[15:51:27] [33mWARN[39m: [36mNo email adapter provided. Email will be written to console. More info at https://payloadcms.com/docs/email/overview.[39m
+[15:51:27] [33mWARN[39m: [36mImage resizing is enabled for one or more collections, but sharp not installed. Please install 'sharp' and pass into the config.[39m
+Honeypot Submission Result: { success: false, error: 'Spam detected.' }
+✅ PASS: Honeypot correctly blocked the spam submission.
+
+[Test 2] Submitting lead with invalid source...
+Invalid Source Result: { success: false, error: 'Invalid lead source.' }
+✅ PASS: Invalid source rejected by validation.
+
+[Test 3] Submitting clean lead with valid source (source="RFQ", clean bot-field)...
+[Resend API Error]: {
+  error: {
+    name: 'application_error',
+    statusCode: null,
+    message: 'Unable to fetch data. The request could not be resolved.'
+  },
+  path: '/emails'
+}
+[Resend API Error]: {
+  status: 403,
+  error: {
+    statusCode: 403,
+    message: 'The exvorta.com domain is not verified. Please, add and verify your domain on https://resend.com/domains',
+    name: 'validation_error'
+  },
+  path: '/emails'
+}
+Clean Submission Result: { success: true, error: null }
+✅ PASS: Clean submission accepted.
+
+[Cleanup] Cleaning up test lead valid-test-honeypot@exvorta.com...
+✅ PASS: Test data cleaned up.
+
+=== ALL HONEYPOT & SOURCE TESTS PASSED ===

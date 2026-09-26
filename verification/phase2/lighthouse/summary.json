@@ -1,0 +1,74 @@
+[
+  {
+    "route": "home",
+    "path": "/",
+    "perf": 65,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "portfolio",
+    "path": "/portfolio",
+    "perf": 74,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "portfolio-nutave",
+    "path": "/portfolio/nutave",
+    "perf": 64,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "ecosystem",
+    "path": "/ecosystem",
+    "perf": 59,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "insights",
+    "path": "/insights",
+    "perf": 85,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "contact",
+    "path": "/contact",
+    "perf": 67,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "rfq",
+    "path": "/rfq",
+    "perf": 60,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "waitlist",
+    "path": "/waitlist",
+    "perf": 70,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "legal",
+    "path": "/legal",
+    "perf": 88,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  }
+]
