@@ -26,22 +26,22 @@ export const RFQFormBlock: React.FC<RFQFormBlockType> = (props) => {
             </Reveal>
             <Reveal y={16} delay={0.22}>
               <div className="space-y-6">
-                <h3 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-8">What Happens Next</h3>
+                <h2 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-8">What Happens Next</h2>
                 <StaggerContainer delayChildren={0.35} staggerChildren={0.14} className="space-y-6 text-sm font-mono text-white/80">
                   {phases && phases.length > 0 ? (
                     phases?.map((phase, i) => (
                       <StaggerItem key={i}>
-                        <li className="flex items-start gap-4 list-none">
+                        <div className="flex items-start gap-4">
                           <span className="text-brand-emerald/80">{phase.stepNumber}</span>
                           <span>{phase.stepName}</span>
-                        </li>
+                        </div>
                       </StaggerItem>
                     ))
                   ) : (
                     <>
-                      <StaggerItem><li className="flex items-start gap-4 list-none"><span className="text-brand-emerald/80">01.</span><span><span className="text-white">Discovery call</span> <span className="text-white/40">— 30 min, this week</span></span></li></StaggerItem>
-                      <StaggerItem><li className="flex items-start gap-4 list-none"><span className="text-brand-emerald/80">02.</span><span><span className="text-white">Scope blueprint &amp; fixed quote</span> <span className="text-white/40">— within 48h</span></span></li></StaggerItem>
-                      <StaggerItem><li className="flex items-start gap-4 list-none"><span className="text-brand-emerald/80">03.</span><span><span className="text-white">Build kickoff</span> <span className="text-white/40">— no obligation until you approve</span></span></li></StaggerItem>
+                      <StaggerItem><div className="flex items-start gap-4"><span className="text-brand-emerald/80">01.</span><span><span className="text-white">Discovery call</span> <span className="text-white/40">— 30 min, this week</span></span></div></StaggerItem>
+                      <StaggerItem><div className="flex items-start gap-4"><span className="text-brand-emerald/80">02.</span><span><span className="text-white">Scope blueprint &amp; fixed quote</span> <span className="text-white/40">— within 48h</span></span></div></StaggerItem>
+                      <StaggerItem><div className="flex items-start gap-4"><span className="text-brand-emerald/80">03.</span><span><span className="text-white">Build kickoff</span> <span className="text-white/40">— no obligation until you approve</span></span></div></StaggerItem>
                     </>
                   )}
                 </StaggerContainer>

@@ -317,22 +317,22 @@ export function ProductShowcaseBlock(props: any) {
 <p className="text-base md:text-lg text-obsidian/60 mb-10 font-light leading-relaxed">Stop wasting hours on manual paperwork. Instantly generate, digitally sign, and manage strictly compliant global trade documents from official templates.</p>
 <StaggerContainer className="space-y-6" staggerChildren={0.1} delayChildren={0.2}>
 <StaggerItem>
-<li className="flex items-center space-x-4 list-none">
+<div className="flex items-center space-x-4">
 <span className="text-[#059669]">✓</span>
 <span className="text-sm text-obsidian font-medium tracking-tight">Intelligent Template Memory</span>
-</li>
+</div>
 </StaggerItem>
 <StaggerItem>
-<li className="flex items-center space-x-4 list-none">
+<div className="flex items-center space-x-4">
 <span className="text-[#059669]">✓</span>
 <span className="text-sm text-obsidian font-medium tracking-tight">Digital Signatures</span>
-</li>
+</div>
 </StaggerItem>
 <StaggerItem>
-<li className="flex items-center space-x-4 list-none">
+<div className="flex items-center space-x-4">
 <span className="text-[#059669]">✓</span>
 <span className="text-sm text-obsidian font-medium tracking-tight">Bank-Grade Compliance &amp; API Ready</span>
-</li>
+</div>
 </StaggerItem>
 </StaggerContainer><div className="mt-8"><Link className="inline-flex items-center text-[11px] font-bold tracking-widest uppercase border-b border-brand-obsidian pb-1 hover:text-emerald-700 hover:border-emerald-700 transition-colors duration-300" href="/rfq">Request Exvorta Docs Access <span className="ms-2">→</span></Link></div>
 </motion.div>

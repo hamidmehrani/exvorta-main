@@ -306,13 +306,13 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                   <div className="flex-1 overflow-auto [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.2)_transparent] [overscroll-behavior-x:contain]">
                     <table className="w-full text-left text-[11px] whitespace-nowrap min-w-[640px]">
                       <thead className="text-[8px] text-white/45 uppercase tracking-widest bg-[#10151B] sticky top-0 z-10">
-                        <tr aria-sort={sortKey === 'bol' ? (sortAsc ? 'ascending' : 'descending') : undefined}>
-                          <th scope="col" aria-label="Sort by BOL" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 cursor-pointer hover:text-white/60" onClick={() => setSort('bol')}>BOL {sortKey === 'bol' && (sortAsc ? '↑' : '↓')}</th>
+                        <tr>
+                          <th scope="col" aria-sort={sortKey === 'bol' ? (sortAsc ? 'ascending' : 'descending') : undefined} aria-label="Sort by BOL" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 cursor-pointer hover:text-white/60" onClick={() => setSort('bol')}>BOL {sortKey === 'bol' && (sortAsc ? '↑' : '↓')}</th>
                           <th className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5">Consignee</th>
                           <th className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 hidden md:table-cell">HS Code</th>
                           <th className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 hidden lg:table-cell">Route</th>
-                          <th scope="col" aria-label="Sort by value" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 text-right cursor-pointer hover:text-white/60" onClick={() => setSort('value')}>Value {sortKey === 'value' && (sortAsc ? '↑' : '↓')}</th>
-                          <th scope="col" aria-label="Sort by status" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 text-right cursor-pointer hover:text-white/60" onClick={() => setSort('status')}>Status</th>
+                          <th scope="col" aria-sort={sortKey === 'value' ? (sortAsc ? 'ascending' : 'descending') : undefined} aria-label="Sort by value" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 text-right cursor-pointer hover:text-white/60" onClick={() => setSort('value')}>Value {sortKey === 'value' && (sortAsc ? '↑' : '↓')}</th>
+                          <th scope="col" aria-sort={sortKey === 'status' ? (sortAsc ? 'ascending' : 'descending') : undefined} aria-label="Sort by status" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 text-right cursor-pointer hover:text-white/60" onClick={() => setSort('status')}>Status</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5 text-white/70 font-mono">
@@ -320,8 +320,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                           <tr
                             key={r.bol}
                             tabIndex={0}
-                            role="button"
-                            aria-label={`Inspect shipment ${r.bol}`}
+                            aria-selected={selected?.bol === r.bol}
                             onClick={() => setSelected(r)}
                             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected(r) } }}
                             className={`hover:bg-white/5 cursor-pointer transition-colors ${selected?.bol === r.bol ? 'bg-emerald-500/5' : ''}`}

@@ -14,8 +14,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function WaitlistPage() {
   return (
-    <main className="flex-1 flex flex-col w-full bg-bg">
+    <div className="flex-1 flex flex-col w-full bg-bg">
       <WaitlistFormBlock blockType="waitlistForm" source="waitlist_page" />
-    </main>
+    </div>
   )
 }

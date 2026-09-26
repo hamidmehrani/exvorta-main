@@ -44,7 +44,7 @@ export default function CookieBanner({ config }: { config: CookieBannerProps }) 
         )}
       </p>
       <div className="flex items-center gap-3">
-        <button onClick={decline} className="px-4 py-2 text-sm text-muted hover:text-text font-medium transition-colors">
+        <button onClick={decline} className="px-4 py-2 text-sm text-text/80 hover:text-text font-medium transition-colors">
           Decline
         </button>
         <button onClick={accept} className="px-4 py-2 text-sm bg-primary text-bg rounded font-semibold hover:bg-primary/90 transition-colors">

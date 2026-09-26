@@ -129,8 +129,8 @@ export default function RFQForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
           <div className="md:col-span-2">
             <InputWrapper>
-               <input id="rfq-name" name="name" className={inputClass} placeholder="FULL NAME" type="text" required disabled={isPending} />
-               <label htmlFor="rfq-name" className={labelClass}>FULL NAME *</label>
+               <input id="rfq-name" name="name" className={inputClass} placeholder="FULL NAME" type="text" required aria-required="true" disabled={isPending} />
+               <label htmlFor="rfq-name" className={labelClass}>FULL NAME <span aria-hidden="true">*</span><span className="sr-only"> (required)</span></label>
                <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
             </InputWrapper>
           </div>
@@ -140,8 +140,8 @@ export default function RFQForm() {
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
           <InputWrapper>
-            <input id="rfq-email" name="email" className={inputClass} placeholder="YOUR EMAIL" type="email" required disabled={isPending} />
-            <label htmlFor="rfq-email" className={labelClass}>YOUR EMAIL <span className="sr-only">(required)</span></label>
+            <input id="rfq-email" name="email" className={inputClass} placeholder="YOUR EMAIL" type="email" required aria-required="true" disabled={isPending} />
+            <label htmlFor="rfq-email" className={labelClass}>YOUR EMAIL <span aria-hidden="true">*</span><span className="sr-only"> (required)</span></label>
 <span className="block text-[9px] font-mono text-black/30 tracking-wide mt-1">Corporate or Gmail — both fine.</span>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
@@ -155,13 +155,13 @@ export default function RFQForm() {
         </div>
         <div className="space-y-10">
           <InputWrapper>
-            <select id="rfq-businessType" name="businessType" className={inputClass} disabled={isPending} defaultValue="" required>
+            <select id="rfq-businessType" name="businessType" className={inputClass} disabled={isPending} defaultValue="" required aria-required="true">
               <option value="" disabled hidden></option>
               <option value="importer">Importer</option>
               <option value="exporter">Exporter</option>
               <option value="trading_company">Trading Company</option>
             </select>
-            <label htmlFor="rfq-businessType" className={`${labelClass} peer-valid:top-0 peer-valid:text-[8px] peer-valid:text-black/60`}>BUSINESS TYPE *</label>
+            <label htmlFor="rfq-businessType" className={`${labelClass} peer-valid:top-0 peer-valid:text-[8px] peer-valid:text-black/60`}>BUSINESS TYPE <span aria-hidden="true">*</span><span className="sr-only"> (required)</span></label>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
           <InputWrapper>
@@ -184,13 +184,13 @@ export default function RFQForm() {
         </div>
         <div className="grid grid-cols-1 gap-10">
           <InputWrapper>
-            <select id="rfq-budget" name="budget" className={inputClass} disabled={isPending} defaultValue="" required>
+            <select id="rfq-budget" name="budget" className={inputClass} disabled={isPending} defaultValue="" required aria-required="true">
               <option value="" disabled hidden></option>
               <option value="$800–1.5k">$800–1.5k</option>
               <option value="$1.5–3k">$1.5–3k</option>
               <option value="$3k+">$3k+</option>
             </select>
-            <label htmlFor="rfq-budget" className={`${labelClass} peer-valid:top-0 peer-valid:text-[8px] peer-valid:text-black/60`}>ALLOCATED BUDGET *</label>
+            <label htmlFor="rfq-budget" className={`${labelClass} peer-valid:top-0 peer-valid:text-[8px] peer-valid:text-black/60`}>ALLOCATED BUDGET <span aria-hidden="true">*</span><span className="sr-only"> (required)</span></label>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
         </div>
@@ -218,6 +218,8 @@ export default function RFQForm() {
         <AnimatePresence>
           {error && (
             <m.div 
+              role="alert"
+              aria-live="assertive"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}

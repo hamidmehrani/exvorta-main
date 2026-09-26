@@ -39,7 +39,7 @@ const Section = ({
 
 export default function LegalPage() {
   return (
-    <main className="w-full bg-[#FAFAF8]">
+    <div className="w-full bg-[#FAFAF8]">
       {/* Hero */}
       <AnimatedSection className="w-full bg-[#0A0A0A] pt-40 pb-24 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
@@ -225,6 +225,6 @@ export default function LegalPage() {
           </Reveal>
         </section>
       </div>
-    </main>
+    </div>
   )
 }

@@ -47,9 +47,9 @@ export default function FooterClient({ columns, brand = { name: 'EXVORTA', logoU
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.55, delay: colIndex * 0.08, ease: EASE_OUT }}
             >
-              <h4 className="text-[12px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">
+              <p className="text-[12px] font-bold tracking-[0.2em] uppercase text-obsidian mb-6">
                 {column.title}
-              </h4>
+              </p>
               <ul className="space-y-2 text-[12px] text-obsidian/70">
                 {column.links.map((link) => (
                   <li key={link.id}>

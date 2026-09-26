@@ -13,8 +13,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function ContactPage() {
   return (
-    <main className="flex-1 flex flex-col w-full bg-bg">
+    <div className="flex-1 flex flex-col w-full bg-bg">
       <ContactFormBlock />
-    </main>
+    </div>
   )
 }

@@ -90,9 +90,9 @@ export default async function HomePage() {
   }
 
   return (
-    <main className="flex-1 flex flex-col w-full bg-bg">
+    <div className="flex-1 flex flex-col w-full bg-bg">
       {process.env.NODE_ENV !== 'production' && <LivePreviewListener />}
       <BlockRenderer blocks={(pageDoc?.layout as React.ComponentProps<typeof BlockRenderer>['blocks']) || []} />
-    </main>
+    </div>
   )
 }

@@ -28,7 +28,7 @@ export const ContactFormBlock: React.FC<ContactFormBlockProps> = ({ title, subti
               </StaggerItem>
               <StaggerItem>
                 <div className="space-y-6">
-                  <h3 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-8">Direct Channels</h3>
+                  <h2 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-8">Direct Channels</h2>
                   <ul className="space-y-6 text-sm font-mono text-white/80">
                     <li className="flex items-start gap-4">
                       <span className="text-white/40">01.</span>

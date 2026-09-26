@@ -27,8 +27,8 @@ export default async function InsightsPage() {
   }
 
   return (
-    <main className="w-full flex-grow bg-white">
+    <div className="w-full flex-grow bg-white">
       <InsightsArchive posts={posts} />
-    </main>
+    </div>
   )
 }

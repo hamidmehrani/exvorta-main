@@ -306,9 +306,9 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
                     />
 
                     <div className="flex flex-col flex-grow p-8">
-                      <h3 className="card-title font-serif text-3xl text-black mb-4 font-medium tracking-tight relative z-10">
+                      <h2 className="card-title font-serif text-3xl text-black mb-4 font-medium tracking-tight relative z-10">
                         {project.title}
-                      </h3>
+                      </h2>
                       <p className="text-sm font-light text-black/60 leading-relaxed mb-8 flex-grow">
                         {excerpt}
                       </p>
