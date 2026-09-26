@@ -1,6 +1,0 @@
-Contact: security@exvorta.com
-Expires: 2027-09-26T23:59:59.000Z
-Encryption: https://keybase.io/exvorta/pgp_keys.asc
-Preferred-Languages: en, fa
-Canonical: /.well-known/security.txt
-Policy: https://exvorta.com/security-policy

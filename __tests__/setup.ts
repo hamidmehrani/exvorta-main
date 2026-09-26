@@ -1,5 +1,5 @@
 // Jest Setup Configuration
-export default {
+const setupConfig = {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['@testing-library/jest-dom'],
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
@@ -10,3 +10,5 @@ export default {
     '^.+\\.(ts|tsx)$': ['ts-jest', { useESM: true }],
   },
 };
+
+export default setupConfig;

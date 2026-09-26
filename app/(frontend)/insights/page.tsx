@@ -1,15 +1,34 @@
 import React from 'react'
-import { redirect } from 'next/navigation'
 import type { Metadata } from 'next'
+import { generateMeta } from '@/utils/generateMeta'
+import { getPayloadClient } from '@/lib/payload'
+import type { Post } from '@/payload-types'
+import { InsightsArchive } from '@/components/blocks/InsightsArchive'
 
-// BLOG DRAFTED: insights archive is intentionally offline until content is
-// ready. All old links 301 to home. To relaunch, restore from git history
-// (this file previously rendered <InsightsArchive posts={posts} />).
-export const metadata: Metadata = {
-  title: 'Insights | Exvorta',
-  robots: { index: false, follow: false },
+export async function generateMetadata(): Promise<Metadata> {
+  return generateMeta({ title: 'Insights & News', description: 'Trade Intelligence. Every week.', url: '/insights' })
 }
 
-export default function InsightsDraftPage() {
-  redirect('/')
+export const dynamic = 'force-dynamic'
+
+export default async function InsightsPage() {
+  let posts: Post[] = []
+
+  try {
+    const payload = await getPayloadClient()
+    const result = await payload.find({
+      collection: 'posts',
+      limit: 50,
+      sort: '-publishedDate',
+    })
+    posts = result.docs
+  } catch (error) {
+    console.warn('[InsightsPage] CMS posts unavailable, rendering archive in baseline mode', error)
+  }
+
+  return (
+    <main className="w-full flex-grow bg-white">
+      <InsightsArchive posts={posts} />
+    </main>
+  )
 }

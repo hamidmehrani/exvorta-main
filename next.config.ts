@@ -46,10 +46,33 @@ const nextConfig: NextConfig = {
     ]
   },
   async headers() {
+    const isHttpsProd =
+      Boolean(process.env.VERCEL) ||
+      (process.env.NODE_ENV === 'production' &&
+        process.env.NEXT_PUBLIC_SERVER_URL?.startsWith('https') &&
+        !process.env.NEXT_PUBLIC_SERVER_URL?.includes('localhost') &&
+        Boolean(process.env.VERCEL_ENV))
+
+    const cspDirectives = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://www.google-analytics.com https://static.hotjar.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com",
+      "img-src 'self' data: https: blob: res.cloudinary.com images.unsplash.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "connect-src 'self' https://api.resend.com https://challenges.cloudflare.com wss: ws:",
+      "frame-src https://challenges.cloudflare.com www.youtube.com player.vimeo.com",
+      "frame-ancestors 'self'",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "block-all-mixed-content",
+      isHttpsProd ? 'upgrade-insecure-requests' : '',
+    ]
+      .filter(Boolean)
+      .join('; ')
+
     return [
       {
-        source: '/(.*)',
-              {
         source: '/(.*)',
         headers: [
           {
@@ -66,7 +89,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://www.google-analytics.com https://static.hotjar.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https: blob: res.cloudinary.com images.unsplash.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.resend.com https://challenges.cloudflare.com wss:// ws://; frame-src https://challenges.cloudflare.com www.youtube.com player.vimeo.com; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; block-all-mixed-content; upgrade-insecure-requests;",
+            value: cspDirectives,
           },
           {
             key: 'X-Content-Type-Options',
@@ -82,10 +105,32 @@ const nextConfig: NextConfig = {
           },
           {
             key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(), payment=(), browsing-topics=()'
+            value: 'camera=(), microphone=(), geolocation=(), payment=(), browsing-topics=()',
           },
         ],
       },
+      {
+        // Static assets — immutable cache for 1 year
+        source: '/_next/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Versioned public assets (fonts, generated PNGs) — long cache
+        source: '/:file.(png|webp|woff2|jpg|jpeg|svg|ico)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
+    ]
+  },
 }
 
 const analyzer = withBundleAnalyzer({
