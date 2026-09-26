@@ -1,0 +1,140 @@
+{
+  "route": "home",
+  "performanceScore": 58,
+  "totalBlockingTime": {
+    "score": 0.53,
+    "displayValue": "560 ms",
+    "numericValue": 558.5
+  },
+  "firstContentfulPaint": {
+    "displayValue": "1.5 s",
+    "numericValue": 1515.435
+  },
+  "speedIndex": {
+    "displayValue": "4.7 s",
+    "numericValue": 4728.581193195269
+  },
+  "interactive": {
+    "displayValue": "8.1 s",
+    "numericValue": 8052.515000000001
+  },
+  "bootupTime": {
+    "displayValue": "2.1 s",
+    "numericValue": 2106.3239999999905,
+    "items": [
+      {
+        "url": "http://localhost:3000/",
+        "total": 1546.8240000000023,
+        "scripting": 8.07999999999999,
+        "scriptParseCompile": 7.695999999999994
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/4946-a309ad5c90ac9a9a.js",
+        "total": 1346.7399999999898,
+        "scripting": 1202.84799999999,
+        "scriptParseCompile": 7.895999999999999
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/7247-41109600c62807fa.js",
+        "total": 1121.6880000000074,
+        "scripting": 273.7200000000005,
+        "scriptParseCompile": 2.696
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/fff8d4bc-fef3e17ceb97a584.js",
+        "total": 419.08800000000014,
+        "scripting": 376.75600000000014,
+        "scriptParseCompile": 41.688
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js",
+        "total": 290.32800000000026,
+        "scripting": 43.95199999999991,
+        "scriptParseCompile": 8.916
+      },
+      {
+        "url": "Unattributable",
+        "total": 266.212000000001,
+        "scripting": 10.823999999999998,
+        "scriptParseCompile": 0
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/webpack-b9d5ea160f4ad4ab.js",
+        "total": 121.4760000000001,
+        "scripting": 120.7400000000001,
+        "scriptParseCompile": 0.512
+      }
+    ]
+  },
+  "mainthreadWorkBreakdown": {
+    "displayValue": "5.3 s",
+    "numericValue": 5273.795999999953,
+    "items": [
+      {
+        "group": "scriptEvaluation",
+        "groupLabel": "Script Evaluation",
+        "duration": 2081.959999999972
+      },
+      {
+        "group": "styleLayout",
+        "groupLabel": "Style & Layout",
+        "duration": 1436.4520000000027
+      },
+      {
+        "group": "other",
+        "groupLabel": "Other",
+        "duration": 1240.811999999997
+      },
+      {
+        "group": "paintCompositeRender",
+        "groupLabel": "Rendering",
+        "duration": 239.52799999998123
+      },
+      {
+        "group": "scriptParseCompile",
+        "groupLabel": "Script Parsing & Compilation",
+        "duration": 162.84000000000006
+      },
+      {
+        "group": "garbageCollection",
+        "groupLabel": "Garbage Collection",
+        "duration": 64.292
+      },
+      {
+        "group": "parseHTML",
+        "groupLabel": "Parse HTML & CSS",
+        "duration": 47.91200000000003
+      }
+    ]
+  },
+  "unusedJavascript": {
+    "displayValue": "Est savings of 528 KiB",
+    "numericValue": 2790,
+    "items": [
+      {
+        "url": "http://localhost:3000/_next/static/chunks/fff8d4bc-fef3e17ceb97a584.js",
+        "totalBytes": 247304,
+        "wastedBytes": 228354,
+        "wastedPercent": 92.33753136563422
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/7367-9d0f9803b9c22c30.js",
+        "totalBytes": 229396,
+        "wastedBytes": 197377,
+        "wastedPercent": 86.04194371946492
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/b66f67b3-622afcbafec69259.js",
+        "totalBytes": 86333,
+        "wastedBytes": 65218,
+        "wastedPercent": 75.54236553211408
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/c58da6f5-5ae04ef324d4ac55.js",
+        "totalBytes": 56765,
+        "wastedBytes": 50073,
+        "wastedPercent": 88.21001953521142
+      }
+    ]
+  }
+}

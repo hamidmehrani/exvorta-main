@@ -46,7 +46,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
   return (
     <div className="bg-[#0D0D0D] antialiased text-[#FAFAF8]">
       {/* ═══════════════ HERO: split editorial + live frame ═══════════════ */}
-      <main className="min-h-screen pt-32 pb-24 px-6 md:px-12 border-b border-white/10" style={{ backgroundColor: '#0D0D0D' }}>
+      <section className="min-h-screen pt-32 pb-24 px-6 md:px-12 border-b border-white/10" style={{ backgroundColor: '#0D0D0D' }}>
         <div className="max-w-[1440px] mx-auto w-full relative z-10">
           <motion.div
             initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
@@ -148,7 +148,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
             </AnimatedSection>
           )}
         </div>
-      </main>
+      </section>
 
       {/* ═══════════════ SECTION 1: THE BRIEF — why they needed us ═══════════════ */}
       <section className="py-14 sm:py-20 lg:py-28 border-t border-white/10" style={{ backgroundColor: cs.heroBg }} id="the-brief">

@@ -35,7 +35,7 @@ export function PortfolioArchiveLayout({ projects }: { projects?: Project[] }) {
   const hasProjects = projects && projects.length > 0;
 
   return (
-    <main className="w-full bg-brand-cream min-h-screen">
+    <div className="w-full bg-brand-cream min-h-screen">
       {/* Hero Section */}
       <AnimatedSection className="w-full pt-32 pb-24">
         <Container>
@@ -110,7 +110,7 @@ export function PortfolioArchiveLayout({ projects }: { projects?: Project[] }) {
           </div>
         )}
       </motion.section>
-    </main>
+    </div>
   );
 }
 

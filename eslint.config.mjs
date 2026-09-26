@@ -18,6 +18,7 @@ const eslintConfig = [
       ".next/**/*",
       "chunks-before/**/*",
       "chunks-after/**/*",
+      "verification/**/*",
       "*.js"
     ]
   },

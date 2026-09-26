@@ -1,0 +1,74 @@
+[
+  {
+    "route": "home-desktop",
+    "path": "/",
+    "perf": 86,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "portfolio-desktop",
+    "path": "/portfolio",
+    "perf": 90,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "portfolio-nutave-desktop",
+    "path": "/portfolio/nutave",
+    "perf": 92,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "ecosystem-desktop",
+    "path": "/ecosystem",
+    "perf": 86,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "insights-desktop",
+    "path": "/insights",
+    "perf": 95,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "contact-desktop",
+    "path": "/contact",
+    "perf": 94,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "rfq-desktop",
+    "path": "/rfq",
+    "perf": 91,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "waitlist-desktop",
+    "path": "/waitlist",
+    "perf": 94,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "legal-desktop",
+    "path": "/legal",
+    "perf": 98,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  }
+]

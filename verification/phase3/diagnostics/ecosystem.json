@@ -1,0 +1,146 @@
+{
+  "route": "ecosystem",
+  "performanceScore": 59,
+  "totalBlockingTime": {
+    "score": 0.6,
+    "displayValue": "480 ms",
+    "numericValue": 475.00849999999946
+  },
+  "firstContentfulPaint": {
+    "displayValue": "1.5 s",
+    "numericValue": 1517.9489999999998
+  },
+  "speedIndex": {
+    "displayValue": "5.3 s",
+    "numericValue": 5300.876868316991
+  },
+  "interactive": {
+    "displayValue": "7.7 s",
+    "numericValue": 7719.2226500000015
+  },
+  "bootupTime": {
+    "displayValue": "1.9 s",
+    "numericValue": 1902.651999999991,
+    "items": [
+      {
+        "url": "http://localhost:3000/_next/static/chunks/4946-a309ad5c90ac9a9a.js",
+        "total": 1677.1639999999895,
+        "scripting": 1190.30799999999,
+        "scriptParseCompile": 20.316
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/7247-41109600c62807fa.js",
+        "total": 691.0360000000004,
+        "scripting": 134.8200000000007,
+        "scriptParseCompile": 4.568
+      },
+      {
+        "url": "http://localhost:3000/ecosystem",
+        "total": 559.5639999999995,
+        "scripting": 7.251999999999994,
+        "scriptParseCompile": 5.807999999999995
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/fff8d4bc-fef3e17ceb97a584.js",
+        "total": 341.0160000000004,
+        "scripting": 300.0920000000004,
+        "scriptParseCompile": 40.336000000000006
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/2206.cf9194d5c9de16b0.js",
+        "total": 256.4640000000005,
+        "scripting": 38.19199999999987,
+        "scriptParseCompile": 1.728
+      },
+      {
+        "url": "Unattributable",
+        "total": 188.8840000000011,
+        "scripting": 6.432,
+        "scriptParseCompile": 0
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/webpack-b9d5ea160f4ad4ab.js",
+        "total": 117.18000000000004,
+        "scripting": 116.22400000000005,
+        "scriptParseCompile": 0.764
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js",
+        "total": 111.14399999999983,
+        "scripting": 23.95199999999988,
+        "scriptParseCompile": 11.860000000000001
+      }
+    ]
+  },
+  "mainthreadWorkBreakdown": {
+    "displayValue": "4.2 s",
+    "numericValue": 4194.583999999939,
+    "items": [
+      {
+        "group": "scriptEvaluation",
+        "groupLabel": "Script Evaluation",
+        "duration": 1962.3119999999608
+      },
+      {
+        "group": "other",
+        "groupLabel": "Other",
+        "duration": 959.1199999999933
+      },
+      {
+        "group": "styleLayout",
+        "groupLabel": "Style & Layout",
+        "duration": 658.1599999999999
+      },
+      {
+        "group": "paintCompositeRender",
+        "groupLabel": "Rendering",
+        "duration": 195.00799999998432
+      },
+      {
+        "group": "scriptParseCompile",
+        "groupLabel": "Script Parsing & Compilation",
+        "duration": 169.88800000000006
+      },
+      {
+        "group": "parseHTML",
+        "groupLabel": "Parse HTML & CSS",
+        "duration": 141.44800000000015
+      },
+      {
+        "group": "garbageCollection",
+        "groupLabel": "Garbage Collection",
+        "duration": 108.648
+      }
+    ]
+  },
+  "unusedJavascript": {
+    "displayValue": "Est savings of 528 KiB",
+    "numericValue": 3020,
+    "items": [
+      {
+        "url": "http://localhost:3000/_next/static/chunks/fff8d4bc-fef3e17ceb97a584.js",
+        "totalBytes": 247304,
+        "wastedBytes": 228354,
+        "wastedPercent": 92.33753136563422
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/7367-9d0f9803b9c22c30.js",
+        "totalBytes": 229396,
+        "wastedBytes": 197377,
+        "wastedPercent": 86.04194371946492
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/b66f67b3-622afcbafec69259.js",
+        "totalBytes": 86333,
+        "wastedBytes": 65218,
+        "wastedPercent": 75.54236553211408
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/c58da6f5-5ae04ef324d4ac55.js",
+        "totalBytes": 56765,
+        "wastedBytes": 50073,
+        "wastedPercent": 88.21001953521142
+      }
+    ]
+  }
+}

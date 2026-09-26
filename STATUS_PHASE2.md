@@ -87,7 +87,9 @@ Audits executed against live production server (`http://localhost:3000`) using L
 2. **Dynamic Route Metadata & SSR Stream Synchronization**:
    - `app/(frontend)/portfolio/[slug]/page.tsx`: Fixed meta description omission in `generateMetadata`. Added `getCachedProject` integration so case studies pre-bake `<meta name="description">` directly into `<head>`, resolving the 92 SEO score to 100.
 
-### B. Accessibility (WCAG 2.1 AA Compliance -> 100/100)
+### B. Accessibility (Automated Audit: 100/100)
+> **Notice on Conformance**: 100/100 on Lighthouse's automated accessibility audit; this does not constitute full WCAG 2.1 AA conformance, which requires manual testing.
+
 1. **Color Contrast**:
    - `components/legal/CookieBanner.tsx`: Updated Decline button text class from `text-muted` (3.57:1 contrast on surface) to `text-text/80 hover:text-text` (7:1 contrast), resolving color-contrast failures across all 9 pages.
 2. **Heading Hierarchy (WCAG 1.3.1 & 2.4.6)**:

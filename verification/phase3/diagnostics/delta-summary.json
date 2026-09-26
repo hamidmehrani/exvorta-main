@@ -1,0 +1,35 @@
+[
+  {
+    "route": "home-after",
+    "path": "/",
+    "perf": 55,
+    "tbt": "510 ms",
+    "tbtMs": 507,
+    "bootup": "1.4 s",
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  },
+  {
+    "route": "ecosystem-after",
+    "path": "/ecosystem",
+    "perf": 60,
+    "tbt": "500 ms",
+    "tbtMs": 502,
+    "bootup": "1.2 s",
+    "a11y": 100,
+    "bp": 96,
+    "seo": 100
+  },
+  {
+    "route": "rfq-after",
+    "path": "/rfq",
+    "perf": 69,
+    "tbt": "260 ms",
+    "tbtMs": 259,
+    "bootup": "1.2 s",
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100
+  }
+]

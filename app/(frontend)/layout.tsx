@@ -111,7 +111,7 @@ export default async function FrontendLayout({
   const hasConsent = cookieStore.get('cookie-consent')?.value === 'accepted'
 
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${playfair.variable}`}>
       <body>
         <Suspense fallback={null}>
           <LoadingBar />

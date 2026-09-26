@@ -1,0 +1,74 @@
+[
+  {
+    "route": "home",
+    "path": "/",
+    "violations": 0,
+    "passes": 49,
+    "incomplete": 1,
+    "violationSummary": "None"
+  },
+  {
+    "route": "portfolio",
+    "path": "/portfolio",
+    "violations": 0,
+    "passes": 40,
+    "incomplete": 1,
+    "violationSummary": "None"
+  },
+  {
+    "route": "portfolio-nutave",
+    "path": "/portfolio/nutave",
+    "violations": 0,
+    "passes": 40,
+    "incomplete": 1,
+    "violationSummary": "None"
+  },
+  {
+    "route": "ecosystem",
+    "path": "/ecosystem",
+    "violations": 0,
+    "passes": 39,
+    "incomplete": 1,
+    "violationSummary": "None"
+  },
+  {
+    "route": "insights",
+    "path": "/insights",
+    "violations": 0,
+    "passes": 43,
+    "incomplete": 1,
+    "violationSummary": "None"
+  },
+  {
+    "route": "contact",
+    "path": "/contact",
+    "violations": 0,
+    "passes": 42,
+    "incomplete": 1,
+    "violationSummary": "None"
+  },
+  {
+    "route": "rfq",
+    "path": "/rfq",
+    "violations": 0,
+    "passes": 43,
+    "incomplete": 1,
+    "violationSummary": "None"
+  },
+  {
+    "route": "waitlist",
+    "path": "/waitlist",
+    "violations": 0,
+    "passes": 42,
+    "incomplete": 1,
+    "violationSummary": "None"
+  },
+  {
+    "route": "legal",
+    "path": "/legal",
+    "violations": 0,
+    "passes": 38,
+    "incomplete": 1,
+    "violationSummary": "None"
+  }
+]

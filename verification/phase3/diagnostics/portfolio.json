@@ -1,0 +1,158 @@
+{
+  "route": "portfolio",
+  "performanceScore": 56,
+  "totalBlockingTime": {
+    "score": 0.6,
+    "displayValue": "480 ms",
+    "numericValue": 482.5
+  },
+  "firstContentfulPaint": {
+    "displayValue": "1.2 s",
+    "numericValue": 1210.988
+  },
+  "speedIndex": {
+    "displayValue": "7.8 s",
+    "numericValue": 7819.057149926419
+  },
+  "interactive": {
+    "displayValue": "8.1 s",
+    "numericValue": 8140.376
+  },
+  "bootupTime": {
+    "displayValue": "4.3 s",
+    "numericValue": 4276.2839999999405,
+    "items": [
+      {
+        "url": "http://localhost:3000/_next/static/chunks/2206.cf9194d5c9de16b0.js",
+        "total": 9734.735999998396,
+        "scripting": 1182.9839999999351,
+        "scriptParseCompile": 1.928
+      },
+      {
+        "url": "http://localhost:3000/portfolio",
+        "total": 6287.087999999984,
+        "scripting": 45.280000000000015,
+        "scriptParseCompile": 23.48800000000002
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/4946-a309ad5c90ac9a9a.js",
+        "total": 1582.6959999999954,
+        "scripting": 1353.3319999999956,
+        "scriptParseCompile": 15.583999999999998
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js",
+        "total": 1535.1640000000104,
+        "scripting": 395.44000000000534,
+        "scriptParseCompile": 14.276
+      },
+      {
+        "url": "Unattributable",
+        "total": 658.2079999999752,
+        "scripting": 6.072,
+        "scriptParseCompile": 0
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/7367-9d0f9803b9c22c30.js",
+        "total": 488.71600000000024,
+        "scripting": 435.1040000000002,
+        "scriptParseCompile": 53.204
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/5683.5596be37d2f225b4.js",
+        "total": 369.08000000000465,
+        "scripting": 337.15200000000465,
+        "scriptParseCompile": 6.223999999999999
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/7247-41109600c62807fa.js",
+        "total": 267.31199999999995,
+        "scripting": 210.83999999999997,
+        "scriptParseCompile": 12.608
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/04763798.6408e286152ce8c8.js",
+        "total": 127.8200000000001,
+        "scripting": 118.04400000000011,
+        "scriptParseCompile": 8.488000000000001
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/fff8d4bc-fef3e17ceb97a584.js",
+        "total": 56.803999999999995,
+        "scripting": 1.52,
+        "scriptParseCompile": 54.715999999999994
+      }
+    ]
+  },
+  "mainthreadWorkBreakdown": {
+    "displayValue": "21.3 s",
+    "numericValue": 21289.30799999512,
+    "items": [
+      {
+        "group": "other",
+        "groupLabel": "Other",
+        "duration": 8949.403999999702
+      },
+      {
+        "group": "styleLayout",
+        "groupLabel": "Style & Layout",
+        "duration": 4901.871999999991
+      },
+      {
+        "group": "scriptEvaluation",
+        "groupLabel": "Script Evaluation",
+        "duration": 4176.371999999875
+      },
+      {
+        "group": "paintCompositeRender",
+        "groupLabel": "Rendering",
+        "duration": 2876.487999995549
+      },
+      {
+        "group": "scriptParseCompile",
+        "groupLabel": "Script Parsing & Compilation",
+        "duration": 247.7040000000001
+      },
+      {
+        "group": "garbageCollection",
+        "groupLabel": "Garbage Collection",
+        "duration": 84.21199999999999
+      },
+      {
+        "group": "parseHTML",
+        "groupLabel": "Parse HTML & CSS",
+        "duration": 53.25599999999999
+      }
+    ]
+  },
+  "unusedJavascript": {
+    "displayValue": "Est savings of 528 KiB",
+    "numericValue": 2900,
+    "items": [
+      {
+        "url": "http://localhost:3000/_next/static/chunks/fff8d4bc-fef3e17ceb97a584.js",
+        "totalBytes": 247304,
+        "wastedBytes": 228354,
+        "wastedPercent": 92.33753136563422
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/7367-9d0f9803b9c22c30.js",
+        "totalBytes": 229396,
+        "wastedBytes": 197377,
+        "wastedPercent": 86.04194371946492
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/b66f67b3-622afcbafec69259.js",
+        "totalBytes": 86333,
+        "wastedBytes": 65218,
+        "wastedPercent": 75.54236553211408
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/c58da6f5-5ae04ef324d4ac55.js",
+        "totalBytes": 56765,
+        "wastedBytes": 50073,
+        "wastedPercent": 88.21001953521142
+      }
+    ]
+  }
+}

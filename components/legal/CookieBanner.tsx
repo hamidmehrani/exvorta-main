@@ -34,7 +34,7 @@ export default function CookieBanner({ config }: { config: CookieBannerProps }) 
   if (!show) return null
 
   return (
-    <div className="fixed bottom-0 inset-x-0 p-4 bg-surface-2 border-t border-border z-50 flex flex-col md:flex-row items-center justify-between gap-4 shadow-lg">
+    <aside aria-label="Cookie consent" className="fixed bottom-0 inset-x-0 p-4 bg-surface-2 border-t border-border z-50 flex flex-col md:flex-row items-center justify-between gap-4 shadow-lg">
       <p className="text-sm text-text flex-1">
         {config.text || 'We use cookies to ensure you get the best experience on our website.'}
         {config.policyUrl && (
@@ -51,6 +51,6 @@ export default function CookieBanner({ config }: { config: CookieBannerProps }) 
           Accept
         </button>
       </div>
-    </div>
+    </aside>
   )
 }

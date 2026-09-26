@@ -1,0 +1,98 @@
+{
+  "home": {
+    "score": 58,
+    "tbt": "560 ms",
+    "bootup": "2.1 s",
+    "mainThread": "5.3 s",
+    "unusedJsSavings": "Est savings of 528 KiB",
+    "topScripts": [
+      {
+        "url": "",
+        "total": "1547ms",
+        "scripting": "8ms"
+      },
+      {
+        "url": "4946-a309ad5c90ac9a9a.js",
+        "total": "1347ms",
+        "scripting": "1203ms"
+      },
+      {
+        "url": "7247-41109600c62807fa.js",
+        "total": "1122ms",
+        "scripting": "274ms"
+      }
+    ]
+  },
+  "ecosystem": {
+    "score": 59,
+    "tbt": "480 ms",
+    "bootup": "1.9 s",
+    "mainThread": "4.2 s",
+    "unusedJsSavings": "Est savings of 528 KiB",
+    "topScripts": [
+      {
+        "url": "4946-a309ad5c90ac9a9a.js",
+        "total": "1677ms",
+        "scripting": "1190ms"
+      },
+      {
+        "url": "7247-41109600c62807fa.js",
+        "total": "691ms",
+        "scripting": "135ms"
+      },
+      {
+        "url": "ecosystem",
+        "total": "560ms",
+        "scripting": "7ms"
+      }
+    ]
+  },
+  "rfq": {
+    "score": 67,
+    "tbt": "270 ms",
+    "bootup": "2.1 s",
+    "mainThread": "3.6 s",
+    "unusedJsSavings": "Est savings of 528 KiB",
+    "topScripts": [
+      {
+        "url": "4946-a309ad5c90ac9a9a.js",
+        "total": "1547ms",
+        "scripting": "1265ms"
+      },
+      {
+        "url": "rfq",
+        "total": "554ms",
+        "scripting": "30ms"
+      },
+      {
+        "url": "7247-41109600c62807fa.js",
+        "total": "424ms",
+        "scripting": "143ms"
+      }
+    ]
+  },
+  "portfolio": {
+    "score": 56,
+    "tbt": "480 ms",
+    "bootup": "4.3 s",
+    "mainThread": "21.3 s",
+    "unusedJsSavings": "Est savings of 528 KiB",
+    "topScripts": [
+      {
+        "url": "2206.cf9194d5c9de16b0.js",
+        "total": "9735ms",
+        "scripting": "1183ms"
+      },
+      {
+        "url": "portfolio",
+        "total": "6287ms",
+        "scripting": "45ms"
+      },
+      {
+        "url": "4946-a309ad5c90ac9a9a.js",
+        "total": "1583ms",
+        "scripting": "1353ms"
+      }
+    ]
+  }
+}

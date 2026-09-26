@@ -15,12 +15,15 @@ export function SmoothScrollProvider({
 }: SmoothScrollProviderProps) {
   const prefersReducedMotion = useReducedMotion()
   const [mounted, setMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     setMounted(true)
+    const isTouchOrSmall = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768
+    setIsMobile(isTouchOrSmall)
   }, [])
 
-  if (!mounted || prefersReducedMotion) {
+  if (!mounted || prefersReducedMotion || isMobile) {
     return <>{children}</>
   }
 

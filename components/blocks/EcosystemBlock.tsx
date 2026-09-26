@@ -66,7 +66,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
                 linear-gradient(to bottom, rgba(5, 150, 105, 0.05) 1px, transparent 1px);
         }
       `}} />
-      <main className="pt-20">
+      <div className="pt-20">
 
 
 <AnimatedSection className="w-full bg-brand-obsidian min-h-[75vh] flex items-center justify-center relative px-4 sm:px-6 lg:px-8 py-40 overflow-hidden border-b border-white/20" id="ecosystem-hero">
@@ -692,7 +692,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
     </MonoLabel>
 </AnimatedSection>
 
-      </main>
+      </div>
     </>
   );
 }
