@@ -1,0 +1,94 @@
+{
+  "timestamp": "2026-09-26T16:43:07.932Z",
+  "grandTotalIncompleteNodes": 250,
+  "ruleSummary": {
+    "color-contrast": 250
+  },
+  "rulesDetailed": {
+    "color-contrast": {
+      "ruleId": "color-contrast",
+      "impact": "serious",
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=axeAPI",
+      "sampleSelectors": [
+        "a[aria-label=\"EXVORTA\"] > .exv-brand > .bl-in[aria-hidden=\"true\"]",
+        "div:nth-child(1) > .hover\\:text-obsidian.group[href$=\"web\"]",
+        "div:nth-child(2) > .hover\\:text-obsidian.group[href$=\"portfolio\"]",
+        "div:nth-child(3) > .hover\\:text-obsidian.group[href$=\"ecosystem\"]",
+        "div:nth-child(4) > .hover\\:text-obsidian.group[href$=\"about\"]"
+      ],
+      "totalNodes": 250,
+      "routesAffected": [
+        {
+          "route": "contact",
+          "count": 22
+        },
+        {
+          "route": "ecosystem",
+          "count": 55
+        },
+        {
+          "route": "home",
+          "count": 50
+        },
+        {
+          "route": "insights",
+          "count": 15
+        },
+        {
+          "route": "legal",
+          "count": 13
+        },
+        {
+          "route": "portfolio-nutave",
+          "count": 21
+        },
+        {
+          "route": "portfolio",
+          "count": 32
+        },
+        {
+          "route": "rfq",
+          "count": 24
+        },
+        {
+          "route": "waitlist",
+          "count": 18
+        }
+      ]
+    }
+  },
+  "perRouteBreakdown": {
+    "contact": {
+      "color-contrast": 22
+    },
+    "ecosystem": {
+      "color-contrast": 55
+    },
+    "home": {
+      "color-contrast": 50
+    },
+    "insights": {
+      "color-contrast": 15
+    },
+    "legal": {
+      "color-contrast": 13
+    },
+    "portfolio-nutave": {
+      "color-contrast": 21
+    },
+    "portfolio": {
+      "color-contrast": 32
+    },
+    "rfq": {
+      "color-contrast": 24
+    },
+    "waitlist": {
+      "color-contrast": 18
+    }
+  },
+  "verificationFinding": {
+    "singleRuleClaimVerified": true,
+    "verdict": "CONFIRMED: Exactly 100% of incomplete checks (250 nodes) belong to rule \"color-contrast\". Zero other incomplete rules exist."
+  }
+}

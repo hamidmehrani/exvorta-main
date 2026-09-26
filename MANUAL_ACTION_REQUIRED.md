@@ -44,3 +44,15 @@ The following items require administrative access to third-party dashboards or e
      - `NEXT_PUBLIC_TURNSTILE_SITE_KEY`: production Site Key.
      - `TURNSTILE_SECRET_KEY`: production Secret Key.
      - `SKIP_TURNSTILE_IN_DEV`: `false` (or unset in production).
+
+---
+
+## 4. Configure & Verify Sentry DSN in Production (MONITORING ACTIVATION)
+- **Background:** In Phase 4, `lib/error-reporting.ts` was wired with a lightweight zero-dependency Sentry envelope dispatcher. However, no `SENTRY_DSN` is configured in the current repository environment (`.env` or process env). Code was written and type-checks, but has not been exercised against a real Sentry project — this is inherited, unverified code.
+- **Status:** **UNCONFIGURED / AWAITING DSN**.
+- **Action Required:**
+  1. Log into your Sentry organization (or create one at [sentry.io](https://sentry.io)).
+  2. Create a project named `exvorta-web` (platform: Next.js / JavaScript).
+  3. Copy the Client Key (DSN) and add `SENTRY_DSN=<your_dsn>` to Vercel Project Settings (and `.env.production`).
+  4. Trigger a test event via `reportError(new Error('Sentry activation test'))` and confirm reception in the Sentry dashboard under Issues.
+

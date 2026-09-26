@@ -1,0 +1,158 @@
+{
+  "home": {
+    "runs": [
+      {
+        "run": 1,
+        "perf": 58,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 498,
+        "fcp": 1516,
+        "lcp": 8011,
+        "si": 5188,
+        "lcpElementSelector": "section.relative > div.max-w-[1400px] > div.text-center > p.text-base",
+        "lcpElementSnippet": "<p class=\"text-base md:text-lg text-obsidian/60 max-w-2xl mx-auto mb-12 font-light\" style=\"opacity: "
+      },
+      {
+        "run": 2,
+        "perf": 59,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 517,
+        "fcp": 1518,
+        "lcp": 7811,
+        "si": 4454,
+        "lcpElementSelector": "section.relative > div.max-w-[1400px] > div.text-center > p.text-base",
+        "lcpElementSnippet": "<p class=\"text-base md:text-lg text-obsidian/60 max-w-2xl mx-auto mb-12 font-light\" style=\"opacity: "
+      },
+      {
+        "run": 3,
+        "perf": 62,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 450,
+        "fcp": 1514,
+        "lcp": 8088,
+        "si": 4194,
+        "lcpElementSelector": "section.relative > div.max-w-[1400px] > div.text-center > p.text-base",
+        "lcpElementSnippet": "<p class=\"text-base md:text-lg text-obsidian/60 max-w-2xl mx-auto mb-12 font-light\" style=\"opacity: "
+      }
+    ],
+    "medianPerf": 59,
+    "medianLcp": 8011,
+    "medianTbt": 498,
+    "medianFcp": 1516,
+    "medianSi": 4454,
+    "medianA11y": 100,
+    "medianBp": 100,
+    "medianSeo": 100,
+    "sampleLcpSelector": "section.relative > div.max-w-[1400px] > div.text-center > p.text-base"
+  },
+  "portfolio": {
+    "runs": [
+      {
+        "run": 1,
+        "perf": 66,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 239,
+        "fcp": 1511,
+        "lcp": 8777,
+        "si": 5467,
+        "lcpElementSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto",
+        "lcpElementSnippet": "<img alt=\"Stonvi website preview\" loading=\"lazy\" width=\"1080\" height=\"4000\" decoding=\"async\" data-ni"
+      },
+      {
+        "run": 2,
+        "perf": 69,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 268,
+        "fcp": 1513,
+        "lcp": 8661,
+        "si": 3155,
+        "lcpElementSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto",
+        "lcpElementSnippet": "<img alt=\"Stonvi website preview\" loading=\"lazy\" width=\"1080\" height=\"4000\" decoding=\"async\" data-ni"
+      },
+      {
+        "run": 3,
+        "perf": 69,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 222,
+        "fcp": 1513,
+        "lcp": 8678,
+        "si": 3991,
+        "lcpElementSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto",
+        "lcpElementSnippet": "<img alt=\"Stonvi website preview\" loading=\"lazy\" width=\"1080\" height=\"4000\" decoding=\"async\" data-ni"
+      }
+    ],
+    "medianPerf": 69,
+    "medianLcp": 8678,
+    "medianTbt": 239,
+    "medianFcp": 1513,
+    "medianSi": 3991,
+    "medianA11y": 100,
+    "medianBp": 100,
+    "medianSeo": 100,
+    "sampleLcpSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto"
+  },
+  "portfolio-nutave": {
+    "runs": [
+      {
+        "run": 1,
+        "perf": 71,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 255,
+        "fcp": 1515,
+        "lcp": 6974,
+        "si": 3085,
+        "lcpElementSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm",
+        "lcpElementSnippet": "<p class=\"text-sm text-text flex-1\">"
+      },
+      {
+        "run": 2,
+        "perf": 70,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 275,
+        "fcp": 1510,
+        "lcp": 7187,
+        "si": 2406,
+        "lcpElementSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm",
+        "lcpElementSnippet": "<p class=\"text-sm text-text flex-1\">"
+      },
+      {
+        "run": 3,
+        "perf": 68,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "tbt": 333,
+        "fcp": 1514,
+        "lcp": 7133,
+        "si": 2436,
+        "lcpElementSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm",
+        "lcpElementSnippet": "<p class=\"text-sm text-text flex-1\">"
+      }
+    ],
+    "medianPerf": 70,
+    "medianLcp": 7133,
+    "medianTbt": 275,
+    "medianFcp": 1514,
+    "medianSi": 2436,
+    "medianA11y": 100,
+    "medianBp": 100,
+    "medianSeo": 100,
+    "sampleLcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+  }
+}

@@ -57,9 +57,9 @@ const TITLE_SLUG_ROUTES: Record<string, string> = {
 };
 
 const TITLE_IMAGE_ROUTES: Record<string, string> = {
-  spicevo: '/portfolio-spicevo.png',
-  nutave: '/portfolio-nutave.png',
-  stonvi: '/portfolio-stonvi.png',
+  spicevo: '/portfolio-spicevo.webp',
+  nutave: '/portfolio-nutave.webp',
+  stonvi: '/portfolio-stonvi.webp',
 };
 
 function isUsableUrl(url?: string): boolean {

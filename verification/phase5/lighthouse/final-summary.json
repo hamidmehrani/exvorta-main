@@ -1,0 +1,272 @@
+[
+  {
+    "route": "home",
+    "path": "/",
+    "mobile": {
+      "perf": 62,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 7672,
+      "tbt": 364,
+      "cls": 0,
+      "fcp": 1510,
+      "si": 5858,
+      "lcpSelector": "section.relative > div.max-w-[1400px] > div.text-center > p.text-base"
+    },
+    "desktop": {
+      "perf": 92,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1611,
+      "tbt": 25,
+      "cls": 0.057,
+      "fcp": 370,
+      "si": 1414,
+      "lcpSelector": "section.relative > div.max-w-[1400px] > div.text-center > p.text-base"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": false
+  },
+  {
+    "route": "portfolio",
+    "path": "/portfolio",
+    "mobile": {
+      "perf": 67,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 8629,
+      "tbt": 183,
+      "cls": 0,
+      "fcp": 1510,
+      "si": 5922,
+      "lcpSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto"
+    },
+    "desktop": {
+      "perf": 93,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1594,
+      "tbt": 22,
+      "cls": 0.05,
+      "fcp": 375,
+      "si": 1199,
+      "lcpSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": false
+  },
+  {
+    "route": "portfolio-nutave",
+    "path": "/portfolio/nutave",
+    "mobile": {
+      "perf": 72,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 7014,
+      "tbt": 219,
+      "cls": 0,
+      "fcp": 1511,
+      "si": 3032,
+      "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+    },
+    "desktop": {
+      "perf": 75,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1609,
+      "tbt": 331,
+      "cls": 0.057,
+      "fcp": 386,
+      "si": 2274,
+      "lcpSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": false
+  },
+  {
+    "route": "ecosystem",
+    "path": "/ecosystem",
+    "mobile": {
+      "perf": 43,
+      "a11y": 100,
+      "bp": 96,
+      "seo": 100,
+      "lcp": 8109,
+      "tbt": 1480,
+      "cls": 0,
+      "fcp": 1524,
+      "si": 6857,
+      "lcpSelector": "section#ecosystem-hero > div.container-site > div > div.mono-label"
+    },
+    "desktop": {
+      "perf": 59,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1945,
+      "tbt": 539,
+      "cls": 0.085,
+      "fcp": 427,
+      "si": 3265,
+      "lcpSelector": "section#ecosystem-hero > div.container-site > div > div.mono-label"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": false
+  },
+  {
+    "route": "insights",
+    "path": "/insights",
+    "mobile": {
+      "perf": 81,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 3927,
+      "tbt": 197,
+      "cls": 0.003,
+      "fcp": 1523,
+      "si": 4963,
+      "lcpSelector": "div.w-full > section#blog-hero > div.container-site > div.mono-label"
+    },
+    "desktop": {
+      "perf": 89,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1301,
+      "tbt": 133,
+      "cls": 0.057,
+      "fcp": 454,
+      "si": 2155,
+      "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": false
+  },
+  {
+    "route": "contact",
+    "path": "/contact",
+    "mobile": {
+      "perf": 68,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 6909,
+      "tbt": 322,
+      "cls": 0.032,
+      "fcp": 1513,
+      "si": 3583,
+      "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+    },
+    "desktop": {
+      "perf": 92,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1274,
+      "tbt": 21,
+      "cls": 0,
+      "fcp": 378,
+      "si": 2313,
+      "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": false
+  },
+  {
+    "route": "rfq",
+    "path": "/rfq",
+    "mobile": {
+      "perf": 50,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 7784,
+      "tbt": 855,
+      "cls": 0.097,
+      "fcp": 1529,
+      "si": 4616,
+      "lcpSelector": "form.space-y-16 > div.space-y-8 > div.mb-8 > div.mono-label"
+    },
+    "desktop": {
+      "perf": 92,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1420,
+      "tbt": 29,
+      "cls": 0,
+      "fcp": 379,
+      "si": 2031,
+      "lcpSelector": "form.space-y-16 > div.space-y-8 > div.mb-8 > div.mono-label"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": false
+  },
+  {
+    "route": "waitlist",
+    "path": "/waitlist",
+    "mobile": {
+      "perf": 65,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 6903,
+      "tbt": 397,
+      "cls": 0.057,
+      "fcp": 1515,
+      "si": 2975,
+      "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+    },
+    "desktop": {
+      "perf": 92,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 1410,
+      "tbt": 33,
+      "cls": 0,
+      "fcp": 373,
+      "si": 1969,
+      "lcpSelector": "div > div.relative > button.group > span.relative"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": false
+  },
+  {
+    "route": "legal",
+    "path": "/legal",
+    "mobile": {
+      "perf": 88,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 3356,
+      "tbt": 65,
+      "cls": 0.097,
+      "fcp": 1508,
+      "si": 3520,
+      "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+    },
+    "desktop": {
+      "perf": 98,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 750,
+      "tbt": 0,
+      "cls": 0,
+      "fcp": 375,
+      "si": 1500,
+      "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+    },
+    "mobileTargetMet": false,
+    "desktopTargetMet": true
+  }
+]

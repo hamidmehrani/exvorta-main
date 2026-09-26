@@ -140,12 +140,13 @@ export function BrowserFrame({
             <Image
               src={imageUrl}
               alt={`${title} website preview`}
-              width={1425}
+              width={1080}
               height={4000}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 66vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px"
               className={`h-auto w-full transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}
               onLoad={() => setLoaded(true)}
               priority={false}
+              loading="lazy"
             />
           </div>
         ) : (

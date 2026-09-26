@@ -1,0 +1,59 @@
+[
+  {
+    "image": "portfolio-stonvi",
+    "original": {
+      "size": "7.47 MB",
+      "bytes": 7835196,
+      "dimensions": "2160x8154"
+    },
+    "optimizedWebP": {
+      "size": "210.6 KB",
+      "bytes": 215618,
+      "dimensions": "1080x4077"
+    },
+    "optimizedPng": {
+      "size": "1115.0 KB",
+      "bytes": 1141786,
+      "dimensions": "1080x4077"
+    },
+    "reductionWebP": "97.2%"
+  },
+  {
+    "image": "portfolio-nutave",
+    "original": {
+      "size": "4.22 MB",
+      "bytes": 4426142,
+      "dimensions": "2160x11682"
+    },
+    "optimizedWebP": {
+      "size": "226.5 KB",
+      "bytes": 231896,
+      "dimensions": "1080x5841"
+    },
+    "optimizedPng": {
+      "size": "663.0 KB",
+      "bytes": 678863,
+      "dimensions": "1080x5841"
+    },
+    "reductionWebP": "94.8%"
+  },
+  {
+    "image": "portfolio-spicevo",
+    "original": {
+      "size": "14.56 MB",
+      "bytes": 15271715,
+      "dimensions": "2160x14814"
+    },
+    "optimizedWebP": {
+      "size": "152.9 KB",
+      "bytes": 156586,
+      "dimensions": "1080x7407"
+    },
+    "optimizedPng": {
+      "size": "2331.3 KB",
+      "bytes": 2387260,
+      "dimensions": "1080x7407"
+    },
+    "reductionWebP": "99.0%"
+  }
+]
