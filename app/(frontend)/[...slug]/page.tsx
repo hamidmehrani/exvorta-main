@@ -82,7 +82,7 @@ export default async function DynamicPage({
         { id: 'cta-1', blockType: 'ctaBanner' },
       ]
     } as any
-    return <main className="flex-1 flex flex-col w-full bg-[#FAFAF8]"><BlockRenderer blocks={fallbackPage.layout} /></main>
+    return <div className="flex-1 flex flex-col w-full bg-[#FAFAF8]"><BlockRenderer blocks={fallbackPage.layout} /></div>
   }
 
   // Redirect root case studies to portfolio
@@ -163,7 +163,7 @@ export default async function DynamicPage({
 
     if (!user) {
       return (
-        <main className="flex-1 flex flex-col items-center justify-center py-20 px-6 max-w-7xl mx-auto w-full min-h-[70vh]">
+        <div className="flex-1 flex flex-col items-center justify-center py-20 px-6 max-w-7xl mx-auto w-full min-h-[70vh]">
           <div className="text-center p-12 border-2 border-border rounded-none max-w-xl w-full bg-surface">
             <h1 className="text-4xl font-serif font-bold text-text mb-4 tracking-tighter">Restricted Access</h1>
             <p className="text-muted mb-8 text-lg font-mono">This content is for authorized partners only.</p>
@@ -174,13 +174,13 @@ export default async function DynamicPage({
               Login to VIP Portal
             </Link>
           </div>
-        </main>
+        </div>
       )
     }
   }
 
   return (
-    <main className="flex-1 flex flex-col w-full bg-bg">
+    <div className="flex-1 flex flex-col w-full bg-bg">
       {process.env.NODE_ENV !== 'production' && <LivePreviewListener />}
       {(pageDoc as { layout?: any[] })?.layout && (pageDoc as { layout?: any[] }).layout!.length > 0 ? (
         <BlockRenderer blocks={(pageDoc as { layout: any[] }).layout} />
@@ -189,6 +189,6 @@ export default async function DynamicPage({
            <div className="text-muted font-mono uppercase tracking-widest">[ NO BLOCKS CONFIGURED ]</div>
         </div>
       )}
-    </main>
+    </div>
   )
 }

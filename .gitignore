@@ -47,7 +47,8 @@ postgres_data/
 repomix-output.xml
 repomix-output*.md
 tree.md
-screenshots/
+/screenshots/
+!verification/**/screenshots/
 *.log
 repomix.md
 repomix-output.xml
