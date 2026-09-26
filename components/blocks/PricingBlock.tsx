@@ -7,7 +7,8 @@ import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/
 export interface PricingTier {
   tierName: string
   price?: string
-  highlight?: string
+  highlight?: string | boolean
+  tierSubtitle?: string
   features: { feature: string }[]
   ctaText?: string
   ctaLink?: string
@@ -33,7 +34,7 @@ export const PricingBlock: React.FC<PricingBlockProps> = (props) => {
   const bottomCtaText = props.bottomCtaText || "[ REQUEST A CUSTOM SCOPE ]"
   const bottomCtaLink = props.bottomCtaLink || "/rfq"
 
-  const defaultTiers = [
+  const defaultTiers: PricingTier[] = [
     {
       tierName: "01. Foundation",
       highlight: "All packages include: Custom Design, Custom Development & Admin Panel",
@@ -109,7 +110,7 @@ export const PricingBlock: React.FC<PricingBlockProps> = (props) => {
               <div className={`${bgClass} ${containerBorderClass} p-10 flex flex-col rounded-none`}>
                 <h3 className={`text-2xl font-serif ${textClass} mb-2`}>{tier.tierName}</h3>
                 <p className={`text-[10px] ${mutedTextClass} uppercase tracking-widest mb-10 h-10`}>
-                  {tier.highlight}
+                  {(typeof tier.highlight === 'string' && tier.highlight) ? tier.highlight : (tier.tierSubtitle || 'All packages include: Custom Design, Custom Development & Admin Panel')}
                 </p>
                 <ul className="flex-grow flex flex-col gap-4 mb-12">
                   {tier.features?.map((f, i) => (
