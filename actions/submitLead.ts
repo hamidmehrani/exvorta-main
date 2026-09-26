@@ -16,7 +16,13 @@ export interface LeadSubmission {
 }
 
 export async function submitLead(data: LeadSubmission) {
-  const ip = (await headers()).get('x-forwarded-for') || 'unknown'
+  let ip = 'unknown'
+  try {
+    const headersList = await headers()
+    ip = headersList.get('x-forwarded-for') || 'unknown'
+  } catch {
+    ip = '127.0.0.1'
+  }
   const payloadClient = await getPayloadClient()
 
   // ── 1. Rate Limiting ────────────────────────────────────────────────────────
