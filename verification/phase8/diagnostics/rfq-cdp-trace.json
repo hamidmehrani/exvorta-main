@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-09-27T07:49:24.720Z",
+  "route": "/rfq",
+  "totalRequests": 43,
+  "adminChunkFound": {
+    "url": "http://localhost:3000/_next/static/chunks/fff8d4bc-fef3e17ceb97a584.js",
+    "initiator": {
+      "type": "parser",
+      "url": "http://localhost:3000/rfq",
+      "lineNumber": 0,
+      "columnNumber": 1693
+    }
+  },
+  "allJsChunks": [
+    "http://localhost:3000/_next/static/chunks/webpack-3b19497779efb7c8.js",
+    "http://localhost:3000/_next/static/chunks/115c46eb-cbe69fc2201723ad.js",
+    "http://localhost:3000/_next/static/chunks/4946-a309ad5c90ac9a9a.js",
+    "http://localhost:3000/_next/static/chunks/main-app-c548dbc14f0438a1.js",
+    "http://localhost:3000/_next/static/chunks/7247-41109600c62807fa.js",
+    "http://localhost:3000/_next/static/chunks/2445-27b7b88f740fd800.js",
+    "http://localhost:3000/_next/static/chunks/3504-cfa1d38fa04deee6.js",
+    "http://localhost:3000/_next/static/chunks/2936-6a9577ac0da549b8.js",
+    "http://localhost:3000/_next/static/chunks/app/(frontend)/rfq/page-d0d90c5ac242eda2.js",
+    "http://localhost:3000/_next/static/chunks/3655-14611a91f64a105c.js",
+    "http://localhost:3000/_next/static/chunks/4272-91aa0f825b59325e.js",
+    "http://localhost:3000/_next/static/chunks/2994-079a392f6d6ee16b.js",
+    "http://localhost:3000/_next/static/chunks/7996-43635d802fda3d3b.js",
+    "http://localhost:3000/_next/static/chunks/app/(frontend)/layout-26ee968d25509b0b.js",
+    "http://localhost:3000/_next/static/chunks/app/(frontend)/error-a222712fe918e43e.js",
+    "http://localhost:3000/_next/static/chunks/fff8d4bc-fef3e17ceb97a584.js",
+    "http://localhost:3000/_next/static/chunks/b66f67b3-622afcbafec69259.js",
+    "http://localhost:3000/_next/static/chunks/c58da6f5-5ae04ef324d4ac55.js",
+    "http://localhost:3000/_next/static/chunks/7367-9d0f9803b9c22c30.js",
+    "http://localhost:3000/_next/static/chunks/app/(payload)/layout-c84580c14f4b0fdc.js",
+    "http://localhost:3000/_next/static/chunks/2206.cf9194d5c9de16b0.js",
+    "http://localhost:3000/_next/static/chunks/4610.7c74e377aeb9586b.js",
+    "http://localhost:3000/_next/static/chunks/04763798.6408e286152ce8c8.js",
+    "http://localhost:3000/_next/static/chunks/6103.2728038d12f5b0cb.js",
+    "http://localhost:3000/_next/static/chunks/5683.5596be37d2f225b4.js",
+    "https://challenges.cloudflare.com/turnstile/v0/b/d76008a69eab/api.js"
+  ]
+}
