@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-09-27T10:26:09.961Z",
+  "route": "rfq",
+  "url": "http://localhost:3000/rfq",
+  "formFactor": "mobile",
+  "runs": [
+    58,
+    62,
+    50
+  ],
+  "spread": 12,
+  "median": {
+    "perf": 58,
+    "lcp": 4128,
+    "tbt": 783,
+    "cls": 0.097,
+    "fcp": 1547,
+    "si": 6777,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+  },
+  "comparison": {
+    "p5CanonicalPerf": 50,
+    "p7MedianPerf": 73,
+    "currentMedianPerf": 58,
+    "deltaVsP7": -15,
+    "deltaVsP5": 8
+  }
+}

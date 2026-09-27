@@ -92,12 +92,13 @@ export async function checkRateLimit(
 const isPlaceholder = (val: string | undefined): boolean => {
   if (!val) return true
   const lower = val.toLowerCase().trim()
+  const isVercelProd = process.env.VERCEL_ENV === 'production'
   return (
     lower.includes('your_') ||
     lower.includes('your-') ||
     lower.includes('secret-here') ||
     lower.includes('placeholder') ||
-    lower === '1x0000000000000000000000000000000aa'
+    (isVercelProd && lower === '1x0000000000000000000000000000000aa')
   )
 }
 

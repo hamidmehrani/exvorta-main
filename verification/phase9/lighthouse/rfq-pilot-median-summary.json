@@ -1,0 +1,39 @@
+{
+  "timestamp": "2026-09-27T10:21:04.552Z",
+  "route": "rfq",
+  "url": "http://localhost:3000/rfq",
+  "formFactor": "mobile",
+  "runs": [
+    40,
+    42,
+    49
+  ],
+  "spread": 9,
+  "median": {
+    "perf": 42,
+    "lcp": 7425,
+    "tbt": 1697,
+    "cls": 0.017,
+    "fcp": 1243,
+    "si": 7404,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+  },
+  "comparison": {
+    "p5CanonicalPerf": 50,
+    "p7MedianPerf": 73,
+    "postPilotMedianPerf": 42,
+    "deltaVsP7": -31,
+    "deltaVsP5": -8,
+    "tbtDeltaVsP5": 842,
+    "lcpDeltaVsP5": -359
+  },
+  "bundleDelta": {
+    "beforePageSizeKb": 4.37,
+    "afterPageSizeKb": 2.97,
+    "reductionPercent": 32,
+    "turnstileExtractedToAsyncChunk": true
+  }
+}
