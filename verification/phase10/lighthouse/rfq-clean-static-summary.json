@@ -1,0 +1,60 @@
+{
+  "testName": "RFQ Clean Static Baseline (Admin Chunk Leak Fixed)",
+  "timestamp": "2026-09-27T13:31:44.155Z",
+  "runs": [
+    {
+      "perf": 62,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 3787,
+      "tbt": 833,
+      "cls": 0.097,
+      "fcp": 1585,
+      "si": 5303,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+    },
+    {
+      "perf": 59,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 3995,
+      "tbt": 1013,
+      "cls": 0.097,
+      "fcp": 1590,
+      "si": 4993,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+    },
+    {
+      "perf": 84,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 3507,
+      "tbt": 195,
+      "cls": 0.097,
+      "fcp": 1534,
+      "si": 3107,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+    }
+  ],
+  "median": {
+    "perf": 62,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 3787,
+    "tbt": 833,
+    "cls": 0.097,
+    "fcp": 1585,
+    "si": 5303,
+    "consoleErrorsCount": 0,
+    "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+  },
+  "spread": 25,
+  "spreadAcceptable": false
+}

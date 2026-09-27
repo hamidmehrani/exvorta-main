@@ -7,7 +7,12 @@ import { submitRFQ } from '@/app/(frontend)/actions/submitRFQ'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { MonoLabel } from '@/components/ui/MonoLabel'
 import { Hairline } from '@/components/ui/Hairline'
-import { Turnstile } from '@marsidev/react-turnstile'
+import dynamic from 'next/dynamic'
+
+const Turnstile = dynamic(
+  () => import('@marsidev/react-turnstile').then((mod) => mod.Turnstile),
+  { ssr: false }
+)
 
 const InputWrapper = ({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) => (
   <StaggerItem className="relative w-full group">

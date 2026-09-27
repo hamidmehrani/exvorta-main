@@ -1,0 +1,74 @@
+[
+  {
+    "route": "home",
+    "path": "/",
+    "hasScriptTag": true,
+    "hasAnyMention": true,
+    "hasPayloadLayout": true,
+    "fileSize": 63676
+  },
+  {
+    "route": "portfolio",
+    "path": "/portfolio",
+    "hasScriptTag": true,
+    "hasAnyMention": true,
+    "hasPayloadLayout": true,
+    "fileSize": 63427
+  },
+  {
+    "route": "nutave",
+    "path": "/portfolio/nutave",
+    "hasScriptTag": true,
+    "hasAnyMention": true,
+    "hasPayloadLayout": true,
+    "fileSize": 68385
+  },
+  {
+    "route": "ecosystem",
+    "path": "/ecosystem",
+    "hasScriptTag": true,
+    "hasAnyMention": true,
+    "hasPayloadLayout": true,
+    "fileSize": 94549
+  },
+  {
+    "route": "insights",
+    "path": "/insights",
+    "hasScriptTag": false,
+    "hasAnyMention": false,
+    "hasPayloadLayout": false,
+    "fileSize": 60318
+  },
+  {
+    "route": "contact",
+    "path": "/contact",
+    "hasScriptTag": true,
+    "hasAnyMention": true,
+    "hasPayloadLayout": true,
+    "fileSize": 42174
+  },
+  {
+    "route": "rfq",
+    "path": "/rfq",
+    "hasScriptTag": true,
+    "hasAnyMention": true,
+    "hasPayloadLayout": true,
+    "fileSize": 57628
+  },
+  {
+    "route": "waitlist",
+    "path": "/waitlist",
+    "hasScriptTag": true,
+    "hasAnyMention": true,
+    "hasPayloadLayout": true,
+    "fileSize": 52396
+  },
+  {
+    "route": "legal",
+    "path": "/legal",
+    "hasScriptTag": false,
+    "hasAnyMention": false,
+    "hasPayloadLayout": false,
+    "fileSize": 67645
+  }
+]

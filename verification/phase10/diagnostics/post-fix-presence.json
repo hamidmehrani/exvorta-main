@@ -1,0 +1,92 @@
+[
+  {
+    "route": "home",
+    "path": "/",
+    "statusCode": 200,
+    "byteLength": 63613,
+    "scriptCount": 20,
+    "hasFff8d4bc": false,
+    "hasPayloadChunk": false,
+    "payloadScripts": []
+  },
+  {
+    "route": "portfolio",
+    "path": "/portfolio",
+    "statusCode": 200,
+    "byteLength": 63753,
+    "scriptCount": 21,
+    "hasFff8d4bc": false,
+    "hasPayloadChunk": false,
+    "payloadScripts": []
+  },
+  {
+    "route": "nutave",
+    "path": "/portfolio/nutave",
+    "statusCode": 200,
+    "byteLength": 68789,
+    "scriptCount": 21,
+    "hasFff8d4bc": false,
+    "hasPayloadChunk": false,
+    "payloadScripts": []
+  },
+  {
+    "route": "insights",
+    "path": "/insights",
+    "statusCode": 200,
+    "byteLength": 60318,
+    "scriptCount": 15,
+    "hasFff8d4bc": false,
+    "hasPayloadChunk": false,
+    "payloadScripts": []
+  },
+  {
+    "route": "ecosystem",
+    "path": "/ecosystem",
+    "statusCode": 200,
+    "byteLength": 94549,
+    "scriptCount": 22,
+    "hasFff8d4bc": false,
+    "hasPayloadChunk": false,
+    "payloadScripts": []
+  },
+  {
+    "route": "contact",
+    "path": "/contact",
+    "statusCode": 200,
+    "byteLength": 42621,
+    "scriptCount": 21,
+    "hasFff8d4bc": false,
+    "hasPayloadChunk": false,
+    "payloadScripts": []
+  },
+  {
+    "route": "rfq",
+    "path": "/rfq",
+    "statusCode": 200,
+    "byteLength": 57911,
+    "scriptCount": 21,
+    "hasFff8d4bc": false,
+    "hasPayloadChunk": false,
+    "payloadScripts": []
+  },
+  {
+    "route": "waitlist",
+    "path": "/waitlist",
+    "statusCode": 200,
+    "byteLength": 52680,
+    "scriptCount": 21,
+    "hasFff8d4bc": false,
+    "hasPayloadChunk": false,
+    "payloadScripts": []
+  },
+  {
+    "route": "legal",
+    "path": "/legal",
+    "statusCode": 200,
+    "byteLength": 67602,
+    "scriptCount": 15,
+    "hasFff8d4bc": false,
+    "hasPayloadChunk": false,
+    "payloadScripts": []
+  }
+]

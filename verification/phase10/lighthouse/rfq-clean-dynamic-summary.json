@@ -1,0 +1,60 @@
+{
+  "testName": "RFQ Clean Dynamic Turnstile Pilot (Admin Chunk Leak Fixed)",
+  "timestamp": "2026-09-27T13:36:11.217Z",
+  "runs": [
+    {
+      "perf": 64,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 4015,
+      "tbt": 668,
+      "cls": 0.097,
+      "fcp": 1536,
+      "si": 5216,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+    },
+    {
+      "perf": 69,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 4321,
+      "tbt": 423,
+      "cls": 0.097,
+      "fcp": 1530,
+      "si": 4592,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+    },
+    {
+      "perf": 78,
+      "a11y": 100,
+      "bp": 100,
+      "seo": 100,
+      "lcp": 3265,
+      "tbt": 512,
+      "cls": 0,
+      "fcp": 1586,
+      "si": 3358,
+      "consoleErrorsCount": 0,
+      "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+    }
+  ],
+  "median": {
+    "perf": 69,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 4321,
+    "tbt": 423,
+    "cls": 0.097,
+    "fcp": 1530,
+    "si": 4592,
+    "consoleErrorsCount": 0,
+    "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+  },
+  "spread": 14,
+  "spreadAcceptable": true
+}

@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-09-27T13:36:44.432Z",
+  "route": "http://localhost:3000/rfq",
+  "turnstileLoaded": true,
+  "turnstileTokenReceived": true,
+  "formSubmitted": true,
+  "submissionSuccessful": true,
+  "details": {
+    "turnstileApiStatus": 200,
+    "tokenSnippet": "XXXX.DUMMY.TOKE..."
+  },
+  "screenshot": "verification/phase10/diagnostics/rfq-success.png"
+}
