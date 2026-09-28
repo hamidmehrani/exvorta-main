@@ -1,0 +1,385 @@
+{
+  "benchmarkName": "Interleaved 7-Run Pilot Benchmark: Static vs Dynamic Turnstile",
+  "timestamp": "2026-09-28T08:27:20.340Z",
+  "totalRounds": 7,
+  "noiseThreshold": {
+    "derivedValue": 31.5,
+    "staticPerfSpread": 40,
+    "dynamicPerfSpread": 36,
+    "staticPerfIQR": 29,
+    "dynamicPerfIQR": 34,
+    "derivationFormula": "max(mean(static_iqr, dynamic_iqr), 5)"
+  },
+  "static": {
+    "runs": [
+      {
+        "round": 1,
+        "condition": "static",
+        "perf": 80,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 4041,
+        "tbt": 105,
+        "cls": 0.097,
+        "fcp": 1522,
+        "si": 4964,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      },
+      {
+        "round": 2,
+        "condition": "static",
+        "perf": 78,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 4126,
+        "tbt": 154,
+        "cls": 0.097,
+        "fcp": 1534,
+        "si": 4995,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      },
+      {
+        "round": 3,
+        "condition": "static",
+        "perf": 85,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 3433,
+        "tbt": 30,
+        "cls": 0.097,
+        "fcp": 1525,
+        "si": 4838,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      },
+      {
+        "round": 4,
+        "condition": "static",
+        "perf": 45,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 4589,
+        "tbt": 2276,
+        "cls": 0,
+        "fcp": 1694,
+        "si": 9736,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      },
+      {
+        "round": 5,
+        "condition": "static",
+        "perf": 53,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 4054,
+        "tbt": 1332,
+        "cls": 0.097,
+        "fcp": 1619,
+        "si": 6151,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      },
+      {
+        "round": 6,
+        "condition": "static",
+        "perf": 77,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 4201,
+        "tbt": 234,
+        "cls": 0.097,
+        "fcp": 1531,
+        "si": 4012,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      },
+      {
+        "round": 7,
+        "condition": "static",
+        "perf": 82,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 3849,
+        "tbt": 32,
+        "cls": 0.097,
+        "fcp": 1529,
+        "si": 4724,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      }
+    ],
+    "stats": {
+      "perf": {
+        "min": 45,
+        "max": 85,
+        "median": 78,
+        "q1": 53,
+        "q3": 82,
+        "iqr": 29,
+        "spread": 40,
+        "sortedValues": [
+          45,
+          53,
+          77,
+          78,
+          80,
+          82,
+          85
+        ]
+      },
+      "tbt": {
+        "min": 30,
+        "max": 2276,
+        "median": 154,
+        "q1": 32,
+        "q3": 1332,
+        "iqr": 1300,
+        "spread": 2246,
+        "sortedValues": [
+          30,
+          32,
+          105,
+          154,
+          234,
+          1332,
+          2276
+        ]
+      },
+      "lcp": {
+        "min": 3433,
+        "max": 4589,
+        "median": 4054,
+        "q1": 3849,
+        "q3": 4201,
+        "iqr": 352,
+        "spread": 1156,
+        "sortedValues": [
+          3433,
+          3849,
+          4041,
+          4054,
+          4126,
+          4201,
+          4589
+        ]
+      },
+      "cls": {
+        "min": 0,
+        "max": 0.097,
+        "median": 0.097,
+        "q1": 0.097,
+        "q3": 0.097,
+        "iqr": 0,
+        "spread": 0.097,
+        "sortedValues": [
+          0,
+          0.097,
+          0.097,
+          0.097,
+          0.097,
+          0.097,
+          0.097
+        ]
+      }
+    }
+  },
+  "dynamic": {
+    "runs": [
+      {
+        "round": 1,
+        "condition": "dynamic",
+        "perf": 78,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 3854,
+        "tbt": 57,
+        "cls": 0.097,
+        "fcp": 1519,
+        "si": 7448,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      },
+      {
+        "round": 2,
+        "condition": "dynamic",
+        "perf": 84,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 3848,
+        "tbt": 41,
+        "cls": 0.097,
+        "fcp": 1525,
+        "si": 4001,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      },
+      {
+        "round": 3,
+        "condition": "dynamic",
+        "perf": 52,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 4070,
+        "tbt": 1508,
+        "cls": 0.097,
+        "fcp": 1648,
+        "si": 6582,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      },
+      {
+        "round": 4,
+        "condition": "dynamic",
+        "perf": 48,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 4025,
+        "tbt": 2401,
+        "cls": 0.107,
+        "fcp": 1372,
+        "si": 7911,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      },
+      {
+        "round": 5,
+        "condition": "dynamic",
+        "perf": 50,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 4181,
+        "tbt": 2225,
+        "cls": 0,
+        "fcp": 1628,
+        "si": 7501,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      },
+      {
+        "round": 6,
+        "condition": "dynamic",
+        "perf": 84,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 3831,
+        "tbt": 36,
+        "cls": 0.097,
+        "fcp": 1376,
+        "si": 3994,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      },
+      {
+        "round": 7,
+        "condition": "dynamic",
+        "perf": 80,
+        "a11y": 100,
+        "bp": 100,
+        "seo": 100,
+        "lcp": 4035,
+        "tbt": 80,
+        "cls": 0.097,
+        "fcp": 1523,
+        "si": 4984,
+        "consoleErrorsCount": 0,
+        "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+      }
+    ],
+    "stats": {
+      "perf": {
+        "min": 48,
+        "max": 84,
+        "median": 78,
+        "q1": 50,
+        "q3": 84,
+        "iqr": 34,
+        "spread": 36,
+        "sortedValues": [
+          48,
+          50,
+          52,
+          78,
+          80,
+          84,
+          84
+        ]
+      },
+      "tbt": {
+        "min": 36,
+        "max": 2401,
+        "median": 80,
+        "q1": 41,
+        "q3": 2225,
+        "iqr": 2184,
+        "spread": 2365,
+        "sortedValues": [
+          36,
+          41,
+          57,
+          80,
+          1508,
+          2225,
+          2401
+        ]
+      },
+      "lcp": {
+        "min": 3831,
+        "max": 4181,
+        "median": 4025,
+        "q1": 3848,
+        "q3": 4070,
+        "iqr": 222,
+        "spread": 350,
+        "sortedValues": [
+          3831,
+          3848,
+          3854,
+          4025,
+          4035,
+          4070,
+          4181
+        ]
+      },
+      "cls": {
+        "min": 0,
+        "max": 0.107,
+        "median": 0.097,
+        "q1": 0.097,
+        "q3": 0.097,
+        "iqr": 0,
+        "spread": 0.107,
+        "sortedValues": [
+          0,
+          0.097,
+          0.097,
+          0.097,
+          0.097,
+          0.097,
+          0.107
+        ]
+      }
+    }
+  },
+  "comparison": {
+    "deltaPerf": 0,
+    "deltaTbt": -74,
+    "deltaLcp": -29,
+    "verdict": "INDISTINGUISHABLE_FROM_NOISE: Composite perf delta (0) is within data-derived noise threshold (±31.5). TBT changed by -74ms, LCP changed by -29ms."
+  }
+}

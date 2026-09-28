@@ -1,0 +1,58 @@
+Generating import map
+No new imports found, skipping writing import map
+   ▲ Next.js 15.4.11
+   - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 19.0s
+   Linting and checking validity of types ...
+   Collecting page data ...
+[12:39:47] [33mWARN[39m: [36mImage resizing is enabled for one or more collections, but sharp not installed. Please install 'sharp' and pass into the config.[39m
+   Generating static pages (0/21) ...
+[12:39:54] [33mWARN[39m: [36mImage resizing is enabled for one or more collections, but sharp not installed. Please install 'sharp' and pass into the config.[39m
+   Generating static pages (5/21) 
+   Generating static pages (10/21) 
+   Generating static pages (15/21) 
+ ✓ Generating static pages (21/21)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      155 B         175 kB
+├ ○ /_not-found                            997 B         103 kB
+├ ƒ /.well-known/security.txt              178 B         102 kB
+├ ƒ /[...slug]                             155 B         175 kB
+├ ƒ /admin/[[...segments]]               13.5 kB         737 kB
+├ ƒ /api/[...slug]                         178 B         102 kB
+├ ƒ /api/dev/seed-page                     178 B         102 kB
+├ ƒ /api/health                            178 B         102 kB
+├ ƒ /api/revalidate                        178 B         102 kB
+├ ƒ /contact                             4.84 kB         124 kB
+├ ƒ /ecosystem                           8.71 kB         144 kB
+├ ○ /icon.svg                                0 B            0 B
+├ ƒ /insights                            2.75 kB         131 kB
+├ ƒ /insights/[slug]                       178 B         102 kB
+├ ƒ /legal                               1.09 kB         122 kB
+├ ƒ /login                               3.97 kB         121 kB
+├ ○ /manifest.webmanifest                  178 B         102 kB
+├ ○ /opengraph-image-4usi79.png              0 B            0 B
+├ ƒ /portfolio                           5.38 kB         146 kB
+├ ● /portfolio/[slug]                    9.69 kB         136 kB
+├   ├ /portfolio/stonvi
+├   ├ /portfolio/nutave
+├   └ /portfolio/spicevo
+├ ƒ /rfq                                 4.37 kB         134 kB
+├ ○ /robots.txt                            178 B         102 kB
+├ ○ /sitemap.xml                           178 B         102 kB
+├ ○ /twitter-image-4usi79.png                0 B            0 B
+└ ƒ /waitlist                            4.37 kB         134 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/115c46eb-cbe69fc2201723ad.js  54.1 kB
+  ├ chunks/4946-a309ad5c90ac9a9a.js      44.4 kB
+  └ other shared chunks (total)          3.53 kB
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+

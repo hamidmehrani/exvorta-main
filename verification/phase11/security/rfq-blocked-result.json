@@ -1,0 +1,10 @@
+{
+  "expectedOutcome": "blocked",
+  "turnstileLoaded": true,
+  "tokenAcquired": true,
+  "formSubmitted": true,
+  "blockedBySecurityException": true,
+  "submissionSuccessful": false,
+  "errorMessage": "[ ERROR: [SECURITY EXCEPTION] TURNSTILE_SECRET_KEY IS REQUIRED IN PRODUCTION BUT MISSING OR SET TO A PLACEHOLDER. ]",
+  "screenshot": "/home/hamid/Desktop/Exvorta/Exvorta/verification/phase11/security/rfq-blocked-default.png"
+}

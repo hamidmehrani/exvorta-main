@@ -1,0 +1,1243 @@
+{
+  "baselineIdentity": "POST-LEAK-FIX CANONICAL FULL-SITE BASELINE (PHASE 11)",
+  "canonicalReferencePath": "verification/phase11/lighthouse/post-leak-fix-baseline.json",
+  "timestamp": "2026-09-28T09:05:55.652Z",
+  "methodology": {
+    "runsPerPlatform": 5,
+    "selectionCriterion": "exact 5-run median by performance score",
+    "averageSpreadAcross18Conditions": 7.39,
+    "dataDerivedNoiseThreshold": 4,
+    "noiseThresholdDerivation": "Empirically derived as max(3, round(averageSpread / 2)) from actual observed 5-run spreads across all 18 test conditions (7.39 pts). Differences within ±4 points are within normal run-to-run variance on 4x throttled mobile emulation."
+  },
+  "sanityCheck": {
+    "affectedRoutes": [
+      "home",
+      "portfolio",
+      "portfolio-nutave",
+      "ecosystem",
+      "contact",
+      "rfq",
+      "waitlist"
+    ],
+    "unaffectedRoutes": [
+      "insights",
+      "legal"
+    ],
+    "averageAffectedMobileDeltaVsPhase7": 18,
+    "averageUnaffectedMobileDeltaVsPhase7": -2,
+    "conclusion": "SANITY CHECK CONFIRMED: Unaffected routes (Legal, Insights) show negligible change vs Phase 7, while affected routes reflect real chunk elimination."
+  },
+  "targetsAchieved": {
+    "mobileGe90": [
+      "contact"
+    ],
+    "desktopGe95": [
+      "home",
+      "portfolio-nutave",
+      "ecosystem",
+      "insights",
+      "contact",
+      "rfq",
+      "legal"
+    ]
+  },
+  "routes": [
+    {
+      "route": "home",
+      "path": "/",
+      "leakPreviouslyPresent": true,
+      "mobile": {
+        "median": {
+          "perf": 83,
+          "lcp": 3942,
+          "tbt": 128,
+          "cls": 0,
+          "fcp": 1518,
+          "si": 2968,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "section.relative > div.max-w-[1400px] > div.text-center > p.text-base"
+        },
+        "spread": 12,
+        "iqr": 10,
+        "minPerf": 79,
+        "maxPerf": 91,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 83,
+            "lcp": 3969,
+            "tbt": 228,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 90,
+            "lcp": 3420,
+            "tbt": 122,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 91,
+            "lcp": 3271,
+            "tbt": 112,
+            "cls": 0
+          },
+          {
+            "run": 4,
+            "perf": 80,
+            "lcp": 3942,
+            "tbt": 128,
+            "cls": 0
+          },
+          {
+            "run": 5,
+            "perf": 79,
+            "lcp": 3954,
+            "tbt": 289,
+            "cls": 0
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 96,
+          "lcp": 871,
+          "tbt": 22,
+          "cls": 0,
+          "fcp": 380,
+          "si": 1873,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "section.relative > div.max-w-[1400px] > div.text-center > h1.text-5xl"
+        },
+        "spread": 3,
+        "iqr": 1,
+        "minPerf": 95,
+        "maxPerf": 98,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 95,
+            "lcp": 881,
+            "tbt": 92,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 96,
+            "lcp": 908,
+            "tbt": 58,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 96,
+            "lcp": 871,
+            "tbt": 7,
+            "cls": 0.057
+          },
+          {
+            "run": 4,
+            "perf": 98,
+            "lcp": 868,
+            "tbt": 6,
+            "cls": 0.057
+          },
+          {
+            "run": 5,
+            "perf": 95,
+            "lcp": 871,
+            "tbt": 22,
+            "cls": 0
+          }
+        ]
+      },
+      "comparisonVsPhase7": {
+        "mobile": {
+          "phase7Median": 60,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 83,
+          "delta": 23,
+          "status": "IMPROVED"
+        },
+        "desktop": {
+          "phase7Median": 90,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 96,
+          "delta": 6,
+          "status": "TARGET MET"
+        }
+      }
+    },
+    {
+      "route": "portfolio",
+      "path": "/portfolio",
+      "leakPreviouslyPresent": true,
+      "mobile": {
+        "median": {
+          "perf": 82,
+          "lcp": 4629,
+          "tbt": 70,
+          "cls": 0,
+          "fcp": 1512,
+          "si": 2879,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.group/frame > div.relative > div.lwframe-capture > img.h-auto"
+        },
+        "spread": 7,
+        "iqr": 3,
+        "minPerf": 78,
+        "maxPerf": 85,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 78,
+            "lcp": 4703,
+            "tbt": 70,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 85,
+            "lcp": 4211,
+            "tbt": 39,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 82,
+            "lcp": 4715,
+            "tbt": 84,
+            "cls": 0
+          },
+          {
+            "run": 4,
+            "perf": 83,
+            "lcp": 4209,
+            "tbt": 51,
+            "cls": 0
+          },
+          {
+            "run": 5,
+            "perf": 80,
+            "lcp": 4629,
+            "tbt": 75,
+            "cls": 0
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 80,
+          "lcp": 1104,
+          "tbt": 255,
+          "cls": 0.05,
+          "fcp": 483,
+          "si": 3388,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "N/A"
+        },
+        "spread": 24,
+        "iqr": 9,
+        "minPerf": 73,
+        "maxPerf": 97,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 85,
+            "lcp": 1105,
+            "tbt": 175,
+            "cls": 0.05
+          },
+          {
+            "run": 2,
+            "perf": 76,
+            "lcp": 1446,
+            "tbt": 270,
+            "cls": 0.05
+          },
+          {
+            "run": 3,
+            "perf": 73,
+            "lcp": 975,
+            "tbt": 390,
+            "cls": 0.05
+          },
+          {
+            "run": 4,
+            "perf": 80,
+            "lcp": 1104,
+            "tbt": 255,
+            "cls": 0.05
+          },
+          {
+            "run": 5,
+            "perf": 97,
+            "lcp": 963,
+            "tbt": 0,
+            "cls": 0.05
+          }
+        ]
+      },
+      "comparisonVsPhase7": {
+        "mobile": {
+          "phase7Median": 67,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 82,
+          "delta": 15,
+          "status": "IMPROVED"
+        },
+        "desktop": {
+          "phase7Median": 89,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 80,
+          "delta": -9,
+          "status": "REGRESSED"
+        }
+      }
+    },
+    {
+      "route": "portfolio-nutave",
+      "path": "/portfolio/nutave",
+      "leakPreviouslyPresent": true,
+      "mobile": {
+        "median": {
+          "perf": 88,
+          "lcp": 3772,
+          "tbt": 80,
+          "cls": 0,
+          "fcp": 1511,
+          "si": 2206,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.grid > div.col-span-1 > section > p.font-sans"
+        },
+        "spread": 13,
+        "iqr": 2,
+        "minPerf": 75,
+        "maxPerf": 88,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 88,
+            "lcp": 3772,
+            "tbt": 80,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 88,
+            "lcp": 3777,
+            "tbt": 92,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 75,
+            "lcp": 3740,
+            "tbt": 503,
+            "cls": 0
+          },
+          {
+            "run": 4,
+            "perf": 88,
+            "lcp": 3772,
+            "tbt": 51,
+            "cls": 0
+          },
+          {
+            "run": 5,
+            "perf": 86,
+            "lcp": 3780,
+            "tbt": 66,
+            "cls": 0
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 99,
+          "lcp": 751,
+          "tbt": 0,
+          "cls": 0.057,
+          "fcp": 372,
+          "si": 996,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "N/A"
+        },
+        "spread": 1,
+        "iqr": 1,
+        "minPerf": 98,
+        "maxPerf": 99,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 98,
+            "lcp": 816,
+            "tbt": 0,
+            "cls": 0.057
+          },
+          {
+            "run": 2,
+            "perf": 99,
+            "lcp": 748,
+            "tbt": 0,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 99,
+            "lcp": 814,
+            "tbt": 0,
+            "cls": 0.057
+          },
+          {
+            "run": 4,
+            "perf": 99,
+            "lcp": 751,
+            "tbt": 0,
+            "cls": 0
+          },
+          {
+            "run": 5,
+            "perf": 98,
+            "lcp": 747,
+            "tbt": 0,
+            "cls": 0.057
+          }
+        ]
+      },
+      "comparisonVsPhase7": {
+        "mobile": {
+          "phase7Median": 70,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 88,
+          "delta": 18,
+          "status": "IMPROVED"
+        },
+        "desktop": {
+          "phase7Median": 95,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 99,
+          "delta": 4,
+          "status": "TARGET MET"
+        }
+      }
+    },
+    {
+      "route": "ecosystem",
+      "path": "/ecosystem",
+      "leakPreviouslyPresent": true,
+      "mobile": {
+        "median": {
+          "perf": 84,
+          "lcp": 4146,
+          "tbt": 168,
+          "cls": 0,
+          "fcp": 1508,
+          "si": 2718,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+        },
+        "spread": 8,
+        "iqr": 1,
+        "minPerf": 76,
+        "maxPerf": 84,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 76,
+            "lcp": 4222,
+            "tbt": 230,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 84,
+            "lcp": 4146,
+            "tbt": 168,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 83,
+            "lcp": 4211,
+            "tbt": 172,
+            "cls": 0
+          },
+          {
+            "run": 4,
+            "perf": 84,
+            "lcp": 4138,
+            "tbt": 161,
+            "cls": 0
+          },
+          {
+            "run": 5,
+            "perf": 84,
+            "lcp": 4096,
+            "tbt": 123,
+            "cls": 0
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 97,
+          "lcp": 865,
+          "tbt": 0,
+          "cls": 0.085,
+          "fcp": 370,
+          "si": 1266,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "section#ecosystem-hero > div.container-site > div.w-full > h1.text-4xl"
+        },
+        "spread": 2,
+        "iqr": 0,
+        "minPerf": 95,
+        "maxPerf": 97,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 97,
+            "lcp": 874,
+            "tbt": 0,
+            "cls": 0.085
+          },
+          {
+            "run": 2,
+            "perf": 97,
+            "lcp": 865,
+            "tbt": 0,
+            "cls": 0.085
+          },
+          {
+            "run": 3,
+            "perf": 95,
+            "lcp": 863,
+            "tbt": 16,
+            "cls": 0
+          },
+          {
+            "run": 4,
+            "perf": 97,
+            "lcp": 833,
+            "tbt": 0,
+            "cls": 0.085
+          },
+          {
+            "run": 5,
+            "perf": 97,
+            "lcp": 884,
+            "tbt": 12,
+            "cls": 0.085
+          }
+        ]
+      },
+      "comparisonVsPhase7": {
+        "mobile": {
+          "phase7Median": 58,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 84,
+          "delta": 26,
+          "status": "IMPROVED"
+        },
+        "desktop": {
+          "phase7Median": 90,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 97,
+          "delta": 7,
+          "status": "TARGET MET"
+        }
+      }
+    },
+    {
+      "route": "insights",
+      "path": "/insights",
+      "leakPreviouslyPresent": false,
+      "mobile": {
+        "median": {
+          "perf": 88,
+          "lcp": 3454,
+          "tbt": 95,
+          "cls": 0.003,
+          "fcp": 1508,
+          "si": 3653,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.w-full > section#blog-hero > div.container-site > h1.text-5xl"
+        },
+        "spread": 30,
+        "iqr": 7,
+        "minPerf": 63,
+        "maxPerf": 93,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 93,
+            "lcp": 3099,
+            "tbt": 58,
+            "cls": 0.003
+          },
+          {
+            "run": 2,
+            "perf": 63,
+            "lcp": 3454,
+            "tbt": 1267,
+            "cls": 0.003
+          },
+          {
+            "run": 3,
+            "perf": 86,
+            "lcp": 3761,
+            "tbt": 70,
+            "cls": 0.002
+          },
+          {
+            "run": 4,
+            "perf": 88,
+            "lcp": 3634,
+            "tbt": 105,
+            "cls": 0.003
+          },
+          {
+            "run": 5,
+            "perf": 93,
+            "lcp": 3107,
+            "tbt": 95,
+            "cls": 0.002
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 97,
+          "lcp": 856,
+          "tbt": 0,
+          "cls": 0.058,
+          "fcp": 370,
+          "si": 1624,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.w-full > section#blog-hero > div.container-site > h1.text-5xl"
+        },
+        "spread": 2,
+        "iqr": 2,
+        "minPerf": 96,
+        "maxPerf": 98,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 98,
+            "lcp": 701,
+            "tbt": 0,
+            "cls": 0.058
+          },
+          {
+            "run": 2,
+            "perf": 98,
+            "lcp": 881,
+            "tbt": 35,
+            "cls": 0.058
+          },
+          {
+            "run": 3,
+            "perf": 96,
+            "lcp": 863,
+            "tbt": 4,
+            "cls": 0.058
+          },
+          {
+            "run": 4,
+            "perf": 97,
+            "lcp": 854,
+            "tbt": 0,
+            "cls": 0.011
+          },
+          {
+            "run": 5,
+            "perf": 96,
+            "lcp": 856,
+            "tbt": 0,
+            "cls": 0
+          }
+        ]
+      },
+      "comparisonVsPhase7": {
+        "mobile": {
+          "phase7Median": 93,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 88,
+          "delta": -5,
+          "status": "REGRESSED"
+        },
+        "desktop": {
+          "phase7Median": 96,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 97,
+          "delta": 1,
+          "status": "TARGET MET"
+        }
+      }
+    },
+    {
+      "route": "contact",
+      "path": "/contact",
+      "leakPreviouslyPresent": true,
+      "mobile": {
+        "median": {
+          "perf": 90,
+          "lcp": 3433,
+          "tbt": 30,
+          "cls": 0,
+          "fcp": 1515,
+          "si": 2967,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.max-w-md > div > div > p.text-base"
+        },
+        "spread": 1,
+        "iqr": 1,
+        "minPerf": 90,
+        "maxPerf": 91,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 90,
+            "lcp": 3485,
+            "tbt": 66,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 90,
+            "lcp": 3433,
+            "tbt": 30,
+            "cls": 0.032
+          },
+          {
+            "run": 3,
+            "perf": 91,
+            "lcp": 3441,
+            "tbt": 32,
+            "cls": 0
+          },
+          {
+            "run": 4,
+            "perf": 90,
+            "lcp": 3425,
+            "tbt": 25,
+            "cls": 0
+          },
+          {
+            "run": 5,
+            "perf": 91,
+            "lcp": 3426,
+            "tbt": 26,
+            "cls": 0
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 99,
+          "lcp": 691,
+          "tbt": 0,
+          "cls": 0,
+          "fcp": 375,
+          "si": 1135,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.max-w-md > div > div > h1.text-4xl"
+        },
+        "spread": 2,
+        "iqr": 1,
+        "minPerf": 97,
+        "maxPerf": 99,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 99,
+            "lcp": 691,
+            "tbt": 0,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 99,
+            "lcp": 689,
+            "tbt": 0,
+            "cls": 0.005
+          },
+          {
+            "run": 3,
+            "perf": 98,
+            "lcp": 694,
+            "tbt": 0,
+            "cls": 0.005
+          },
+          {
+            "run": 4,
+            "perf": 99,
+            "lcp": 686,
+            "tbt": 0,
+            "cls": 0
+          },
+          {
+            "run": 5,
+            "perf": 97,
+            "lcp": 692,
+            "tbt": 0,
+            "cls": 0
+          }
+        ]
+      },
+      "comparisonVsPhase7": {
+        "mobile": {
+          "phase7Median": 66,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 90,
+          "delta": 24,
+          "status": "TARGET MET"
+        },
+        "desktop": {
+          "phase7Median": 96,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 99,
+          "delta": 3,
+          "status": "TARGET MET"
+        }
+      }
+    },
+    {
+      "route": "rfq",
+      "path": "/rfq",
+      "leakPreviouslyPresent": true,
+      "mobile": {
+        "median": {
+          "perf": 88,
+          "lcp": 3478,
+          "tbt": 54,
+          "cls": 0.097,
+          "fcp": 1513,
+          "si": 2486,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+        },
+        "spread": 7,
+        "iqr": 4,
+        "minPerf": 84,
+        "maxPerf": 91,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 84,
+            "lcp": 3933,
+            "tbt": 54,
+            "cls": 0.097
+          },
+          {
+            "run": 2,
+            "perf": 88,
+            "lcp": 3410,
+            "tbt": 23,
+            "cls": 0.097
+          },
+          {
+            "run": 3,
+            "perf": 90,
+            "lcp": 3482,
+            "tbt": 58,
+            "cls": 0
+          },
+          {
+            "run": 4,
+            "perf": 91,
+            "lcp": 3417,
+            "tbt": 25,
+            "cls": 0
+          },
+          {
+            "run": 5,
+            "perf": 86,
+            "lcp": 3478,
+            "tbt": 136,
+            "cls": 0.097
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 99,
+          "lcp": 765,
+          "tbt": 0,
+          "cls": 0.036,
+          "fcp": 376,
+          "si": 1197,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.w-full > div.max-w-md > div > h1.text-4xl"
+        },
+        "spread": 1,
+        "iqr": 1,
+        "minPerf": 98,
+        "maxPerf": 99,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 99,
+            "lcp": 759,
+            "tbt": 0,
+            "cls": 0.036
+          },
+          {
+            "run": 2,
+            "perf": 99,
+            "lcp": 787,
+            "tbt": 5,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 98,
+            "lcp": 836,
+            "tbt": 0,
+            "cls": 0
+          },
+          {
+            "run": 4,
+            "perf": 98,
+            "lcp": 765,
+            "tbt": 43,
+            "cls": 0.036
+          },
+          {
+            "run": 5,
+            "perf": 99,
+            "lcp": 752,
+            "tbt": 0,
+            "cls": 0.036
+          }
+        ]
+      },
+      "comparisonVsPhase7": {
+        "mobile": {
+          "phase7Median": 73,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 88,
+          "delta": 15,
+          "status": "IMPROVED"
+        },
+        "desktop": {
+          "phase7Median": 96,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 99,
+          "delta": 3,
+          "status": "TARGET MET"
+        }
+      }
+    },
+    {
+      "route": "waitlist",
+      "path": "/waitlist",
+      "leakPreviouslyPresent": true,
+      "mobile": {
+        "median": {
+          "perf": 83,
+          "lcp": 3640,
+          "tbt": 36,
+          "cls": 0.057,
+          "fcp": 1510,
+          "si": 7051,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "section.w-full > div.w-full > div > p.text-base"
+        },
+        "spread": 6,
+        "iqr": 5,
+        "minPerf": 82,
+        "maxPerf": 88,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 83,
+            "lcp": 3599,
+            "tbt": 36,
+            "cls": 0.057
+          },
+          {
+            "run": 2,
+            "perf": 82,
+            "lcp": 3617,
+            "tbt": 56,
+            "cls": 0.057
+          },
+          {
+            "run": 3,
+            "perf": 88,
+            "lcp": 3640,
+            "tbt": 36,
+            "cls": 0.057
+          },
+          {
+            "run": 4,
+            "perf": 82,
+            "lcp": 3644,
+            "tbt": 30,
+            "cls": 0.057
+          },
+          {
+            "run": 5,
+            "perf": 87,
+            "lcp": 3649,
+            "tbt": 34,
+            "cls": 0.057
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 94,
+          "lcp": 723,
+          "tbt": 3,
+          "cls": 0,
+          "fcp": 373,
+          "si": 2567,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "section.w-full > div.w-full > div > h1.text-4xl"
+        },
+        "spread": 7,
+        "iqr": 2,
+        "minPerf": 92,
+        "maxPerf": 99,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 96,
+            "lcp": 973,
+            "tbt": 1,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 92,
+            "lcp": 723,
+            "tbt": 22,
+            "cls": 0
+          },
+          {
+            "run": 3,
+            "perf": 94,
+            "lcp": 782,
+            "tbt": 3,
+            "cls": 0
+          },
+          {
+            "run": 4,
+            "perf": 94,
+            "lcp": 689,
+            "tbt": 4,
+            "cls": 0
+          },
+          {
+            "run": 5,
+            "perf": 99,
+            "lcp": 657,
+            "tbt": 0,
+            "cls": 0
+          }
+        ]
+      },
+      "comparisonVsPhase7": {
+        "mobile": {
+          "phase7Median": 78,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 83,
+          "delta": 5,
+          "status": "IMPROVED"
+        },
+        "desktop": {
+          "phase7Median": 94,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 94,
+          "delta": 0,
+          "status": "UNCHANGED (within noise)"
+        }
+      }
+    },
+    {
+      "route": "legal",
+      "path": "/legal",
+      "leakPreviouslyPresent": false,
+      "mobile": {
+        "median": {
+          "perf": 88,
+          "lcp": 3312,
+          "tbt": 59,
+          "cls": 0.097,
+          "fcp": 1509,
+          "si": 3410,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+        },
+        "spread": 5,
+        "iqr": 4,
+        "minPerf": 86,
+        "maxPerf": 91,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 87,
+            "lcp": 3310,
+            "tbt": 59,
+            "cls": 0.097
+          },
+          {
+            "run": 2,
+            "perf": 88,
+            "lcp": 3312,
+            "tbt": 53,
+            "cls": 0.097
+          },
+          {
+            "run": 3,
+            "perf": 91,
+            "lcp": 3312,
+            "tbt": 61,
+            "cls": 0
+          },
+          {
+            "run": 4,
+            "perf": 86,
+            "lcp": 3482,
+            "tbt": 47,
+            "cls": 0.097
+          },
+          {
+            "run": 5,
+            "perf": 91,
+            "lcp": 3354,
+            "tbt": 61,
+            "cls": 0
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 97,
+          "lcp": 741,
+          "tbt": 0,
+          "cls": 0.085,
+          "fcp": 370,
+          "si": 1353,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "consoleErrorsCount": 0,
+          "lcpSelector": "div.h-full > div.min-h-full > aside.fixed > p.text-sm"
+        },
+        "spread": 2,
+        "iqr": 1,
+        "minPerf": 97,
+        "maxPerf": 99,
+        "runs": [
+          {
+            "run": 1,
+            "perf": 98,
+            "lcp": 782,
+            "tbt": 0,
+            "cls": 0
+          },
+          {
+            "run": 2,
+            "perf": 97,
+            "lcp": 737,
+            "tbt": 0,
+            "cls": 0.085
+          },
+          {
+            "run": 3,
+            "perf": 97,
+            "lcp": 741,
+            "tbt": 0,
+            "cls": 0.085
+          },
+          {
+            "run": 4,
+            "perf": 97,
+            "lcp": 735,
+            "tbt": 0,
+            "cls": 0.085
+          },
+          {
+            "run": 5,
+            "perf": 99,
+            "lcp": 746,
+            "tbt": 0,
+            "cls": 0
+          }
+        ]
+      },
+      "comparisonVsPhase7": {
+        "mobile": {
+          "phase7Median": 87,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 88,
+          "delta": 1,
+          "status": "UNCHANGED (within noise)"
+        },
+        "desktop": {
+          "phase7Median": 96,
+          "phase7Source": "verification/phase7/lighthouse/final-summary-median.json",
+          "phase11Median": 97,
+          "delta": 1,
+          "status": "TARGET MET"
+        }
+      }
+    }
+  ]
+}

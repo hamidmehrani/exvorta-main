@@ -1,0 +1,10 @@
+{
+  "expectedOutcome": "allowed",
+  "turnstileLoaded": true,
+  "tokenAcquired": true,
+  "formSubmitted": true,
+  "blockedBySecurityException": false,
+  "submissionSuccessful": true,
+  "errorMessage": null,
+  "screenshot": "/home/hamid/Desktop/Exvorta/Exvorta/verification/phase11/security/rfq-allowed-optin.png"
+}

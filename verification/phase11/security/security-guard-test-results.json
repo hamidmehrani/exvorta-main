@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-09-28T08:12:02.240Z",
+  "tests": [
+    {
+      "name": "Flag absent in production",
+      "passed": true,
+      "expected": "Security Exception thrown",
+      "result": "Blocked"
+    },
+    {
+      "name": "Flag explicitly false in production",
+      "passed": true,
+      "expected": "Security Exception thrown",
+      "result": "Blocked"
+    },
+    {
+      "name": "Flag explicitly true in production test run",
+      "passed": true,
+      "expected": "Permitted and queried siteverify",
+      "result": "Allowed for test"
+    }
+  ]
+}

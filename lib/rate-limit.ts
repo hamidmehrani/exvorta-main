@@ -92,13 +92,20 @@ export async function checkRateLimit(
 const isPlaceholder = (val: string | undefined): boolean => {
   if (!val) return true
   const lower = val.toLowerCase().trim()
-  const isVercelProd = process.env.VERCEL_ENV === 'production'
+  const isDummyKey = lower === '1x0000000000000000000000000000000aa'
+  const allowTestKey = process.env.ALLOW_TEST_TURNSTILE_KEY === 'true'
+
+  // The dummy Turnstile secret is strictly rejected in any production-like environment
+  // unless explicitly allowed via the test-only opt-in flag ALLOW_TEST_TURNSTILE_KEY='true'.
+  if (isDummyKey) {
+    return !allowTestKey
+  }
+
   return (
     lower.includes('your_') ||
     lower.includes('your-') ||
     lower.includes('secret-here') ||
-    lower.includes('placeholder') ||
-    (isVercelProd && lower === '1x0000000000000000000000000000000aa')
+    lower.includes('placeholder')
   )
 }
 
