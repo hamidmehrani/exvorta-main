@@ -1,11 +1,6 @@
-"use client";
-
-import React from 'react';
-import { AnimatedSection, Reveal, StaggerContainer, StaggerItem } from '../ui/Reveal';
-import { Container } from '../ui/Container';
-import { MonoLabel } from '../ui/MonoLabel';
-import { m as motion } from 'framer-motion';
-import { easings, useReducedMotion } from '@/lib/animations';
+import React from 'react'
+import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/Reveal'
+import { SectionHeading } from '../ui/SectionHeading'
 
 /**
  * PlatformCapabilitiesBlock — /web section answering "what do I actually get"
@@ -54,104 +49,100 @@ const TECH = [
 ]
 
 export function PlatformCapabilitiesBlock() {
-  const prefersReducedMotion = useReducedMotion();
-
   return (
     <AnimatedSection className="w-full">
       <section
-        className="py-32 bg-[#0D0D0D] text-white border-t border-white/10 relative overflow-hidden"
+        className="on-dark relative isolate overflow-hidden border-t border-rule-dark bg-obsidian py-24 text-white md:py-32"
         data-purpose="platform-capabilities"
       >
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(white 0.5px, transparent 0.5px)', backgroundSize: '22px 22px' }} />
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="bg-aura-dark absolute inset-0 opacity-60" />
+          <div className="bg-blueprint-grid-dark absolute inset-0" />
+        </div>
 
-        <Container>
-          {/* Heading */}
-          <Reveal y={20} className="mb-20 text-center">
-            <MonoLabel className="text-[10px] font-mono tracking-[0.3em] text-white/45 uppercase mb-6 block">
-              [ WHAT YOU ACTUALLY GET ]
-            </MonoLabel>
-            <h2 className="text-4xl md:text-6xl font-serif font-semibold tracking-tight leading-tight mb-6">
-              Built to be operated <span className="text-white/50">by you.</span>
-            </h2>
-            <p className="text-white/60 max-w-2xl mx-auto font-light">
-              Most agencies hand you a website and a monthly invoice. We hand you
-              the keys — and the infrastructure stays out of your way.
-            </p>
-          </Reveal>
+        <div className="container-site">
+          <SectionHeading
+            align="center"
+            tone="dark"
+            eyebrow="What you actually get"
+            title={
+              <>
+                Built to be operated <span className="text-muted-dark">by you.</span>
+              </>
+            }
+            description="Most agencies hand you a website and a monthly invoice. We hand you the keys — and the infrastructure stays out of your way."
+            className="mb-16 md:mb-20"
+          />
 
-          {/* Capability cards */}
+          {/* Capability cells */}
           <StaggerContainer
             delayChildren={0.1}
             staggerChildren={0.12}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-28"
+            className="frame frame-dark mb-28 grid grid-cols-1 border border-rule-dark md:grid-cols-2"
           >
-            {CAPABILITIES.map((cap, i) => (
-              <StaggerItem key={cap.tag}>
-                <motion.div
-                  className="h-full border border-white/10 bg-white/[0.03] p-8 md:p-10 flex flex-col hover:border-brand-emerald/40 hover:bg-white/[0.05] transition-all duration-500 group relative overflow-hidden"
-                  whileHover={prefersReducedMotion ? undefined : { y: -6 }}
-                  transition={{ duration: 0.3, ease: easings.cinematic }}
-                >
-                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-emerald/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="flex items-start justify-between mb-8 gap-4">
-                    <span className="font-mono text-[9px] tracking-[0.25em] text-brand-emerald/90 uppercase border border-brand-emerald/30 px-2.5 py-1">
-                      {cap.tag}
-                    </span>
-                    <div className="text-right shrink-0">
-                      <div className="text-3xl md:text-4xl font-serif font-semibold text-white leading-none">{cap.stat}</div>
-                      <div className="font-mono text-[8px] tracking-[0.2em] text-white/40 uppercase mt-2">{cap.statLabel}</div>
-                    </div>
+            {CAPABILITIES.map((cap) => (
+              <StaggerItem
+                key={cap.tag}
+                className="group relative flex flex-col border-b border-rule-dark p-8 transition-colors duration-500 last:border-b-0 hover:bg-white/[0.03] md:odd:border-e md:[&:nth-last-child(-n+2)]:border-b-0 md:p-12"
+              >
+                <span
+                  aria-hidden
+                  className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-success transition-transform duration-500 ease-[var(--ease-cinematic)] group-hover:scale-x-100"
+                />
+                <div className="mb-10 flex items-start justify-between gap-4">
+                  <span className="border border-success/40 px-2.5 py-1.5 font-mono text-label uppercase text-success">
+                    {cap.tag}
+                  </span>
+                  <div className="shrink-0 text-end">
+                    <div className="font-serif text-headline font-semibold leading-none text-white">{cap.stat}</div>
+                    <div className="mt-3 font-mono text-label uppercase text-muted-dark">{cap.statLabel}</div>
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-serif font-semibold tracking-tight mb-4">{cap.title}</h3>
-                  <p className="text-white/55 font-light leading-relaxed text-[15px]">{cap.desc}</p>
-                </motion.div>
+                </div>
+                <h3 className="mb-4 font-serif text-3xl font-semibold leading-tight text-white">{cap.title}</h3>
+                <p className="text-base font-light leading-relaxed text-muted-dark">{cap.desc}</p>
               </StaggerItem>
             ))}
           </StaggerContainer>
 
           {/* Tech stack — translated to business language */}
-          <Reveal y={20} className="mb-12 text-center">
-            <MonoLabel className="text-[10px] font-mono tracking-[0.3em] text-white/45 uppercase mb-6 block">
-              [ THE ENGINE ROOM — IN PLAIN ENGLISH ]
-            </MonoLabel>
-            <h3 className="text-3xl md:text-4xl font-serif font-semibold tracking-tight">
-              Serious technology. <span className="text-white/50">Business reasons.</span>
-            </h3>
-          </Reveal>
+          <SectionHeading
+            align="center"
+            tone="dark"
+            as="h3"
+            eyebrow="The engine room — in plain English"
+            title={
+              <>
+                Serious technology. <span className="text-muted-dark">Business reasons.</span>
+              </>
+            }
+            className="mb-12"
+          />
 
           <StaggerContainer
             delayChildren={0.08}
             staggerChildren={0.08}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10 border border-white/10"
+            className="grid grid-cols-1 gap-px border border-rule-dark bg-rule-dark sm:grid-cols-2 lg:grid-cols-3"
           >
-            {TECH.map((t, i) => (
-              <StaggerItem key={t.name}>
-                <motion.div
-                  className="h-full bg-[#0D0D0D] p-8 flex flex-col gap-3 hover:bg-white/[0.04] transition-colors duration-300"
-                  initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.6, delay: i * 0.05, ease: easings.cinematic }}
-                >
+            {TECH.map((t) => (
+              <StaggerItem key={t.name} className="h-full">
+                <div className="flex h-full flex-col gap-3 bg-obsidian p-8 transition-colors duration-300 hover:bg-card">
                   <div className="flex items-center gap-3">
-                    <span className="w-1.5 h-1.5 bg-brand-emerald rotate-45" />
-                    <span className="font-mono text-sm text-white font-medium tracking-wide">{t.name}</span>
+                    <span className="h-1.5 w-1.5 rotate-45 bg-success" aria-hidden />
+                    <span className="font-mono text-sm font-medium text-white">{t.name}</span>
                   </div>
-                  <p className="text-white/50 text-sm leading-relaxed font-light">{t.why}</p>
-                </motion.div>
+                  <p className="text-base font-light leading-relaxed text-muted-dark">{t.why}</p>
+                </div>
               </StaggerItem>
             ))}
           </StaggerContainer>
 
-          <Reveal y={16} delay={0.1} className="mt-10 text-center">
-            <p className="font-mono text-[10px] tracking-[0.25em] text-white/35 uppercase">
-              You never touch any of it — but every layer works for your business.
-            </p>
-          </Reveal>
-        </Container>
+          <p className="eyebrow eyebrow-dark mt-12 justify-center text-center">
+            You never touch any of it — but every layer works for your business.
+          </p>
+        </div>
       </section>
     </AnimatedSection>
-  );
+  )
 }
 
-export default PlatformCapabilitiesBlock;
+export default PlatformCapabilitiesBlock

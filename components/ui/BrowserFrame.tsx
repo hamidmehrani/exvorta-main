@@ -69,14 +69,14 @@ export function BrowserFrame({
     <div
       className={`group/frame relative flex flex-col overflow-hidden ${
         dark
-          ? 'bg-[#141414] border border-white/10 shadow-[0_24px_60px_-24px_rgba(0,0,0,0.7)]'
-          : 'bg-[#0D0D0D] border border-black/10 shadow-[0_20px_50px_-24px_rgba(0,0,0,0.25)]'
+          ? 'bg-sidebar border border-rule-dark shadow-[0_24px_60px_-24px_rgba(0,0,0,0.7)]'
+          : 'bg-surface border border-rule-strong shadow-lift'
       } ${className}`}
     >
       {/* ── Chrome bar ─────────────────────────────────────────────────── */}
       <div
         className={`flex items-center gap-3 px-4 py-2.5 border-b shrink-0 ${
-          dark ? 'bg-[#1B1B1B] border-white/10' : 'bg-[#F2F1EF] border-black/[0.08]'
+          dark ? 'bg-card border-rule-dark' : 'bg-surface-2 border-rule'
         }`}
       >
         <span className="flex items-center gap-[6px] shrink-0" aria-hidden>
@@ -131,7 +131,7 @@ export function BrowserFrame({
       </div>
 
       {/* ── Screen ─────────────────────────────────────────────────────── */}
-      <div ref={screenRef} className={`relative ${aspectClass} overflow-hidden bg-[#0D0D0D] group`}>
+      <div ref={screenRef} className={`relative ${aspectClass} overflow-hidden bg-obsidian group`}>
         {imageUrl ? (
           <div
             ref={captureRef}
@@ -150,7 +150,7 @@ export function BrowserFrame({
             />
           </div>
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1A1A1A] to-[#0D0D0D] flex flex-col items-center justify-center gap-4">
+          <div className="absolute inset-0 bg-gradient-to-br from-card to-obsidian flex flex-col items-center justify-center gap-4">
             <div className="w-14 h-10 border border-white/10 rounded-[2px] flex items-center justify-center">
               <div className="w-7 h-5 border border-white/20 rounded-[1px]" />
             </div>
@@ -161,7 +161,7 @@ export function BrowserFrame({
         )}
 
         {/* Bottom fade — the capture dissolves instead of hard-clipping */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0D0D0D]/80 via-[#0D0D0D]/25 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-obsidian/80 via-obsidian/25 to-transparent" />
 
         {/* Live pill — bottom center on hover */}
         {liveHref && (

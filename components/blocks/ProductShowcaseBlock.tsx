@@ -126,7 +126,7 @@ export function ProductShowcaseBlock(props: any) {
   return (
     <AnimatedSection className="w-full" data-purpose="product-showcase">
       <motion.section
-        className="py-32 bg-brand-cream border-t border-brand-obsidian/5 relative overflow-hidden"
+        className="py-24 md:py-32 bg-surface border-y border-rule relative overflow-hidden"
         data-purpose="exvorta-docs"
         initial="hidden"
         whileInView="show"
@@ -310,17 +310,20 @@ export function ProductShowcaseBlock(props: any) {
 
 {/*  Right Column: Marketing  */}
 <motion.div className="order-1 lg:order-2" variants={column}>
-<div className="text-[10px] tracking-widest uppercase text-obsidian/40 mb-6">Document Automation</div>
-<h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-obsidian mb-8 leading-[1.1]">Trade Documents,<br/>Automated &amp; Perfected.</h2>
-<p className="text-base md:text-lg text-obsidian/60 mb-10 font-light leading-relaxed">Stop wasting hours on manual paperwork. Instantly generate, digitally sign, and manage strictly compliant global trade documents from official templates.</p>
-<StaggerContainer as="ul" className="space-y-6" staggerChildren={0.1} delayChildren={0.2}>
+<p className="eyebrow mb-6">
+<span className="eyebrow-index" aria-hidden><i className="block h-1.5 w-1.5 rotate-45 bg-current" /></span>
+Document Automation
+</p>
+<h2 className="font-serif text-headline font-semibold text-obsidian mb-8">Trade Documents,<br/>Automated &amp; Perfected.</h2>
+<p className="text-lede text-muted mb-10 font-light">Stop wasting hours on manual paperwork. Instantly generate, digitally sign, and manage strictly compliant global trade documents from official templates.</p>
+<StaggerContainer as="ul" className="border-y border-rule" staggerChildren={0.1} delayChildren={0.2}>
 {['Intelligent Template Memory', 'Digital Signatures', 'Bank-Grade Compliance & API Ready'].map((feature) => (
-<StaggerItem as="li" key={feature} className="flex items-center space-x-4">
-<span className="text-emerald" aria-hidden>✓</span>
-<span className="text-sm text-obsidian font-medium tracking-tight">{feature}</span>
+<StaggerItem as="li" key={feature} className="flex items-center gap-4 border-b border-rule py-4 last:border-b-0">
+<span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-success-bg text-[10px] text-emerald" aria-hidden>✓</span>
+<span className="text-base text-obsidian font-medium">{feature}</span>
 </StaggerItem>
 ))}
-</StaggerContainer><div className="mt-8"><Link className="inline-flex items-center text-[11px] font-bold tracking-widest uppercase border-b border-brand-obsidian pb-1 hover:text-emerald-700 hover:border-emerald-700 transition-colors duration-300" href="/rfq">Request Exvorta Docs Access <span className="ms-2">→</span></Link></div>
+</StaggerContainer><div className="mt-10"><Link className="btn-primary min-h-[52px] px-8 py-4" href="/rfq">Request Exvorta Docs Access →</Link></div>
 </motion.div>
 </div>
 </div></motion.section>

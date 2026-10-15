@@ -30,6 +30,13 @@
   /* Secondary copy. 62% obsidian on cream ≈ 5.3:1 — clears WCAG AA for body
      text, unlike the previous 50% (≈ 4.0:1). */
   --color-muted: rgba(13, 13, 13, 0.62);
+  /* Structural rules — grid lines, ledger dividers, crosshair marks. Stronger
+     than the 5% hairline (which reads as "no border" on cream) yet still quiet. */
+  --color-rule: rgba(13, 13, 13, 0.12);
+  --color-rule-strong: rgba(13, 13, 13, 0.28);
+  --color-rule-dark: rgba(255, 255, 255, 0.14);
+  /* Secondary copy on obsidian — 64% white ≈ 7:1. */
+  --color-muted-dark: rgba(255, 255, 255, 0.64);
 
   /* Product interface (dark) */
   --color-dashboard: #0D0D0D;
@@ -58,8 +65,29 @@
   --font-serif: var(--font-playfair), Georgia, serif;
   --font-mono: ui-monospace, 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
 
+  /* Type scale — fluid, mirrors DESIGN.md (display 84 → 48, headline 60 → 36,
+     title 32 → 24). `text-display` etc. carry their own leading + tracking. */
+  --text-display: clamp(3rem, 1.6rem + 5.2vw, 5.25rem);
+  --text-display--line-height: 1.06;
+  --text-display--letter-spacing: -0.025em;
+  --text-headline: clamp(2.25rem, 1.4rem + 2.8vw, 3.75rem);
+  --text-headline--line-height: 1.12;
+  --text-headline--letter-spacing: -0.02em;
+  --text-title: clamp(1.5rem, 1.1rem + 1.2vw, 2rem);
+  --text-title--line-height: 1.2;
+  --text-title--letter-spacing: -0.01em;
+  --text-lede: clamp(1.0625rem, 0.95rem + 0.4vw, 1.25rem);
+  --text-lede--line-height: 1.65;
+  --text-mega: clamp(4.5rem, 2rem + 17vw, 17rem);
+  --text-mega--line-height: 0.8;
+  --text-mega--letter-spacing: 0.04em;
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.22em;
+
   /* Elevation */
   --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.03);
+  --shadow-lift: 0 18px 40px -22px rgba(13, 13, 13, 0.22), 0 2px 6px rgba(13, 13, 13, 0.04);
   --shadow-glow: 0 0 40px rgba(0, 0, 0, 0.1);
 
   --animate-marquee: marquee 25s linear infinite;
@@ -231,6 +259,10 @@
   }
   .lwframe-capture { transition: none; }
   .terminal-caret { animation: none; }
+  .btn-primary::after,
+  .btn-ghost::before { transition: none; }
+  .btn-primary:hover,
+  .card-elite:hover { transform: none; }
 }
 
 /*
@@ -257,8 +289,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Editorial typography: balanced headlines, no orphans in paragraphs. */
+/* Editorial typography: balanced headlines, no orphans in paragraphs.
+   Playfair defaults to old-style figures ("03" reads as "o3"); stats, indices
+   and prices need lining figures. */
 h1, h2, h3 { text-wrap: balance; }
+.font-serif { font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
 p, li, blockquote { text-wrap: pretty; }
 
 ::selection {
@@ -305,41 +340,79 @@ html.lenis body { height: auto; }
    utilities layer and silently ignore such overrides.
    ─────────────────────────────────────────────────────────────────────────── */
 @layer components {
+  /* Buttons (DESIGN.md → Components). 4px radius, 11px blueprint label.
+     Primary: lit top edge + a single sheen sweep and the "subtle blue glow"
+     on hover. Ghost: fill rises from the baseline. Transform/opacity/shadow
+     only, so hover stays on the compositor. */
   .btn-primary {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
     background-color: var(--color-obsidian);
-    color: #ffffff;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.625rem;
+    color: var(--color-surface);
+    padding: 0.8125rem 1.625rem;
+    font-size: var(--text-label);
+    font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     border-radius: 4px;
-    transition: background-color 200ms, color 200ms, border-color 200ms, transform 200ms;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 1px 2px rgba(13, 13, 13, 0.2);
+    transition: transform 250ms var(--ease-cinematic), box-shadow 250ms var(--ease-cinematic), background-color 200ms;
+  }
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.16) 50%, transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 700ms var(--ease-cinematic);
   }
   .btn-primary:hover {
-    background-color: rgba(13, 13, 13, 0.8);
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 10px 28px -8px color-mix(in oklab, var(--color-info) 45%, transparent),
+      0 2px 4px rgba(13, 13, 13, 0.2);
   }
+  .btn-primary:hover::after { transform: translateX(120%); }
+  .btn-primary:active { transform: translateY(0); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1); }
 
   .btn-ghost {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
     border: 1px solid var(--color-obsidian);
     color: var(--color-obsidian);
     background-color: transparent;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.625rem;
+    padding: 0.8125rem 1.625rem;
+    font-size: var(--text-label);
+    font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     border-radius: 4px;
-    transition: background-color 200ms, color 200ms, border-color 200ms, transform 200ms;
+    transition: color 250ms var(--ease-cinematic), border-color 200ms, transform 250ms var(--ease-cinematic);
   }
-  .btn-ghost:hover {
+  .btn-ghost::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
     background-color: var(--color-obsidian);
-    color: #ffffff;
+    transform: translateY(101%);
+    transition: transform 350ms var(--ease-cinematic);
   }
+  .btn-ghost:hover { color: var(--color-surface); }
+  .btn-ghost:hover::before { transform: translateY(0); }
+  .btn-ghost:active { transform: translateY(1px); }
 
   .btn-mono {
     display: inline-flex;
@@ -349,15 +422,47 @@ html.lenis body { height: auto; }
     background-color: transparent;
     color: var(--color-obsidian);
     padding: 0.5rem 1.25rem;
-    font-size: 0.625rem;
+    font-size: var(--text-label);
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--color-rule-strong);
     border-radius: 4px;
-    transition: border-color 200ms;
+    transition: border-color 200ms, background-color 200ms;
   }
   .btn-mono:hover {
     border-color: var(--color-obsidian);
+    background-color: var(--color-surface);
+  }
+
+  /* Inside obsidian sections (.on-dark) the same classes invert themselves, so
+     blocks never hand-roll "bg-white text-obsidian" buttons. */
+  .on-dark .btn-primary {
+    background-color: var(--color-surface);
+    color: var(--color-obsidian);
+    box-shadow: inset 0 -1px 0 rgba(13, 13, 13, 0.12), 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+  .on-dark .btn-primary::after {
+    background: linear-gradient(105deg, transparent 35%, rgba(13, 13, 13, 0.1) 50%, transparent 65%);
+  }
+  .on-dark .btn-primary:hover {
+    box-shadow:
+      inset 0 -1px 0 rgba(13, 13, 13, 0.12),
+      0 10px 32px -8px color-mix(in oklab, var(--color-success) 45%, transparent),
+      0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  .on-dark .btn-ghost {
+    border-color: rgba(255, 255, 255, 0.55);
+    color: var(--color-surface);
+  }
+  .on-dark .btn-ghost::before { background-color: var(--color-surface); }
+  .on-dark .btn-ghost:hover { color: var(--color-obsidian); border-color: var(--color-surface); }
+  .on-dark .btn-mono {
+    color: var(--color-surface);
+    border-color: var(--color-rule-dark);
+  }
+  .on-dark .btn-mono:hover {
+    border-color: var(--color-surface);
+    background-color: transparent;
   }
 
   .glass-panel {
@@ -419,12 +524,128 @@ html.lenis body { height: auto; }
      edges so it frames the hero instead of boxing it in. */
   .bg-blueprint-grid {
     background-image:
-      linear-gradient(to right, rgba(13, 13, 13, 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(13, 13, 13, 0.045) 1px, transparent 1px);
+      linear-gradient(to right, var(--color-rule) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-rule) 1px, transparent 1px);
+    background-size: 72px 72px;
+    opacity: 0.55;
+    -webkit-mask-image: radial-gradient(ellipse 80% 75% at 50% 25%, black 20%, transparent 85%);
+    mask-image: radial-gradient(ellipse 80% 75% at 50% 25%, black 20%, transparent 85%);
+  }
+
+  /* Same grid for obsidian sections. */
+  .bg-blueprint-grid-dark {
+    background-image:
+      linear-gradient(to right, var(--color-rule-dark) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-rule-dark) 1px, transparent 1px);
     background-size: 72px 72px;
     opacity: 0.35;
-    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 20%, black, transparent);
-    mask-image: radial-gradient(ellipse 90% 70% at 50% 20%, black, transparent);
+    -webkit-mask-image: radial-gradient(ellipse 75% 80% at 50% 40%, black 10%, transparent 80%);
+    mask-image: radial-gradient(ellipse 75% 80% at 50% 40%, black 10%, transparent 80%);
+  }
+
+  /* Emerald aura for dark sections — a gradient, never a blur filter. */
+  .bg-aura-dark {
+    background-image: radial-gradient(
+      ellipse 55% 60% at 50% 0%,
+      color-mix(in oklab, var(--color-emerald) 22%, transparent),
+      transparent 72%
+    );
+  }
+
+  /* Architectural column rails: two hairlines at the container edges. */
+  .rails { position: relative; }
+  .rails::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(var(--color-rule), var(--color-rule)) calc(50% - 608px) 0 / 1px 100% no-repeat,
+      linear-gradient(var(--color-rule), var(--color-rule)) calc(50% + 608px) 0 / 1px 100% no-repeat;
+    -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 58%);
+    mask-image: linear-gradient(to bottom, black 20%, transparent 58%);
+  }
+  @media (max-width: 1279px) { .rails::before { display: none; } }
+
+  /* Crosshair frame (design system → Architectural Schematics): "+" marks sit
+     on the four corners of any container. Set --frame-mark to recolour. Needs
+     a non-clipping parent (the marks bleed 6px outside the box). */
+  .frame { position: relative; --frame-mark: var(--color-rule-strong); }
+  .frame::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      linear-gradient(var(--frame-mark), var(--frame-mark)) left 0 top 6px / 13px 1px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) left 6px top 0 / 1px 13px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) right 0 top 6px / 13px 1px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) right 6px top 0 / 1px 13px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) left 0 bottom 6px / 13px 1px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) left 6px bottom 0 / 1px 13px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) right 0 bottom 6px / 13px 1px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) right 6px bottom 0 / 1px 13px;
+    background-repeat: no-repeat;
+  }
+  .frame-dark { --frame-mark: rgba(255, 255, 255, 0.4); }
+
+  /* Blueprint label with an optional index chip: "01 / Manifesto". */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    line-height: 1;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .eyebrow-index {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-emerald);
+  }
+  .eyebrow-index::after {
+    content: "";
+    width: 2rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.55;
+  }
+  .on-dark .eyebrow,
+  .eyebrow-dark { color: var(--color-muted-dark); }
+  .on-dark .eyebrow-index,
+  .eyebrow-dark .eyebrow-index { color: var(--color-success); }
+
+  /* Ledger grid: cells share 1px rules instead of floating as separate cards.
+     Use on a grid container; children become cells. */
+  .ledger {
+    display: grid;
+    gap: 1px;
+    background-color: var(--color-rule);
+    border: 1px solid var(--color-rule);
+  }
+  .ledger > * { background-color: var(--color-surface); }
+  .ledger-dark {
+    background-color: var(--color-rule-dark);
+    border-color: var(--color-rule-dark);
+  }
+  .ledger-dark > * { background-color: var(--color-obsidian); }
+
+  /* Elite card: hairline surface that sharpens and lifts on hover. */
+  .card-elite {
+    position: relative;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-rule);
+    transition: transform 400ms var(--ease-cinematic), border-color 250ms, box-shadow 400ms var(--ease-cinematic);
+  }
+  .card-elite:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-rule-strong);
+    box-shadow: var(--shadow-lift);
   }
 
   /* Full-page grain: fixed + tile-sized raster (see .bg-noise note). */

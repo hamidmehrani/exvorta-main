@@ -25,10 +25,10 @@ export const MarqueeBlock: React.FC<{
   if (items.length === 0) return null
 
   return (
-    <AnimatedSection className="w-full py-20 px-6 border-b border-black/5 overflow-hidden">
+    <AnimatedSection className="w-full overflow-hidden border-b border-rule px-6 py-20">
       {sectionTitle && (
-        <div className="text-center mb-12">
-          <MonoLabel className="text-black/40 uppercase">{sectionTitle}</MonoLabel>
+        <div className="mb-12 text-center">
+          <MonoLabel className="eyebrow">{sectionTitle}</MonoLabel>
         </div>
       )}
       <Marquee speed={40}>

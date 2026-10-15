@@ -1,11 +1,9 @@
-'use client'
-
 import { sanitizeHeadingHtml } from '@/utils/heading-sanitize'
 
 import React from 'react'
-import { AnimatedSection, StaggerContainer, StaggerItem, EASE_OUT } from '@/components/ui/Reveal'
-import { m } from 'framer-motion'
+import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 import { StaggerText } from '@/components/ui/motion'
+import { unbracket } from '@/lib/text'
 
 export interface ThesisBlockProps {
   eyebrow?: string
@@ -16,33 +14,28 @@ export interface ThesisBlockProps {
 }
 
 export const ThesisBlock: React.FC<ThesisBlockProps> = (props) => {
-  const eyebrow = props.eyebrow || "[ THE EXVORTA<br/>THESIS ]"
+  // CMS eyebrows carry brackets and <br/>; the label renders as plain text.
+  const eyebrow = unbracket((props.eyebrow || 'THE EXVORTA THESIS').replace(/<br\s*\/?>/gi, ' '))
   const headline = props.headline || "The era of the digital brochure is dead. A generic website signals operational weakness to global partners. We engineer assets with a balance sheet impact."
   const paragraph1 = props.paragraph1 || "In the high-stakes arena of global trade, your digital footprint is your most heavily scrutinized asset. Before a contract is signed, before a container is shipped, serious buyers verify your credibility online before they ever reach out."
   const paragraph2 = props.paragraph2 || "We established Exvorta to provide elite trading firms with digital infrastructure that matches their physical scale. No templates. No shortcuts. Just pure, unadulterated performance architecture."
 
   return (
-    <AnimatedSection className="w-full bg-[#FCFAF8] py-32 md:py-48 px-6">
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
-        
+    <AnimatedSection className="w-full py-24 md:py-40">
+      <div className="container-site grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
         {/* Left Column: The Anchor */}
-        <div className="lg:col-span-3 flex flex-col justify-start">
-          <m.div
-            aria-hidden
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.9, ease: EASE_OUT }}
-            className="w-12 h-[1px] bg-black/20 mb-8 origin-left"
-          ></m.div>
-          <span 
-            className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: eyebrow }}
-          />
+        <div className="flex flex-col justify-start lg:col-span-3">
+          <span aria-hidden className="mb-8 block h-px w-12 bg-rule-strong" />
+          <p className="eyebrow !items-start leading-relaxed">
+            <span className="eyebrow-index" aria-hidden>
+              <i className="mt-px block h-1.5 w-1.5 rotate-45 bg-current" />
+            </span>
+            {eyebrow}
+          </p>
         </div>
-        
+
         {/* Right Column: The Manifesto */}
-        <StaggerContainer className="lg:col-span-9 flex flex-col justify-center" staggerChildren={0.12} delayChildren={0.1}>
+        <StaggerContainer className="flex flex-col justify-center lg:col-span-9" staggerChildren={0.12} delayChildren={0.1}>
           <StaggerItem>
             <StaggerText
               as="h2"
@@ -51,25 +44,20 @@ export const ThesisBlock: React.FC<ThesisBlockProps> = (props) => {
               stagger={0.055}
               duration={0.7}
               mode="inView"
-              className="text-4xl md:text-5xl lg:text-6xl font-serif text-black leading-[1.1] tracking-tight mb-12 max-w-4xl"
+              className="mb-12 max-w-4xl font-serif text-headline font-semibold text-obsidian"
             />
           </StaggerItem>
           {paragraph1 && (
             <StaggerItem>
-              <p className="text-xl text-black/60 font-sans leading-relaxed max-w-3xl mb-8">
-                {paragraph1}
-              </p>
+              <p className="mb-8 max-w-3xl text-lede font-light text-muted">{paragraph1}</p>
             </StaggerItem>
           )}
           {paragraph2 && (
             <StaggerItem>
-              <p className="text-xl text-black/60 font-sans leading-relaxed max-w-3xl">
-                {paragraph2}
-              </p>
+              <p className="max-w-3xl text-lede font-light text-muted">{paragraph2}</p>
             </StaggerItem>
           )}
         </StaggerContainer>
-        
       </div>
     </AnimatedSection>
   )

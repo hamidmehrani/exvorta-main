@@ -173,7 +173,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
       initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 80, scale: 0.96, filter: 'blur(8px)' }}
       animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
       transition={{ duration: 1.1, delay: 0.75, ease: easings.cinematic }}
-      className="exvorta-os relative w-full max-w-[1400px] mx-auto rounded-xl shadow-2xl overflow-hidden bg-[#0B0F14] border border-white/10 flex flex-col mt-20 will-change-transform text-left"
+      className="exvorta-os relative w-full max-w-[1400px] mx-auto rounded-xl shadow-2xl overflow-hidden bg-[#0B0F14] border border-white/10 flex flex-col will-change-transform text-left"
       data-purpose="dashboard-preview"
       dir="ltr"
     >
