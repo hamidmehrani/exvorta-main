@@ -28,9 +28,14 @@ export default function CookieBanner({ config }: { config: CookieBannerProps }) 
     <div
       role="dialog"
       aria-label="Cookie preferences"
-      className="fixed inset-x-4 bottom-4 z-50 border border-obsidian/10 bg-surface p-6 shadow-soft md:inset-x-auto md:start-6 md:bottom-6 md:max-w-md"
+      className="fixed inset-x-4 bottom-4 z-50 border border-rule-strong bg-surface p-6 shadow-lift md:inset-x-auto md:start-6 md:bottom-6 md:max-w-md"
     >
-      <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted">[ Cookies ]</p>
+      <p className="eyebrow mb-4">
+        <span className="eyebrow-index" aria-hidden>
+          <i className="block h-1.5 w-1.5 rotate-45 bg-current" />
+        </span>
+        Cookies
+      </p>
       <p className="mb-6 text-sm leading-relaxed text-obsidian/80">
         {config.text || 'We use cookies to ensure you get the best experience on our website.'}
         {config.policyUrl && (

@@ -12,6 +12,8 @@ export interface BrowserFrameProps {
   /** Chrome colorway — 'dark' for dark page sections, 'light' for light ones. */
   tone?: 'light' | 'dark'
   aspectClass?: string
+  /** Preload the capture — set for frames that can be the page's LCP. */
+  priority?: boolean
   /** Rendered under the screen (meta rows, captions…). */
   footer?: React.ReactNode
   className?: string
@@ -32,6 +34,7 @@ export function BrowserFrame({
   imageUrl,
   tone = 'light',
   aspectClass = 'aspect-[16/10]',
+  priority = false,
   footer,
   className = '',
 }: BrowserFrameProps) {
@@ -146,7 +149,7 @@ export function BrowserFrame({
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 66vw"
               className={`h-auto w-full transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}
               onLoad={() => setLoaded(true)}
-              priority={false}
+              priority={priority}
             />
           </div>
         ) : (

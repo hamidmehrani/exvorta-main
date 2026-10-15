@@ -89,14 +89,10 @@ export const FAQBlock: React.FC<FAQBlockProps> = (props) => {
     <AnimatedSection className="on-dark relative isolate w-full overflow-hidden bg-obsidian py-24 text-white md:py-32">
       <FAQJsonLd questions={questions} />
       <div aria-hidden className="bg-blueprint-grid-dark pointer-events-none absolute inset-0 -z-10" />
-      <div className="container-site grid gap-14 lg:grid-cols-12 lg:gap-20">
-        <div className="lg:col-span-5">
-          <div className="lg:sticky lg:top-32">
-            <SectionHeading tone="dark" eyebrow={eyebrow} title="" titleHtml={sectionTitle} />
-          </div>
-        </div>
+      <div className="container-site">
+        <SectionHeading align="center" tone="dark" eyebrow={eyebrow} title="" titleHtml={sectionTitle} className="mb-16 md:mb-20" />
 
-        <StaggerContainer className="border-t border-rule-dark lg:col-span-7" staggerChildren={0.08} delayChildren={0.15}>
+        <StaggerContainer className="mx-auto max-w-4xl border-t border-rule-dark" staggerChildren={0.08} delayChildren={0.15}>
           {questions.map((q: FAQItem, i: number) => (
             <StaggerItem key={i}>
               <FAQRow q={q} i={i} open={openIndex === i} onToggle={() => setOpenIndex(openIndex === i ? -1 : i)} />

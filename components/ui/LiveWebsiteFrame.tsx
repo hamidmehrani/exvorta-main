@@ -14,6 +14,8 @@ export interface LiveWebsiteFrameProps {
   slug?: string
   /** Kept for API compatibility. */
   live?: boolean
+  /** Preload the capture (above-the-fold cards). */
+  priority?: boolean
   /** Extra classes for the outer wrapper */
   className?: string
 }
@@ -33,6 +35,7 @@ export function LiveWebsiteFrame({
   volume,
   service,
   slug,
+  priority,
   className = '',
 }: LiveWebsiteFrameProps) {
   const liveHref = liveUrl || (slug ? `https://${slug}.exvorta.com` : '')
@@ -49,6 +52,7 @@ export function LiveWebsiteFrame({
       url={liveHref || undefined}
       imageUrl={imageUrl}
       tone="light"
+      priority={priority}
       className={className}
       footer={
         metaRows.length > 0 ? (

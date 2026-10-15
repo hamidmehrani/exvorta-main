@@ -1,12 +1,10 @@
-'use client'
-
 import { sanitizeHeadingHtml } from '@/utils/heading-sanitize'
 
 import React from 'react'
-import Link from 'next/link'
-import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
-import { m as motion } from 'framer-motion'
-import { easings, useReducedMotion } from '@/lib/animations'
+import Link from '@/components/ui/AppLink'
+import { AnimatedSection, Reveal, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { unbracket } from '@/lib/text'
 
 const CAPABILITIES = [
   { title: 'Products & Catalog', desc: 'Add, edit, and reorder products with spec sheets, dimensions, and imagery — live instantly.' },
@@ -18,58 +16,58 @@ const CAPABILITIES = [
 ]
 
 export function CmsControlBlock(props: Record<string, unknown>) {
-  const prefersReducedMotion = useReducedMotion()
-  const eyebrow = (props.eyebrow as string) || '[ TOTAL OPERATIONAL CONTROL ]'
+  const eyebrow = unbracket(props.eyebrow as string) || 'TOTAL OPERATIONAL CONTROL'
   const headline = (props.headline as string) || 'Your website. Your panel. Zero dependency.'
 
   return (
-    <section className="w-full py-28 bg-[#0D0D0D] border-t border-white/10" data-purpose="cms-control">
-      <div className="max-w-7xl mx-auto px-6 w-full">
-        <AnimatedSection className="text-center mb-16">
-          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/45 mb-6">{eyebrow}</div>
-          <h2 className="font-serif text-4xl md:text-6xl text-white tracking-tighter leading-[1.08] font-semibold mb-6">
-            <span dangerouslySetInnerHTML={{ __html: sanitizeHeadingHtml(headline) }} />
-          </h2>
-          <p className="font-sans text-base md:text-lg text-white/50 max-w-2xl mx-auto font-light">
-            Every Exvorta deployment ships with a custom content panel engineered for your team.
-            If you can use a browser, you can run the entire website — {` `}
-            <span className="text-white/80">no developer required, ever.</span>
-          </p>
-        </AnimatedSection>
+    <AnimatedSection className="on-dark relative isolate w-full overflow-hidden border-t border-rule-dark bg-obsidian py-24 text-white md:py-32" data-purpose="cms-control">
+      <div aria-hidden className="bg-blueprint-grid-dark pointer-events-none absolute inset-0 -z-10" />
+      <div className="container-site">
+        <SectionHeading
+          align="center"
+          tone="dark"
+          eyebrow={eyebrow}
+          title=""
+          titleHtml={sanitizeHeadingHtml(headline, { onDark: true })}
+          description={
+            <>
+              Every Exvorta deployment ships with a custom content panel engineered for your team. If you can use a
+              browser, you can run the entire website — <span className="text-white">no developer required, ever.</span>
+            </>
+          }
+          className="mb-16 md:mb-20"
+        />
 
         <StaggerContainer
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16"
+          className="frame frame-dark mb-16 grid grid-cols-1 border border-rule-dark md:grid-cols-2 lg:grid-cols-3"
           staggerChildren={0.08}
           delayChildren={0.1}
         >
           {CAPABILITIES.map((cap, i) => (
-            <StaggerItem key={i}>
-              <motion.div
-                className="h-full border border-white/10 bg-[#141414] p-8 hover:border-white/25 transition-colors duration-300 group"
-                whileHover={prefersReducedMotion ? undefined : { y: -6 }}
-                transition={{ duration: 0.3, ease: easings.cinematic }}
-              >
-                <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#059669] mb-5">
-                  {String(i + 1).padStart(2, '0')}
-                </div>
-                <h3 className="font-serif text-xl text-white mb-3 font-medium tracking-tight">{cap.title}</h3>
-                <p className="font-sans text-sm text-white/50 leading-relaxed font-light">{cap.desc}</p>
-              </motion.div>
+            <StaggerItem
+              key={cap.title}
+              className="group relative border-b border-rule-dark p-8 transition-colors duration-300 hover:bg-white/[0.03] max-md:last:border-b-0 md:p-10 md:max-lg:odd:border-e md:max-lg:[&:nth-last-child(-n+2)]:border-b-0 lg:border-e lg:[&:nth-child(3n)]:border-e-0 lg:[&:nth-last-child(-n+3)]:border-b-0"
+            >
+              <span
+                aria-hidden
+                className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-success transition-transform duration-500 ease-[var(--ease-cinematic)] group-hover:scale-x-100"
+              />
+              <p className="eyebrow eyebrow-dark mb-8">
+                <span className="eyebrow-index">{String(i + 1).padStart(2, '0')}</span>
+              </p>
+              <h3 className="mb-3 font-serif text-2xl font-semibold leading-snug text-white">{cap.title}</h3>
+              <p className="text-base font-light leading-relaxed text-muted-dark">{cap.desc}</p>
             </StaggerItem>
           ))}
         </StaggerContainer>
 
-        <AnimatedSection className="text-center">
-          <Link
-            href="/portfolio"
-            className="inline-flex items-center gap-3 border border-white/25 px-10 py-4 font-mono text-[11px] uppercase tracking-[0.2em] text-white hover:bg-white hover:text-black transition-all duration-300"
-          >
-            SEE IT IN THE LIVE CASE STUDIES
-            <span>→</span>
+        <Reveal y={14} className="text-center">
+          <Link href="/portfolio" className="btn-ghost min-h-[52px] px-10 py-4">
+            SEE IT IN THE LIVE CASE STUDIES →
           </Link>
-        </AnimatedSection>
+        </Reveal>
       </div>
-    </section>
+    </AnimatedSection>
   )
 }
 

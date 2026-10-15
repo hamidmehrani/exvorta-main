@@ -238,6 +238,7 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
                         liveUrl={project.liveUrl || (project.slug ? `https://${project.slug}.exvorta.com` : undefined)}
                         slug={project.slug}
                         live
+                        priority={index < 3}
                       />
                       <CardBody title={project.title} as="h2">
                         <p className="mb-8 flex-grow text-base font-light leading-relaxed text-muted">{excerpt}</p>

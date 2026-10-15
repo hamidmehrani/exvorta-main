@@ -43,7 +43,7 @@ export function CtaBand({
     <AnimatedSection
       id={id}
       className={`relative isolate w-full overflow-hidden ${
-        dark ? 'on-dark bg-obsidian text-white' : 'border-y border-rule bg-surface text-obsidian'
+        dark ? 'on-dark border-t border-rule-dark bg-obsidian text-white' : 'border-y border-rule bg-surface text-obsidian'
       }`}
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">

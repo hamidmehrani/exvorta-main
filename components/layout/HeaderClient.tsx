@@ -86,7 +86,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { 
     <header
       className={`fixed inset-x-0 top-0 z-50 border-b bg-cream transition-[transform,box-shadow,border-color] duration-300 ease-[var(--ease-cinematic)] ${
         hidden ? '-translate-y-full' : 'translate-y-0'
-      } ${scrolled ? 'border-obsidian/10 shadow-soft' : 'border-obsidian/[0.06]'}`}
+      } ${scrolled ? 'border-rule-strong shadow-soft' : 'border-rule'}`}
       data-purpose="site-header"
     >
       <div className="container-site grid h-20 grid-cols-[1fr_auto] items-center gap-4 lg:grid-cols-[1fr_auto_1fr] lg:gap-8">
@@ -109,7 +109,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { 
         </div>
 
         {/* Desktop navigation — centred on the page, not on the leftover space */}
-        <nav aria-label="Primary" className="hidden min-w-0 items-center gap-10 font-sans text-[11px] font-medium uppercase tracking-widest lg:flex xl:gap-12">
+        <nav aria-label="Primary" className="hidden min-w-0 items-center gap-10 font-sans text-label font-medium uppercase lg:flex xl:gap-12">
           {navLinks.map((item, idx) => {
             const href = resolveHref(item)
             const isExternal = item.link?.type === 'custom' && item.link?.openInNewTab
@@ -128,8 +128,8 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { 
                 {item.link.label}
                 <span
                   aria-hidden
-                  className={`absolute inset-x-0 bottom-2.5 h-px origin-left bg-obsidian transition-transform duration-300 ${
-                    active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  className={`absolute inset-x-0 bottom-2.5 h-px origin-left transition-transform duration-300 ${
+                    active ? 'scale-x-100 bg-emerald' : 'scale-x-0 bg-obsidian group-hover:scale-x-100'
                   }`}
                 />
               </Link>
@@ -139,7 +139,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { 
 
         {/* CTA */}
         <div className="hidden items-center gap-6 justify-self-end lg:flex">
-          <Link href="/login" className="whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.2em] text-muted transition-colors hover:text-obsidian">
+          <Link href="/login" className="whitespace-nowrap font-mono text-label uppercase text-muted transition-colors hover:text-obsidian">
             CLIENT LOGIN
           </Link>
           <Link href="/rfq" className="btn-primary min-h-[44px] whitespace-nowrap">

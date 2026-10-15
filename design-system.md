@@ -118,3 +118,56 @@ No heavy shadows. Tonal layering + glassmorphism:
 ## Audit log — 2026-10-15 (performance + design pass)
 
 See `PERFORMANCE.md → Rendering architecture` for the invariants this pass established.
+
+## Blueprint system — design pass 2026-10-15 (v2)
+
+Done at the owner's explicit request ("full freedom, perfect the design"), which overrides the
+"port `code.html` 1:1" rule for the areas below. The brand language is unchanged (Institutional Elite);
+what changed is how consistently it is applied. Pages built from CMS blocks inherit everything.
+
+### New tokens (`@theme` in `app/globals.css`)
+
+| Token | Use |
+|---|---|
+| `text-display` / `text-headline` / `text-title` / `text-lede` / `text-label` / `text-mega` | The only heading/body scale. Fluid (`clamp`), each carries its own leading + tracking. Never hand-roll `text-[84px]` or `tracking-tighter` on headings. |
+| `rule` / `rule-strong` / `rule-dark` | Structural lines (grid, ledger dividers, crosshairs). Replaces `border-black/5`, which is invisible on cream. |
+| `muted-dark` | Secondary copy on obsidian (64% white ≈ 7:1). |
+| `shadow-lift` | Hover elevation for `card-elite`. |
+
+### New primitives
+
+- **`.frame`** (+ `.frame-dark`) — the four corner crosshair marks from "Architectural Schematics". Put it on a
+  non-clipping container; marks bleed 6px outside. Recolour with `--frame-mark`.
+- **`.rails`** — two hairline column rails at the container edges (hero only).
+- **`.bg-blueprint-grid` / `.bg-blueprint-grid-dark` / `.bg-aura-dark`** — visible blueprint grid and the emerald aura.
+  Gradients only (no blur filters — see PERFORMANCE.md invariant 7).
+- **`.eyebrow`**, `.eyebrow-index`, `.eyebrow-dark` — the blueprint label. A section's marker is an emerald diamond
+  (or a number in lists); never write `[ BRACKETS ]` inside a heading block, `unbracket()` CMS values instead.
+- **`.card-elite`** — hairline card that lifts on hover. Use it for stand-alone cards.
+- **Ledger layout** — grouped cells share 1px rules inside a `frame` (`border border-rule` on the grid,
+  `border-e`/`border-b` on cells, emerald/success top-rule sweep on hover). Use it instead of floating cards.
+- **`.on-dark`** — put on any obsidian section: `.btn-primary`, `.btn-ghost`, `.btn-mono`, `.eyebrow` and focus rings
+  invert automatically. Do not hand-roll `bg-white text-obsidian` buttons.
+- **`<SectionHeading>`** (`components/ui/SectionHeading.tsx`) — eyebrow → headline → lede, one scale everywhere.
+- **`<CtaBand>`** (`components/ui/CtaBand.tsx`) — the closing statement band shared by CTA, CTA banner and the portfolio close.
+
+### Buttons
+
+`.btn-primary`: lit top edge, one sheen sweep and the DESIGN.md "subtle blue glow" on hover (success-green on dark).
+`.btn-ghost`: fill rises from the baseline. Labels are 11px (`text-label`), 500 weight. All motion is
+transform/opacity/shadow and is disabled under `prefers-reduced-motion`.
+
+### Typography
+
+Playfair has no italic file: never use `italic` on serif text (it synthesises a faux oblique). Playfair's default
+old-style figures make "03" read as "o3"; `.font-serif` now forces lining figures.
+
+### Section rhythm
+
+Cream → white (`bg-surface`, tonal layer) → obsidian. A page should never have more than two consecutive cream sections.
+
+### Home page
+
+Hero: visible grid + rails, survey strip (Dubai coordinates), dual CTA, stat ledger, crosshair-framed OS panel that
+peeks above the fold. Reach strip below. Manifesto as a ledger. Closing statement is a framed `CtaBand`.
+Footer: bordered link ledger and the cropped `text-mega` wordmark.

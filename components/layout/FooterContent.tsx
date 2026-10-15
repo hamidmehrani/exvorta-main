@@ -89,12 +89,13 @@ export default function FooterContent({ columns, brand = { name: 'EXVORTA', logo
       </div>
 
       {/* Closing signature: oversized wordmark, cropped by the page edge */}
+      {/* Painted from a data attribute (::before) so it is pure decoration — a text node
+          would be audited for contrast even though it is aria-hidden. */}
       <div
         aria-hidden
-        className="pointer-events-none -mb-[0.08em] select-none overflow-hidden whitespace-nowrap text-center font-sans text-mega font-bold uppercase text-obsidian/[0.045] [mask-image:linear-gradient(to_bottom,black_45%,transparent)]"
-      >
-        {brand.name}
-      </div>
+        data-wordmark={brand.name}
+        className="pointer-events-none -mb-[0.08em] select-none overflow-hidden whitespace-nowrap text-center font-sans text-mega font-bold uppercase text-obsidian/[0.045] [mask-image:linear-gradient(to_bottom,black_45%,transparent)] before:content-[attr(data-wordmark)]"
+      />
     </footer>
   )
 }

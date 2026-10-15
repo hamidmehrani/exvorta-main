@@ -16,38 +16,40 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
   source,
 }) => {
   return (
-    <AnimatedSection className="w-full bg-obsidian flex flex-col items-center justify-center relative px-6 pb-32 pt-40 flex-grow overflow-hidden">
-      {/* Background effect */}
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_50%)] rounded-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px', opacity: 0.1 }}></div>
-      {/* Emerald aura */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[460px] bg-[radial-gradient(ellipse_50%_70%_at_50%_0%,color-mix(in_oklab,var(--color-emerald)_14%,transparent),transparent_72%)]" />
-      {/* Global Noise Overlay for Institutional Feel inside the dark section */}
-      <div className="absolute inset-0 z-0 bg-noise mix-blend-overlay rounded-none pointer-events-none" style={{ opacity: 0.03 }}></div>
+    <AnimatedSection className="on-dark relative isolate flex w-full flex-grow flex-col items-center justify-center overflow-hidden bg-obsidian px-6 pb-28 pt-40 md:pb-36">
+      {/* Aura + blueprint grid */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="bg-aura-dark absolute inset-0" />
+        <div className="bg-blueprint-grid-dark absolute inset-0" />
+      </div>
 
       {/* Content Container */}
-      <div className="w-full max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
+      <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center text-center">
 
         {/* Typography Block */}
         <Reveal y={14}>
-          <div className="text-[11px] font-mono tracking-[0.3em] text-white/60 uppercase mb-8">
-            [ EXVORTA ECOSYSTEM ]
-          </div>
+          <p className="eyebrow eyebrow-dark mb-8 justify-center">
+            <span className="eyebrow-index" aria-hidden>
+              <i className="block h-1.5 w-1.5 rotate-45 bg-current" />
+            </span>
+            Exvorta Ecosystem
+          </p>
         </Reveal>
 
         <Reveal y={22}>
-          <h1 className="text-4xl md:text-5xl font-serif font-semibold text-white mb-6 leading-tight">
+          <h1 className="mb-6 font-serif text-headline font-semibold text-white">
             Request Alpha Access.
           </h1>
         </Reveal>
 
         <Reveal y={16} delay={0.12}>
-          <p className="text-base md:text-lg text-white/70 font-light leading-relaxed mb-10 max-w-lg mx-auto">
+          <p className="mx-auto mb-12 max-w-lg text-lede font-light text-muted-dark">
             The Exvorta Suite is in closed beta. Enter your corporate email to
             reserve your position — early partners shape the roadmap.
           </p>
         </Reveal>
 
-        <Reveal y={20} delay={0.2} className="w-full max-w-2xl mx-auto">
+        <Reveal y={20} delay={0.2} className="mx-auto w-full max-w-2xl">
           <WaitlistClientForm
             placeholder={placeholder || ''}
             buttonText={buttonText || ''}
@@ -56,17 +58,18 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
         </Reveal>
 
         {/* What you get — module grid */}
-        <Reveal y={20} delay={0.3} className="w-full mt-16">
-          <StaggerContainer delayChildren={0.15} staggerChildren={0.1} className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10 border border-white/10 text-start max-w-2xl mx-auto w-full">
+        <Reveal y={20} delay={0.3} className="mt-20 w-full">
+          <StaggerContainer delayChildren={0.15} staggerChildren={0.1} className="frame frame-dark mx-auto grid w-full max-w-2xl grid-cols-1 border border-rule-dark text-start sm:grid-cols-2">
             {PERKS.map((p) => (
-              <StaggerItem key={p.title} className="h-full">
-                <div className="bg-obsidian p-5 flex flex-col gap-1.5 hover:bg-white/[0.04] transition-colors h-full">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[11px] text-white font-medium tracking-wide">{p.title}</span>
-                    <span className="font-mono text-[10px] tracking-[0.15em] text-emerald uppercase">{p.phase}</span>
-                  </div>
-                  <span className="text-xs text-white/65 font-light leading-relaxed">{p.desc}</span>
+              <StaggerItem
+                key={p.title}
+                className="group flex h-full flex-col gap-2 border-b border-rule-dark p-6 transition-colors hover:bg-white/[0.04] last:border-b-0 sm:odd:border-e sm:[&:nth-last-child(-n+2)]:border-b-0"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-sm font-medium text-white">{p.title}</span>
+                  <span className="font-mono text-label uppercase text-success">{p.phase}</span>
                 </div>
+                <span className="text-sm font-light leading-relaxed text-muted-dark">{p.desc}</span>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -74,16 +77,14 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
 
         {/* Security Micro-copy */}
         <Reveal y={12} delay={0.4}>
-          <div className="mt-8 flex flex-col items-center gap-2">
+          <div className="mt-10 flex flex-col items-center gap-3">
             <div className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald animate-pulse" />
-              <div className="text-[10px] font-mono tracking-widest text-white/60 uppercase">
-                End-to-End Encrypted Data Transmission
-              </div>
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success motion-reduce:animate-none" aria-hidden />
+              <span className="eyebrow eyebrow-dark">End-to-End Encrypted Data Transmission</span>
             </div>
-            <div className="text-[10px] font-mono text-white/50 tracking-[0.15em] uppercase">
+            <p className="font-mono text-label uppercase text-white/50">
               * Active Exvorta Web clients bypass the waitlist automatically
-            </div>
+            </p>
           </div>
         </Reveal>
       </div>

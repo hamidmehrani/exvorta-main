@@ -136,9 +136,11 @@ export function PlatformCapabilitiesBlock() {
             ))}
           </StaggerContainer>
 
-          <p className="eyebrow eyebrow-dark mt-12 justify-center text-center">
-            You never touch any of it — but every layer works for your business.
-          </p>
+          <div className="mt-12 text-center">
+            <p className="eyebrow eyebrow-dark">
+              You never touch any of it — but every layer works for your business.
+            </p>
+          </div>
         </div>
       </section>
     </AnimatedSection>
