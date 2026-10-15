@@ -1,11 +1,21 @@
-'use client'
-
 import React from 'react'
-import { m, useReducedMotion } from 'framer-motion'
-import { easings } from '@/lib/animations'
 
-export const EASE_OUT = easings.cinematic
+/*
+ * Scroll-reveal primitives.
+ *
+ * These render plain elements carrying data-reveal* hooks; the entrance
+ * itself is CSS (globals.css → "Scroll reveal") and the trigger is a tiny
+ * inline IntersectionObserver (RevealScript). Nothing here needs hydration,
+ * so above-the-fold content paints and animates at first paint instead of
+ * staying invisible until React boots, and there is no per-element JS.
+ *
+ * No 'use client' on purpose: usable from server and client components.
+ */
+
+export const EASE_OUT: [number, number, number, number] = [0.22, 1, 0.36, 1]
 export const EASE_IN_OUT: [number, number, number, number] = [0.65, 0, 0.35, 1]
+
+type RevealStyle = React.CSSProperties & Record<`--${string}`, string | number | undefined>
 
 interface RevealProps {
   children: React.ReactNode
@@ -13,22 +23,20 @@ interface RevealProps {
   className?: string
   y?: number
   duration?: number
+  id?: string
 }
 
-export function Reveal({ children, delay = 0, className = '', y = 20, duration = 0.7 }: RevealProps) {
-  const shouldReduceMotion = useReducedMotion()
-
+export function Reveal({ children, delay = 0, className = '', y = 20, duration = 0.7, id }: RevealProps) {
+  const style: RevealStyle = {
+    '--reveal-y': `${y}px`,
+    '--reveal-dur': `${duration}s`,
+    '--reveal-delay': `${delay}s`,
+  }
   return (
-    <m.div
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y, filter: 'blur(6px)' }}
-      whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration, delay, ease: EASE_OUT }}
-      className={className}
-      style={{ willChange: 'opacity, transform, filter' }}
-    >
+    // data-in is added by the observer after SSR — silence the attribute diff.
+    <div id={id} data-reveal="" suppressHydrationWarning className={className} style={style}>
       {children}
-    </m.div>
+    </div>
   )
 }
 
@@ -37,105 +45,70 @@ interface StaggerContainerProps {
   className?: string
   delayChildren?: number
   staggerChildren?: number
+  /** Semantic element, e.g. "ul" — pair with <StaggerItem as="li">. */
+  as?: React.ElementType
 }
 
-export function StaggerContainer({ 
-  children, 
-  className = '', 
-  delayChildren = 0.1, 
-  staggerChildren = 0.08 
+export function StaggerContainer({
+  children,
+  className = '',
+  delayChildren = 0.1,
+  staggerChildren = 0.08,
+  as: Tag = 'div',
 }: StaggerContainerProps) {
-  const shouldReduceMotion = useReducedMotion()
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: shouldReduceMotion ? 0 : staggerChildren,
-        delayChildren,
-      },
-    },
+  const style: RevealStyle = {
+    '--stagger-start': `${delayChildren}s`,
+    '--stagger': `${staggerChildren}s`,
   }
-
   return (
-    <m.div
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: '-50px' }}
-      className={className}
-    >
+    <Tag data-reveal-stagger="" suppressHydrationWarning className={className} style={style}>
       {children}
-    </m.div>
+    </Tag>
   )
 }
 
-export function StaggerItem({ children, className = '', y = 16 }: { children: React.ReactNode, className?: string, y?: number }) {
-  const shouldReduceMotion = useReducedMotion()
-  
-  const itemVariants = {
-    hidden: shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y, filter: 'blur(4px)' },
-    show: {
-      opacity: 1,
-      y: 0,
-      filter: 'blur(0px)',
-      transition: { duration: 0.6, ease: EASE_OUT }
-    },
-  }
-
+export function StaggerItem({
+  children,
+  className = '',
+  y = 16,
+  as: Tag = 'div',
+}: {
+  children: React.ReactNode
+  className?: string
+  y?: number
+  as?: React.ElementType
+}) {
+  const style: RevealStyle = { '--reveal-y': `${y}px`, '--reveal-dur': '0.6s' }
   return (
-    <m.div variants={itemVariants} className={className} style={{ willChange: 'opacity, transform, filter' }}>
+    <Tag data-reveal-item="" className={className} style={style}>
       {children}
-    </m.div>
+    </Tag>
   )
 }
 
-export function AnimatedSection({ children, className = '', delay = 0, id }: { children: React.ReactNode, className?: string, delay?: number, id?: string }) {
-  const shouldReduceMotion = useReducedMotion()
+export function AnimatedSection({
+  children,
+  className = '',
+  delay = 0,
+  id,
+}: {
+  children: React.ReactNode
+  className?: string
+  delay?: number
+  id?: string
+}) {
+  const style: RevealStyle = {
+    '--reveal-y': '24px',
+    '--reveal-dur': '0.8s',
+    '--reveal-delay': `${delay}s`,
+  }
   return (
-    <m.section
-      id={id}
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24, filter: 'blur(6px)' }}
-      whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.8, delay, ease: EASE_OUT }}
-      className={className}
-      style={{ willChange: 'opacity, transform, filter' }}
-    >
+    <section id={id} data-reveal="" suppressHydrationWarning className={className} style={style}>
       {children}
-    </m.section>
+    </section>
   )
 }
 
-export function AnimatedButton({ children, className = '', href, type, disabled }: { children: React.ReactNode; className?: string; href?: string; type?: 'button' | 'submit' | 'reset'; disabled?: boolean }) {
-  const motionProps = {
-    whileHover: { scale: 1.02 },
-    whileTap: { scale: 0.98 },
-  }
+export { AnimatedButton } from './AnimatedButton'
 
-  if (href) {
-    return (
-      <m.a
-        href={href}
-        {...motionProps}
-        className={className}
-      >
-        {children}
-      </m.a>
-    )
-  }
-  return (
-    <m.button
-      type={type || 'button'}
-      disabled={disabled}
-      {...motionProps}
-      className={className}
-    >
-      {children}
-    </m.button>
-  )
-}
-
-
-export default Reveal;
+export default Reveal

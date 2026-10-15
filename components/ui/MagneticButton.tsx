@@ -8,12 +8,15 @@ interface MagneticButtonProps extends HTMLMotionProps<"div"> {
   children: React.ReactNode
   className?: string
   strength?: number
+  /** Stretch to the container (form submit buttons) instead of shrink-wrapping. */
+  fullWidth?: boolean
 }
 
 export function MagneticButton({
   children,
   className = '',
   strength = 20,
+  fullWidth = false,
   ...props
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null)
@@ -41,7 +44,7 @@ export function MagneticButton({
   }
 
   if (prefersReducedMotion) {
-    return <motion.div className={className} {...props}>{children}</motion.div>
+    return <motion.div className={`${fullWidth ? 'block w-full' : ''} ${className}`} {...props}>{children}</motion.div>
   }
 
   return (
@@ -50,7 +53,7 @@ export function MagneticButton({
       onMouseMove={handleMouse}
       onMouseLeave={reset}
       style={{ x: sx, y: sy }}
-      className={`relative inline-block cursor-pointer ${className}`}
+      className={`relative ${fullWidth ? 'block w-full' : 'inline-block'} cursor-pointer ${className}`}
       {...props}
     >
       {children}

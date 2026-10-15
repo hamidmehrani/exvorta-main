@@ -70,7 +70,7 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
   }
 
   const inputClass = "peer w-full bg-white/[0.03] border border-white/15 px-5 pt-6 pb-2.5 text-white text-sm font-mono tracking-widest outline-none focus:border-brand-emerald focus:bg-white/[0.05] focus:ring-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-emerald transition-colors rounded-none placeholder-transparent relative z-10"
-  const labelClass = "absolute start-5 top-2 text-[9px] font-mono tracking-[0.2em] text-white/40 uppercase transition-all duration-200 pointer-events-none peer-focus:text-brand-emerald"
+  const labelClass = "absolute start-5 top-2 text-[10px] font-mono tracking-[0.2em] text-white/65 uppercase transition-all duration-200 pointer-events-none peer-focus:text-brand-emerald"
 
   const InputWrapper = ({ children, isFocused }: { children: React.ReactNode, isFocused?: boolean }) => (
     <div className="relative w-full group overflow-hidden bg-brand-obsidian/50 backdrop-blur-sm">
@@ -85,7 +85,7 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: EASE_OUT }}
-      className="w-full max-w-xl"
+      className="mx-auto w-full max-w-2xl"
     >
       <form onSubmit={onSubmit} className="flex flex-col gap-6 rounded-none relative">
         <input type="hidden" name="source" value={source || 'Waitlist'} />
@@ -109,7 +109,7 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
               transition={{ duration: 0.6, ease: EASE_OUT }}
               className="flex flex-col items-center gap-8 py-8 relative"
             >
-              <div className="absolute inset-0 bg-brand-emerald/5 blur-[50px] rounded-full pointer-events-none" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--color-emerald)_8%,transparent),transparent_70%)]" />
               <m.div 
                 initial={{ scale: 0 }}
                 animate={{ scale: [0, 1.2, 1] }}
@@ -151,11 +151,11 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
                   name="name"
                   type="text" 
                   required
-                  placeholder="ENTER FULL NAME..."
+                  placeholder="FULL NAME"
                   className={inputClass}
                   disabled={isPending}
                 />
-                <label htmlFor="wl-name" className={labelClass}>ENTER FULL NAME...</label>
+                <label htmlFor="wl-name" className={labelClass}>FULL NAME</label>
               </InputWrapper>
               
               <InputWrapper>
@@ -163,11 +163,11 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
                   name="company"
                   type="text" 
                   required
-                  placeholder="ENTER COMPANY NAME..."
+                  placeholder="COMPANY NAME"
                   className={inputClass}
                   disabled={isPending}
                 />
-                <label htmlFor="wl-company" className={labelClass}>ENTER COMPANY NAME...</label>
+                <label htmlFor="wl-company" className={labelClass}>COMPANY NAME</label>
               </InputWrapper>
               
               <InputWrapper>
@@ -175,11 +175,11 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
                   name="role"
                   type="text" 
                   required
-                  placeholder="ENTER YOUR ROLE..."
+                  placeholder="YOUR ROLE"
                   className={inputClass}
                   disabled={isPending}
                 />
-                <label htmlFor="wl-role" className={labelClass}>ENTER YOUR ROLE...</label>
+                <label htmlFor="wl-role" className={labelClass}>YOUR ROLE</label>
               </InputWrapper>
               
               <InputWrapper>
@@ -189,11 +189,11 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder={placeholder || 'ENTER CORPORATE EMAIL...'}
+                  placeholder={placeholder || 'CORPORATE EMAIL'}
                   className={inputClass}
                   disabled={isPending}
                 />
-                <label htmlFor="wl-email" className={labelClass}>{placeholder || 'ENTER CORPORATE EMAIL...'}</label>
+                <label htmlFor="wl-email" className={labelClass}>{placeholder || 'CORPORATE EMAIL'}</label>
               </InputWrapper>
               
               <div className="mt-4">
@@ -201,7 +201,7 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
                   animate={isValid && !isPending ? { scale: [1, 1.02, 1] } : { scale: 1 }}
                   transition={{ duration: 1.5, repeat: isValid ? Infinity : 0, ease: "easeInOut" }}
                 >
-                  <MagneticButton>
+                  <MagneticButton fullWidth>
                     <button 
                       type="submit" 
                       disabled={isPending}

@@ -1,10 +1,12 @@
 import { GlobalConfig } from 'payload'
+import { revalidateGlobal } from '../hooks/revalidateGlobal'
 
 export const Analytics: GlobalConfig = {
   slug: 'analytics',
   admin: {
     group: 'Global Settings',
   },
+  hooks: { afterChange: [revalidateGlobal('analytics')] },
   fields: [
     {
       name: 'gtmId',

@@ -59,8 +59,11 @@ export default function RFQForm() {
     }
   }
 
-  const inputClass = `peer bg-transparent border-b border-hairline-light text-black placeholder:text-transparent rounded-none px-0 py-4 pt-6 text-sm focus:ring-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-emerald focus:border-brand-emerald uppercase font-mono tracking-widest w-full transition-colors duration-300 ${error ? 'border-red-500' : ''}`
-  const labelClass = `absolute left-0 top-6 text-black/40 text-[10px] uppercase font-mono tracking-widest transition-all duration-300 pointer-events-none peer-focus:top-0 peer-focus:text-[8px] peer-focus:text-brand-emerald peer-focus:opacity-100 peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[8px] peer-[:not(:placeholder-shown)]:text-black/60 peer-valid:top-0 peer-valid:text-[8px] peer-valid:text-black/60`
+  // Underline fields (design system: "focus = sharp 1px border-bottom"). The
+  // rest border was 5% black — effectively invisible — so the form read as a
+  // blank column; 28% obsidian is clearly a field without becoming a box.
+  const inputClass = `peer bg-transparent border-b border-obsidian/30 hover:border-obsidian/60 text-obsidian placeholder:text-transparent rounded-none px-0 py-4 pt-6 text-sm focus:ring-0 focus-visible:outline-none focus:border-emerald focus:shadow-[0_1px_0_0_var(--color-emerald)] uppercase font-mono tracking-widest w-full transition-[border-color,box-shadow] duration-300 ${error ? 'border-danger' : ''}`
+  const labelClass = `absolute start-0 top-6 text-muted text-[11px] uppercase font-mono tracking-widest transition-all duration-300 pointer-events-none peer-focus:top-0 peer-focus:text-[9px] peer-focus:text-emerald peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[9px] peer-[:not(:placeholder-shown)]:text-muted`
 
   if (success) {
     return (
@@ -86,7 +89,7 @@ export default function RFQForm() {
           </svg>
         </m.div>
         <MonoLabel className="text-2xl font-bold text-black mb-4 uppercase">[ SUCCESS ]</MonoLabel>
-        <MonoLabel className="text-sm tracking-widest text-black/60 uppercase max-w-md">
+        <MonoLabel className="max-w-md text-sm uppercase tracking-widest text-muted">
           Your architectural requirements have been securely logged. An engineering director will initiate contact within 24 hours.
         </MonoLabel>
       </m.div>
@@ -132,7 +135,7 @@ export default function RFQForm() {
           <InputWrapper>
             <input id="rfq-email" name="email" className={inputClass} placeholder="YOUR EMAIL" type="email" required disabled={isPending} />
             <label htmlFor="rfq-email" className={labelClass}>YOUR EMAIL</label>
-<span className="block text-[9px] font-mono text-black/30 tracking-wide mt-1">Corporate or Gmail — both fine.</span>
+<span className="mt-1 block font-mono text-[10px] tracking-wide text-muted">Corporate or Gmail — both fine.</span>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
         </div>
@@ -151,7 +154,7 @@ export default function RFQForm() {
               <option value="exporter">Exporter</option>
               <option value="trading_company">Trading Company</option>
             </select>
-            <label htmlFor="rfq-businessType" className={`${labelClass} peer-valid:top-0 peer-valid:text-[8px] peer-valid:text-black/60`}>BUSINESS TYPE *</label>
+            <label htmlFor="rfq-businessType" className={`${labelClass} peer-valid:top-0 peer-valid:text-[9px] peer-valid:text-muted`}>BUSINESS TYPE *</label>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
           <InputWrapper>
@@ -180,14 +183,14 @@ export default function RFQForm() {
               <option value="$1.5–3k">$1.5–3k</option>
               <option value="$3k+">$3k+</option>
             </select>
-            <label htmlFor="rfq-budget" className={`${labelClass} peer-valid:top-0 peer-valid:text-[8px] peer-valid:text-black/60`}>ALLOCATED BUDGET *</label>
+            <label htmlFor="rfq-budget" className={`${labelClass} peer-valid:top-0 peer-valid:text-[9px] peer-valid:text-muted`}>ALLOCATED BUDGET *</label>
             <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-emerald peer-focus:w-full transition-all duration-500"></div>
           </InputWrapper>
         </div>
       </StaggerContainer>
 
       <StaggerItem className="pt-8">
-        <MagneticButton>
+        <MagneticButton fullWidth>
           <button 
             type="submit" 
             disabled={isPending}
@@ -211,13 +214,13 @@ export default function RFQForm() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="text-red-500 font-mono text-[10px] tracking-widest text-center mt-4 uppercase font-bold"
+              className="mt-4 text-center font-mono text-[11px] font-bold uppercase tracking-widest text-danger"
             >
               [ ERROR: {error} ]
             </m.div>
           )}
         </AnimatePresence>
-        <p className="mt-8 text-center text-[9px] text-black/40 font-mono uppercase tracking-widest"> 
+        <p className="mt-8 text-center font-mono text-[10px] uppercase tracking-widest text-muted"> 
           Your information is handled with the highest level of professional discretion.
         </p>
       </StaggerItem>

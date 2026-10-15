@@ -313,25 +313,13 @@ export function ProductShowcaseBlock(props: any) {
 <div className="text-[10px] tracking-widest uppercase text-obsidian/40 mb-6">Document Automation</div>
 <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-obsidian mb-8 leading-[1.1]">Trade Documents,<br/>Automated &amp; Perfected.</h2>
 <p className="text-base md:text-lg text-obsidian/60 mb-10 font-light leading-relaxed">Stop wasting hours on manual paperwork. Instantly generate, digitally sign, and manage strictly compliant global trade documents from official templates.</p>
-<StaggerContainer className="space-y-6" staggerChildren={0.1} delayChildren={0.2}>
-<StaggerItem>
-<li className="flex items-center space-x-4 list-none">
-<span className="text-[#059669]">✓</span>
-<span className="text-sm text-obsidian font-medium tracking-tight">Intelligent Template Memory</span>
-</li>
+<StaggerContainer as="ul" className="space-y-6" staggerChildren={0.1} delayChildren={0.2}>
+{['Intelligent Template Memory', 'Digital Signatures', 'Bank-Grade Compliance & API Ready'].map((feature) => (
+<StaggerItem as="li" key={feature} className="flex items-center space-x-4">
+<span className="text-emerald" aria-hidden>✓</span>
+<span className="text-sm text-obsidian font-medium tracking-tight">{feature}</span>
 </StaggerItem>
-<StaggerItem>
-<li className="flex items-center space-x-4 list-none">
-<span className="text-[#059669]">✓</span>
-<span className="text-sm text-obsidian font-medium tracking-tight">Digital Signatures</span>
-</li>
-</StaggerItem>
-<StaggerItem>
-<li className="flex items-center space-x-4 list-none">
-<span className="text-[#059669]">✓</span>
-<span className="text-sm text-obsidian font-medium tracking-tight">Bank-Grade Compliance &amp; API Ready</span>
-</li>
-</StaggerItem>
+))}
 </StaggerContainer><div className="mt-8"><Link className="inline-flex items-center text-[11px] font-bold tracking-widest uppercase border-b border-brand-obsidian pb-1 hover:text-emerald-700 hover:border-emerald-700 transition-colors duration-300" href="/rfq">Request Exvorta Docs Access <span className="ms-2">→</span></Link></div>
 </motion.div>
 </div>

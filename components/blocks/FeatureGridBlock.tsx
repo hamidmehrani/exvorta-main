@@ -37,7 +37,7 @@ export const FeatureGridBlock: React.FC<FeatureGridBlockProps> = (props) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <motion.div
-              className="text-[10px] tracking-widest uppercase text-obsidian/40 mb-4"
+              className="font-mono text-[11px] tracking-[0.25em] uppercase text-muted mb-4"
               initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 10, filter: 'blur(4px)' }}
               whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
               viewport={{ once: true, margin: '-60px' }}
@@ -60,13 +60,13 @@ export const FeatureGridBlock: React.FC<FeatureGridBlockProps> = (props) => {
                   transition={{ duration: 0.3, ease: easings.cinematic }}
                 >
                   <motion.span
-                    className="text-gray-200 text-4xl font-serif leading-none absolute top-6 right-8 opacity-50 group-hover/card:opacity-100 group-hover/card:text-black/25 transition-colors duration-500"
+                    className="text-obsidian/20 text-4xl font-serif leading-none absolute top-6 end-8 group-hover/card:text-emerald transition-colors duration-500"
                     aria-hidden
                   >
                     {String(idx + 1).padStart(2, '0')}
                   </motion.span>
                   <h3 className="text-lg font-serif mb-3 text-black font-semibold">{feature.title}</h3>
-                  <p className="text-sm text-obsidian/60 leading-relaxed font-light text-gray-600">{feature.description}</p>
+                  <p className="text-sm text-muted leading-relaxed font-light">{feature.description}</p>
                 </motion.div>
               </StaggerItem>
             ))}

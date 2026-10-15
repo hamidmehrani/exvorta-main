@@ -1,6 +1,7 @@
 import { isAdmin } from '../access/isAdmin'
 import { GlobalConfig } from 'payload'
 import { link } from '../fields/link'
+import { revalidateGlobal } from '../hooks/revalidateGlobal'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
@@ -11,6 +12,7 @@ export const Footer: GlobalConfig = {
     read: () => true,
     update: isAdmin,
   },
+  hooks: { afterChange: [revalidateGlobal('footer')] },
   fields: [
     {
       name: 'columns',

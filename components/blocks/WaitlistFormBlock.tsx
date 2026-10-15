@@ -16,11 +16,11 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
   source,
 }) => {
   return (
-    <AnimatedSection className="w-full bg-brand-obsidian flex flex-col items-center justify-center relative px-6 py-32 flex-grow overflow-hidden rounded-none border-t border-white/10">
+    <AnimatedSection className="w-full bg-obsidian flex flex-col items-center justify-center relative px-6 pb-32 pt-40 flex-grow overflow-hidden">
       {/* Background effect */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_50%)] rounded-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px', opacity: 0.1 }}></div>
       {/* Emerald aura */}
-      <div aria-hidden className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[380px] rounded-full bg-brand-emerald/10 blur-[130px]" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[460px] bg-[radial-gradient(ellipse_50%_70%_at_50%_0%,color-mix(in_oklab,var(--color-emerald)_14%,transparent),transparent_72%)]" />
       {/* Global Noise Overlay for Institutional Feel inside the dark section */}
       <div className="absolute inset-0 z-0 bg-noise mix-blend-overlay rounded-none pointer-events-none" style={{ opacity: 0.03 }}></div>
 
@@ -29,7 +29,7 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
 
         {/* Typography Block */}
         <Reveal y={14}>
-          <div className="text-[10px] font-mono tracking-[0.3em] text-white/40 uppercase mb-8">
+          <div className="text-[11px] font-mono tracking-[0.3em] text-white/60 uppercase mb-8">
             [ EXVORTA ECOSYSTEM ]
           </div>
         </Reveal>
@@ -41,7 +41,7 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
         </Reveal>
 
         <Reveal y={16} delay={0.12}>
-          <p className="text-base md:text-lg text-white/50 font-light leading-relaxed mb-10 max-w-lg mx-auto">
+          <p className="text-base md:text-lg text-white/70 font-light leading-relaxed mb-10 max-w-lg mx-auto">
             The Exvorta Suite is in closed beta. Enter your corporate email to
             reserve your position — early partners shape the roadmap.
           </p>
@@ -60,12 +60,12 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
           <StaggerContainer delayChildren={0.15} staggerChildren={0.1} className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10 border border-white/10 text-start max-w-2xl mx-auto w-full">
             {PERKS.map((p) => (
               <StaggerItem key={p.title} className="h-full">
-                <div className="bg-brand-obsidian p-5 flex flex-col gap-1.5 hover:bg-white/[0.04] transition-colors h-full">
+                <div className="bg-obsidian p-5 flex flex-col gap-1.5 hover:bg-white/[0.04] transition-colors h-full">
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-[11px] text-white font-medium tracking-wide">{p.title}</span>
-                    <span className="font-mono text-[8px] tracking-[0.15em] text-brand-emerald/80 uppercase">{p.phase}</span>
+                    <span className="font-mono text-[10px] tracking-[0.15em] text-emerald uppercase">{p.phase}</span>
                   </div>
-                  <span className="text-xs text-white/45 font-light leading-relaxed">{p.desc}</span>
+                  <span className="text-xs text-white/65 font-light leading-relaxed">{p.desc}</span>
                 </div>
               </StaggerItem>
             ))}
@@ -75,13 +75,13 @@ export const WaitlistFormBlock: React.FC<WaitlistFormBlockType> = ({
         {/* Security Micro-copy */}
         <Reveal y={12} delay={0.4}>
           <div className="mt-8 flex flex-col items-center gap-2">
-            <div className="flex items-center gap-3 opacity-40">
+            <div className="flex items-center gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-emerald animate-pulse" />
-              <div className="text-[8px] font-mono tracking-widest text-white/80 uppercase">
+              <div className="text-[10px] font-mono tracking-widest text-white/60 uppercase">
                 End-to-End Encrypted Data Transmission
               </div>
             </div>
-            <div className="text-[9px] font-mono text-white/25 tracking-[0.15em] uppercase">
+            <div className="text-[10px] font-mono text-white/50 tracking-[0.15em] uppercase">
               * Active Exvorta Web clients bypass the waitlist automatically
             </div>
           </div>

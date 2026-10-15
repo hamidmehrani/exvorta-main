@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { AnimatedSection, AnimatedButton, StaggerContainer, StaggerItem } from '@/components/ui/Reveal';
 import { WeeklyBriefingForm } from '@/components/blocks/WeeklyBriefingForm';
-import Link from 'next/link';
+import Link from '@/components/ui/AppLink';
 import type { Post } from '@/payload-types';
 import { Container } from '@/components/ui/Container';
 import { MonoLabel } from '@/components/ui/MonoLabel';
@@ -15,7 +15,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
       <AnimatedSection id="blog-hero" className="w-full bg-[#0A0A0A] pt-40 pb-20 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none z-0"></div>
         <Container className="relative z-10 flex flex-col items-center text-center">
-          <MonoLabel className="text-white/40 mb-8 block">
+          <MonoLabel className="text-white/60 mb-8 block">
             [ EXVORTA INTELLIGENCE NODE ]
           </MonoLabel>
           <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-serif font-bold text-white leading-[1.0] tracking-tight mb-8">
@@ -175,7 +175,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
       {/* 07. [FINAL CTA] - Purpose: Lead generation */}
       <AnimatedSection id="blog-cta" className="w-full bg-[#0A0A0A] py-40 px-6">
         <Container className="max-w-4xl text-center flex flex-col items-center">
-          <MonoLabel className="text-white/40 mb-8 block">
+          <MonoLabel className="text-white/60 mb-8 block">
             [ INITIATE PARTNERSHIP ]
           </MonoLabel>
           <h2 className="text-4xl md:text-6xl font-serif text-white mb-12">

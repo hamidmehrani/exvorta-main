@@ -1,19 +1,18 @@
 import React from 'react'
-import { getPayloadClient } from '@/lib/payload'
-import type {  Navigation  } from '@/payload-types'
+import type { Navigation, SiteSetting } from '@/payload-types'
+import { getCachedGlobal } from '@/lib/payload-cache'
 import HeaderClient from './HeaderClient'
 
 export const Header = async () => {
+  const [navData, settings] = await Promise.all([
+    getCachedGlobal<Navigation>('navigation', 2),
+    getCachedGlobal<SiteSetting>('site-settings'),
+  ])
+
   const brand: { name: string; logoUrl: string | null } = { name: 'EXVORTA', logoUrl: null }
-  let navData: Navigation | null = null
-  try {
-    const payload = await getPayloadClient()
-    navData = await payload.findGlobal({
-      slug: 'navigation',
-      depth: 2,
-    }) as Navigation
-  } catch (error) {
-    console.warn('[Header] CMS navigation unavailable, using fallback', error)
+  if (settings?.siteName) brand.name = settings.siteName.toUpperCase()
+  if (settings?.logo && typeof settings.logo === 'object' && settings.logo.url) {
+    brand.logoUrl = settings.logo.url
   }
 
   // Sales-psychology nav: what it is → proof → who we are.
@@ -26,19 +25,7 @@ export const Header = async () => {
 
   const finalNavLinks = navData?.links?.length ? navData.links : fallbackLinks
 
-  try {
-    const payload = await getPayloadClient()
-    const settings = await payload.findGlobal({ slug: 'site-settings' })
-    if (settings?.siteName) brand.name = settings.siteName.toUpperCase()
-    if (settings?.logo && typeof settings.logo === 'object' && settings.logo.url) {
-      brand.logoUrl = settings.logo.url
-    }
-  } catch {
-    // keep text fallback
-  }
-
   return <HeaderClient navLinks={finalNavLinks} brand={brand} />
 }
 
 export default Header
-

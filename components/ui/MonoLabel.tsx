@@ -1,82 +1,76 @@
 'use client'
 
-import React, { useRef, useEffect, useState } from 'react'
-import { useReducedMotion } from '@/lib/animations'
-
-interface GsapContext {
-  revert: () => void
-}
+import React, { useEffect, useRef } from 'react'
 
 export interface MonoLabelProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   as?: React.ElementType
 }
 
-const CHARS = '░▒▓█▄▀+*&^%$#@!'
+const GLYPHS = '░▒▓█▄▀+*&^%$#@!'
+const DURATION = 420
 
+/**
+ * Blueprint label. Plain string labels "decode" once as they scroll into view
+ * (design system: status rows decode via MonoLabel).
+ *
+ * The effect rewrites the existing text node's value from requestAnimationFrame,
+ * so React never re-renders per frame and no animation library is loaded. (It
+ * used to pull GSAP + ScrollTrigger into every page and call setState on every
+ * tick for every label.) The server HTML always contains the real text.
+ */
 export function MonoLabel({ children, as: Component = 'div', className = '', ...props }: MonoLabelProps) {
-  const containerRef = useRef<HTMLElement>(null)
-  const [text, setText] = useState<string>('')
-  const prefersReducedMotion = useReducedMotion()
-  const originalText = typeof children === 'string' ? children : ''
+  const ref = useRef<HTMLElement>(null)
+  const original = typeof children === 'string' ? children : ''
 
   useEffect(() => {
-    setText(originalText)
-    if (prefersReducedMotion || !containerRef.current || !originalText) return
-    let ctx: GsapContext | undefined
-    // Safety net: if ScrollTrigger never fires (label already in view, GSAP
-    // load failure, hidden pane), resolve to the real text after 1.2s.
-    const fallbackTimer = setTimeout(() => setText(originalText), 1200)
-    Promise.all([
-      import('gsap').then(m => m.gsap || m.default),
-      import('gsap/ScrollTrigger').then(m => m.ScrollTrigger || m.default)
-    ]).then(([gsap, ScrollTrigger]) => {
-      if (!gsap || !ScrollTrigger) return;
-      gsap.registerPlugin(ScrollTrigger)
+    const el = ref.current
+    const node = el?.firstChild
+    if (!el || !original || node?.nodeType !== Node.TEXT_NODE) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-      const obj = { value: 0 }
+    let raf = 0
+    const text = node as Text
+    const run = () => {
+      const start = performance.now()
+      const tick = (now: number) => {
+        const progress = Math.min(1, (now - start) / DURATION)
+        const revealed = Math.floor(progress * original.length)
+        text.nodeValue =
+          progress >= 1
+            ? original
+            : original
+                .split('')
+                .map((ch, i) => (i < revealed || ch === ' ' ? ch : GLYPHS[Math.floor(Math.random() * GLYPHS.length)]))
+                .join('')
+        if (progress < 1) raf = requestAnimationFrame(tick)
+      }
+      raf = requestAnimationFrame(tick)
+    }
 
-      ctx = gsap.context(() => {
-        gsap.to(obj, {
-          value: originalText.length,
-          duration: 0.4,
-          ease: 'power2.inOut',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top bottom',
-            once: true,
-          },
-          onUpdate: () => {
-            const progress = Math.floor(obj.value)
-            const scrambled = originalText.split('').map((char, index) => {
-              if (index < progress) return char
-              if (char === ' ') return ' '
-              return CHARS[Math.floor(Math.random() * CHARS.length)]
-            }).join('')
-            setText(scrambled)
-          },
-          onComplete: () => {
-            clearTimeout(fallbackTimer)
-            setText(originalText)
-          }
-        })
-      })
-    }).catch(() => {
-      clearTimeout(fallbackTimer)
-      setText(originalText)
-    })
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          io.disconnect()
+          run()
+        }
+      },
+      { rootMargin: '0px 0px -8% 0px' },
+    )
+    io.observe(el)
 
     return () => {
-      clearTimeout(fallbackTimer)
-      ctx?.revert()
+      io.disconnect()
+      cancelAnimationFrame(raf)
+      text.nodeValue = original
     }
-  }, [originalText, prefersReducedMotion])
+  }, [original])
 
   return (
-    <Component ref={containerRef} className={`mono-label ${className}`} {...props}>
-      {prefersReducedMotion ? children : (text || children)}
+    <Component ref={ref} className={`mono-label ${className}`} suppressHydrationWarning {...props}>
+      {children}
     </Component>
   )
 }
 
-export default MonoLabel;
+export default MonoLabel

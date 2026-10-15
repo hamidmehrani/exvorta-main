@@ -126,13 +126,13 @@ export function RoadmapBlock(props: any) {
 <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '10px 10px' }}></div>
 <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
 <div className="w-full md:w-2/3 text-left">
-<div className="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ THE VISION ]</div>
+<div className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/60 mb-6">[ THE VISION ]</div>
 <h3 className="text-xl md:text-3xl font-serif mb-6 text-white">Exvorta Suite</h3>
-<p className="text-xs md:text-sm text-gray-400 leading-relaxed font-light">
+<p className="text-xs md:text-sm text-white/70 leading-relaxed font-light">
               The ultimate convergence. A singular, unified digital infrastructure seamlessly integrating your web presence, automated compliance, logistics, and intelligence into one trade OS.
             </p>
 <div className="mt-6">
-<Link href="/waitlist" className="inline-flex items-center gap-3 px-8 py-3.5 bg-white/5 border border-white/20 text-white font-mono text-[10px] uppercase tracking-[0.2em] hover:bg-brand-emerald hover:border-brand-emerald transition-all duration-300">
+<Link href="/waitlist" className="inline-flex min-h-[44px] items-center gap-3 whitespace-nowrap px-6 py-3.5 sm:px-8 bg-white/5 border border-white/20 text-white font-mono text-[10px] uppercase tracking-[0.16em] sm:tracking-[0.2em] hover:bg-emerald hover:border-emerald transition-colors duration-300">
   [ JOIN THE SUITE WAITLIST ] <span>→</span>
 </Link>
 </div>

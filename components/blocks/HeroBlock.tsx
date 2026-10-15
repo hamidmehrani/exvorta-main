@@ -1,190 +1,168 @@
 'use client'
 import React from 'react'
-import type {  Page  } from '@/payload-types'
+import type { Page } from '@/payload-types'
 import Link from 'next/link'
-import { AnimatedSection } from '@/components/ui/Reveal'
 import { StaggerText } from '@/components/ui/motion/StaggerText'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { useReducedMotion } from '@/lib/animations'
-import { m as motion } from 'framer-motion'
-import { easings } from '@/lib/animations'
+import { unbracket } from '@/lib/text'
 import dynamic from 'next/dynamic'
 import { Scanline } from '@/components/ui/terminal-motion'
 import { CaretBlink } from '@/components/ui/terminal-motion'
 
 // 638-line interactive panel below the fold: client-only + not part of the
-// main bundle so the hero LCP stays fast.
+// main bundle so the hero LCP stays fast. The placeholder reserves the
+// panel's measured height (644px mobile / 608px ≥ md) so its arrival doesn't
+// shove the footer around (that was the page's only layout shift).
 const ExvortaOsPanel = dynamic(
   () => import('@/components/blocks/ExvortaOsPanel').then((mod) => mod.ExvortaOsPanel),
-  { ssr: false, loading: () => <div className="h-[420px]" aria-hidden="true" /> },
+  { ssr: false, loading: () => <div className="mt-20 h-[644px] md:h-[608px]" aria-hidden="true" /> },
 )
 
 type HeroBlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'hero' }>
 
+type RiseStyle = React.CSSProperties & Record<`--${string}`, string | number | undefined>
+/** Staggered above-the-fold entrance — CSS only (see .rise in globals.css). */
+const rise = (i: number): RiseStyle => ({ '--i': i })
+
 export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
   const prefersReducedMotion = useReducedMotion()
 
-  try {
   const isWebHero = props.eyebrow?.includes('HIGH-PERFORMANCE') || props.headline?.includes('High-Performance') || props.eyebrow?.includes('WEBSITES')
   const isAboutHero = props.headline?.includes('Gravity') || props.eyebrow?.includes('IDENTITY') || props.headline?.includes('Digital Gravity')
 
   if (isAboutHero) {
-    const heroVariantsAbout = {
-      hidden: {},
-      show: { transition: { staggerChildren: 0.14, delayChildren: 0.1 } },
-    }
-    const heroItemAbout = {
-      hidden: prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 22, filter: 'blur(6px)' },
-      show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: easings.cinematic } },
-    }
     return (
-      <AnimatedSection className="w-full">
-        <section className="w-full bg-[#0A0A0A] flex flex-col items-center justify-center text-center relative px-6 py-40 min-h-[85vh] overflow-hidden rounded-none" id="hero">
-          {/* ambient aura */}
-          <div aria-hidden className="pointer-events-none absolute inset-0">
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[420px] rounded-full bg-emerald-400/[0.07] blur-[130px]" />
-          </div>
-          <motion.div variants={heroVariantsAbout} initial="hidden" animate="show" className="relative z-10 max-w-7xl mx-auto flex flex-col items-center">
-            <motion.span variants={heroItemAbout} className="text-[9px] md:text-[10px] font-mono tracking-[0.4em] text-white/40 uppercase mb-10 block">
-              {props.eyebrow || '[ THE EXVORTA IDENTITY ]'}
-            </motion.span>
-            <motion.h1
-              variants={heroItemAbout}
-              className="text-5xl md:text-[5.5rem] font-serif font-bold text-white leading-[1.05] tracking-tight max-w-5xl mx-auto mb-10"
-              dangerouslySetInnerHTML={{ __html: props.headline || 'We Engineer Digital Gravity.<br/><span class="text-white/60">For the World\'s Most Demanding Trade Entities.</span>' }}
-            />
-            <motion.p variants={heroItemAbout} className="max-w-2xl mx-auto text-lg md:text-xl text-white/50 leading-relaxed font-sans mt-6">
-              {props.subheadline || 'Exvorta is a boutique digital architecture firm. We exist strictly to close the credibility gap between your monumental physical trading velocity and your online infrastructure.'}
-            </motion.p>
-            <motion.div variants={heroItemAbout} className="text-[9px] font-mono text-white/25 tracking-[0.2em] uppercase mt-16">[ DUBAI · GLOBAL REACH ]</motion.div>
-          </motion.div>
-        </section>
-      </AnimatedSection>
+      <section className="relative flex min-h-[85vh] w-full flex-col items-center justify-center overflow-hidden bg-obsidian px-6 py-40 text-center" id="hero">
+        {/* ambient aura — a gradient, not a 130px blur filter (far cheaper to paint) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_45%_40%_at_50%_38%,color-mix(in_oklab,var(--color-emerald)_9%,transparent),transparent_70%)]"
+        />
+        <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center">
+          <span style={rise(0)} className="rise mb-10 block font-mono text-[10px] uppercase tracking-[0.4em] text-white/60">
+            {props.eyebrow || '[ THE EXVORTA IDENTITY ]'}
+          </span>
+          <h1
+            style={rise(1)}
+            className="rise mx-auto mb-10 max-w-5xl font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-white md:text-[5.5rem]"
+            dangerouslySetInnerHTML={{ __html: props.headline || 'We Engineer Digital Gravity.<br/><span class="text-white/60">For the World\'s Most Demanding Trade Entities.</span>' }}
+          />
+          <p style={rise(2)} className="rise mx-auto mt-6 max-w-2xl font-sans text-lg leading-relaxed text-white/60 md:text-xl">
+            {props.subheadline || 'Exvorta is a boutique digital architecture firm. We exist strictly to close the credibility gap between your monumental physical trading velocity and your online infrastructure.'}
+          </p>
+          <div style={rise(3)} className="rise mt-16 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">[ DUBAI · GLOBAL REACH ]</div>
+        </div>
+      </section>
     )
   }
 
   if (isWebHero) {
     return (
-      <AnimatedSection className="w-full relative py-0">
-        <section className="relative w-full max-w-7xl mx-auto px-6 flex flex-col items-center justify-center min-h-[90vh] py-20 text-center">
-          {/* Status Pill */}
-          <div className="relative z-10 flex items-center gap-2 bg-black/[0.03] px-4 py-1.5 border border-black/5 mb-10 rounded-none">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="relative inline-flex h-1.5 w-1.5 bg-[#059669] rounded-none"></span>
-            </span>
-            <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-black/60">
-              {props.eyebrow || '[ EXVORTA WEB ]'}
-            </span>
+      <section className="relative mx-auto flex min-h-[90vh] w-full max-w-7xl flex-col items-center justify-center px-6 py-20 text-center">
+        {/* Status Pill */}
+        <div style={rise(0)} className="rise relative z-10 mb-10 flex items-center gap-2 border border-black/5 bg-black/[0.03] px-4 py-1.5">
+          <span className="inline-flex h-1.5 w-1.5 bg-emerald" />
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted">
+            {props.eyebrow || '[ EXVORTA WEB ]'}
+          </span>
+        </div>
+
+        {/* Monumental Headline */}
+        <h1
+          style={rise(1)}
+          className="rise relative z-10 mb-8 font-serif text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl lg:text-8xl"
+          dangerouslySetInnerHTML={{ __html: props.headline || '<span class="block text-obsidian">High-Performance Websites.</span>\n<span class="block text-obsidian/80">For Global Traders.</span>' }}
+        />
+
+        {/* Strategic Sub-headline */}
+        <p style={rise(2)} className="rise relative z-10 mb-12 max-w-2xl font-sans text-sm leading-relaxed text-muted md:text-base">
+          {props.subheadline || 'We build high-performance websites that make global trading companies look like the serious players they are.'}
+        </p>
+
+        {/* Dual CTA Buttons */}
+        <div style={rise(3)} className="rise relative z-10 mb-16 flex flex-col items-center gap-4 sm:flex-row">
+          <Link className="btn-primary min-h-[48px] px-10 py-4 font-semibold" href={props.primaryCTA?.url || '/rfq'}>
+            {props.primaryCTA?.label || '[ START YOUR PROJECT ]'}
+          </Link>
+          <Link className="btn-ghost min-h-[48px] px-10 py-4 font-semibold" href="/portfolio">
+            [ VIEW RECENT PROJECTS ]
+          </Link>
+        </div>
+
+        {/* Legal Micro-copy */}
+        <div className="absolute inset-x-0 bottom-12 hidden px-6 sm:block">
+          <div className="mx-auto flex max-w-4xl items-center justify-between font-mono text-[10px] uppercase tracking-[0.3em] text-obsidian/50">
+            <span>[ ENGINEERED FOR SPEED ]</span>
+            <span>[ GLOBAL B2B READY ]</span>
+            <span>[ ON-TIME DELIVERY ]</span>
           </div>
-          
-          {/* Monumental Headline */}
-          <h1 className="relative z-10 font-serif text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight mb-8"
-              dangerouslySetInnerHTML={{ __html: props.headline || '<span class="block text-black">High-Performance Websites.</span>\n<span class="block text-black/80">For Global Traders.</span>' }}
-          />
-          
-          {/* Strategic Sub-headline */}
-          <p className="relative z-10 max-w-2xl text-sm md:text-base text-black/60 leading-relaxed font-sans mb-12">
-            {props.subheadline || 'We build high-performance websites that make global trading companies look like the serious players they are.'}
-          </p>
-          
-          {/* Dual CTA Buttons */}
-          <div className="relative z-10 flex flex-col sm:flex-row items-center gap-4 mb-16">
-            <Link className="bg-[#0D0D0D] text-white px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-gray-900 transition-all duration-300 rounded-none" href={props.primaryCTA?.url || "/rfq"}>
-              {props.primaryCTA?.label || '[ START YOUR PROJECT ]'}
-            </Link>
-            <Link className="border text-black/80 px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-black/5 transition-all duration-300 border-black rounded-none" href="/portfolio">
-              [ VIEW RECENT PROJECTS ]
-            </Link>
-          </div>
-          
-          {/* Legal Micro-copy */}
-          <div className="absolute bottom-12 left-0 right-0 px-6 hidden sm:block">
-            <div className="max-w-4xl mx-auto flex justify-between items-center text-[10px] tracking-[0.3em] font-mono text-black/40 uppercase">
-              <span>[ ENGINEERED FOR SPEED ]</span>
-              <span>[ GLOBAL B2B READY ]</span>
-              <span>[ ON-TIME DELIVERY ]</span>
-            </div>
-          </div>
-        </section>
-      </AnimatedSection>
+        </div>
+      </section>
     )
   }
 
-  // Fallback to Home Hero for others
-  const heroVariants = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
-  }
-  const heroItem = {
-    hidden: prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 18, filter: 'blur(5px)' },
-    show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: easings.cinematic } },
-  }
+  // Home hero
+  const headline = props.headline || 'Digital Infrastructure<br/>for Global Traders'
+  const ctaHref = props.primaryCTA?.url && props.primaryCTA.url !== '#' ? props.primaryCTA.url : '/rfq'
 
   return (
-    <AnimatedSection className="w-full">
-      {/*  BEGIN: Hero Section  */}
-<section className="relative pt-32 pb-40 overflow-hidden" data-purpose="hero-section">
-{/* Ambient background: soft emerald aura + fine grid */}
-<div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-  <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-emerald-400/10 blur-[140px]" />
-  <div className="absolute inset-0 opacity-[0.35]" style={{ backgroundImage: 'linear-gradient(to right, rgba(13,13,13,0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(13,13,13,0.045) 1px, transparent 1px)', backgroundSize: '72px 72px', maskImage: 'radial-gradient(ellipse 90% 70% at 50% 20%, black, transparent)', WebkitMaskImage: 'radial-gradient(ellipse 90% 70% at 50% 20%, black, transparent)' }} />
-</div>
-<div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative">
-{/*  Hero Content  */}
-<motion.div className="text-center max-w-4xl mx-auto mb-20" variants={heroVariants} initial="hidden" animate="show">
-<motion.div variants={heroItem} className="inline-flex items-center justify-center px-3 py-1 mb-8 rounded-full border border-black/10 bg-white/50 text-[10px] tracking-widest uppercase text-obsidian/60"><motion.span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2" animate={{ opacity: [1, 0.35, 1] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}></motion.span> [ {props.eyebrow || (isWebHero ? "HIGH-PERFORMANCE WEBSITES" : "ENGINE V1.0 LIVE")} ]<CaretBlink className="!w-[0.5em] !h-[0.9em]" /></motion.div>
-{prefersReducedMotion ? (
-  <h1
-    className="text-5xl md:text-7xl lg:text-[84px] leading-[1.1] font-serif font-semibold text-obsidian mb-8 tracking-tight"
-    dangerouslySetInnerHTML={{ __html: props.headline || "Digital Infrastructure<br/>for Global Traders" }}
-  />
-) : (
-  <StaggerText
-    as="h1"
-    text={props.headline || "Digital Infrastructure<br/>for Global Traders"}
-    stagger={0.028}
-    delay={0.2}
-    duration={0.75}
-    unit="chars"
-    fromMarks
-    className="text-5xl md:text-7xl lg:text-[84px] leading-[1.1] font-serif font-semibold text-obsidian mb-8 tracking-tight"
-  />
-)}
-<motion.p variants={heroItem} className="text-base md:text-lg text-obsidian/60 max-w-2xl mx-auto mb-12 font-light">{props.subheadline || (isWebHero ? "The institutional standard. Bespoke architecture, flawless aesthetics, and engineered for elite B2B trading companies operating at a global scale." : "Websites that make institutional buyers take you seriously — built for exporters who compete on trust, not price. See the proof: three live deployments, one standard.")}</motion.p>
-<motion.div variants={heroItem}>
-<MagneticButton>
-  <Link
-    className="inline-flex min-h-[44px] items-center justify-center px-8 py-4 btn-primary"
-    href={props.primaryCTA?.url && props.primaryCTA.url !== '#' ? props.primaryCTA.url : '/rfq'}
-  >
-    {props.primaryCTA?.label || "[ START YOUR PROJECT ]"}
-  </Link>
-</MagneticButton>
-</motion.div>
-<motion.div variants={heroItem} className="mt-12 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 font-mono text-[12px] tracking-[0.3em] uppercase text-obsidian/50">
-  <span className="flex items-center gap-2"><span className="w-1 h-1 bg-emerald-600 rotate-45" /> 3 live deployments</span>
-  <span className="flex items-center gap-2"><span className="w-1 h-1 bg-emerald-600 rotate-45" /> &lt;1s global load</span>
-  <span className="flex items-center gap-2"><span className="w-1 h-1 bg-emerald-600 rotate-45" /> CMS you own</span>
-</motion.div>
-</motion.div>
-{/*  Dashboard Preview - ONLY for Home  */}
-{(!isWebHero) && (
-  <Scanline>
-    <ExvortaOsPanel prefersReducedMotion={prefersReducedMotion} />
-  </Scanline>
-)}
-</div></section><div className="py-12 flex justify-center" data-purpose="social-proof-anchor"><p className="text-[12px] font-sans text-obsidian/50 uppercase tracking-[0.2em] text-center max-w-xl leading-relaxed">Elevating digital infrastructure for modern trading firms across the GCC and Europe.</p></div>
-{/*  END: Hero Section  */}
-
-    </AnimatedSection>
+    <div className="w-full" data-purpose="hero">
+      <section className="relative overflow-hidden pb-24 pt-32 md:pb-40" data-purpose="hero-section">
+        {/* Ambient background: soft emerald aura + fine blueprint grid */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute inset-x-0 top-0 h-[560px] bg-[radial-gradient(ellipse_50%_60%_at_50%_0%,color-mix(in_oklab,var(--color-emerald)_14%,transparent),transparent_72%)]" />
+          <div className="bg-blueprint-grid absolute inset-0" />
+        </div>
+        <div className="relative mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
+          {/* Hero Content */}
+          <div className="mx-auto mb-20 max-w-4xl text-center">
+            <div style={rise(0)} className="rise mb-8 inline-flex items-center justify-center rounded-full border border-obsidian/10 bg-white/60 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-muted">
+              <span className="me-2 h-1.5 w-1.5 animate-pulse rounded-full bg-emerald" aria-hidden />
+              [ {unbracket(props.eyebrow) || 'ENGINE V1.0 LIVE'} ]
+              <CaretBlink className="!h-[0.9em] !w-[0.5em]" />
+            </div>
+            <StaggerText
+              as="h1"
+              text={headline}
+              stagger={0.07}
+              delay={0.05}
+              duration={0.8}
+              className="mb-8 font-serif text-5xl font-semibold leading-[1.1] tracking-tight text-obsidian md:text-7xl lg:text-[84px]"
+            />
+            {/* The LCP element: deliberately NOT animated so it paints with the first frame. */}
+            <p className="mx-auto mb-12 max-w-2xl text-base font-light leading-relaxed text-muted md:text-lg">
+              {props.subheadline || 'Websites that make institutional buyers take you seriously — built for exporters who compete on trust, not price. See the proof: three live deployments, one standard.'}
+            </p>
+            <div style={rise(3)} className="rise">
+              <MagneticButton>
+                <Link className="btn-primary min-h-[48px] px-8 py-4" href={ctaHref}>
+                  {props.primaryCTA?.label || '[ START YOUR PROJECT ]'}
+                </Link>
+              </MagneticButton>
+            </div>
+            <ul style={rise(4)} className="rise mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+              {['3 live deployments', '<1s global load', 'CMS you own'].map((item) => (
+                <li key={item} className="flex items-center gap-2">
+                  <span className="h-1 w-1 rotate-45 bg-emerald" aria-hidden />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* Dashboard Preview */}
+          <Scanline>
+            <ExvortaOsPanel prefersReducedMotion={prefersReducedMotion} />
+          </Scanline>
+        </div>
+      </section>
+      <div className="flex justify-center py-12" data-purpose="social-proof-anchor">
+        <p className="max-w-xl text-center font-sans text-xs uppercase leading-relaxed tracking-[0.2em] text-muted">
+          Elevating digital infrastructure for modern trading firms across the GCC and Europe.
+        </p>
+      </div>
+    </div>
   )
-  } catch (error) {
-    console.error('[HeroBlock] render error:', error)
-    if (process.env.NODE_ENV !== 'production') {
-      return <div style={{ padding: 20, color: 'red', border: '1px solid red' }}>Error in HeroBlock</div>
-    }
-    return null
-  }
 }
 
 export default HeroBlock

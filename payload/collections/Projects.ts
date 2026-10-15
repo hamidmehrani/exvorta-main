@@ -1,13 +1,30 @@
 import { readOnlyPublic } from '../access'
-import { CollectionConfig } from 'payload'
+import { CollectionConfig, CollectionAfterChangeHook } from 'payload'
+import { revalidatePath } from 'next/cache'
 import {
   lexicalEditor,
   HTMLConverterFeature,
 } from '@payloadcms/richtext-lexical'
 
+// Portfolio pages are statically cached (ISR) — publish should show up now,
+// not at the next 5-minute window.
+const revalidateProject: CollectionAfterChangeHook = ({ doc }) => {
+  try {
+    revalidatePath('/')
+    revalidatePath('/portfolio')
+    if (doc?.slug) revalidatePath(`/portfolio/${doc.slug}`)
+  } catch {
+    // Standalone scripts (seed, migrate) run outside a Next request.
+  }
+  return doc
+}
+
 export const Projects: CollectionConfig = {
   access: readOnlyPublic,
   slug: 'projects',
+  hooks: {
+    afterChange: [revalidateProject],
+  },
   admin: {
     useAsTitle: 'title',
     group: 'Content',

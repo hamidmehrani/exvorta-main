@@ -4,7 +4,9 @@
 // Run OUTSIDE the Claude sandbox (it needs live internet):
 //   cd ~/Desktop/Exvorta/Exvorta && node scripts/capture-portfolio-screenshots.mjs
 //
-// Output: public/portfolio-{spicevo,nutave,stonvi}.png
+// Output: public/portfolio-{spicevo,nutave,stonvi}.png — then run
+//   node scripts/optimize-portfolio-captures.mjs
+// to produce the lightweight .webp files the site serves.
 import { chromium } from 'playwright';
 
 const SITES = [

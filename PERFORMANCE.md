@@ -1,5 +1,22 @@
 # Exvorta — Performance Budgets
 
+## Rendering architecture — invariants
+
+These are what keep the public site fast. Break one and the numbers below regress silently.
+
+1. **Public routes are static (ISR, 5 min).** Never call `cookies()`, `headers()` or read `searchParams` in the root layout or in a page that should be cached. Cookie consent therefore lives in a plain client cookie (`exv_consent`, see `lib/consent.ts`) and `components/legal/ConsentAnalytics.tsx` loads GA/GTM after the visitor accepts.
+2. **Read CMS globals with `getCachedGlobal(slug)`** (`lib/payload-cache.ts`, tag `global-<slug>`). Every global the shell reads needs a `revalidateGlobal(slug)` `afterChange` hook (`payload/hooks/revalidateGlobal.ts`); collections that feed static pages (Pages, Projects) revalidate in their own hooks.
+3. **Keep the Payload admin out of public chunks.** Server components import `Link` from `@/components/ui/AppLink`, never `next/link`, and nothing under `components/admin/*` may import a module the public site also uses (the admin has its own `AdminBrandMark`). Otherwise webpack attaches the admin's ~1.5 MB chunk group to every public page. Check after a build: `grep -c "payload)/layout" .next/server/app/index.html` must print `0`.
+4. **Motion never gates content on hydration.** Above the fold use CSS (`.rise`, `<StaggerText>`, `ExvortaLogo`); below the fold use `Reveal` / `AnimatedSection` / `StaggerContainer` (CSS transitions + the inline observer in `RevealScript`). Do not put framer `initial={{ opacity: 0 }}` on anything that can be the LCP element, and keep the hero paragraph un-animated.
+5. **No `loading.tsx` on statically generated routes** — it wraps the page in a Suspense boundary whose skeleton paints before the content is swapped in (measurable CLS on the footer).
+6. **Blocks are statically imported in `BlockRenderer`.** `dynamic(..., { ssr: false })` removes a block from the HTML; `dynamic()` with SSR streams it in after first paint.
+7. **No paint-heavy decoration:** no `blur-[…]` filters, no page-sized SVG filters. Use gradients (`bg-[radial-gradient(...)]`) and the tiled `.noise-overlay`.
+8. **New route folders go into `RESERVED_SLUGS`** in `app/(frontend)/[...slug]/page.tsx`, otherwise the CMS catch-all can pre-render a second HTML file at the same path.
+9. **Images:** portfolio captures are produced with `scripts/capture-portfolio-screenshots.mjs` → `scripts/optimize-portfolio-captures.mjs` (1440 px WebP, ≤ 6400 px tall). Never commit multi-megabyte PNGs to `public/`.
+10. **`next.config.ts` strips withPayload's `Critical-CH` / `Vary` hints from public routes** (they force a second document request in Chrome and fragment the CDN cache). Keep that wrapper when upgrading Payload.
+
+---
+
 ## Core Web Vitals Targets (Production)
 
 | Metric | Full Name | Target | Max Threshold | Priority |
@@ -130,8 +147,8 @@ These exceptions are accepted and should not trigger alerts.
 
 - [ ] Move from `console.error` in layout to `reportError` from `lib/error-reporting.ts`
 - [ ] Implement full CSP header with nonces (Next.js middleware)
-- [ ] Add `preload` hints for hero images in layout
-- [ ] Evaluate `next/dynamic` lazy-loading for `EcosystemBlock` (37KB component)
-- [ ] Add `optimizePackageImports` for `lucide-react` in `next.config.ts`
+- [x] ~~Add `preload` hints for hero images in layout~~ (hero has no image; fonts are preloaded by next/font)
+- [x] ~~Evaluate `next/dynamic` lazy-loading for `EcosystemBlock`~~ — rejected: dynamic blocks are streamed after first paint (CLS) or missing from the HTML (SEO)
+- [x] `optimizePackageImports` configured for framer-motion / gsap (lucide-react is not used)
 - [ ] Replace hardcoded `lh3.googleusercontent.com` fallback images with Cloudinary assets
 - [ ] Add `aria-label` to all icon-only buttons (Accessibility)

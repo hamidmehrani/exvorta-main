@@ -95,7 +95,7 @@ export function BrowserFrame({
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" aria-hidden />
           )}
           <svg
-            className={`w-2.5 h-2.5 shrink-0 ${dark ? 'text-white/35' : 'text-black/35'}`}
+            className={`w-2.5 h-2.5 shrink-0 ${dark ? 'text-white/60' : 'text-black/60'}`}
             fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden
           >
             <path
@@ -104,8 +104,8 @@ export function BrowserFrame({
             />
           </svg>
           <span
-            className={`font-mono text-[9px] tracking-[0.15em] uppercase truncate ${
-              dark ? 'text-white/45' : 'text-black/45'
+            className={`font-mono text-[10px] tracking-[0.15em] uppercase truncate ${
+              dark ? 'text-white/65' : 'text-black/65'
             }`}
           >
             {host || title}
@@ -118,8 +118,8 @@ export function BrowserFrame({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Open ${title} in a new tab`}
-            className={`shrink-0 inline-flex items-center gap-1 font-mono text-[8px] tracking-[0.2em] uppercase transition-colors ${
-              dark ? 'text-white/35 hover:text-white' : 'text-black/35 hover:text-black'
+            className={`shrink-0 inline-flex items-center gap-1 font-mono text-[10px] tracking-[0.2em] uppercase transition-colors ${
+              dark ? 'text-white/60 hover:text-white' : 'text-black/60 hover:text-black'
             }`}
           >
             OPEN

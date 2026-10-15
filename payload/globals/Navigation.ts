@@ -1,6 +1,7 @@
 import { isAdmin } from '../access/isAdmin'
 import { GlobalConfig } from 'payload'
 import { link } from '../fields/link'
+import { revalidateGlobal } from '../hooks/revalidateGlobal'
 
 export const Navigation: GlobalConfig = {
   slug: 'navigation',
@@ -11,6 +12,7 @@ export const Navigation: GlobalConfig = {
     read: () => true,
     update: isAdmin,
   },
+  hooks: { afterChange: [revalidateGlobal('navigation')] },
   fields: [
     {
       name: 'links',

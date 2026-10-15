@@ -10,7 +10,6 @@ interface DeferredWidgetsProps {
     enable?: boolean | null
     text?: string | null
     policyUrl?: string | null
-    hasResponded?: boolean
   }
   whatsappConfig: {
     enableWidget?: boolean | null
@@ -33,7 +32,7 @@ export default function DeferredWidgets({ cookieConfig, whatsappConfig, umamiCon
 
   return (
     <>
-      {cookieConfig?.enable && !cookieConfig?.hasResponded && <CookieBanner config={cookieConfig} />}
+      {cookieConfig?.enable && <CookieBanner config={cookieConfig} />}
       {waReady && (
         <WhatsAppFloat
           phoneNumber={whatsappConfig?.phoneNumber || ''}

@@ -6,9 +6,10 @@ import type { Project } from '@/payload-types';
 import type { Metadata } from 'next';
 import { generateMeta } from '@/utils/generateMeta';
 
-// Content is managed dynamically in the Payload admin panel,
-// so this route must render per-request instead of being pre-rendered at build time.
-export const dynamic = 'force-dynamic';
+// Content is managed in the Payload admin panel. Pages are pre-rendered and
+// cached (ISR); the Projects afterChange hook revalidates on publish and the
+// window below is the safety net.
+export const revalidate = 300;
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     console.error(`Failed to fetch project meta for slug: ${resolvedParams.slug}`, error);
   }
 
-  return generateMeta({ doc: { meta: { title: project?.title } }, image: `/portfolio-${resolvedParams.slug}.png`, url: `/portfolio/${resolvedParams.slug}` })
+  return generateMeta({ doc: { meta: { title: project?.title } }, url: `/portfolio/${resolvedParams.slug}` })
 }
 
 export async function generateStaticParams() {

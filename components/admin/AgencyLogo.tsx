@@ -1,6 +1,6 @@
 import React from 'react'
 import { adminPanelConfig } from './panel.config'
-import ExvortaLogo from '@/components/brand/ExvortaLogo'
+import AdminBrandMark from './AdminBrandMark'
 
 /**
  * Unified admin logo — shared across all projects, branded via panel.config.
@@ -11,7 +11,7 @@ export const AgencyLogo: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '4px 0' }}>
-      <ExvortaLogo size={28} tone="dark" />
+      <AdminBrandMark size={28} tone="dark" />
       <span
         style={{
           fontSize: '20px',

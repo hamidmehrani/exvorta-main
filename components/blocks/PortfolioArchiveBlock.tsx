@@ -57,9 +57,9 @@ const TITLE_SLUG_ROUTES: Record<string, string> = {
 };
 
 const TITLE_IMAGE_ROUTES: Record<string, string> = {
-  spicevo: '/portfolio-spicevo.png',
-  nutave: '/portfolio-nutave.png',
-  stonvi: '/portfolio-stonvi.png',
+  spicevo: '/portfolio-spicevo.webp',
+  nutave: '/portfolio-nutave.webp',
+  stonvi: '/portfolio-stonvi.webp',
 };
 
 function isUsableUrl(url?: string): boolean {
@@ -188,7 +188,7 @@ function HomepagePortfolioSection({
                       href={resolveCaseStudyUrl(project)}
                       className="inline-flex items-center justify-center border border-black rounded-none px-8 py-4 text-[10px] font-mono text-center hover:bg-black hover:text-white transition-colors group/btn"
                     >
-                      {project.linkLabel || 'VIEW CASE STUDY'}
+                      {(project.linkLabel || 'VIEW CASE STUDY').replace(/\s*[↗→]\s*$/, '')}
                       <span className="ml-2 transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform">↗</span>
                     </a>
                   </MagneticButton>
@@ -306,9 +306,9 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
                     />
 
                     <div className="flex flex-col flex-grow p-8">
-                      <h3 className="card-title font-serif text-3xl text-black mb-4 font-medium tracking-tight relative z-10">
+                      <h2 className="card-title font-serif text-3xl text-black mb-4 font-medium tracking-tight relative z-10">
                         {project.title}
-                      </h3>
+                      </h2>
                       <p className="text-sm font-light text-black/60 leading-relaxed mb-8 flex-grow">
                         {excerpt}
                       </p>
@@ -348,7 +348,7 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
       <section className="w-full bg-[#111] text-white py-32 border-t border-black">
         <Container>
           <div className="flex flex-col items-center text-center">
-            <MonoLabel className="text-white/40 mb-8 border-white/20">[ NEXT STEPS ]</MonoLabel>
+            <MonoLabel className="mb-8 font-mono text-[11px] uppercase tracking-[0.3em] text-white/60">[ NEXT STEPS ]</MonoLabel>
             <h2 className="font-serif text-[60px] md:text-[96px] text-white mb-8 leading-none font-semibold">
               Initiate a Project.
             </h2>

@@ -1,7 +1,7 @@
 import { getPayloadClient } from './payload';
 import { unstable_cache } from 'next/cache';
 import { cache } from 'react';
-import { Page, SeoDefault } from '@/payload-types';
+import type { Config, Page, SeoDefault } from '@/payload-types';
 
 export const getCachedPage = cache(unstable_cache(
   async (slug: string) => {
@@ -45,3 +45,30 @@ export const getCachedSeoDefaults = cache(unstable_cache(
   ['payload-seo-defaults'],
   { revalidate: 300, tags: ['seo-defaults'] }
 ));
+
+export type GlobalSlug = keyof Config['globals']
+
+/**
+ * Cached read of a Payload global.
+ *
+ * Layout chrome (navigation, footer, site settings…) is read on every page.
+ * Hitting the database for each of them per request made every route
+ * dynamic and added several round-trips to TTFB. Cached entries are tagged
+ * `global-<slug>` and busted by `revalidateGlobal` when an editor publishes.
+ * Returns null when the CMS is unreachable so callers can fall back.
+ */
+export function getCachedGlobal<T>(slug: GlobalSlug, depth = 0): Promise<T | null> {
+  return unstable_cache(
+    async () => {
+      try {
+        const payload = await getPayloadClient();
+        return (await payload.findGlobal({ slug, depth })) as unknown as T;
+      } catch (error) {
+        console.warn(`[cms] global "${slug}" unavailable:`, error instanceof Error ? error.message : error);
+        return null;
+      }
+    },
+    ['payload-global', slug, String(depth)],
+    { revalidate: 300, tags: ['globals', `global-${slug}`] },
+  )();
+}

@@ -10,15 +10,15 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="w-full h-12 mt-4 rounded-lg bg-primary text-bg font-semibold hover:bg-primary/90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+      className="btn-primary mt-2 min-h-[52px] w-full disabled:cursor-not-allowed disabled:opacity-60"
     >
       {pending ? (
         <span className="flex items-center gap-2">
-          <span className="w-5 h-5 border-2 border-bg border-t-transparent rounded-full animate-spin"></span>
-          Authenticating...
+          <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" aria-hidden />
+          [ Authenticating… ]
         </span>
       ) : (
-        'Sign In'
+        '[ Sign in ]'
       )}
     </button>
   )
@@ -28,35 +28,37 @@ export default function LoginForm() {
   const [state, formAction] = useActionState(loginAction, { error: '', success: false })
 
   return (
-    <form action={formAction} className="flex flex-col gap-5 w-full text-start">
-
-      
+    <form action={formAction} className="flex w-full flex-col gap-6 text-start">
       {state?.error && (
-        <div className="p-4 bg-danger/10 border border-danger/20 text-danger rounded-lg text-sm font-medium">
+        <p role="alert" className="border border-danger/30 bg-danger/10 p-4 font-mono text-xs uppercase tracking-widest text-danger">
           {state.error}
-        </div>
+        </p>
       )}
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="login-email" className="text-sm font-semibold text-text uppercase tracking-wider text-xs">Email Address</label>
-        <input 
+      <div>
+        <label htmlFor="login-email" className="field-label">Email address</label>
+        <input
           id="login-email"
-          type="email" 
-          name="email" 
-          required 
-          className="h-12 bg-surface-2 border border-border rounded-lg px-4 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all"
-          placeholder="admin@exvorta.com"
+          type="email"
+          name="email"
+          required
+          autoComplete="email"
+          aria-invalid={state?.error ? true : undefined}
+          className="field"
+          placeholder="you@company.com"
         />
       </div>
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="login-password" className="text-sm font-semibold text-text uppercase tracking-wider text-xs">Password</label>
-        <input 
+      <div>
+        <label htmlFor="login-password" className="field-label">Password</label>
+        <input
           id="login-password"
-          type="password" 
-          name="password" 
-          required 
-          className="h-12 bg-surface-2 border border-border rounded-lg px-4 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all"
+          type="password"
+          name="password"
+          required
+          autoComplete="current-password"
+          aria-invalid={state?.error ? true : undefined}
+          className="field"
           placeholder="••••••••"
         />
       </div>
