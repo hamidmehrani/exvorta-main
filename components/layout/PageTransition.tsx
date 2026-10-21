@@ -1,44 +1,31 @@
 'use client'
 
-import React from 'react'
-import { AnimatePresence, m as motion } from 'framer-motion'
+import React, { useRef } from 'react'
 import { usePathname } from 'next/navigation'
-import { useReducedMotion, easings } from '@/lib/animations'
 
 interface PageTransitionProps {
   children: React.ReactNode
 }
 
+/**
+ * Route-change fade for the page content only (header/footer stay put).
+ *
+ * Pure CSS: keying on the pathname remounts the wrapper, which replays the
+ * `.page-enter` keyframes. The first render never animates, so the initial
+ * load paints immediately. (The previous AnimatePresence `mode="wait"`
+ * version delayed every navigation by ~0.8s and, in the App Router, could not
+ * keep the outgoing page around anyway — it faded the *new* page out and in.)
+ */
 export function PageTransition({ children }: PageTransitionProps) {
   const pathname = usePathname()
-  const prefersReducedMotion = useReducedMotion()
-  const [mounted, setMounted] = React.useState(false)
+  const first = useRef(pathname)
+  const navigated = first.current !== pathname
 
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  // Always render the SAME component tree structure — prevents "Rendered more hooks
-  // than during the previous render" in Next.js App Router caused by React reconciling
-  // different component structures between SSR and CSR renders.
-  // Pre-mount: children rendered immediately visible (no animation flash).
-  // Post-mount + reduced motion: same static wrapper.
-  // Post-mount + full motion: AnimatePresence with key-based page transition.
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={pathname}
-        initial={mounted && !prefersReducedMotion ? { opacity: 0, y: 12 } : false}
-        animate={{ opacity: 1, y: 0 }}
-        exit={mounted && !prefersReducedMotion ? { opacity: 0, y: -12 } : undefined}
-        transition={{
-          duration: 0.35,
-          ease: easings.cinematic,
-          delay: 0.05,
-        }}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <div key={pathname} className={navigated ? 'page-enter flex flex-1 flex-col' : 'flex flex-1 flex-col'}>
+      {children}
+    </div>
   )
 }
+
+export default PageTransition

@@ -12,10 +12,11 @@ export interface BrowserFrameProps {
   /** Chrome colorway — 'dark' for dark page sections, 'light' for light ones. */
   tone?: 'light' | 'dark'
   aspectClass?: string
+  /** Preload the capture — set for frames that can be the page's LCP. */
+  priority?: boolean
   /** Rendered under the screen (meta rows, captions…). */
   footer?: React.ReactNode
   className?: string
-  priority?: boolean
 }
 
 /**
@@ -33,9 +34,9 @@ export function BrowserFrame({
   imageUrl,
   tone = 'light',
   aspectClass = 'aspect-[16/10]',
+  priority = false,
   footer,
   className = '',
-  priority = false,
 }: BrowserFrameProps) {
   const dark = tone === 'dark'
   const screenRef = useRef<HTMLDivElement>(null)
@@ -70,14 +71,14 @@ export function BrowserFrame({
     <div
       className={`group/frame relative flex flex-col overflow-hidden ${
         dark
-          ? 'bg-[#141414] border border-white/10 shadow-[0_24px_60px_-24px_rgba(0,0,0,0.7)]'
-          : 'bg-[#0D0D0D] border border-black/10 shadow-[0_20px_50px_-24px_rgba(0,0,0,0.25)]'
+          ? 'bg-sidebar border border-rule-dark shadow-[0_24px_60px_-24px_rgba(0,0,0,0.7)]'
+          : 'bg-surface border border-rule-strong shadow-lift'
       } ${className}`}
     >
       {/* ── Chrome bar ─────────────────────────────────────────────────── */}
       <div
         className={`flex items-center gap-3 px-4 py-2.5 border-b shrink-0 ${
-          dark ? 'bg-[#1B1B1B] border-white/10' : 'bg-[#F2F1EF] border-black/[0.08]'
+          dark ? 'bg-card border-rule-dark' : 'bg-surface-2 border-rule'
         }`}
       >
         <span className="flex items-center gap-[6px] shrink-0" aria-hidden>
@@ -96,7 +97,7 @@ export function BrowserFrame({
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" aria-hidden />
           )}
           <svg
-            className={`w-2.5 h-2.5 shrink-0 ${dark ? 'text-white/35' : 'text-black/35'}`}
+            className={`w-2.5 h-2.5 shrink-0 ${dark ? 'text-white/60' : 'text-black/60'}`}
             fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden
           >
             <path
@@ -105,8 +106,8 @@ export function BrowserFrame({
             />
           </svg>
           <span
-            className={`font-mono text-[9px] tracking-[0.15em] uppercase truncate ${
-              dark ? 'text-white/45' : 'text-black/45'
+            className={`font-mono text-[10px] tracking-[0.15em] uppercase truncate ${
+              dark ? 'text-white/65' : 'text-black/65'
             }`}
           >
             {host || title}
@@ -119,8 +120,8 @@ export function BrowserFrame({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Open ${title} in a new tab`}
-            className={`shrink-0 inline-flex items-center gap-1 font-mono text-[8px] tracking-[0.2em] uppercase transition-colors ${
-              dark ? 'text-white/35 hover:text-white' : 'text-black/35 hover:text-black'
+            className={`shrink-0 inline-flex items-center gap-1 font-mono text-[10px] tracking-[0.2em] uppercase transition-colors ${
+              dark ? 'text-white/60 hover:text-white' : 'text-black/60 hover:text-black'
             }`}
           >
             OPEN
@@ -132,7 +133,7 @@ export function BrowserFrame({
       </div>
 
       {/* ── Screen ─────────────────────────────────────────────────────── */}
-      <div ref={screenRef} className={`relative ${aspectClass} overflow-hidden bg-[#0D0D0D] group`}>
+      <div ref={screenRef} className={`relative ${aspectClass} overflow-hidden bg-obsidian group`}>
         {imageUrl ? (
           <div
             ref={captureRef}
@@ -144,16 +145,14 @@ export function BrowserFrame({
               alt={`${title} website preview`}
               width={1080}
               height={4000}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px"
-              className={priority ? 'h-auto w-full' : `h-auto w-full transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}
-              onLoad={priority ? undefined : () => setLoaded(true)}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 66vw"
+              className={`h-auto w-full transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+              onLoad={() => setLoaded(true)}
               priority={priority}
-              loading={priority ? 'eager' : 'lazy'}
-              fetchPriority={priority ? 'high' : 'auto'}
             />
           </div>
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1A1A1A] to-[#0D0D0D] flex flex-col items-center justify-center gap-4">
+          <div className="absolute inset-0 bg-gradient-to-br from-card to-obsidian flex flex-col items-center justify-center gap-4">
             <div className="w-14 h-10 border border-white/10 rounded-[2px] flex items-center justify-center">
               <div className="w-7 h-5 border border-white/20 rounded-[1px]" />
             </div>
@@ -164,7 +163,7 @@ export function BrowserFrame({
         )}
 
         {/* Bottom fade — the capture dissolves instead of hard-clipping */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0D0D0D]/80 via-[#0D0D0D]/25 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-obsidian/80 via-obsidian/25 to-transparent" />
 
         {/* Live pill — bottom center on hover */}
         {liveHref && (

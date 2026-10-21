@@ -1,53 +1,50 @@
-'use client'
-
 import React from 'react'
 import LoginForm from '@/components/forms/LoginForm'
-import { m, AnimatePresence } from 'framer-motion'
-import { EASE_OUT } from '@/components/ui/Reveal'
 import ExvortaLogo from '@/components/brand/ExvortaLogo'
+
+type RiseStyle = React.CSSProperties & Record<`--${string}`, string | number | undefined>
 
 export default function LoginShell() {
   return (
-    <main className="flex-1 flex flex-col items-center justify-center py-20 px-6 min-h-[80vh] w-full relative">
-      {/* Aesthetic Background Elements — slow orbital drift */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg h-[400px] pointer-events-none">
-        <m.div
-          animate={{ x: [0, 30, -20, 0], y: [0, -18, 12, 0] }}
-          transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-full h-full bg-primary/5 blur-[120px] rounded-full"
-        />
+    <div className="relative flex w-full flex-1 flex-col items-center justify-center px-6 pb-24 pt-36">
+      {/* Blueprint backdrop + soft emerald aura (gradients, not blur filters) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-x-0 top-0 h-[480px] bg-[radial-gradient(ellipse_45%_60%_at_50%_0%,color-mix(in_oklab,var(--color-emerald)_12%,transparent),transparent_72%)]" />
+        <div className="bg-blueprint-grid absolute inset-0" />
       </div>
 
-      <m.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: EASE_OUT }}
-        className="w-full max-w-md p-10 bg-surface border border-border rounded-2xl shadow-2xl relative z-10 flex flex-col items-center text-center"
+      <div
+        style={{ '--i': 0 } as RiseStyle}
+        className="rise relative z-10 flex w-full max-w-md flex-col items-center border border-obsidian/10 bg-surface p-8 text-center shadow-soft sm:p-10"
       >
-        {/* Brand Mark */}
-        <m.div
-          initial={{ scale: 0.6, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.15, duration: 0.5, ease: EASE_OUT }}
-          className="w-16 h-16 rounded-2xl bg-[#FAFAF8] border border-black/10 flex items-center justify-center mb-6 overflow-hidden"
-        >
-          <ExvortaLogo size={40} />
-        </m.div>
+        <ExvortaLogo size={36} />
 
-        <h1 className="text-3xl font-extrabold text-text mb-2 tracking-tight">Client Portal</h1>
-        <p className="text-muted mb-6 font-medium">Sign in to access your project workspace.</p>
-        <div className="mb-8 w-full flex items-start gap-3 bg-surface-2 border border-border rounded-lg p-4 text-start">
-          <svg className="w-4 h-4 text-steel shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="9" /><path d="M12 11v5" /><circle cx="12" cy="8" r="0.5" fill="currentColor" stroke="none" /><circle cx="12" cy="8" r="0.9" /></svg>
-          <p className="text-[11px] text-muted leading-relaxed">
-            Client dashboards are being provisioned. You can sign in now — project
-            workspaces unlock for active engagements. Need access? Email
-            <a href="mailto:ops@exvorta.com" className="text-obsidian underline ml-1">ops@exvorta.com</a>.
+        <div className="my-8 h-px w-12 bg-obsidian/15" aria-hidden />
+
+        <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted">[ Client portal ]</p>
+        <h1 className="mb-3 font-serif text-3xl font-semibold tracking-tight text-obsidian">Sign in to your workspace</h1>
+        <p className="mb-8 text-sm text-muted">Project dashboards, documents and deployments in one place.</p>
+
+        <div className="mb-8 flex w-full items-start gap-3 border border-obsidian/10 bg-surface-2 p-4 text-start">
+          <svg className="mt-0.5 h-4 w-4 shrink-0 text-emerald" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 11v5" />
+            <circle cx="12" cy="8" r="0.9" />
+          </svg>
+          <p className="text-xs leading-relaxed text-muted">
+            Client dashboards are being provisioned. You can sign in now — project workspaces unlock for active
+            engagements. Need access?{' '}
+            <a href="mailto:ops@exvorta.com" className="text-obsidian underline underline-offset-2">
+              ops@exvorta.com
+            </a>
+            .
           </p>
         </div>
 
         <LoginForm />
-        <p className="mt-6 text-[10px] font-mono tracking-[0.2em] text-muted uppercase">Secured · Exvorta Infrastructure</p>
-      </m.div>
-    </main>
+
+        <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Secured · Exvorta infrastructure</p>
+      </div>
+    </div>
   )
 }

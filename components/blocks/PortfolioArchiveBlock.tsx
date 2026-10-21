@@ -1,18 +1,13 @@
-"use client";
-
-import React, { useRef } from 'react';
-import { m as motion } from "framer-motion";
-import type { Project, Media } from '@/payload-types';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Container } from '@/components/ui/Container';
-import { MonoLabel } from '@/components/ui/MonoLabel';
-import { Button } from '@/components/ui/Button';
-import { useAnimationLevel, easings } from '@/lib/animations';
-import { MagneticButton } from '@/components/ui/MagneticButton';
-import { LiveWebsiteFrame } from '@/components/ui/LiveWebsiteFrame';
-import { Reveal } from '@/components/ui/Reveal';
-import { StaggerText } from '@/components/ui/motion';
+import React from 'react'
+import Link from '@/components/ui/AppLink'
+import type { Project, Media } from '@/payload-types'
+import { Container } from '@/components/ui/Container'
+import { LiveWebsiteFrame } from '@/components/ui/LiveWebsiteFrame'
+import { Reveal, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { CtaBand } from '@/components/ui/CtaBand'
+import { StaggerText } from '@/components/ui/motion'
+import { unbracket } from '@/lib/text'
 
 // ── Strict Type Definitions ───────────────────────────────────────────────────
 
@@ -96,6 +91,16 @@ function extractMediaUrl(media?: number | Media | null, fallbackSlug?: string): 
   return '';
 }
 
+/** Shared card shell: hairline surface, lifts on hover, content below the browser frame. */
+function CardBody({ title, as: Heading = 'h3', children }: { title: string; as?: 'h2' | 'h3'; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-grow flex-col p-7">
+      <Heading className="mb-3 font-serif text-3xl font-semibold leading-tight text-obsidian">{title}</Heading>
+      {children}
+    </div>
+  )
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // HOMEPAGE SECTION MODE (Proof of Execution)
 // ─────────────────────────────────────────────────────────────────────────────
@@ -107,125 +112,68 @@ function HomepagePortfolioSection({
   ctaLabel,
   ctaUrl,
 }: PortfolioArchiveBlockProps) {
-  const containerRef = useRef<HTMLElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
-  const animationLevel = useAnimationLevel();
-
   const safeProjects = Array.isArray(projects) ? projects.filter(isInlineProject) : [];
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 48, filter: 'blur(6px)' },
-    show: {
-      opacity: 1,
-      y: 0,
-      filter: 'blur(0px)',
-      transition: { duration: 0.8, ease: easings.cinematic },
-    },
-  };
-
   return (
-    <section ref={containerRef} className="w-full py-16 sm:py-24 lg:py-32 bg-[#FAFAF8] border-t border-black/5" data-purpose="proof-of-execution">
+    <section className="w-full border-t border-rule py-24 md:py-32" data-purpose="proof-of-execution">
       <Container>
-        {/* Header matched to reference design */}
-        <Reveal y={20} className="mb-20">
-          <div className="font-mono text-[11px] tracking-[0.25em] text-gray-500 uppercase mb-4">
-            {sectionLabel || '[ OUR INFRASTRUCTURE WORK ]'}
-          </div>
-          <h2 className="text-5xl sm:text-6xl md:text-8xl lg:text-[120px] font-serif text-[#0D0D0D] tracking-tighter leading-none mb-8">
-            {headline || 'Proof of Execution.'}
-          </h2>
-          {subtitle && (
-            <p className="mt-4 text-lg text-black/60 font-light max-w-2xl">{subtitle}</p>
-          )}
-          <motion.div
-            className="w-full h-[1px] bg-black mt-8 origin-left"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 1.1, delay: 0.3, ease: easings.cinematic }}
+        <div className="mb-14 flex flex-col gap-8 md:mb-20 md:flex-row md:items-end md:justify-between">
+          <SectionHeading
+            eyebrow={unbracket(sectionLabel) || 'Our infrastructure work'}
+            title={headline || 'Proof of Execution.'}
+            description={subtitle}
           />
-        </Reveal>
-
-        {/* 1 col mobile, 2 col tablet, 3 col desktop as requested */}
-        <motion.div
-          ref={gridRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-80px' }}
-          variants={{ hidden: {}, show: { transition: { staggerChildren: animationLevel === 'none' ? 0 : 0.14, delayChildren: 0.1 } } }}
-        >
-          {safeProjects?.map((project, index) => (
-            <motion.article
-              key={project.id || index}
-              variants={cardVariants}
-              className="portfolio-card group flex flex-col bg-white border border-black/5 rounded-none overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 relative"
-              whileHover={animationLevel === 'none' ? undefined : { y: -8 }}
-            >
-              <LiveWebsiteFrame
-                title={project.title}
-                imageUrl={resolveProjectImage(project)}
-                liveUrl={resolveCaseStudyUrl(project).startsWith('/portfolio/') ? `https://${resolveCaseStudyUrl(project).split('/').pop()}.exvorta.com` : undefined}
-                live
-                industry={project.industry}
-                volume={project.volume}
-                service={project.service}
-              />
-
-              <div className="flex flex-col flex-grow p-8">
-                <h3 className="card-title font-serif text-3xl text-black mb-4 font-medium tracking-tight relative z-10">
-                  {project.title}
-                </h3>
-                {project.description && (
-                  <p className="text-sm font-light text-black/60 leading-relaxed mb-8 flex-grow">
-                    {project.description}
-                  </p>
-                )}
-
-                <div className="mt-auto self-start flex flex-wrap items-center gap-3">
-                  <MagneticButton>
-                    <a
-                      href={resolveCaseStudyUrl(project)}
-                      className="inline-flex items-center justify-center border border-black rounded-none px-8 py-4 text-[10px] font-mono text-center hover:bg-black hover:text-white transition-colors group/btn"
-                    >
-                      {project.linkLabel || 'VIEW CASE STUDY'}
-                      <span className="ml-2 transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform">↗</span>
-                    </a>
-                  </MagneticButton>
-                  {(() => {
-                    const csUrl = resolveCaseStudyUrl(project);
-                    const liveHref = csUrl.startsWith('/portfolio/') ? `https://${csUrl.split('/').pop()}.exvorta.com` : '';
-                    return liveHref ? (
-                      <a
-                        href={liveHref}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Open ${project.title} live website`}
-                        className="inline-flex items-center gap-2 rounded-none px-6 py-4 text-[10px] font-mono text-black/60 hover:text-black border border-black/15 hover:border-black transition-colors"
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" aria-hidden />
-                        LIVE SITE
-                      </a>
-                    ) : null;
-                  })()}
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </motion.div>
-
-        <div className="py-12 flex justify-center border-t border-black/5 pt-20">
-          <Reveal delay={0.1}>
-            <MagneticButton>
-              <a
-                href={ctaUrl || "/portfolio"}
-                className="bg-[#0D0D0D] text-white px-12 py-5 text-[11px] font-mono font-medium tracking-[0.2em] uppercase rounded-none hover:bg-black transition-all"
-              >
-                {ctaLabel || 'EXPLORE FULL PORTFOLIO ↗'}
-              </a>
-            </MagneticButton>
+          <Reveal y={14} delay={0.2} className="shrink-0">
+            <Link href={ctaUrl || '/portfolio'} className="btn-ghost min-h-[52px] px-8 py-4">
+              {(ctaLabel || 'EXPLORE FULL PORTFOLIO').replace(/\s*[↗→]\s*$/, '')} ↗
+            </Link>
           </Reveal>
         </div>
+
+        {/* 1 col mobile, 2 col tablet, 3 col desktop */}
+        <StaggerContainer className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" staggerChildren={0.14} delayChildren={0.1}>
+          {safeProjects.map((project, index) => {
+            const csUrl = resolveCaseStudyUrl(project);
+            const liveHref = csUrl.startsWith('/portfolio/') ? `https://${csUrl.split('/').pop()}.exvorta.com` : '';
+            return (
+              <StaggerItem key={project.id || index} className="h-full" y={28}>
+                <article className="card-elite group flex h-full flex-col">
+                  <LiveWebsiteFrame
+                    title={project.title}
+                    imageUrl={resolveProjectImage(project)}
+                    liveUrl={liveHref || undefined}
+                    live
+                    industry={project.industry}
+                    volume={project.volume}
+                    service={project.service}
+                  />
+                  <CardBody title={project.title}>
+                    {project.description && (
+                      <p className="mb-8 flex-grow text-base font-light leading-relaxed text-muted">{project.description}</p>
+                    )}
+                    <div className="mt-auto flex flex-wrap items-center gap-2.5">
+                      <Link href={csUrl} className="btn-ghost px-5 py-3.5">
+                        {(project.linkLabel || 'VIEW CASE STUDY').replace(/\s*[↗→]\s*$/, '')} ↗
+                      </Link>
+                      {liveHref && (
+                        <a
+                          href={liveHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Open ${project.title} live website`}
+                          className="btn-mono gap-2 px-4 py-3.5"
+                        >
+                          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald" aria-hidden />
+                          Live site
+                        </a>
+                      )}
+                    </div>
+                  </CardBody>
+                </article>
+              </StaggerItem>
+            );
+          })}
+        </StaggerContainer>
       </Container>
     </section>
   );
@@ -236,18 +184,6 @@ function HomepagePortfolioSection({
 // ─────────────────────────────────────────────────────────────────────────────
 function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
   const hasProjects = projects && projects.length > 0;
-  const containerRef = useRef<HTMLDivElement>(null);
-  const animationLevel = useAnimationLevel();
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 48, filter: 'blur(6px)' },
-    show: {
-      opacity: 1,
-      y: 0,
-      filter: 'blur(0px)',
-      transition: { duration: 0.8, ease: easings.cinematic },
-    },
-  };
 
   const firstCardVariants = {
     hidden: { opacity: 1, y: 0, filter: 'blur(0px)' },
@@ -255,21 +191,31 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
   };
 
   return (
-    <div ref={containerRef} className="w-full bg-[#FAFAF8] min-h-screen">
+    <div className="min-h-screen w-full">
       {/* Hero Section */}
-      <section className="w-full pt-28 sm:pt-40 pb-24 border-b border-black/5">
+      <section className="rails relative isolate w-full overflow-hidden border-b border-rule pb-20 pt-36 md:pb-28 md:pt-44">
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(ellipse_55%_65%_at_30%_0%,color-mix(in_oklab,var(--color-emerald)_12%,transparent),transparent_72%)]" />
+          <div className="bg-blueprint-grid absolute inset-0" />
+        </div>
         <Container>
           <div className="max-w-5xl">
-            <div className="font-mono text-[11px] uppercase text-gray-500 mb-6 tracking-[0.2em]">[ SELECTED WORKS ]</div>
+            <p className="eyebrow rise mb-8">
+              <span className="eyebrow-index" aria-hidden>
+                <i className="block h-1.5 w-1.5 rotate-45 bg-current" />
+              </span>
+              Selected works
+            </p>
             <StaggerText
               as="h1"
               text="Latest Web Design Works."
               mode="animate"
-              unit="chars"
-              duration={0.7}
-              className="font-serif text-5xl sm:text-[64px] md:text-[100px] text-[#0D0D0D] mb-8 leading-none font-semibold tracking-tighter"
+              unit="words"
+              stagger={0.08}
+              duration={0.8}
+              className="mb-8 font-serif text-display font-semibold text-obsidian"
             />
-            <p className="font-sans text-xl md:text-2xl text-black/60 max-w-2xl font-light">
+            <p className="max-w-2xl text-lede font-light text-muted">
               Premium websites and CMS platforms engineered for global exporters.
             </p>
           </div>
@@ -277,18 +223,11 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
       </section>
 
       {/* Project Blocks Grid */}
-      <section className="w-full py-16 sm:py-24 lg:py-32">
+      <section className="w-full py-24 md:py-32">
         <Container>
           {hasProjects ? (
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: '-80px' }}
-              variants={{ hidden: {}, show: { transition: { staggerChildren: animationLevel === 'none' ? 0 : 0.14, delayChildren: 0.1 } } }}
-            >
+            <StaggerContainer className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" staggerChildren={0.14} delayChildren={0.1}>
               {projects?.map((project, index) => {
-                const heroImageUrl = extractMediaUrl(project.heroImage);
                 const industry = project.metrics?.find((m) => m.label.toLowerCase() === 'industry')?.value || 'Various';
                 const stack = project.metrics?.find((m) => m.label.toLowerCase() === 'tech stack' || m.label.toLowerCase() === 'stack')?.value || 'Next.js';
                 // Type narrowing for dynamic Payload CMS fields if any
@@ -296,81 +235,57 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
                 const excerpt = typeof projAny.excerpt === 'string' ? projAny.excerpt : 'Premium web design and CMS platform.';
 
                 return (
-                  <motion.article
-                    key={project.id || index}
-                    variants={index === 0 ? firstCardVariants : cardVariants}
-                    initial={index === 0 ? false : undefined}
-                    className="portfolio-card group flex flex-col bg-white border border-black/5 rounded-none overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 relative"
-                    whileHover={animationLevel === 'none' ? undefined : { y: -8 }}
-                  >
-                    <LiveWebsiteFrame
-                      title={project.title}
-                      imageUrl={extractMediaUrl(project.heroImage, project.slug)}
-                      liveUrl={project.liveUrl || (project.slug ? `https://${project.slug}.exvorta.com` : undefined)}
-                      slug={project.slug}
-                      priority={index === 0}
-                      live
-                    />
+                  <StaggerItem key={project.id || index} className="h-full" y={28}>
+                    <article className="card-elite group flex h-full flex-col">
+                      <LiveWebsiteFrame
+                        title={project.title}
+                        imageUrl={extractMediaUrl(project.heroImage, project.slug)}
+                        liveUrl={project.liveUrl || (project.slug ? `https://${project.slug}.exvorta.com` : undefined)}
+                        slug={project.slug}
+                        live
+                        priority={index < 3}
+                      />
+                      <CardBody title={project.title} as="h2">
+                        <p className="mb-8 flex-grow text-base font-light leading-relaxed text-muted">{excerpt}</p>
 
-                    <div className="flex flex-col flex-grow p-8">
-                      <h2 className="card-title font-serif text-3xl text-black mb-4 font-medium tracking-tight relative z-10">
-                        {project.title}
-                      </h2>
-                      <p className="text-sm font-light text-black/60 leading-relaxed mb-8 flex-grow">
-                        {excerpt}
-                      </p>
+                        <dl className="mb-10 space-y-3 font-mono text-label uppercase">
+                          <div className="flex justify-between gap-4 border-b border-rule pb-2.5">
+                            <dt className="text-muted">Industry</dt>
+                            <dd className="max-w-[60%] truncate font-medium text-obsidian">{industry}</dd>
+                          </div>
+                          <div className="flex justify-between gap-4 border-b border-rule pb-2.5">
+                            <dt className="text-muted">Stack</dt>
+                            <dd className="max-w-[60%] truncate font-medium text-obsidian">{stack}</dd>
+                          </div>
+                        </dl>
 
-                      <div className="space-y-3 font-mono text-[9px] uppercase tracking-widest mb-10 text-gray-500">
-                        <div className="flex justify-between border-b border-black/5 pb-2">
-                          <span>INDUSTRY</span>
-                          <span className="text-black font-medium truncate max-w-[150px]">{industry}</span>
+                        <div className="mt-auto self-start">
+                          <Link href={`/portfolio/${project.slug}`} className="btn-ghost px-6 py-3.5">
+                            READ CASE STUDY ↗
+                          </Link>
                         </div>
-                        <div className="flex justify-between border-b border-black/5 pb-2">
-                          <span>STACK</span>
-                          <span className="text-black font-medium truncate max-w-[150px]">{stack}</span>
-                        </div>
-                      </div>
-
-                      <div className="mt-auto self-start">
-                        <MagneticButton>
-                          <a href={`/portfolio/${project.slug}`} className="inline-flex items-center justify-center border border-black rounded-none px-8 py-4 text-[10px] font-mono text-center hover:bg-black hover:text-white transition-colors group/btn">
-                            READ CASE STUDY <span className="ml-2 transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform">↗</span>
-                          </a>
-                        </MagneticButton>
-                      </div>
-                    </div>
-                  </motion.article>
+                      </CardBody>
+                    </article>
+                  </StaggerItem>
                 );
               })}
-            </motion.div>
+            </StaggerContainer>
           ) : (
-            <div className="py-16 sm:py-24 lg:py-32 text-center text-black/40 font-mono text-[10px] uppercase tracking-widest">
-              No projects found.
+            <div className="py-32 text-center">
+              <p className="eyebrow justify-center">No projects found.</p>
             </div>
           )}
         </Container>
       </section>
 
       {/* CTA Section */}
-      <section className="w-full bg-[#111] text-white py-16 sm:py-24 lg:py-32 border-t border-black">
-        <Container>
-          <div className="flex flex-col items-center text-center">
-            <MonoLabel className="text-white/40 mb-8 border-white/20">[ NEXT STEPS ]</MonoLabel>
-            <h2 className="font-serif text-4xl sm:text-5xl md:text-[96px] text-white mb-8 leading-none font-semibold">
-              Initiate a Project.
-            </h2>
-            <p className="font-sans text-lg text-white/60 max-w-2xl mb-12 mx-auto font-light">
-              We partner with a limited number of global exporters each quarter to ensure
-              institutional-grade delivery. Let&apos;s discuss your digital infrastructure.
-            </p>
-            <MagneticButton>
-              <Link href="/rfq" className="inline-flex items-center justify-center px-12 py-6 bg-white text-black hover:bg-gray-200 shadow-[0_0_20px_rgba(255,255,255,0.1)] font-mono text-[10px] uppercase tracking-widest transition-colors group/btn">
-                REQUEST A CONSULTATION <span className="ml-2 transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform">↗</span>
-              </Link>
-            </MagneticButton>
-          </div>
-        </Container>
-      </section>
+      <CtaBand
+        tone="dark"
+        eyebrow="Next steps"
+        headline="Initiate a Project."
+        description="We partner with a limited number of global exporters each quarter to ensure institutional-grade delivery. Let's discuss your digital infrastructure."
+        primary={{ label: 'REQUEST A CONSULTATION ↗', href: '/rfq' }}
+      />
     </div>
   );
 }
@@ -383,7 +298,7 @@ export function PortfolioArchiveBlock(props: PortfolioArchiveBlockProps) {
 
   // Filter projects via type guard arrays
   const fullProjects = Array.isArray(projects) ? projects.filter(isProject) : [];
-  
+
   if (fullPage || fullProjects.length > 0) {
     return <FullPagePortfolioArchive projects={fullProjects} />;
   }

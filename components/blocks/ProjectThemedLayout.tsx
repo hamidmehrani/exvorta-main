@@ -44,10 +44,10 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
   const excerpt = project?.excerpt || cs.excerpt;
 
   return (
-    <div className="bg-[#0D0D0D] antialiased text-[#FAFAF8]">
+    <div className="bg-obsidian text-cream">
       {/* ═══════════════ HERO: split editorial + live frame ═══════════════ */}
-      <section className="min-h-screen pt-32 pb-24 px-6 md:px-12 border-b border-white/10" style={{ backgroundColor: '#0D0D0D' }}>
-        <div className="max-w-[1440px] mx-auto w-full relative z-10">
+      <div className="min-h-screen pt-32 pb-24 border-b border-white/10 bg-obsidian">
+        <div className="container-site relative z-10">
           <motion.div
             initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
             animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
@@ -58,16 +58,16 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
               <span className="text-[14px]">←</span>
               ALL CASE STUDIES
             </Link>
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">{cs.category}</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/55">{cs.category}</span>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
             {/* Left: brand story */}
             <div className="col-span-1 lg:col-span-5 flex flex-col">
-              <AnimatedSection priority>
+              <AnimatedSection>
                 <div className="flex items-center gap-3 mb-8">
                   <span className="inline-block w-10 h-[2px]" style={{ backgroundColor: accent }} />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">CASE STUDY — {cs.title.toUpperCase()}</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/60">CASE STUDY — {cs.title.toUpperCase()}</span>
                 </div>
                 <h1 className="font-serif text-[44px] md:text-[64px] tracking-tighter leading-[1.05] mb-6 font-semibold">
                   {cs.title}
@@ -104,7 +104,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                   <div className="w-full border border-white/10 divide-y divide-white/10">
                     {metrics.map((metric, i) => (
                       <div key={i} className="flex items-center justify-between px-5 py-3">
-                        <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/30">{metric.label}</span>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/55">{metric.label}</span>
                         <span className="font-mono text-[10px] uppercase text-white/80">{metric.value}</span>
                       </div>
                     ))}
@@ -126,7 +126,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                   poster={heroSrc || undefined}
                   priority={true}
                 />
-                <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.3em] text-white/40">
+                <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-white/60">
                   FIG. 01 — LIVE DEPLOYMENT — {cs.domain}
                 </p>
               </motion.div>
@@ -142,18 +142,18 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                     <div className="font-serif text-5xl md:text-6xl font-semibold mb-2 tracking-tight" style={{ color: accent }}>
                       {s.value}
                     </div>
-                    <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/40">{s.label}</div>
+                    <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/60">{s.label}</div>
                   </div>
                 ))}
               </div>
             </AnimatedSection>
           )}
         </div>
-      </section>
+      </div>
 
       {/* ═══════════════ SECTION 1: THE BRIEF — why they needed us ═══════════════ */}
-      <section className="py-14 sm:py-20 lg:py-28 border-t border-white/10" style={{ backgroundColor: cs.heroBg }} id="the-brief">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 text-[#0D0D0D]">
+      <section className="py-28 border-t border-white/10" style={{ backgroundColor: cs.heroBg }} id="the-brief">
+        <div className="container-site text-obsidian">
           <StaggerContainer staggerChildren={0.12} delayChildren={0.05}>
             <StaggerItem>
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] mb-8" style={{ color: accent }}>[ 01 — THE BRIEF ]</div>
@@ -176,14 +176,14 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
               <StaggerItem className="lg:col-span-7">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="border border-black/10 p-6 bg-white/40">
-                    <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-black/40 mb-3">THE PROBLEM</div>
+                    <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-black/60 mb-3">THE PROBLEM</div>
                     <p className="font-sans text-sm text-black/70 leading-relaxed">
                       {cs.brief?.problem ||
                         'Credibility gap: institutional buyers judged the company by a website that undersold its certifications, capacity, and compliance depth.'}
                     </p>
                   </div>
                   <div className="border p-6" style={{ borderColor: accent, backgroundColor: `${accent}08` }}>
-                    <div className="font-mono text-[9px] uppercase tracking-[0.25em] mb-3" style={{ color: accent }}>THE EXVORTA ANSWER</div>
+                    <div className="font-mono text-[10px] uppercase tracking-[0.25em] mb-3" style={{ color: accent }}>THE EXVORTA ANSWER</div>
                     <p className="font-sans text-sm text-black/80 leading-relaxed">
                       {cs.brief?.answer ||
                         'A spec-grade web presence: every claim verifiable, every certificate one click away, every product documented like an architectural submittal.'}
@@ -197,8 +197,8 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
       </section>
 
       {/* ═══════════════ SECTION 2: WHAT WE SHIPPED — capabilities ═══════════════ */}
-      <section className="bg-[#0D0D0D] py-14 sm:py-20 lg:py-28 border-t border-white/10" id="what-we-shipped">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+      <section className="bg-obsidian py-28 border-t border-white/10" id="what-we-shipped">
+        <div className="container-site">
           <StaggerContainer staggerChildren={0.1} delayChildren={0.05}>
             <StaggerItem>
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] mb-8" style={{ color: accent }}>[ 02 — WHAT WE SHIPPED ]</div>
@@ -209,8 +209,8 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
               {cs.products.map((p, i) => (
                 <StaggerItem key={i}>
-                  <div className="h-full border border-white/10 bg-[#141414] p-8 hover:border-white/25 transition-colors duration-300 group">
-                    <div className="font-mono text-[9px] uppercase tracking-[0.25em] mb-6" style={{ color: accent }}>
+                  <div className="h-full border border-white/10 bg-sidebar p-8 hover:border-white/25 transition-colors duration-300 group">
+                    <div className="font-mono text-[10px] uppercase tracking-[0.25em] mb-6" style={{ color: accent }}>
                       {String(i + 1).padStart(2, '0')} — RANGE
                     </div>
                     <h3 className="font-serif text-2xl mb-4 font-medium tracking-tight">{p.name}</h3>
@@ -224,7 +224,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
             {cs.certifications.length > 0 && (
               <StaggerItem>
                 <div className="border border-white/10 divide-y divide-white/10">
-                  <div className="px-6 py-4 font-mono text-[9px] uppercase tracking-[0.3em] text-white/30 border-b border-white/10">
+                  <div className="px-6 py-4 font-mono text-[10px] uppercase tracking-[0.3em] text-white/55 border-b border-white/10">
                     COMPLIANCE FRONT-AND-CENTER — VERIFIED CLAIMS, ZERO INFLATION
                   </div>
                   {cs.certifications.map((c, i) => (
@@ -241,8 +241,8 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
       </section>
 
       {/* ═══════════════ SECTION 3: YOU OWN THE PANEL (CMS control) ═══════════════ */}
-      <section className="py-14 sm:py-20 lg:py-28 border-t border-white/10" style={{ backgroundColor: cs.heroBg }} id="own-the-panel">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 text-[#0D0D0D]">
+      <section className="py-28 border-t border-white/10" style={{ backgroundColor: cs.heroBg }} id="own-the-panel">
+        <div className="container-site text-obsidian">
           <StaggerContainer staggerChildren={0.1}>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               <StaggerItem className="lg:col-span-5">
@@ -275,7 +275,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                     <span className="w-2 h-2 rounded-full bg-white/20" />
                     <span className="w-2 h-2 rounded-full bg-white/15" />
                     <span className="w-2 h-2 rounded-full bg-white/10" />
-                    <span className="ml-3 font-mono text-[10px] text-white/40">{cs.domain}/admin — YOUR PANEL</span>
+                    <span className="ml-3 font-mono text-[10px] text-white/60">{cs.domain}/admin — YOUR PANEL</span>
                   </div>
                   <div className="flex">
                     <div className="w-14 border-r border-white/10 flex flex-col items-center py-5 gap-4 bg-[#0D0D0D]">
@@ -286,10 +286,10 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                     <div className="flex-1 p-6">
                       <div className="flex items-center justify-between mb-6">
                         <div>
-                          <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/30 mb-2">CONTENT OPERATIONS</div>
+                          <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/55 mb-2">CONTENT OPERATIONS</div>
                           <div className="font-serif text-xl text-white">Everything editable</div>
                         </div>
-                        <span className="px-3 py-1.5 font-mono text-[9px] uppercase tracking-widest text-white" style={{ backgroundColor: accent }}>+ NEW</span>
+                        <span className="px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-white" style={{ backgroundColor: accent }}>+ NEW</span>
                       </div>
                       <div className="space-y-2">
                         {[
@@ -299,10 +299,10 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
                           ['PAGE SECTIONS', 'drag & drop', accent],
                           ['MEDIA LIBRARY', 'unlimited', accent],
                         ].map(([label, meta, c], i) => (
-                          <div key={i} className="flex items-center justify-between border border-white/10 px-4 py-3 bg-[#0D0D0D] hover:bg-white/5 transition-colors">
+                          <div key={i} className="flex items-center justify-between gap-3 border border-white/10 px-4 py-3 bg-obsidian hover:bg-white/5 transition-colors">
                             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/80">{label}</span>
-                            <span className="font-mono text-[10px] text-white/40">{meta}</span>
-                            <span className="font-mono text-[10px]" style={{ color: c }}>[ EDIT ]</span>
+                            <span className="font-mono text-[10px] text-white/60">{meta}</span>
+                            <span className="font-mono text-[10px] whitespace-nowrap" style={{ color: c }}>[ EDIT ]</span>
                           </div>
                         ))}
                       </div>
@@ -317,7 +317,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
 
       {/* ═══════════════ SECTION 4: testimonial (when available) ═══════════════ */}
       {cs.testimonial && (
-        <section className="bg-[#0D0D0D] py-14 sm:py-20 lg:py-28 border-t border-white/10">
+        <section className="bg-obsidian py-28 border-t border-white/10">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <AnimatedSection>
               <div className="font-serif text-3xl md:text-4xl leading-snug italic text-white/90 mb-10">
@@ -326,7 +326,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
               <div className="font-mono text-[10px] uppercase tracking-[0.3em]" style={{ color: accent }}>
                 {cs.testimonial.author}
               </div>
-              <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/30 mt-2">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55 mt-2">
                 {cs.testimonial.role}
               </div>
             </AnimatedSection>
@@ -335,8 +335,8 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
       )}
 
       {/* ═══════════════ FINAL CTA: two doors ═══════════════ */}
-      <section className="py-16 sm:py-24 lg:py-32 border-t border-white/10" style={{ backgroundColor: cs.heroBg }}>
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 text-[#0D0D0D]">
+      <section className="py-32 border-t border-white/10" style={{ backgroundColor: cs.heroBg }}>
+        <div className="container-site text-obsidian">
           <AnimatedSection className="text-center mb-16">
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] mb-6" style={{ color: accent }}>[ NEXT STEPS ]</div>
             <h2 className="font-serif text-[44px] md:text-[64px] tracking-tighter leading-[1.05] font-semibold mb-6">
@@ -360,7 +360,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
             <Link
               href="/rfq"
               className="inline-flex items-center justify-center px-12 py-5 font-mono text-[11px] uppercase tracking-[0.2em] border transition-colors"
-              style={{ borderColor: '#0D0D0D' }}
+              style={{ borderColor: 'var(--color-obsidian)' }}
             >
               [ REQUEST A SIMILAR BUILD ]
             </Link>
@@ -378,15 +378,15 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
         return (
           <Link
             href={`/portfolio/${nextKey}`}
-            className="group block bg-[#0D0D0D] border-t border-white/10 py-20 px-6 md:px-12 transition-colors hover:bg-[#141414]"
+            className="group block border-t border-white/10 bg-obsidian py-20 transition-colors hover:bg-sidebar"
           >
-            <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="container-site flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div>
-                <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/30 mb-4">NEXT CASE STUDY</div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55 mb-4">NEXT CASE STUDY</div>
                 <div className="font-serif text-[36px] md:text-[52px] tracking-tighter leading-none font-semibold text-white">
                   {next.title}
                 </div>
-                <div className="font-mono text-[10px] uppercase tracking-[0.25em] mt-3" style={{ color: next.accent }}>
+                <div className="font-mono text-[10px] uppercase tracking-[0.25em] mt-3 text-white/60">
                   {next.category}
                 </div>
               </div>

@@ -1,14 +1,15 @@
 import React from 'react';
 import { getPayloadClient } from '@/lib/payload';
+import { getCachedProject } from '@/lib/payload-cache';
 import { ProjectSingleLayout } from '@/components/blocks/ProjectSingleLayout';
 import { notFound } from 'next/navigation';
 import type { Project } from '@/payload-types';
 import type { Metadata } from 'next';
 import { generateMeta } from '@/utils/generateMeta';
 
-import { getCachedProject } from '@/lib/payload-cache';
-
-export const dynamic = 'auto';
+// Content is managed in the Payload admin panel. Pages are pre-rendered and
+// cached (ISR); the Projects afterChange hook revalidates on publish and the
+// window below is the safety net.
 export const revalidate = 300;
 
 type Props = {
@@ -19,17 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const project = await getCachedProject(resolvedParams.slug);
 
-  const title = project?.title || 'Case Study';
-  const description =
-    project?.excerpt ||
-    `${title} — High-performance export web platform engineered by Exvorta.`;
-
-  return generateMeta({
-    title,
-    description,
-    image: `/portfolio-${resolvedParams.slug}.png`,
-    url: `/portfolio/${resolvedParams.slug}`,
-  });
+  return generateMeta({ doc: { meta: { title: project?.title } }, url: `/portfolio/${resolvedParams.slug}` })
 }
 
 export async function generateStaticParams() {

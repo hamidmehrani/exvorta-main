@@ -3,9 +3,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { m as motion, AnimatePresence, useReducedMotion as useFramerReducedMotion } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 import type { Page } from '@/payload-types'
-import { easings, useAnimationLevel } from '@/lib/animations'
 import ExvortaLogo from '@/components/brand/ExvortaLogo'
 
 interface NavLink {
@@ -27,12 +26,21 @@ interface HeaderClientProps {
   brand?: { name: string; logoUrl: string | null }
 }
 
+const resolveHref = (item: NavLink): string => {
+  const refValue = item.link?.reference?.value
+  const isRef = item.link?.type === 'reference' && refValue
+  if (isRef) {
+    if (typeof refValue === 'string' || typeof refValue === 'number') return `/${refValue}`
+    return `/${(refValue as { slug?: string }).slug || ''}`
+  }
+  return item.link?.url || '/'
+}
+
 export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { name: 'EXVORTA', logoUrl: null } }) => {
+  const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
-  const animationLevel = useAnimationLevel()
-  const prefersReducedMotion = useFramerReducedMotion()
 
   useEffect(() => {
     let lastY = window.scrollY
@@ -49,6 +57,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { 
       }
       lastY = y
     }
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [isMobileMenuOpen])
@@ -59,57 +68,31 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { 
     return () => { document.documentElement.style.overflow = '' }
   }, [isMobileMenuOpen])
 
+  // Close the drawer on navigation and on Escape
+  useEffect(() => { setIsMobileMenuOpen(false) }, [pathname])
+  useEffect(() => {
+    if (!isMobileMenuOpen) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setIsMobileMenuOpen(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [isMobileMenuOpen])
+
   const closeMenu = useCallback(() => setIsMobileMenuOpen(false), [])
 
-  const resolveHref = (item: NavLink): string => {
-    const refValue = item.link?.reference?.value
-    const isRef = item.link?.type === 'reference' && refValue
-    if (isRef) {
-      if (typeof refValue === 'string' || typeof refValue === 'number') return `/${refValue}`
-      return `/${(refValue as { slug?: string }).slug || ''}`
-    }
-    return item.link?.url || '/'
-  }
-
-  const renderLinks = (onClick?: () => void) =>
-    navLinks.map((item, idx) => {
-      const href = resolveHref(item)
-      const isExternal = item.link?.type === 'custom' && item.link?.openInNewTab
-      return (
-        <motion.div
-          key={item.id || idx}
-          initial={prefersReducedMotion ? false : { opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.05 * idx + 0.1, ease: easings.cinematic }}
-        >
-          <Link
-            href={href}
-            target={isExternal ? "_blank" : undefined}
-            rel={isExternal ? "noopener noreferrer" : undefined}
-            onClick={onClick}
-            className="hover:text-obsidian transition-colors relative group"
-          >
-            {item.link.label}
-            <span aria-hidden className="absolute -bottom-2 left-0 w-0 h-[1px] bg-obsidian transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-        </motion.div>
-      )
-    })
+  const isActive = (href: string) =>
+    href !== '/' && (pathname === href || pathname.startsWith(`${href}/`))
 
   return (
-    <motion.header
-      initial={false}
-      animate={{ y: hidden ? '-100%' : '0%' }}
-      transition={{ duration: 0.35, ease: easings.cinematic }}
-      className={`fixed top-0 left-0 right-0 z-50 glass-panel border-b transition-[background-color,border-color,backdrop-filter] duration-300 ${
-        scrolled ? 'bg-cream/85 backdrop-blur-lg border-black/10 shadow-[0_1px_20px_rgba(0,0,0,0.04)]' : 'bg-transparent border-transparent'
-      }`}
+    <header
+      className={`fixed inset-x-0 top-0 z-50 border-b bg-cream transition-[transform,box-shadow,border-color] duration-300 ease-[var(--ease-cinematic)] ${
+        hidden ? '-translate-y-full' : 'translate-y-0'
+      } ${scrolled ? 'border-rule-strong shadow-soft' : 'border-rule'}`}
       data-purpose="site-header"
     >
-      <div className="container-site h-20 flex items-center justify-between gap-4 lg:gap-8">
+      <div className="container-site grid h-20 grid-cols-[1fr_auto] items-center gap-4 lg:grid-cols-[1fr_auto_1fr] lg:gap-8">
         {/* Logo */}
-        <div className="flex-shrink-0">
-          <Link href="/" aria-label={brand.name} className="inline-flex items-center min-h-[44px]">
+        <div className="flex justify-self-start">
+          <Link href="/" aria-label={`${brand.name} home`} className="inline-flex min-h-[44px] items-center">
             {brand.logoUrl ? (
               <Image
                 src={brand.logoUrl}
@@ -125,14 +108,38 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { 
           </Link>
         </div>
 
-        {/* Desktop Navigation — full nav only at lg+; below that the drawer handles it */}
-        <nav className="hidden lg:flex items-center gap-12 text-[11px] font-medium tracking-widest text-obsidian/60 uppercase min-w-0">
-          {renderLinks()}
+        {/* Desktop navigation — centred on the page, not on the leftover space */}
+        <nav aria-label="Primary" className="hidden min-w-0 items-center gap-10 font-sans text-label font-medium uppercase lg:flex xl:gap-12">
+          {navLinks.map((item, idx) => {
+            const href = resolveHref(item)
+            const isExternal = item.link?.type === 'custom' && item.link?.openInNewTab
+            const active = isActive(href)
+            return (
+              <Link
+                key={item.id || idx}
+                href={href}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+                aria-current={active ? 'page' : undefined}
+                className={`group relative inline-flex min-h-[44px] items-center whitespace-nowrap transition-colors duration-200 hover:text-obsidian ${
+                  active ? 'text-obsidian' : 'text-muted'
+                }`}
+              >
+                {item.link.label}
+                <span
+                  aria-hidden
+                  className={`absolute inset-x-0 bottom-2.5 h-px origin-left transition-transform duration-300 ${
+                    active ? 'scale-x-100 bg-emerald' : 'scale-x-0 bg-obsidian group-hover:scale-x-100'
+                  }`}
+                />
+              </Link>
+            )
+          })}
         </nav>
 
         {/* CTA */}
-        <div className="hidden lg:flex items-center gap-6 shrink-0">
-          <Link href="/login" className="text-[10px] tracking-[0.2em] font-mono text-black/70 hover:text-black uppercase transition-all whitespace-nowrap">
+        <div className="hidden items-center gap-6 justify-self-end lg:flex">
+          <Link href="/login" className="whitespace-nowrap font-mono text-label uppercase text-muted transition-colors hover:text-obsidian">
             CLIENT LOGIN
           </Link>
           <Link href="/rfq" className="btn-primary min-h-[44px] whitespace-nowrap">
@@ -141,72 +148,70 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { 
         </div>
 
         {/* Mobile menu button — shown up to lg so the menu never squeezes */}
-        <div className="lg:hidden flex items-center">
+        <div className="flex items-center justify-self-end lg:hidden">
           <button
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-            className="w-11 h-11 flex items-center justify-center text-obsidian hover:text-black/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-obsidian"
+            className="flex h-11 w-11 items-center justify-center text-obsidian transition-colors hover:text-obsidian/60"
             type="button"
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
               {isMobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Drawer */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            key="mobile-menu"
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, height: 0 }}
-            animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, height: 'auto' }}
-            exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: easings.cinematic }}
-            className="lg:hidden border-t border-black/5 bg-cream absolute top-full left-0 w-full z-40 overflow-hidden"
-          >
-            <nav className="flex flex-col p-6 gap-4">
-              {navLinks.map((item, idx) => {
-                const href = resolveHref(item)
-                const isExternal = item.link?.type === 'custom' && item.link?.openInNewTab
-                return (
-                  <motion.div
-                    key={item.id || idx}
-                    initial={prefersReducedMotion ? false : { opacity: 0, x: -12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.25, delay: 0.04 * idx, ease: easings.cinematic }}
-                  >
-                    <Link
-                      href={href}
-                      target={isExternal ? "_blank" : undefined}
-                      rel={isExternal ? "noopener noreferrer" : undefined}
-                      className="block py-2 text-sm font-medium tracking-widest text-obsidian uppercase hover:text-obsidian/70 transition-colors duration-200"
-                      onClick={closeMenu}
-                    >
-                      {item.link.label}
-                    </Link>
-                  </motion.div>
-                )
-              })}
-              <div className="border-t border-black/10 pt-4 flex flex-col gap-4 mt-2">
-                <Link href="/login" className="py-2 text-sm font-medium tracking-widest text-obsidian uppercase" onClick={closeMenu}>
-                  CLIENT LOGIN
+      {/* Mobile menu drawer — height animates 0fr→1fr; `inert` keeps the
+          closed panel out of the tab order and the accessibility tree. */}
+      <div
+        id="mobile-menu"
+        inert={!isMobileMenuOpen}
+        className={`grid border-obsidian/10 bg-cream transition-[grid-template-rows,border-color] duration-300 ease-[var(--ease-cinematic)] lg:hidden ${
+          isMobileMenuOpen ? 'grid-rows-[1fr] border-t' : 'grid-rows-[0fr] border-t-0'
+        }`}
+      >
+        <div className="overflow-hidden">
+          <nav aria-label="Mobile" className="container-site flex max-h-[calc(100dvh-var(--header-h))] flex-col overflow-y-auto py-4">
+            {navLinks.map((item, idx) => {
+              const href = resolveHref(item)
+              const isExternal = item.link?.type === 'custom' && item.link?.openInNewTab
+              const active = isActive(href)
+              return (
+                <Link
+                  key={item.id || idx}
+                  href={href}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                  aria-current={active ? 'page' : undefined}
+                  onClick={closeMenu}
+                  className={`flex min-h-[56px] items-center justify-between border-b border-obsidian/[0.06] text-sm font-medium uppercase tracking-[0.2em] transition-colors ${
+                    active ? 'text-obsidian' : 'text-obsidian/75 hover:text-obsidian'
+                  }`}
+                >
+                  {item.link.label}
+                  <span aria-hidden className="font-mono text-xs text-muted">{active ? '●' : '→'}</span>
                 </Link>
-                <Link href="/rfq" className="min-h-[44px] inline-flex items-center justify-center btn-primary" onClick={closeMenu}>
-                  [ START YOUR PROJECT ]
-                </Link>
-              </div>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
+              )
+            })}
+            <div className="flex flex-col gap-3 pb-4 pt-6">
+              <Link href="/login" onClick={closeMenu} className="btn-ghost min-h-[48px]">
+                CLIENT LOGIN
+              </Link>
+              <Link href="/rfq" onClick={closeMenu} className="btn-primary min-h-[48px]">
+                [ START YOUR PROJECT ]
+              </Link>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
   )
 }
 

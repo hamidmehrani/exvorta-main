@@ -10,32 +10,44 @@ export interface ContactFormBlockProps {
 
 export const ContactFormBlock: React.FC<ContactFormBlockProps> = ({ title, subtitle }) => {
   return (
-    <AnimatedSection priority className="w-full bg-[#FCFAF8] min-h-screen">
-      <div className="w-full mx-auto flex flex-col md:flex-row min-h-[calc(100vh-5rem)] border-b border-[#E5E5E5]">
+    <AnimatedSection className="w-full bg-cream pt-[var(--header-h)]">
+      <div className="mx-auto flex min-h-[calc(100vh-var(--header-h))] w-full flex-col border-b border-rule md:flex-row">
         {/* Left Column */}
-        <div className="w-full md:w-[40%] bg-[#0D0D0D] p-8 md:p-16 lg:p-24 flex flex-col justify-center border-r border-[#E5E5E5] relative">
-          <div className="max-w-md mx-auto w-full">
-            <StaggerContainer priority delayChildren={0.1} staggerChildren={0.12}>
-              <StaggerItem priority>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold mb-6 leading-tight text-white">
+        <div className="on-dark relative isolate flex w-full flex-col justify-center overflow-hidden bg-obsidian p-8 md:w-[40%] md:p-16 lg:p-24">
+          <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+            <div className="bg-aura-dark absolute inset-0 opacity-70" />
+            <div className="bg-blueprint-grid-dark absolute inset-0" />
+          </div>
+          <div className="relative mx-auto w-full max-w-md">
+            <StaggerContainer delayChildren={0.1} staggerChildren={0.12}>
+              <StaggerItem>
+                <p className="eyebrow eyebrow-dark mb-8">
+                  <span className="eyebrow-index" aria-hidden>
+                    <i className="block h-1.5 w-1.5 rotate-45 bg-current" />
+                  </span>
+                  Contact
+                </p>
+              </StaggerItem>
+              <StaggerItem>
+                <h1 className="mb-6 font-serif text-headline font-semibold text-white">
                   {title || 'Start the Conversation.'}
                 </h1>
               </StaggerItem>
-              <StaggerItem priority>
-                <p className="text-base text-gray-300 font-sans font-light mb-16 leading-relaxed">
+              <StaggerItem>
+                <p className="mb-16 text-lede font-light text-muted-dark">
                   {subtitle || 'Questions about scope, timelines, or infrastructure? Our team responds within one business day.'}
                 </p>
               </StaggerItem>
               <StaggerItem>
-                <div className="space-y-6">
-                  <h2 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-8">Direct Channels</h2>
-                  <ul className="space-y-6 text-sm font-mono text-white/80">
-                    <li className="flex items-start gap-4">
-                      <span className="text-white/40">01.</span>
+                <div>
+                  <h2 className="eyebrow eyebrow-dark mb-6">Direct Channels</h2>
+                  <ul className="border-t border-rule-dark font-mono text-sm text-white/80">
+                    <li className="flex items-start gap-4 border-b border-rule-dark py-4">
+                      <span className="text-success">01.</span>
                       <span>hello@exvorta.com</span>
                     </li>
-                    <li className="flex items-start gap-4">
-                      <span className="text-white/40">02.</span>
+                    <li className="flex items-start gap-4 border-b border-rule-dark py-4">
+                      <span className="text-success">02.</span>
                       <span>Dubai, UAE — Global Reach</span>
                     </li>
                   </ul>
@@ -46,8 +58,8 @@ export const ContactFormBlock: React.FC<ContactFormBlockProps> = ({ title, subti
         </div>
 
         {/* Right Column */}
-        <div className="w-full md:w-[60%] bg-[#FCFAF8] p-8 md:p-16 lg:p-24 flex items-center">
-          <Reveal delay={0.2} className="max-w-2xl mx-auto w-full">
+        <div className="flex w-full items-center bg-cream p-8 md:w-[60%] md:p-16 lg:p-24">
+          <Reveal delay={0.2} className="mx-auto w-full max-w-2xl">
             <ContactForm />
           </Reveal>
         </div>

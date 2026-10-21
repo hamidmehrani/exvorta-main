@@ -1,184 +1,151 @@
-'use client'
-
 import React from 'react'
-import { m as motion, useReducedMotion as useFramerReducedMotion } from 'framer-motion'
-import { easings } from '@/lib/animations'
+
+type RevealStyle = React.CSSProperties & Record<`--${string}`, string | number | undefined>
 
 interface StaggerTextProps {
-  /** Plain text or inline markup (e.g. <br/>). Markup tags are preserved verbatim. */
+  /**
+   * Plain text. `<br/>` and `<span class="…">…</span>` are split-animated;
+   * any other markup falls back to a single fade-up of the whole headline.
+   */
   text: string
   className?: string
-  /** Seconds between each unit ("chars" or "words"). */
+  /** Seconds between each unit ("words" or "chars"). */
   stagger?: number
   delay?: number
   duration?: number
   /** Rendered element. */
   as?: 'h1' | 'h2' | 'h3' | 'p' | 'span'
   unit?: 'chars' | 'words'
-  /** "animate" = on mount (hero), "inView" = when scrolled into view. */
+  /** "animate" = on first paint (hero), "inView" = when scrolled into view. */
   mode?: 'animate' | 'inView'
-  /** Animate each unit with a vertical mask (clip-path) for a polished reveal. */
+  /** Kept for API compatibility — every unit rises out of its own mask. */
   fromMarks?: boolean
 }
 
+type Token =
+  | { kind: 'word'; value: string; className?: string }
+  | { kind: 'br' }
+
+const TAG_RE = /<(\/?)(br|span)((?:\s+class="[^"]*")?)\s*\/?>/gi
+
+/** Words + <br> + class-carrying <span> wrappers. Returns null for anything else. */
+function tokenize(text: string): Token[] | null {
+  // Reject any tag we don't understand (a bare `<` followed by a letter or slash).
+  const stripped = text.replace(TAG_RE, '')
+  if (/<[a-z/]/i.test(stripped)) return null
+
+  const tokens: Token[] = []
+  const spanStack: string[] = []
+  let cursor = 0
+  let match: RegExpExecArray | null
+  TAG_RE.lastIndex = 0
+
+  const pushText = (chunk: string) => {
+    const className = spanStack[spanStack.length - 1]
+    for (const word of chunk.split(/\s+/)) {
+      if (word) tokens.push({ kind: 'word', value: word, className })
+    }
+  }
+
+  while ((match = TAG_RE.exec(text)) !== null) {
+    pushText(text.slice(cursor, match.index))
+    const [, closing, name, attrs] = match
+    if (name.toLowerCase() === 'br') {
+      tokens.push({ kind: 'br' })
+    } else if (closing) {
+      spanStack.pop()
+    } else {
+      spanStack.push(/class="([^"]*)"/.exec(attrs)?.[1] ?? '')
+    }
+    cursor = match.index + match[0].length
+  }
+  pushText(text.slice(cursor))
+  return tokens
+}
+
 /**
- * Splits text into words/chars and animates each with a rise+fade+blur.
- * HTML fragments such as <br/> or <span> pass through untouched.
- * Words are wrapped so line breaks stay intact; each word holds an
- * overflow-hidden mask when fromMarks is on.
+ * Headline that rises word-by-word (design system: "Hero h1 staggers
+ * word-by-word"). Pure CSS — the markup is complete in the server HTML, the
+ * animation starts at first paint and nothing waits on hydration, so a hero
+ * headline can never be the reason LCP is late. Reduced motion is handled in
+ * globals.css.
  */
 export function StaggerText({
   text,
   className = '',
-  stagger = 0.04,
+  stagger = 0.06,
   delay = 0,
-  duration = 0.6,
-  as = 'h1',
-  unit = 'chars',
+  duration = 0.75,
+  as: Tag = 'h1',
+  unit = 'words',
   mode = 'animate',
-  fromMarks = true,
 }: StaggerTextProps) {
-  const framerReduced = useFramerReducedMotion()
-  const Tag = motion[as] as typeof motion.h1
+  const style: RevealStyle = {
+    '--sx-stagger': `${stagger}s`,
+    '--sx-delay': `${delay}s`,
+    '--sx-dur': `${duration}s`,
+  }
+  const inView = mode === 'inView' ? '' : undefined
+  const tokens = tokenize(text)
 
-  // Tokenize: words + html tags preserved; words keep adjacent tags attached.
-  const words: Array<{ parts: Array<{ type: 'text' | 'html'; value: string }> }> = []
-  const htmlRe = /<[^>]+>/g
-  let cursor = 0
-  let match: RegExpExecArray | null
-  const pushWord = () => {
-    if (words.length === 0 || words[words.length - 1].parts.length === 0) return
-  }
-  let current: Array<{ type: 'text' | 'html'; value: string }> = []
-  const flushWord = () => {
-    if (current.length > 0) {
-      words.push({ parts: current })
-      current = []
-    }
-  }
-  const flushAll = () => {
-    flushWord()
-    pushWord()
-  }
-
-  while ((match = htmlRe.exec(text)) !== null) {
-    const segment = text.slice(cursor, match.index)
-    for (const rawWord of segment.split(/(\s+)/)) {
-      if (rawWord) {
-        if (/^\s+$/.test(rawWord)) {
-          flushAll()
-        } else {
-          current.push({ type: 'text', value: rawWord })
-        }
-      }
-    }
-    current.push({ type: 'html', value: match[0] })
-    cursor = match.index + match[0].length
-  }
-  for (const rawWord of text.slice(cursor).split(/(\s+)/)) {
-    if (rawWord) {
-      if (/^\s+$/.test(rawWord)) {
-        flushAll()
-      } else {
-        current.push({ type: 'text', value: rawWord })
-      }
-    }
-  }
-  flushAll()
-
-  // Simplified char splitting per word (only text parts get split into chars).
-  const container = {
-    hidden: {},
-    show: { transition: { staggerChildren: unit === 'chars' ? stagger : stagger, delayChildren: delay } },
-  }
-
-  const unitVariants = {
-    // SSR-safe: initial state is VISIBLE (no opacity/y). The hidden state is
-    // applied on hydration just before animate runs, so the LCP headline is
-    // never invisible when JS fails or is slow (no-JS users see full text).
-    show: {
-      y: '0%',
-      opacity: 1,
-      filter: 'blur(0px)',
-      transition: { duration, ease: easings.cinematic },
-    },
-  }
-
-  const aria = React.useMemo(() => text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(), [text])
-
-  if (framerReduced) {
+  if (!tokens) {
     return (
-      <Tag className={className} dangerouslySetInnerHTML={{ __html: text }} />
+      <Tag
+        className={`rise ${className}`}
+        style={{ '--rise-delay': `${delay}s` } as RevealStyle}
+        dangerouslySetInnerHTML={{ __html: text }}
+      />
     )
   }
 
-  const renderWord = (word: { parts: Array<{ type: 'text' | 'html'; value: string }> }, wordIndex: number) => {
-    const pieces: React.ReactNode[] = []
-    let charKey = 0
-    word.parts.forEach((part, partIndex) => {
-      if (part.type === 'html') {
-        pieces.push(<span key={`h-${wordIndex}-${partIndex}`} dangerouslySetInnerHTML={{ __html: part.value }} />)
-      } else if (unit === 'chars') {
-        for (const ch of part.value) {
-          const inner = fromMarks ? (
-            <motion.span
-              key={`c-${wordIndex}-${charKey}`}
-              variants={unitVariants}
-              className="inline-block will-change-transform"
-            >
-              {ch}
-            </motion.span>
-          ) : (
-            <motion.span
-              key={`c-${wordIndex}-${charKey}`}
-              variants={unitVariants}
-              className="inline-block will-change-transform"
-            >
-              {ch}
-            </motion.span>
-          )
-          pieces.push(
-            fromMarks ? (
-              <span key={`m-${wordIndex}-${charKey}`} className="inline-block overflow-hidden align-bottom pb-[0.08em] -mb-[0.08em]">
-                {inner}
+  let unitIndex = 0
+  const nodes: React.ReactNode[] = []
+  tokens.forEach((token, i) => {
+    if (token.kind === 'br') {
+      nodes.push(<br key={`br-${i}`} />)
+      return
+    }
+    const prev = tokens[i - 1]
+    if (prev && prev.kind === 'word') nodes.push(' ')
+    const wrapClass = token.className || undefined
+    if (unit === 'chars') {
+      nodes.push(
+        <span key={`w-${i}`} className={`inline-block whitespace-nowrap ${wrapClass ?? ''}`}>
+          {Array.from(token.value).map((ch, c) => (
+            <span key={c} className="sx-word">
+              <span className="sx-unit" style={{ '--i': unitIndex++ } as RevealStyle}>
+                {ch}
               </span>
-            ) : inner,
-          )
-          charKey++
-        }
-      } else {
-        pieces.push(
-          <motion.span
-            key={`w-${wordIndex}-${partIndex}`}
-            variants={unitVariants}
-            className="inline-block will-change-transform"
-          >
-            {part.value}
-          </motion.span>,
-        )
-      }
-    })
-    return (
-      <span key={`word-${wordIndex}`} className="inline-block whitespace-nowrap">
-        {pieces}
-      </span>
-    )
-  }
+            </span>
+          ))}
+        </span>,
+      )
+    } else {
+      nodes.push(
+        <span key={`w-${i}`} className={`sx-word ${wrapClass ?? ''}`}>
+          <span className="sx-unit" style={{ '--i': unitIndex++ } as RevealStyle}>
+            {token.value}
+          </span>
+        </span>,
+      )
+    }
+  })
+
+  const plain = tokens
+    .map((t) => (t.kind === 'word' ? t.value : ' '))
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim()
 
   return (
     <Tag
-      variants={container}
-      initial={false}
-      {...(mode === 'animate' ? { animate: 'show' } : { whileInView: 'show', viewport: { once: true, margin: '-80px' } })}
       className={className}
-      aria-label={aria}
+      style={style}
+      data-sx-inview={inView}
+      suppressHydrationWarning
+      {...(unit === 'chars' ? { 'aria-label': plain } : {})}
     >
-      {words.map((word, index) => (
-        <React.Fragment key={`word-frag-${index}`}>
-          {renderWord(word, index)}
-          {index < words.length - 1 ? ' ' : null}
-        </React.Fragment>
-      ))}
+      {unit === 'chars' ? <span aria-hidden="true">{nodes}</span> : nodes}
     </Tag>
   )
 }

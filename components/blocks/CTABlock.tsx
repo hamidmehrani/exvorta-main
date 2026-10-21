@@ -1,43 +1,51 @@
 import React from 'react'
 import { sanitizeHeadingHtml } from '@/utils/heading-sanitize'
-import type {  Page  } from '@/payload-types'
-import { AnimatedSection, Reveal } from '@/components/ui/Reveal'
+import type { Page } from '@/payload-types'
+import { CtaBand } from '@/components/ui/CtaBand'
 import { StaggerText } from '@/components/ui/motion/StaggerText'
-import { useReducedMotion } from '@/lib/animations'
+import { unbracket } from '@/lib/text'
 
 type CTABlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'cta' }>
 
+const isUsable = (url?: string | null): url is string => Boolean(url) && url !== '#'
+
+/**
+ * Closing statement + call to action.
+ *
+ * Honors every field the CMS block exposes — theme, eyebrow, both buttons and
+ * the disclaimer. The previous version rendered only title and description,
+ * so a CTA authored in the admin appeared with no button at all.
+ */
 export const CTABlock: React.FC<CTABlockProps> = (props) => {
-  const prefersReducedMotion = useReducedMotion()
-  const headline = props.title || "Deals are won before the first meeting."
+  const dark = props.theme === 'dark'
+  const headline = props.title || 'Deals are won before the first meeting.'
+  const description =
+    props.description ||
+    'Without a credible digital presence, you are losing deals before the first conversation. Exvorta fixes this.'
+  const hasHtml = /<[^>]+>/.test(headline) && !/^(?:[^<]|<br\s*\/?>)*$/i.test(headline)
+
+  const primary = isUsable(props.buttonUrl) && props.buttonText ? { label: props.buttonText, href: props.buttonUrl } : null
+  const secondary =
+    isUsable(props.secondaryButtonUrl) && props.secondaryButtonText
+      ? { label: props.secondaryButtonText, href: props.secondaryButtonUrl }
+      : null
 
   return (
-    <AnimatedSection className="w-full">
-
-<section className="py-16 sm:py-24 lg:py-32" data-purpose="the-pitch">
-<div className="max-w-4xl mx-auto px-4 text-center">
-{prefersReducedMotion ? (
-  <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-obsidian mb-8 leading-tight"><span dangerouslySetInnerHTML={{ __html: sanitizeHeadingHtml(headline) }} /></h2>
-) : (
-  <StaggerText
-    as="h2"
-    text={headline}
-    unit="words"
-    stagger={0.09}
-    duration={0.7}
-    mode="inView"
-    fromMarks={false}
-    className="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-obsidian mb-8 leading-tight"
-  />
-)}
-<Reveal delay={0.25} y={14}>
-<p className="text-base md:text-lg text-obsidian/60 leading-relaxed font-light max-w-2xl mx-auto text-center">{props.description || "Without a credible digital presence, you are losing deals before the first conversation. Exvorta fixes this."}</p>
-</Reveal>
-</div>
-</section>
-
-
-    </AnimatedSection>
+    <CtaBand
+      tone={dark ? 'dark' : 'light'}
+      eyebrow={unbracket(props.eyebrow) || undefined}
+      headline={
+        hasHtml ? (
+          <span dangerouslySetInnerHTML={{ __html: sanitizeHeadingHtml(headline, { onDark: dark }) }} />
+        ) : (
+          <StaggerText as="span" text={headline} unit="words" stagger={0.09} duration={0.7} mode="inView" />
+        )
+      }
+      description={description}
+      primary={primary}
+      secondary={secondary}
+      footnote={props.disclaimer || undefined}
+    />
   )
 }
 

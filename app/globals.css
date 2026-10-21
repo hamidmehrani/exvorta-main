@@ -5,86 +5,99 @@
 @source "../app";
 @source "../components";
 
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter-Variable.woff2') format('woff2');
-  font-weight: 100 900;
-  font-display: swap;
-  font-style: normal;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
-    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-:root {
-  /* EXVORTA Premium Dark Theme */
-  --color-cream: #FAFAF8;
-  --color-obsidian: #0D0D0D;
-  --color-surface: #FFFFFF;
-  --color-border: rgba(0,0,0,0.05);
-  --color-border-dark: rgba(255,255,255,0.1);
-  --color-dashboard: #0D0D0D;
-  --color-sidebar: #141414;
-  --color-card: #1A1A1A;
-  --color-success: #00FF66;
-  --color-success-bg: rgba(0, 255, 102, 0.1);
-  --color-warning: #FFB800;
-  --color-warning-bg: rgba(255, 184, 0, 0.1);
-  --color-info: #0066FF;
-  --color-info-bg: rgba(0, 102, 255, 0.1);
-  --color-emerald: #059669;
-  /* Form/UI semantic tokens (mapped to design system) */
-  --color-primary: var(--color-obsidian);
-  --color-surface-2: #F5F5F2;
-  --color-muted: rgba(13, 13, 13, 0.5);
-  --color-teal: #059669;
-  --color-danger: #DC2626;
-  --font-inter: 'Inter';
-  --font-playfair: 'Playfair Display', Georgia, serif;
-}
-
-@theme {
-  /* Values must be literal — `--color-x: var(--color-x)` is a circular
-     reference and Tailwind v4 drops the token entirely. */
+/* ─── Design tokens ─────────────────────────────────────────────────────────
+   Single source of truth. `static` emits every variable even when no utility
+   references it, so raw CSS (`var(--color-obsidian)`) and inline styles keep
+   working. Values must be literal — `--color-x: var(--color-x)` is circular
+   and Tailwind v4 drops the token entirely.
+   Fonts come from next/font (see app/(frontend)/layout.tsx) which defines
+   --font-inter / --font-playfair on <html>; no @font-face lives here, so each
+   font file is downloaded exactly once.
+   ─────────────────────────────────────────────────────────────────────────── */
+@theme static {
+  /* Marketing surface (light) */
   --color-bg: #FAFAF8;
-  --color-surface: #FFFFFF;
-  --color-border: rgba(0,0,0,0.05);
-  --color-border-dark: rgba(255,255,255,0.1);
-  --color-text: #0D0D0D;
   --color-cream: #FAFAF8;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #F5F5F2;
+  --color-text: #0D0D0D;
   --color-obsidian: #0D0D0D;
+  --color-primary: #0D0D0D;
+  --color-border: rgba(0, 0, 0, 0.05);
+  --color-border-dark: rgba(255, 255, 255, 0.1);
+  --color-hairline-light: rgba(0, 0, 0, 0.05);
+  --color-hairline-dark: rgba(255, 255, 255, 0.1);
+  /* Secondary copy. 62% obsidian on cream ≈ 5.3:1 — clears WCAG AA for body
+     text, unlike the previous 50% (≈ 4.0:1). */
+  --color-muted: rgba(13, 13, 13, 0.62);
+  /* Structural rules — grid lines, ledger dividers, crosshair marks. Stronger
+     than the 5% hairline (which reads as "no border" on cream) yet still quiet. */
+  --color-rule: rgba(13, 13, 13, 0.12);
+  --color-rule-strong: rgba(13, 13, 13, 0.28);
+  --color-rule-dark: rgba(255, 255, 255, 0.14);
+  /* Secondary copy on obsidian — 64% white ≈ 7:1. */
+  --color-muted-dark: rgba(255, 255, 255, 0.64);
+
+  /* Product interface (dark) */
   --color-dashboard: #0D0D0D;
   --color-sidebar: #141414;
   --color-card: #1A1A1A;
-  --color-emerald: #059669;
-  --color-brand-cream: #FAFAF8;
-  --color-brand-obsidian: #0D0D0D;
-  --color-brand-emerald: #059669;
   --color-mockup-dashboard: #0D0D0D;
   --color-mockup-sidebar: #141414;
   --color-mockup-card: #1A1A1A;
-  --color-hairline-light: rgba(0,0,0,0.05);
-  --color-hairline-dark: rgba(255,255,255,0.1);
-  --color-success-bg: rgba(0, 255, 102, 0.1);
-  --color-warning-bg: rgba(255, 184, 0, 0.1);
-  --color-info-bg: rgba(0, 102, 255, 0.1);
-  --color-surface-2: #F5F5F2;
-  --color-muted: rgba(13, 13, 13, 0.5);
-  /* Form/UI semantic tokens (Tailwind v4 resolves bg-primary etc. from these) */
-  --color-primary: #0D0D0D;
-  --color-surface-2: #F5F5F2;
-  --color-muted: rgba(13, 13, 13, 0.5);
-  --color-teal: #059669;
-  --color-danger: #DC2626;
+
+  /* Functional accents */
   --color-success: #00FF66;
+  --color-success-bg: rgba(0, 255, 102, 0.1);
+  --color-emerald: #059669;
+  --color-teal: #059669;
+  --color-brand-cream: #FAFAF8;
+  --color-brand-obsidian: #0D0D0D;
+  --color-brand-emerald: #059669;
   --color-warning: #FFB800;
+  --color-warning-bg: rgba(255, 184, 0, 0.1);
   --color-info: #0066FF;
-  --font-sans: var(--font-inter), sans-serif;
+  --color-info-bg: rgba(0, 102, 255, 0.1);
+  --color-danger: #DC2626;
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-serif: var(--font-playfair), Georgia, serif;
-  --font-mono: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace';
+  --font-mono: ui-monospace, 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+
+  /* Type scale — fluid, mirrors DESIGN.md (display 84 → 48, headline 60 → 36,
+     title 32 → 24). `text-display` etc. carry their own leading + tracking. */
+  --text-display: clamp(3rem, 1.6rem + 5.2vw, 5.25rem);
+  --text-display--line-height: 1.06;
+  --text-display--letter-spacing: -0.025em;
+  --text-headline: clamp(2.25rem, 1.4rem + 2.8vw, 3.75rem);
+  --text-headline--line-height: 1.15;
+  --text-headline--letter-spacing: -0.02em;
+  --text-title: clamp(1.5rem, 1.1rem + 1.2vw, 2rem);
+  --text-title--line-height: 1.2;
+  --text-title--letter-spacing: -0.01em;
+  --text-lede: clamp(1.0625rem, 0.95rem + 0.4vw, 1.25rem);
+  --text-lede--line-height: 1.65;
+  --text-mega: clamp(4.5rem, 2rem + 17vw, 17rem);
+  --text-mega--line-height: 0.8;
+  --text-mega--letter-spacing: 0.04em;
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.22em;
+
+  /* Elevation */
   --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.03);
-  --shadow-glow: 0 0 40px rgba(0,0,0,0.1);
+  --shadow-lift: 0 18px 40px -22px rgba(13, 13, 13, 0.22), 0 2px 6px rgba(13, 13, 13, 0.04);
+  --shadow-glow: 0 0 40px rgba(0, 0, 0, 0.1);
+
   --animate-marquee: marquee 25s linear infinite;
+}
+
+:root {
+  /* Shared easing — mirrors easings.cinematic in lib/animations.ts */
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Fixed header height; pages offset their first section by this. */
+  --header-h: 5rem;
 }
 
 /* ─── Motion keyframes ─────────────────────────────────────────────────────── */
@@ -93,46 +106,213 @@
   to { transform: translateX(-100%); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
-    animation: none;
-  }
+/* Portfolio card hover: sweeping scanline over LiveWebsiteFrame */
+@keyframes framescan {
+  0% { transform: translateY(-100%); }
+  50% { transform: translateY(400%); }
+  100% { transform: translateY(-100%); }
 }
 
-/* 
+/* Exvorta OS panel: ledger row entrance */
+@keyframes osrow {
+  from { opacity: 0; transform: translateX(-14px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes caret-blink {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0; }
+}
+
+/* Brand lockup (components/brand/ExvortaLogo.tsx) */
+@keyframes brand-in { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+@keyframes brand-pop { 0% { opacity: 0; transform: scale(0.3); } 65% { opacity: 1; transform: scale(1.15); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes brand-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+.exv-brand .bl-in, .exv-brand .bl-pop, .exv-brand .bl-pop-pulse { transform-box: fill-box; transform-origin: center; }
+.exv-brand[data-animated] .bl-in { animation: brand-in 0.7s var(--ease-cinematic) backwards; animation-delay: var(--bl-delay, 0s); }
+.exv-brand[data-animated] .bl-pop { animation: brand-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) backwards; animation-delay: var(--bl-delay, 0s); }
+.exv-brand[data-animated] .bl-pop-pulse {
+  animation: brand-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) backwards, brand-pulse 3.4s ease-in-out infinite;
+  animation-delay: var(--bl-delay, 0s), calc(var(--bl-delay, 0s) + 0.7s);
+}
+.exv-wordmark {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  white-space: nowrap;
+  position: relative;
+  top: -0.04em;
+  color: #141414;
+}
+.exv-brand[data-tone="dark"] .exv-wordmark { color: #ffffff; }
+
+/* Above-the-fold entrance. Pure CSS so the hero paints and animates at first
+   paint instead of waiting for hydration (keeps LCP off the JS critical path).
+   Stagger with style={{ '--i': n }}. */
+@keyframes rise {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes rise-mask {
+  from { opacity: 0; transform: translate3d(0, 105%, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes page-enter {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.rise {
+  animation: rise 0.7s var(--ease-cinematic) backwards;
+  animation-delay: calc(var(--i, 0) * 0.08s + var(--rise-delay, 0s));
+}
+
+/* Route change: new page content eases in. Applied by PageTransition only
+   after the first navigation, never on the initial load. */
+.page-enter {
+  animation: page-enter 0.4s var(--ease-cinematic) backwards;
+}
+
+/* ─── Scroll reveal ──────────────────────────────────────────────────────────
+   <Reveal>, <AnimatedSection>, <StaggerContainer> render data-reveal* hooks.
+   A ~400 byte inline observer (RevealScript, mounted in <head>) adds data-in
+   when an element enters the viewport — no hydration, no per-element JS, and
+   the transition runs on the compositor (opacity + transform only).
+   ─────────────────────────────────────────────────────────────────────────── */
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-y, 20px), 0);
+  transition:
+    opacity var(--reveal-dur, 0.7s) var(--ease-cinematic) var(--reveal-delay, 0s),
+    transform var(--reveal-dur, 0.7s) var(--ease-cinematic) var(--reveal-delay, 0s);
+}
+[data-reveal][data-in] {
+  opacity: 1;
+  transform: none;
+}
+/* Stagger items only hide while their container waits to enter, so an item
+   rendered outside a container is simply visible. */
+[data-reveal-item] {
+  transition:
+    opacity var(--reveal-dur, 0.6s) var(--ease-cinematic) var(--reveal-delay, 0s),
+    transform var(--reveal-dur, 0.6s) var(--ease-cinematic) var(--reveal-delay, 0s);
+}
+[data-reveal-stagger]:not([data-in]) [data-reveal-item] {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-y, 16px), 0);
+}
+/* Stagger children by position (supports up to 12; the rest share the last step). */
+[data-reveal-item] { --reveal-delay: calc(var(--i, 0) * var(--stagger, 0.08s) + var(--stagger-start, 0.1s)); }
+[data-reveal-item]:nth-child(1) { --i: 0; }
+[data-reveal-item]:nth-child(2) { --i: 1; }
+[data-reveal-item]:nth-child(3) { --i: 2; }
+[data-reveal-item]:nth-child(4) { --i: 3; }
+[data-reveal-item]:nth-child(5) { --i: 4; }
+[data-reveal-item]:nth-child(6) { --i: 5; }
+[data-reveal-item]:nth-child(7) { --i: 6; }
+[data-reveal-item]:nth-child(8) { --i: 7; }
+[data-reveal-item]:nth-child(9) { --i: 8; }
+[data-reveal-item]:nth-child(10) { --i: 9; }
+[data-reveal-item]:nth-child(11) { --i: 10; }
+[data-reveal-item]:nth-child(n + 12) { --i: 11; }
+/* No IntersectionObserver / no JS: never hide content. */
+.no-io [data-reveal],
+.no-io [data-reveal-stagger]:not([data-in]) [data-reveal-item] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* Split-text headline (StaggerText): each word rises out of its own mask. */
+.sx-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.sx-unit {
+  display: inline-block;
+  animation: rise-mask var(--sx-dur, 0.75s) var(--ease-cinematic) backwards;
+  animation-delay: calc(var(--i, 0) * var(--sx-stagger, 0.06s) + var(--sx-delay, 0s));
+}
+[data-sx-inview]:not([data-in]) .sx-unit {
+  animation: none;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee { animation: none; }
+  .rise,
+  .page-enter,
+  .sx-unit,
+  .exv-brand .bl-in,
+  .exv-brand .bl-pop,
+  .exv-brand .bl-pop-pulse { animation: none !important; }
+  [data-reveal],
+  [data-reveal-item],
+  [data-reveal-stagger]:not([data-in]) [data-reveal-item] {
+    transform: none;
+    transition: opacity 0.2s linear;
+  }
+  .lwframe-capture { transition: none; }
+  .terminal-caret { animation: none; }
+  .btn-primary::after,
+  .btn-ghost::before { transition: none; }
+  .btn-primary:hover,
+  .card-elite:hover { transform: none; }
+}
+
+/*
   CRITICAL RULE: RTL & Logical Properties
   Do NOT use physical directional utility classes (e.g., ml-, pr-, text-left, border-l-).
-  Always use Tailwind's logical properties (e.g., ms-, pe-, text-start, border-s-) 
+  Always use Tailwind's logical properties (e.g., ms-, pe-, text-start, border-s-)
   to ensure seamless RTL support.
 */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  /* Never allow horizontal scroll */
+  overflow-x: clip;
+}
 
 body {
   background: var(--color-cream);
   color: var(--color-obsidian);
   margin: 0;
   padding: 0;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 6rem;
+/* Editorial typography: balanced headlines, no orphans in paragraphs.
+   Playfair defaults to old-style figures ("03" reads as "o3"); stats, indices
+   and prices need lining figures. */
+h1, h2, h3 { text-wrap: balance; }
+.font-serif { font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
+p, li, blockquote { text-wrap: pretty; }
+
+::selection {
+  background: var(--color-obsidian);
+  color: var(--color-cream);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-html[dir="ltr"] body {
-  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
-}
+/* Lenis smooth scroll — the required parts of lenis/dist/lenis.css. */
+html.lenis,
+html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
 
 @media print {
   header, footer, nav, [role="navigation"] {
     display: none !important;
   }
-  
+
   body, html {
     background: #FFFFFF !important;
     color: #000000 !important;
@@ -154,142 +334,333 @@ html[dir="ltr"] body {
 /* ─── Design-system component classes ────────────────────────────────────────
    Buttons: obsidian bg, white text, uppercase, tracking, 4px radius (DESIGN.md).
    glass-panel / bg-noise: ported 1:1 from Exvorta designs code.html prototypes.
+
+   These live in @layer components so Tailwind utilities (px-8, bg-transparent,
+   max-w-4xl…) can override them. Unlayered rules would always win over the
+   utilities layer and silently ignore such overrides.
    ─────────────────────────────────────────────────────────────────────────── */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-obsidian);
-  color: #ffffff;
-  padding: 0.75rem 1.5rem;
-  font-size: 0.625rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  border-radius: 4px;
-  transition: all 200ms;
-}
-.btn-primary:hover {
-  background-color: rgba(13, 13, 13, 0.8);
-}
-
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--color-obsidian);
-  color: var(--color-obsidian);
-  background-color: transparent;
-  padding: 0.75rem 1.5rem;
-  font-size: 0.625rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  border-radius: 4px;
-  transition: all 200ms;
-}
-.btn-ghost:hover {
-  background-color: var(--color-obsidian);
-  color: #ffffff;
-}
-
-.btn-mono {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  background-color: transparent;
-  color: var(--color-obsidian);
-  padding: 0.5rem 1.25rem;
-  font-size: 0.625rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
-  transition: all 200ms;
-}
-.btn-mono:hover {
-  border-color: var(--color-obsidian);
-}
-
-.glass-panel {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.bg-noise {
-  position: relative;
-}
-.bg-noise::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
-  pointer-events: none;
-}
-
-/* ─── Site Container ────────────────────────────────────────────────────────
-   Used by <Container> component everywhere. Matches design system:
-   max-w: 1280px (container-max), px: 1.5rem (gutter) → 2rem on md
-   ─────────────────────────────────────────────────────────────────────────── */
-.container-site {
-  width: 100%;
-  max-width: 1280px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .container-site {
-    padding-left: 2rem;
-    padding-right: 2rem;
+@layer components {
+  /* Buttons (DESIGN.md → Components). 4px radius, 11px blueprint label.
+     Primary: lit top edge + a single sheen sweep and the "subtle blue glow"
+     on hover. Ghost: fill rises from the baseline. Transform/opacity/shadow
+     only, so hover stays on the compositor. */
+  .btn-primary {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--color-obsidian);
+    color: var(--color-surface);
+    padding: 0.8125rem 1.625rem;
+    font-size: var(--text-label);
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 1px 2px rgba(13, 13, 13, 0.2);
+    transition: transform 250ms var(--ease-cinematic), box-shadow 250ms var(--ease-cinematic), background-color 200ms;
   }
-}
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.16) 50%, transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 700ms var(--ease-cinematic);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 10px 28px -8px color-mix(in oklab, var(--color-info) 45%, transparent),
+      0 2px 4px rgba(13, 13, 13, 0.2);
+  }
+  .btn-primary:hover::after { transform: translateX(120%); }
+  .btn-primary:active { transform: translateY(0); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1); }
 
-/* ─── Locale-aware font-sans overrides ────────────────────────────────────── */
+  .btn-ghost {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px solid var(--color-obsidian);
+    color: var(--color-obsidian);
+    background-color: transparent;
+    padding: 0.8125rem 1.625rem;
+    font-size: var(--text-label);
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: color 250ms var(--ease-cinematic), border-color 200ms, transform 250ms var(--ease-cinematic);
+  }
+  .btn-ghost::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--color-obsidian);
+    transform: translateY(101%);
+    transition: transform 350ms var(--ease-cinematic);
+  }
+  .btn-ghost:hover { color: var(--color-surface); }
+  .btn-ghost:hover::before { transform: translateY(0); }
+  .btn-ghost:active { transform: translateY(1px); }
 
-/* Farsi: IRANSansX variable font */
-.font-locale-fa {
-  --font-sans: var(--font-iran-sans-x), Tahoma, Arial, sans-serif;
-  --font-serif: var(--font-iran-sans-x), Tahoma, serif;
-  --font-display: var(--font-iran-sans-x), Tahoma, serif;
-  --font-body: var(--font-iran-sans-x), Tahoma, sans-serif;
-}
+  .btn-mono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    background-color: transparent;
+    color: var(--color-obsidian);
+    padding: 0.5rem 1.25rem;
+    font-size: var(--text-label);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-rule-strong);
+    border-radius: 4px;
+    transition: border-color 200ms, background-color 200ms;
+  }
+  .btn-mono:hover {
+    border-color: var(--color-obsidian);
+    background-color: var(--color-surface);
+  }
 
-/* Arabic: Cairo */
-.font-locale-ar {
-  --font-sans: var(--font-cairo), Tahoma, Arial, sans-serif;
-  --font-serif: var(--font-cairo), Tahoma, serif;
-  --font-display: var(--font-cairo), Tahoma, serif;
-  --font-body: var(--font-cairo), Tahoma, sans-serif;
-}
+  /* Inside obsidian sections (.on-dark) the same classes invert themselves, so
+     blocks never hand-roll "bg-white text-obsidian" buttons. */
+  .on-dark .btn-primary {
+    background-color: var(--color-surface);
+    color: var(--color-obsidian);
+    box-shadow: inset 0 -1px 0 rgba(13, 13, 13, 0.12), 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+  .on-dark .btn-primary::after {
+    background: linear-gradient(105deg, transparent 35%, rgba(13, 13, 13, 0.1) 50%, transparent 65%);
+  }
+  .on-dark .btn-primary:hover {
+    box-shadow:
+      inset 0 -1px 0 rgba(13, 13, 13, 0.12),
+      0 10px 32px -8px color-mix(in oklab, var(--color-success) 45%, transparent),
+      0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  .on-dark .btn-ghost {
+    border-color: rgba(255, 255, 255, 0.55);
+    color: var(--color-surface);
+  }
+  .on-dark .btn-ghost::before { background-color: var(--color-surface); }
+  .on-dark .btn-ghost:hover { color: var(--color-obsidian); border-color: var(--color-surface); }
+  .on-dark .btn-mono {
+    color: var(--color-surface);
+    border-color: var(--color-rule-dark);
+  }
+  .on-dark .btn-mono:hover {
+    border-color: var(--color-surface);
+    background-color: transparent;
+  }
 
-/* All other locales: Inter */
-.font-locale-default {
-  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-playfair), Georgia, serif;
-  --font-display: var(--font-playfair), Georgia, serif;
-  --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
-}
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
 
-/* Portfolio card hover: sweeping scanline over LiveWebsiteFrame */
-@keyframes framescan {
-  0% { transform: translateY(-100%); }
-  50% { transform: translateY(400%); }
-  100% { transform: translateY(-100%); }
-}
+  /* Fine grain. The SVG declares an explicit 200×200 box so it rasterises
+     once as a tile; a viewBox-only SVG scales to the whole element and gets
+     re-rendered (feTurbulence, 3 octaves) at full page size. */
+  .bg-noise {
+    position: relative;
+  }
+  .bg-noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('data:image/svg+xml;utf8,%3Csvg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)" opacity="0.05"/%3E%3C/svg%3E');
+    background-size: 200px 200px;
+    pointer-events: none;
+  }
 
-/* Exvorta OS panel: ledger row entrance */
-@keyframes osrow {
-  from { opacity: 0; transform: translateX(-14px); }
-  to { opacity: 1; transform: translateX(0); }
-}
+  /* Form fields: light-grey fill + sharp 1px underline; focus thickens the
+     underline to emerald (DESIGN.md → Inputs). */
+  .field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .field {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.75rem 1rem;
+    border: 0;
+    border-bottom: 1px solid rgba(13, 13, 13, 0.3);
+    border-radius: 0;
+    background-color: var(--color-surface-2);
+    color: var(--color-obsidian);
+    font-size: 0.9375rem;
+    transition: border-color 200ms, box-shadow 200ms, background-color 200ms;
+  }
+  .field::placeholder { color: rgba(13, 13, 13, 0.45); }
+  .field:hover { border-bottom-color: rgba(13, 13, 13, 0.6); }
+  .field:focus {
+    outline: none;
+    background-color: var(--color-surface);
+    border-bottom-color: var(--color-emerald);
+    box-shadow: 0 1px 0 0 var(--color-emerald);
+  }
+  .field[aria-invalid="true"] { border-bottom-color: var(--color-danger); }
 
-/* Responsive safety: never allow horizontal scroll on body */
-html, body {
-  overflow-x: clip;
+  /* Blueprint grid (design system: "0.5px grid lines"). Fades out towards the
+     edges so it frames the hero instead of boxing it in. */
+  .bg-blueprint-grid {
+    background-image:
+      linear-gradient(to right, var(--color-rule) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-rule) 1px, transparent 1px);
+    background-size: 72px 72px;
+    opacity: 0.55;
+    -webkit-mask-image: radial-gradient(ellipse 80% 75% at 50% 25%, black 20%, transparent 85%);
+    mask-image: radial-gradient(ellipse 80% 75% at 50% 25%, black 20%, transparent 85%);
+  }
+
+  /* Same grid for obsidian sections. */
+  .bg-blueprint-grid-dark {
+    background-image:
+      linear-gradient(to right, var(--color-rule-dark) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-rule-dark) 1px, transparent 1px);
+    background-size: 72px 72px;
+    opacity: 0.35;
+    -webkit-mask-image: radial-gradient(ellipse 75% 80% at 50% 40%, black 10%, transparent 80%);
+    mask-image: radial-gradient(ellipse 75% 80% at 50% 40%, black 10%, transparent 80%);
+  }
+
+  /* Emerald aura for dark sections — a gradient, never a blur filter. */
+  .bg-aura-dark {
+    background-image: radial-gradient(
+      ellipse 55% 60% at 50% 0%,
+      color-mix(in oklab, var(--color-emerald) 22%, transparent),
+      transparent 72%
+    );
+  }
+
+  /* Architectural column rails: two hairlines at the container edges. */
+  .rails { position: relative; }
+  .rails::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(var(--color-rule), var(--color-rule)) calc(50% - 608px) 0 / 1px 100% no-repeat,
+      linear-gradient(var(--color-rule), var(--color-rule)) calc(50% + 608px) 0 / 1px 100% no-repeat;
+    -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 58%);
+    mask-image: linear-gradient(to bottom, black 20%, transparent 58%);
+  }
+  @media (max-width: 1279px) { .rails::before { display: none; } }
+
+  /* Crosshair frame (design system → Architectural Schematics): "+" marks sit
+     on the four corners of any container. Set --frame-mark to recolour. Needs
+     a non-clipping parent (the marks bleed 6px outside the box). */
+  .frame { position: relative; --frame-mark: var(--color-rule-strong); }
+  .frame::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      linear-gradient(var(--frame-mark), var(--frame-mark)) left 0 top 6px / 13px 1px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) left 6px top 0 / 1px 13px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) right 0 top 6px / 13px 1px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) right 6px top 0 / 1px 13px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) left 0 bottom 6px / 13px 1px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) left 6px bottom 0 / 1px 13px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) right 0 bottom 6px / 13px 1px,
+      linear-gradient(var(--frame-mark), var(--frame-mark)) right 6px bottom 0 / 1px 13px;
+    background-repeat: no-repeat;
+  }
+  .frame-dark { --frame-mark: rgba(255, 255, 255, 0.4); }
+
+  /* Blueprint label with an optional index chip: "01 / Manifesto". */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    line-height: 1;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .eyebrow-index {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-emerald);
+  }
+  .eyebrow-index::after {
+    content: "";
+    width: 2rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.55;
+  }
+  .on-dark .eyebrow,
+  .eyebrow-dark { color: var(--color-muted-dark); }
+  .on-dark .eyebrow-index,
+  .eyebrow-dark .eyebrow-index { color: var(--color-success); }
+
+  /* Elite card: hairline surface that sharpens and lifts on hover. */
+  .card-elite {
+    position: relative;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-rule);
+    transition: transform 400ms var(--ease-cinematic), border-color 250ms, box-shadow 400ms var(--ease-cinematic);
+  }
+  .card-elite:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-rule-strong);
+    box-shadow: var(--shadow-lift);
+  }
+
+  /* Full-page grain: fixed + tile-sized raster (see .bg-noise note). */
+  .noise-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    pointer-events: none;
+    background-image: url('data:image/svg+xml;utf8,%3Csvg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
+    background-size: 200px 200px;
+  }
+
+  /* ─── Site Container ──────────────────────────────────────────────────────
+     Used by <Container> component everywhere. Matches design system:
+     max-w: 1280px (container-max), px: 1.5rem (gutter) → 2rem on md
+     ───────────────────────────────────────────────────────────────────────── */
+  .container-site {
+    width: 100%;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
 }
 
 /* ── Exvorta OS panel: luxury scrollbar + scroll affordance ─────────────── */
@@ -325,57 +696,33 @@ html, body {
   transform: translateY(0);
   transition: transform 2.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.group:hover .lwframe-capture {
+.group:hover .lwframe-capture,
+.group\/frame:hover .lwframe-capture {
   /* Cap the drift so very tall captures (4000px+) still get the same calm,
      ~one-fold travel as short ones. */
   transform: translateY(calc(-1 * min(calc(0.38 * var(--scroll, 0px)), 850px)));
   will-change: transform;
 }
-@media (prefers-reduced-motion: reduce) {
-  .lwframe-capture { transition: none; }
-}
 
 /* Waitlist: label turns emerald on input focus */
 input:focus + label[class*="top-2"] {
-  color: #059669 !important;
+  color: var(--color-emerald) !important;
 }
 
 /* Keyboard focus indicator — global a11y guarantee (dark & light sections) */
 :focus-visible {
-  outline: 2px solid var(--color-obsidian, #0D0D0D);
+  outline: 2px solid var(--color-obsidian);
   outline-offset: 2px;
 }
 .on-dark :focus-visible,
-section[class*="bg-[#0D0D0D]"] :focus-visible {
+section[class*="bg-[#0D0D0D]"] :focus-visible,
+section[class*="bg-[#0A0A0A]"] :focus-visible,
+section[class*="bg-obsidian"] :focus-visible {
   outline-color: #ffffff;
 }
 
 /* Terminal caret — terminal-motion.tsx companion */
 .terminal-caret {
-  background: var(--theme-success-400, #00FF66);
+  background: var(--color-success);
   animation: caret-blink 1.1s steps(1) infinite;
-}
-@keyframes caret-blink {
-  0%, 55% { opacity: 1; }
-  56%, 100% { opacity: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .terminal-caret { animation: none; }
-}
-
-/* Ecosystem stamp toggle & grid background */
-@keyframes stamp-toggle {
-  0%, 45% { content: "DRAFT"; opacity: 1; }
-  50% { opacity: 0; }
-  55%, 100% { content: "READY"; opacity: 1; }
-}
-.animated-stamp::before {
-  content: "DRAFT";
-  animation: stamp-toggle 6s infinite;
-}
-.grid-bg-brand-emerald {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(5, 150, 105, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(5, 150, 105, 0.05) 1px, transparent 1px);
 }

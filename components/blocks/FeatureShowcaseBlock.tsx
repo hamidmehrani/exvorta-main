@@ -1,7 +1,7 @@
-'use client'
-
 import React from 'react'
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { unbracket } from '@/lib/text'
 
 export interface FeatureShowcaseBlockProps {
   label?: string
@@ -14,115 +14,94 @@ export interface FeatureShowcaseBlockProps {
   [key: string]: any
 }
 
-export const FeatureShowcaseBlock: React.FC<FeatureShowcaseBlockProps> = (props) => {
-  try {
-  const eyebrow = props.label || "[ ARCHITECTURAL SPECS ]"
-  const title = props.title || "Pure Code. Flawless Aesthetics."
-  
-  const defaultFeatures = [
-    {
-      title: "Bespoke Art Direction. Refined Until Perfect.",
-      description: "Custom visual identities designed from scratch. We refine every pixel until we achieve a shared, institutional masterpiece.",
-      iconType: "target"
-    },
-    {
-      title: "100% Hardcoded.",
-      description: "Built from scratch. No templates, no shortcuts. Elite code for unbreachable security and extreme speed.",
-      iconType: "horizontal-lines"
-    },
-    {
-      title: "High-Performance UX.",
-      description: "Fluid animations and instant interaction speeds designed for high-stakes, fast-moving global trade environments.",
-      iconType: "vertical-lines"
-    },
-    {
-      title: "Dedicated Ongoing Support.",
-      description: "Professional infrastructure handling and unlimited layout updates so your team remains focused on moving trade volume.",
-      iconType: "dot"
-    }
-  ]
+const defaultFeatures = [
+  {
+    title: 'Bespoke Art Direction. Refined Until Perfect.',
+    description: 'Custom visual identities designed from scratch. We refine every pixel until we achieve a shared, institutional masterpiece.',
+    iconType: 'target',
+  },
+  {
+    title: '100% Hardcoded.',
+    description: 'Built from scratch. No templates, no shortcuts. Elite code for unbreachable security and extreme speed.',
+    iconType: 'horizontal-lines',
+  },
+  {
+    title: 'High-Performance UX.',
+    description: 'Fluid animations and instant interaction speeds designed for high-stakes, fast-moving global trade environments.',
+    iconType: 'vertical-lines',
+  },
+  {
+    title: 'Dedicated Ongoing Support.',
+    description: 'Professional infrastructure handling and unlimited layout updates so your team remains focused on moving trade volume.',
+    iconType: 'dot',
+  },
+]
 
-  const featuresToRender = (props.features && props.features.length > 0) ? props.features : defaultFeatures
-
-  const renderIcon = (index: number) => {
-    const type = defaultFeatures[index]?.iconType || "dot"
-    
-    if (type === "target") {
-      return (
-        <div className="w-8 h-8 border border-white/20 flex items-center justify-center mb-8">
-          <div className="w-4 h-4 border border-white/20"></div>
-        </div>
-      )
-    }
-    if (type === "horizontal-lines") {
-      return (
-        <div className="w-8 h-8 border border-white/20 flex flex-col mb-8">
-          <div className="flex-1 border-b border-white/20"></div>
-          <div className="flex-1"></div>
-        </div>
-      )
-    }
-    if (type === "vertical-lines") {
-      return (
-        <div className="w-8 h-8 border border-white/20 flex mb-8">
-          <div className="flex-1 border-r border-white/20"></div>
-          <div className="flex-1"></div>
-        </div>
-      )
-    }
-    
+/** Small schematic glyphs — the blueprint vocabulary in miniature. */
+function Glyph({ type }: { type: string }) {
+  const box = 'mb-10 flex h-10 w-10 border border-white/30 transition-colors duration-500 group-hover:border-success'
+  if (type === 'target') {
     return (
-      <div className="w-8 h-8 border border-white/20 flex items-center justify-center mb-8">
-        <div className="w-2 h-2 bg-white/20"></div>
+      <div className={`${box} items-center justify-center`} aria-hidden>
+        <div className="h-5 w-5 border border-white/30 transition-colors duration-500 group-hover:border-success" />
       </div>
     )
   }
+  if (type === 'horizontal-lines') {
+    return (
+      <div className={`${box} flex-col`} aria-hidden>
+        <div className="flex-1 border-b border-white/30 transition-colors duration-500 group-hover:border-success" />
+        <div className="flex-1" />
+      </div>
+    )
+  }
+  if (type === 'vertical-lines') {
+    return (
+      <div className={box} aria-hidden>
+        <div className="flex-1 border-e border-white/30 transition-colors duration-500 group-hover:border-success" />
+        <div className="flex-1" />
+      </div>
+    )
+  }
+  return (
+    <div className={`${box} items-center justify-center`} aria-hidden>
+      <div className="h-2 w-2 bg-white/40 transition-colors duration-500 group-hover:bg-success" />
+    </div>
+  )
+}
+
+export const FeatureShowcaseBlock: React.FC<FeatureShowcaseBlockProps> = (props) => {
+  const eyebrow = unbracket(props.label) || 'ARCHITECTURAL SPECS'
+  const title = props.title || 'Pure Code. Flawless Aesthetics.'
+  const features = props.features && props.features.length > 0 ? props.features : defaultFeatures
 
   return (
-    <AnimatedSection className="w-full py-14 sm:py-20 lg:py-24 bg-[#0D0D0D] border-b border-[#0D0D0D]">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <span className="text-white/40 text-[10px] font-mono tracking-[0.2em] mb-6 block">
-            {eyebrow}
-          </span>
-          <h2 className="text-4xl md:text-5xl font-serif text-white">
-            {title}
-          </h2>
-        </div>
-        
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 w-full border border-white/20" staggerChildren={0.1} delayChildren={0.15}>
-          {featuresToRender?.map((f, i) => {
-            // Apply borders conditionally based on position in grid
-            const isLastRow = i >= featuresToRender.length - 2
-            const isRightCol = i % 2 !== 0
+    <AnimatedSection className="on-dark relative isolate w-full overflow-hidden bg-obsidian py-24 text-white md:py-32">
+      <div aria-hidden className="bg-blueprint-grid-dark pointer-events-none absolute inset-0 -z-10" />
+      <div className="container-site">
+        <SectionHeading align="center" tone="dark" eyebrow={eyebrow} title={title} description={props.description} className="mb-16 md:mb-20" />
 
-            let borderClass = 'border-white/20 p-10 flex flex-col justify-between min-h-[340px] '
-            if (!isLastRow) borderClass += 'border-b md:border-b '
-            if (!isRightCol) borderClass += 'md:border-r '
-
-            return (
-              <StaggerItem key={i} className="h-full">
-                <div className={`h-full bg-[#0D0D0D] ${borderClass} transition-colors duration-500 hover:bg-white/[0.02]`}>
-                  {renderIcon(i)}
-                  <div>
-                    <h3 className="text-2xl font-serif text-white mb-3">{f.title}</h3>
-                    <p className="text-white/50 text-sm max-w-xl">{f.description}</p>
-                  </div>
-                </div>
-              </StaggerItem>
-            )
-          })}
+        <StaggerContainer className="frame frame-dark grid w-full grid-cols-1 border border-rule-dark md:grid-cols-2" staggerChildren={0.1} delayChildren={0.15}>
+          {features.map((f: { title: string; description: string }, i: number) => (
+            <StaggerItem
+              key={i}
+              className="group relative flex min-h-[320px] flex-col justify-between border-b border-rule-dark p-10 transition-colors duration-500 last:border-b-0 hover:bg-white/[0.03] md:odd:border-e md:[&:nth-last-child(-n+2)]:border-b-0 md:p-12"
+            >
+              <span
+                aria-hidden
+                className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-success transition-transform duration-500 ease-[var(--ease-cinematic)] group-hover:scale-x-100"
+              />
+              <Glyph type={defaultFeatures[i]?.iconType || 'dot'} />
+              <div>
+                <h3 className="mb-4 font-serif text-3xl font-semibold leading-tight text-white">{f.title}</h3>
+                <p className="max-w-xl text-base font-light leading-relaxed text-muted-dark">{f.description}</p>
+              </div>
+            </StaggerItem>
+          ))}
         </StaggerContainer>
       </div>
     </AnimatedSection>
   )
-  } catch (error) {
-    console.error('[FeatureShowcaseBlock] render error:', error)
-    if (process.env.NODE_ENV !== 'production') {
-      return <div style={{ padding: 20, color: 'red', border: '1px solid red' }}>Error in FeatureShowcaseBlock</div>
-    }
-    return null
-  }
 }
 
 export default FeatureShowcaseBlock

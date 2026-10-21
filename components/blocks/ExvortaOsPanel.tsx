@@ -173,7 +173,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
       initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 80, scale: 0.96, filter: 'blur(8px)' }}
       animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
       transition={{ duration: 1.1, delay: 0.75, ease: easings.cinematic }}
-      className="exvorta-os relative w-full max-w-[1400px] mx-auto rounded-xl shadow-2xl overflow-hidden bg-[#0B0F14] border border-white/10 flex flex-col mt-20 will-change-transform text-left"
+      className="exvorta-os relative w-full max-w-[1400px] mx-auto rounded-xl shadow-2xl overflow-hidden bg-[#0B0F14] border border-white/10 flex flex-col will-change-transform text-left"
       data-purpose="dashboard-preview"
       dir="ltr"
     >
@@ -184,7 +184,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
           <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
           <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
         </div>
-        <div className="text-[9px] sm:text-[10px] text-white/40 tracking-widest uppercase font-mono truncate">Exvorta OS — Command Center</div>
+        <div className="text-[9px] sm:text-[10px] text-white/55 tracking-widest uppercase font-mono truncate">Exvorta OS — Command Center</div>
         <div className="flex items-center gap-2 shrink-0">
           <span className="hidden sm:inline text-[9px] text-white/45 font-mono">{clock} UTC</span>
           <span className="text-[9px] text-emerald-400 font-mono border border-emerald-400/20 bg-emerald-400/5 px-2 py-0.5 rounded whitespace-nowrap">SYS_ONLINE</span>
@@ -225,9 +225,9 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
           {/* top bar */}
           <div className="h-13 min-h-[52px] border-b border-white/10 flex items-center justify-between gap-3 px-3 sm:px-5 bg-black/20">
             <div className="hidden lg:flex items-center space-x-2 text-[10px] uppercase tracking-widest font-mono min-w-0">
-              <span className="text-white/40">Workspace</span>
+              <span className="text-white/55">Workspace</span>
               <span className="text-white/20">/</span>
-              <span className="text-white/40">Global Routing</span>
+              <span className="text-white/55">Global Routing</span>
               <span className="text-white/20">/</span>
               <span className="text-emerald-400">Active</span>
             </div>
@@ -251,7 +251,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                 <div className="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-900 border border-white/10 flex items-center justify-center text-[10px] font-semibold">AM</div>
                 <div className="hidden sm:block text-right">
                   <div className="text-[11px] font-medium leading-tight">A. Mercer</div>
-                  <div className="text-[8px] text-white/40 uppercase tracking-wider">Admin</div>
+                  <div className="text-[8px] text-white/55 uppercase tracking-wider">Admin</div>
                 </div>
               </div>
             </div>
@@ -266,7 +266,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
               { label: 'Jurisdictions', value: '14', accent: 'text-white' },
             ].map(k => (
               <div key={k.label} className="px-3 sm:px-5 py-2.5 sm:py-3">
-                <div className="text-[8px] sm:text-[9px] text-white/40 tracking-widest uppercase">{k.label}</div>
+                <div className="text-[8px] sm:text-[9px] text-white/55 tracking-widest uppercase">{k.label}</div>
                 <div className={`text-lg sm:text-2xl font-light ${k.accent}`}>{k.value}</div>
               </div>
             ))}
@@ -286,7 +286,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                   className="absolute inset-0 flex flex-col min-h-0"
                 >
                   <div className="px-3 sm:px-5 py-2 flex items-center justify-between border-b border-white/10 bg-black/10 shrink-0">
-                    <span className="text-[9px] text-white/40 tracking-widest uppercase font-mono">Live Clearance Ledger — {rows.length} shipments</span>
+                    <span className="text-[9px] text-white/55 tracking-widest uppercase font-mono">Live Clearance Ledger — {rows.length} shipments</span>
                     <button
                       type="button"
                       onClick={() => {
@@ -307,28 +307,33 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                     <table className="w-full text-left text-[11px] whitespace-nowrap min-w-[640px]">
                       <thead className="text-[8px] text-white/45 uppercase tracking-widest bg-[#10151B] sticky top-0 z-10">
                         <tr>
-                          <th scope="col" aria-sort={sortKey === 'bol' ? (sortAsc ? 'ascending' : 'descending') : undefined} aria-label="Sort by BOL" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 cursor-pointer hover:text-white/60" onClick={() => setSort('bol')}>BOL {sortKey === 'bol' && (sortAsc ? '↑' : '↓')}</th>
-                          <th className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5">Consignee</th>
-                          <th className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 hidden md:table-cell">HS Code</th>
-                          <th className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 hidden lg:table-cell">Route</th>
-                          <th scope="col" aria-sort={sortKey === 'value' ? (sortAsc ? 'ascending' : 'descending') : undefined} aria-label="Sort by value" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 text-right cursor-pointer hover:text-white/60" onClick={() => setSort('value')}>Value {sortKey === 'value' && (sortAsc ? '↑' : '↓')}</th>
-                          <th scope="col" aria-sort={sortKey === 'status' ? (sortAsc ? 'ascending' : 'descending') : undefined} aria-label="Sort by status" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 text-right cursor-pointer hover:text-white/60" onClick={() => setSort('status')}>Status</th>
+                          <th scope="col" aria-sort={sortKey === 'bol' ? (sortAsc ? 'ascending' : 'descending') : undefined} className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5">
+                            <button type="button" onClick={() => setSort('bol')} className="uppercase tracking-widest hover:text-white/70">BOL {sortKey === 'bol' && (sortAsc ? '↑' : '↓')}</button>
+                          </th>
+                          <th scope="col" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5">Consignee</th>
+                          <th scope="col" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 hidden md:table-cell">HS Code</th>
+                          <th scope="col" className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 hidden lg:table-cell">Route</th>
+                          <th scope="col" aria-sort={sortKey === 'value' ? (sortAsc ? 'ascending' : 'descending') : undefined} className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 text-right">
+                            <button type="button" onClick={() => setSort('value')} className="uppercase tracking-widest hover:text-white/70">Value {sortKey === 'value' && (sortAsc ? '↑' : '↓')}</button>
+                          </th>
+                          <th scope="col" aria-sort={sortKey === 'status' ? (sortAsc ? 'ascending' : 'descending') : undefined} className="px-3 sm:px-4 py-2.5 font-normal border-b border-white/5 text-right">
+                            <button type="button" onClick={() => setSort('status')} className="uppercase tracking-widest hover:text-white/70">Status {sortKey === 'status' && (sortAsc ? '↑' : '↓')}</button>
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5 text-white/70 font-mono">
                         {rows.map((r, i) => (
                           <tr
                             key={r.bol}
-                            tabIndex={0}
-                            aria-selected={selected?.bol === r.bol}
                             onClick={() => setSelected(r)}
-                            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected(r) } }}
                             className={`hover:bg-white/5 cursor-pointer transition-colors ${selected?.bol === r.bol ? 'bg-emerald-500/5' : ''}`}
                             style={prefersReducedMotion ? undefined : { animation: `osrow 0.4s ease both`, animationDelay: `${i * 40}ms` }}
                           >
-                            <td className="px-3 sm:px-4 py-2.5 text-white">{r.bol}</td>
+                            <td className="px-3 sm:px-4 py-2.5 text-white">
+                              <button type="button" onClick={(e) => { e.stopPropagation(); setSelected(r) }} className="hover:text-emerald-400 transition-colors">{r.bol}</button>
+                            </td>
                             <td className="px-3 sm:px-4 py-2.5">{r.consignee}</td>
-                            <td className="px-3 sm:px-4 py-2.5 text-white/40 hidden md:table-cell">{r.hs}</td>
+                            <td className="px-3 sm:px-4 py-2.5 text-white/55 hidden md:table-cell">{r.hs}</td>
                             <td className="px-3 sm:px-4 py-2.5 hidden lg:table-cell">
                               <span className="text-white/80">{r.origin.split(' ')[0]}</span>
                               <span className="text-white/25"> → </span>
@@ -366,11 +371,11 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                     <motion.div aria-hidden className="pointer-events-none absolute inset-x-0 h-14 z-10" style={{ background: 'linear-gradient(to bottom, transparent, rgba(16,185,129,0.06), transparent)' }} animate={{ top: ['-15%', '115%'] }} transition={{ duration: 5.5, repeat: Infinity, ease: 'linear', repeatDelay: 2 }} />
                   )}
                   <div className="px-3 sm:px-5 py-2 border-b border-white/10 bg-black/10 flex items-center justify-between shrink-0">
-                    <span className="text-[9px] text-white/40 tracking-widest uppercase font-mono flex items-center">
+                    <span className="text-[9px] text-white/55 tracking-widest uppercase font-mono flex items-center">
                       <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-2 animate-pulse" />
                       Operations Feed — realtime
                     </span>
-                    <span className="text-[8px] text-white/40 font-mono">stream: global</span>
+                    <span className="text-[8px] text-white/55 font-mono">stream: global</span>
                   </div>
                   <div className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.2)_transparent] [overscroll-behavior-y:contain] p-3 sm:p-4 space-y-3 font-mono text-[10px] sm:text-[11px]">
                     {TERMINAL_SCRIPT.slice(0, terminalCount).map((entry, i) => {
@@ -390,7 +395,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                         >
                           <div className="text-white/45 mb-0.5">[{time} UTC]</div>
                           <div className="text-white/85">{entry.t}</div>
-                          <div className={entry.kind === 'ok' ? 'text-emerald-400/80 mt-0.5' : entry.kind === 'warn' ? 'text-amber-400/80 mt-0.5' : entry.kind === 'info' ? 'text-sky-400/80 mt-0.5' : 'text-white/40 mt-0.5'}>{entry.ref}</div>
+                          <div className={entry.kind === 'ok' ? 'text-emerald-400/80 mt-0.5' : entry.kind === 'warn' ? 'text-amber-400/80 mt-0.5' : entry.kind === 'info' ? 'text-sky-400/80 mt-0.5' : 'text-white/55 mt-0.5'}>{entry.ref}</div>
                         </motion.div>
                       )
                     })}
@@ -412,7 +417,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                   className="absolute inset-0 flex flex-col min-h-0"
                 >
                   <div className="px-3 sm:px-5 py-2 border-b border-white/10 bg-black/10 shrink-0">
-                    <span className="text-[9px] text-white/40 tracking-widest uppercase font-mono">Compliance Health — 14 jurisdictions</span>
+                    <span className="text-[9px] text-white/55 tracking-widest uppercase font-mono">Compliance Health — 14 jurisdictions</span>
                   </div>
                   <div className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.2)_transparent] [overscroll-behavior-y:contain] p-3 sm:p-5 space-y-3">
                     {COMPLIANCE.map((c, i) => (
@@ -439,7 +444,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                             transition={{ duration: 0.9, delay: 0.15 + i * 0.07, ease: easings.cinematic }}
                           />
                         </div>
-                        <div className="text-[9px] sm:text-[10px] text-white/40 font-mono">{c.detail}</div>
+                        <div className="text-[9px] sm:text-[10px] text-white/55 font-mono">{c.detail}</div>
                       </motion.div>
                     ))}
                   </div>
@@ -457,12 +462,12 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                   className="absolute inset-0 flex flex-col min-h-0"
                 >
                   <div className="px-3 sm:px-5 py-2 border-b border-white/10 bg-black/10 shrink-0">
-                    <span className="text-[9px] text-white/40 tracking-widest uppercase font-mono">Trade Analytics — trailing 12 months</span>
+                    <span className="text-[9px] text-white/55 tracking-widest uppercase font-mono">Trade Analytics — trailing 12 months</span>
                   </div>
                   <div className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.2)_transparent] [overscroll-behavior-y:contain] p-3 sm:p-5 space-y-6 min-h-0">
                     {/* bar chart */}
                     <div>
-                      <div className="text-[9px] text-white/40 tracking-widest uppercase mb-3">Throughput (k TEU)</div>
+                      <div className="text-[9px] text-white/55 tracking-widest uppercase mb-3">Throughput (k TEU)</div>
                       <div className="flex items-end gap-1 sm:gap-1.5 h-28 sm:h-36">
                         {VOLUME_SERIES.map((v, i) => (
                           <div key={i} className="flex-1 flex flex-col justify-end h-full group relative">
@@ -476,19 +481,19 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                           </div>
                         ))}
                       </div>
-                      <div className="flex justify-between text-[7px] text-white/40 font-mono mt-1.5">
+                      <div className="flex justify-between text-[7px] text-white/55 font-mono mt-1.5">
                         <span>JAN</span><span className="hidden sm:inline">MAR</span><span className="hidden sm:inline">MAY</span><span className="hidden sm:inline">JUL</span><span className="hidden sm:inline">SEP</span><span>DEC</span>
                       </div>
                     </div>
                     {/* lanes */}
                     <div>
-                      <div className="text-[9px] text-white/40 tracking-widest uppercase mb-3">Top Lanes</div>
+                      <div className="text-[9px] text-white/55 tracking-widest uppercase mb-3">Top Lanes</div>
                       <div className="space-y-2.5">
                         {LANES.map((l, i) => (
                           <div key={l.route}>
                             <div className="flex justify-between text-[9px] sm:text-[10px] font-mono mb-1">
                               <span className="text-white/70">{l.route}</span>
-                              <span className="text-white/40">{l.vol}</span>
+                              <span className="text-white/55">{l.vol}</span>
                             </div>
                             <div className="h-1 rounded-full bg-white/5 overflow-hidden">
                               <motion.div
@@ -517,7 +522,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                   className="absolute inset-0 flex flex-col min-h-0"
                 >
                   <div className="px-3 sm:px-5 py-2 border-b border-white/10 bg-black/10 flex items-center justify-between shrink-0">
-                    <span className="text-[9px] text-white/40 tracking-widest uppercase font-mono">Document Engine — auto-generated</span>
+                    <span className="text-[9px] text-white/55 tracking-widest uppercase font-mono">Document Engine — auto-generated</span>
                     <span className="text-[8px] text-emerald-400 font-mono border border-emerald-400/20 px-1.5 py-0.5 rounded">AI</span>
                   </div>
                   <div className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.2)_transparent] [overscroll-behavior-y:contain] p-3 sm:p-5 space-y-2">
@@ -530,11 +535,11 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                         className="flex items-center gap-3 border border-white/10 bg-white/[0.03] rounded-lg px-3 sm:px-4 py-3 hover:border-emerald-400/30 hover:bg-emerald-400/[0.03] transition-colors group cursor-pointer"
                       >
                         <div className="w-8 h-8 rounded bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-                          <svg className="w-4 h-4 text-white/40 group-hover:text-emerald-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                          <svg className="w-4 h-4 text-white/55 group-hover:text-emerald-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="text-[10px] sm:text-[11px] text-white/85 truncate font-mono">{d.name}</div>
-                          <div className="text-[8px] text-white/35 font-mono mt-0.5">{d.size} · {d.when}</div>
+                          <div className="text-[8px] text-white/55 font-mono mt-0.5">{d.size} · {d.when}</div>
                         </div>
                         <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded border shrink-0 ${d.gen === 'AI' ? 'text-emerald-400 border-emerald-400/20 bg-emerald-400/10' : 'text-sky-400 border-sky-400/20 bg-sky-400/10'}`}>{d.gen}</span>
                       </motion.div>
@@ -559,7 +564,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
             onClick={() => setTab(t.id)}
             aria-label={t.label}
             className={`flex-1 flex flex-col items-center gap-0.5 py-2 text-[7px] uppercase tracking-widest transition-colors ${
-              tab === t.id ? 'text-emerald-400' : 'text-white/30'
+              tab === t.id ? 'text-emerald-400' : 'text-white/60'
             }`}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">{t.icon}</svg>
@@ -586,7 +591,7 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
             >
               <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-white/10 bg-black/30 shrink-0">
                 <span className="text-[10px] tracking-widest uppercase font-mono text-white/50">Shipment — <span className="text-white">{selected.bol}</span></span>
-                <button type="button" onClick={() => setSelected(null)} aria-label="Close" className="w-7 h-7 rounded flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-colors">
+                <button type="button" onClick={() => setSelected(null)} aria-label="Close" className="w-7 h-7 rounded flex items-center justify-center text-white/55 hover:text-white hover:bg-white/10 transition-colors">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
               </div>
@@ -602,12 +607,12 @@ export function ExvortaOsPanel({ prefersReducedMotion = false }: { prefersReduce
                   ['ETA', selected.eta === '—' ? 'On hold' : `${selected.eta} days`],
                 ].map(([k, v]) => (
                   <div key={k} className="flex justify-between gap-4 border-b border-white/5 pb-2">
-                    <span className="text-white/35 uppercase text-[9px] tracking-widest">{k}</span>
+                    <span className="text-white/55 uppercase text-[9px] tracking-widest">{k}</span>
                     <span className="text-white/85 text-right">{v}</span>
                   </div>
                 ))}
                 <div className="pt-2 space-y-2">
-                  <div className="text-[9px] text-white/35 uppercase tracking-widest mb-1">Milestones</div>
+                  <div className="text-[9px] text-white/55 uppercase tracking-widest mb-1">Milestones</div>
                   {[
                     ['Booking confirmed', true],
                     ['Origin customs cleared', selected.status !== 'PENDING KYC' && selected.status !== 'CUSTOMS HOLD'],

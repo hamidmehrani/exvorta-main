@@ -1,5 +1,5 @@
 import React from 'react'
-import ExvortaLogo from '@/components/brand/ExvortaLogo'
+import AdminBrandMark from './AdminBrandMark'
 
 /**
  * Unified admin favicon icon — shared across all projects.
@@ -20,7 +20,7 @@ export const AgencyIcon: React.FC = () => {
         overflow: 'hidden',
       }}
     >
-      <ExvortaLogo size={22} wordmark={false} />
+      <AdminBrandMark size={22} wordmark={false} />
     </div>
   )
 }

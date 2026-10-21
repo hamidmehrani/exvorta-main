@@ -2,14 +2,30 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/Reveal';
+import { AnimatedSection, Reveal, StaggerContainer, StaggerItem } from '../ui/Reveal';
 import { Container } from '../ui/Container';
-import { m as motion } from 'framer-motion';
-import { easings, useReducedMotion } from '@/lib/animations';
+import { SectionHeading } from '../ui/SectionHeading';
 import { submitLead } from '@/actions/submitLead';
 
+const PHASES = [
+  {
+    name: 'Exvorta Track',
+    description: 'End-to-end multimodal logistics telemetry and predictive freight visibility.',
+    cta: 'JOIN TRACK WAITLIST',
+  },
+  {
+    name: 'Exvorta CRM',
+    description: 'Trade-specific counterparty risk management and global vendor intelligence.',
+    cta: 'JOIN CRM WAITLIST',
+  },
+  {
+    name: 'Exvorta Intel',
+    description: 'Proprietary market data, trade flows, and real-time commodities pricing benchmarks.',
+    cta: 'JOIN INTEL WAITLIST',
+  },
+] as const;
+
 export function RoadmapBlock(props: any) {
-  const prefersReducedMotion = useReducedMotion();
   const [email, setEmail] = useState('');
   const [waitlistState, setWaitlistState] = useState<'idle' | 'pending' | 'done' | 'error'>('idle');
   const [waitlistError, setWaitlistError] = useState<string | null>(null);
@@ -33,163 +49,126 @@ export function RoadmapBlock(props: any) {
     }
   };
 
-  const heading = {
-    hidden: prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 24, filter: 'blur(6px)' },
-    show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: easings.cinematic } },
-  };
-
   return (
     <AnimatedSection className="w-full">
-      <motion.section
-        className="py-14 sm:py-20 lg:py-24 bg-brand-cream text-brand-obsidian border-t border-hairline-light"
-        data-purpose="roadmap"
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: '-80px' }}
-        variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } } }}
-      >
-<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<motion.div className="text-center mb-16" variants={heading}>
-<h2 className="text-4xl md:text-5xl font-serif font-semibold text-brand-obsidian tracking-tight mb-4">The Master Plan: Exvorta Ecosystem</h2>
-<p className="text-base md:text-lg text-brand-obsidian/60 max-w-2xl mx-auto font-light leading-relaxed">
-        We are actively building the definitive, unified operating system for global trade.
-      </p>
-</motion.div>
-<StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16" staggerChildren={0.14} delayChildren={0.15}>
-{/*  Phase 1: Track  */}
-<StaggerItem className="h-full">
-<motion.div
-  className="h-full bg-mockup-dashboard border border-hairline-dark rounded-2xl p-8 hover:border-hairline-dark/50 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)]"
-  whileHover={prefersReducedMotion ? undefined : { y: -6 }}
-  transition={{ duration: 0.3, ease: easings.cinematic }}
->
-<div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '10px 10px' }}></div>
-<div className="relative z-10 text-left">
-<div className="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ PHASE 1 ]</div>
-<h3 className="text-xl font-serif mb-4 text-white">Exvorta Track</h3>
-<p className="text-xs text-gray-400 leading-relaxed font-light">End-to-end multimodal logistics telemetry and predictive freight visibility.</p>
-<div className="mt-5">
-<Link href="/waitlist" className="inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-white/50 hover:text-brand-emerald transition-colors">
-  JOIN TRACK WAITLIST <span className="text-[10px]">→</span>
-</Link>
-</div>
-</div>
-</motion.div>
-</StaggerItem>
-{/*  Phase 2: CRM  */}
-<StaggerItem className="h-full">
-<motion.div
-  className="h-full bg-mockup-dashboard border border-hairline-dark rounded-2xl p-8 hover:border-hairline-dark/50 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)]"
-  whileHover={prefersReducedMotion ? undefined : { y: -6 }}
-  transition={{ duration: 0.3, ease: easings.cinematic }}
->
-<div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '10px 10px' }}></div>
-<div className="relative z-10 text-left">
-<div className="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ PHASE 2 ]</div>
-<h3 className="text-xl font-serif mb-4 text-white">Exvorta CRM</h3>
-<p className="text-xs text-gray-400 leading-relaxed font-light">Trade-specific counterparty risk management and global vendor intelligence.</p>
-<div className="mt-5">
-<Link href="/waitlist" className="inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-white/50 hover:text-brand-emerald transition-colors">
-  JOIN CRM WAITLIST <span className="text-[10px]">→</span>
-</Link>
-</div>
-</div>
-</motion.div>
-</StaggerItem>
-{/*  Phase 3: Intel  */}
-<StaggerItem className="h-full">
-<motion.div
-  className="h-full bg-mockup-dashboard border border-hairline-dark rounded-2xl p-8 hover:border-hairline-dark/50 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)]"
-  whileHover={prefersReducedMotion ? undefined : { y: -6 }}
-  transition={{ duration: 0.3, ease: easings.cinematic }}
->
-<div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '10px 10px' }}></div>
-<div className="relative z-10 text-left">
-<div className="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ PHASE 3 ]</div>
-<h3 className="text-xl font-serif mb-4 text-white">Exvorta Intel</h3>
-<p className="text-xs text-gray-400 leading-relaxed font-light">Proprietary market data, trade flows, and real-time commodities pricing benchmarks.</p>
-<div className="mt-5">
-<Link href="/waitlist" className="inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-white/50 hover:text-brand-emerald transition-colors">
-  JOIN INTEL WAITLIST <span className="text-[10px]">→</span>
-</Link>
-</div>
-</div>
-</motion.div>
-</StaggerItem>
-{/*  The Vision: Suite  */}
-<StaggerItem className="md:col-span-3">
-<motion.div
-  className="bg-mockup-dashboard border border-hairline-dark rounded-2xl p-8 md:p-12 hover:border-hairline-dark/50 transition-all text-white relative overflow-hidden group shadow-[inset_0_0_30px_rgba(255,255,255,0.02)]"
-  whileHover={prefersReducedMotion ? undefined : { y: -4 }}
-  transition={{ duration: 0.3, ease: easings.cinematic }}
->
-<div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '10px 10px' }}></div>
-<div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
-<div className="w-full md:w-2/3 text-left">
-<div className="text-[8px] font-bold uppercase tracking-[0.25em] text-white/40 mb-6">[ THE VISION ]</div>
-<h3 className="text-xl md:text-3xl font-serif mb-6 text-white">Exvorta Suite</h3>
-<p className="text-xs md:text-sm text-gray-400 leading-relaxed font-light">
-              The ultimate convergence. A singular, unified digital infrastructure seamlessly integrating your web presence, automated compliance, logistics, and intelligence into one trade OS.
-            </p>
-<div className="mt-6">
-<Link href="/waitlist" className="inline-flex items-center gap-3 px-8 py-3.5 bg-white/5 border border-white/20 text-white font-mono text-[10px] uppercase tracking-[0.2em] hover:bg-brand-emerald hover:border-brand-emerald transition-all duration-300">
-  [ JOIN THE SUITE WAITLIST ] <span>→</span>
-</Link>
-</div>
-</div>
-<div className="w-full md:w-1/3 flex items-center justify-center">
-<div className="relative w-48 h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
-<motion.div className="absolute w-full h-full border border-hairline-dark rounded-full" animate={prefersReducedMotion ? undefined : { rotate: 360 }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}></motion.div>
-<motion.div className="absolute w-2/3 h-2/3 border border-hairline-dark rounded-full" animate={prefersReducedMotion ? undefined : { rotate: -360 }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}></motion.div>
-<div className="absolute inset-0 flex items-center justify-center">
-<motion.div className="w-4 h-4 bg-amber-400 rounded-full shadow-[0_0_20px_rgba(251,191,36,0.6)] z-20" animate={prefersReducedMotion ? undefined : { scale: [1, 1.18, 1], opacity: [1, 0.85, 1] }} transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}></motion.div>
-<motion.div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-white/40 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.3)]" animate={prefersReducedMotion ? undefined : { opacity: [0.4, 1, 0.4] }} transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}></motion.div>
-<motion.div className="absolute bottom-1/4 right-0 w-2 h-2 bg-amber-500/60 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.3)]" animate={prefersReducedMotion ? undefined : { opacity: [1, 0.4, 1] }} transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}></motion.div>
-<div className="absolute top-1/4 left-0 w-1.5 h-1.5 bg-white/30 rounded-full"></div>
-<svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100">
-<path d="M50 50 L50 0 M50 50 L100 75 M50 50 L0 75" fill="none" stroke="white" strokeDasharray="2,2" strokeWidth="0.5"></path>
-</svg>
-</div>
-</div>
-</div>
-</div>
-</motion.div>
-</StaggerItem>
-</StaggerContainer>
-{/*  Waitlist UI  */}
-<motion.div
-  className="w-full max-w-xl mx-auto text-center"
-  initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-  whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-  viewport={{ once: true, margin: '-60px' }}
-  transition={{ duration: 0.7, delay: 0.2, ease: easings.cinematic }}
->
-{waitlistState === 'done' ? (
-<div className="text-center py-3 border border-brand-obsidian/20 bg-brand-obsidian/5">
-<span className="text-sm font-mono tracking-widest uppercase text-brand-obsidian">[ YOU ARE ON THE LIST — CHECK YOUR INBOX ]</span>
-</div>
-) : (
-<form onSubmit={handleWaitlistSubmit} className="flex flex-col sm:flex-row gap-4">
-<input
-  className="flex-1 bg-transparent border-t-0 border-x-0 border-b border-brand-obsidian/20 focus:ring-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-emerald focus:border-brand-obsidian text-sm py-3 placeholder:text-brand-obsidian/50"
-  placeholder="Enter official corporate email..."
-  type="email"
-  required
-  value={email}
-  onChange={(e) => setEmail(e.target.value)}
-  disabled={waitlistState === 'pending'}
-/>
-<button type="submit" disabled={waitlistState === 'pending'} className="px-10 py-4 bg-brand-obsidian text-white text-[11px] font-medium tracking-widest uppercase hover:bg-black/80 transition-all shadow-[0_0_15px_rgba(255,255,255,0.05)] whitespace-nowrap disabled:opacity-60">
-          {waitlistState === 'pending' ? '[ SUBMITTING... ]' : '[ REQUEST EARLY ACCESS ]'}
-        </button>
-</form>
-)}
-{waitlistError && (
-<p className="mt-3 text-center text-sm text-red-600 font-mono">{waitlistError}</p>
-)}
-</motion.div>
-</div>
-</motion.section>
+      <section className="border-t border-rule py-24 md:py-32" data-purpose="roadmap">
+        <Container>
+          <SectionHeading
+            align="center"
+            eyebrow="Ecosystem roadmap"
+            title="The Master Plan: Exvorta Ecosystem"
+            description="We are actively building the definitive, unified operating system for global trade."
+            className="mb-16 md:mb-20"
+          />
+
+          {/* Roadmap console: three phases + the suite, one obsidian panel */}
+          <div className="frame mb-20">
+            <div className="on-dark relative isolate overflow-hidden bg-obsidian text-white">
+              <div aria-hidden className="bg-blueprint-grid-dark pointer-events-none absolute inset-0 -z-10" />
+
+              <StaggerContainer
+                className="grid grid-cols-1 divide-y divide-rule-dark md:grid-cols-3 md:divide-x md:divide-y-0"
+                staggerChildren={0.14}
+                delayChildren={0.15}
+              >
+                {PHASES.map((phase, i) => (
+                  <StaggerItem key={phase.name} className="group relative flex flex-col p-8 md:p-10">
+                    <span
+                      aria-hidden
+                      className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-success transition-transform duration-500 ease-[var(--ease-cinematic)] group-hover:scale-x-100"
+                    />
+                    <div className="mb-10 flex items-center gap-4 font-mono text-label uppercase text-muted-dark">
+                      <span>[ PHASE {i + 1} ]</span>
+                      <span className="flex gap-1" aria-hidden>
+                        {PHASES.map((_, step) => (
+                          <i key={step} className={`block h-1 w-5 ${step <= i ? 'bg-success' : 'bg-rule-dark'}`} />
+                        ))}
+                      </span>
+                    </div>
+                    <h3 className="mb-4 font-serif text-2xl font-semibold text-white">{phase.name}</h3>
+                    <p className="mb-8 text-base font-light leading-relaxed text-muted-dark">{phase.description}</p>
+                    <Link
+                      href="/waitlist"
+                      className="mt-auto inline-flex min-h-[44px] items-center gap-2 self-start font-mono text-label uppercase text-white/70 transition-colors group-hover:text-success"
+                    >
+                      {phase.cta}
+                      <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    </Link>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+
+              {/* The vision: suite */}
+              <Reveal y={16}>
+                <div className="relative flex flex-col items-center gap-12 overflow-hidden border-t border-rule-dark p-8 md:flex-row md:p-14">
+                  <div aria-hidden className="bg-aura-dark pointer-events-none absolute inset-0 opacity-60" />
+                  <div className="relative w-full md:w-2/3">
+                    <p className="eyebrow eyebrow-dark mb-6">[ THE VISION ]</p>
+                    <h3 className="mb-6 font-serif text-title font-semibold text-white">Exvorta Suite</h3>
+                    <p className="max-w-xl text-lede font-light text-muted-dark">
+                      The ultimate convergence. A singular, unified digital infrastructure seamlessly integrating your web presence, automated compliance, logistics, and intelligence into one trade OS.
+                    </p>
+                    <div className="mt-10">
+                      <Link href="/waitlist" className="btn-primary min-h-[52px] px-8 py-4">
+                        [ JOIN THE SUITE WAITLIST ] →
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="relative flex w-full items-center justify-center md:w-1/3" aria-hidden>
+                    <div className="relative flex h-48 w-48 items-center justify-center">
+                      <div className="absolute h-full w-full animate-[spin_22s_linear_infinite] rounded-full border border-rule-dark motion-reduce:animate-none" />
+                      <div className="absolute h-2/3 w-2/3 animate-[spin_15s_linear_infinite_reverse] rounded-full border border-rule-dark motion-reduce:animate-none" />
+                      <svg className="absolute inset-0 h-full w-full opacity-30" viewBox="0 0 100 100">
+                        <path d="M50 50 L50 0 M50 50 L100 75 M50 50 L0 75" fill="none" stroke="currentColor" strokeDasharray="2,2" strokeWidth="0.5" />
+                      </svg>
+                      <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 rounded-full bg-white/50" />
+                      <span className="absolute bottom-1/4 right-0 h-2 w-2 rounded-full bg-warning/70" />
+                      <span className="absolute left-0 top-1/4 h-1.5 w-1.5 rounded-full bg-white/30" />
+                      <span className="relative z-10 h-4 w-4 animate-pulse rounded-full bg-warning shadow-[0_0_24px_color-mix(in_oklab,var(--color-warning)_60%,transparent)] motion-reduce:animate-none" />
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+
+          {/* Waitlist */}
+          <Reveal y={20} delay={0.1}>
+            <div className="mx-auto w-full max-w-2xl text-center">
+              <p className="eyebrow mb-6 justify-center">Early access</p>
+              {waitlistState === 'done' ? (
+                <div className="border border-rule-strong bg-surface px-6 py-4">
+                  <span className="font-mono text-label uppercase text-obsidian">[ YOU ARE ON THE LIST — CHECK YOUR INBOX ]</span>
+                </div>
+              ) : (
+                <form onSubmit={handleWaitlistSubmit} className="flex flex-col gap-4 sm:flex-row">
+                  <label htmlFor="roadmap-waitlist-email" className="sr-only">Corporate email</label>
+                  <input
+                    id="roadmap-waitlist-email"
+                    className="field flex-1"
+                    placeholder="Enter official corporate email..."
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={waitlistState === 'pending'}
+                  />
+                  <button
+                    type="submit"
+                    disabled={waitlistState === 'pending'}
+                    className="btn-primary min-h-[52px] whitespace-nowrap px-10 py-4 disabled:opacity-60"
+                  >
+                    {waitlistState === 'pending' ? '[ SUBMITTING... ]' : '[ REQUEST EARLY ACCESS ]'}
+                  </button>
+                </form>
+              )}
+              {waitlistError && (
+                <p role="alert" className="mt-3 text-center font-mono text-sm text-danger">{waitlistError}</p>
+              )}
+            </div>
+          </Reveal>
+        </Container>
+      </section>
     </AnimatedSection>
   );
 }

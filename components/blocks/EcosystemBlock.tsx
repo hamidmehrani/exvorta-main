@@ -48,35 +48,44 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
   };
 
   return (
-    <div className="pt-20">
-      <AnimatedSection priority className="w-full bg-brand-obsidian min-h-[75vh] flex items-center justify-center relative px-4 sm:px-6 lg:px-8 py-40 overflow-hidden border-b border-white/20" id="ecosystem-hero">
-        <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_80%)] animate-pulse [animation-duration:12s]"></div>
-        <Container className="max-w-6xl w-full flex flex-col items-center text-center relative z-10">
-          <Reveal priority y={16}><MonoLabel className="text-[9px] md:text-[10px] font-mono tracking-[0.4em] text-white/55 uppercase mb-10 block">{hero.eyebrow}</MonoLabel></Reveal>
-          <Reveal priority y={24} delay={0.1} className="w-full">
-            <h1 className="text-4xl sm:text-5xl md:text-[5.5rem] lg:text-[6.5rem] font-serif font-bold text-white leading-[1.0] tracking-tight mb-8">
-              <StaggerText
-                as="span"
-                text={hero.title || ''}
-                unit="chars"
-                stagger={0.024}
-                duration={0.8}
-              />
-              <br />
-              <span className="text-white/60">
-                <StaggerText
-                  as="span"
-                  text={hero.subtitle || ''}
-                  unit="chars"
-                  stagger={0.024}
-                  duration={0.8}
-                />
-              </span>
-            </h1>
-          </Reveal>
-          <m.div aria-hidden initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 1.2, delay: 0.5, ease: EASE_OUT }} className="w-40 h-px bg-brand-emerald/60 origin-center mb-10" />
+    <>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes stamp-toggle {
+            0%, 45% { content: "DRAFT"; opacity: 1; }
+            50% { opacity: 0; }
+            55%, 100% { content: "READY"; opacity: 1; }
+        }
+        .animated-stamp::before {
+            content: "DRAFT";
+            animation: stamp-toggle 6s infinite;
+        }
+        .grid-bg-brand-emerald {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(5, 150, 105, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(5, 150, 105, 0.05) 1px, transparent 1px);
+        }
+      `}} />
+      <div className="pt-20">
+
+
+<AnimatedSection className="on-dark isolate w-full bg-brand-obsidian min-h-[75vh] flex items-center justify-center relative px-4 sm:px-6 lg:px-8 py-40 overflow-hidden border-b border-white/20" id="ecosystem-hero">
+<div aria-hidden className="pointer-events-none absolute inset-0 -z-10"><div className="bg-aura-dark absolute inset-0 opacity-70"></div><div className="bg-blueprint-grid-dark absolute inset-0"></div></div>
+<Container className="max-w-6xl w-full flex flex-col items-center text-center relative z-10">
+<Reveal y={16}><MonoLabel className="eyebrow eyebrow-dark mb-10">{hero.eyebrow}</MonoLabel></Reveal>
+<Reveal y={24} delay={0.1} className="w-full">
+<StaggerText
+  as="h1"
+  text={`${hero.title} <br/> <span class="text-white/60">${hero.subtitle}</span>`}
+  unit="chars"
+  stagger={0.024}
+  duration={0.8}
+  className="text-display font-serif font-semibold text-white mb-8"
+/>
+</Reveal>
+<m.div aria-hidden initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 1.2, delay: 0.5, ease: EASE_OUT }} className="w-40 h-px bg-brand-emerald/60 origin-center mb-10" />
 <Reveal y={16} delay={0.45}>
-<p className="max-w-3xl mx-auto text-lg md:text-xl text-white/50 leading-relaxed font-sans">
+<p className="max-w-3xl mx-auto text-lede font-light text-muted-dark">
       {hero.description}
     </p>
 </Reveal>
@@ -84,7 +93,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </Container>
 </AnimatedSection>
 
-<AnimatedSection className="w-full bg-brand-cream py-16 sm:py-24 md:py-32 lg:py-48 px-4 sm:px-6 lg:px-8 border-b border-brand-obsidian" id="ecosystem-problem"><Container className="max-w-5xl mx-auto flex flex-col items-center text-center"><MonoLabel className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-12 block relative"><div className="absolute -top-12 left-1/2 w-[1px] h-8 bg-black/10"></div> {problem.eyebrow} </MonoLabel><StaggerText as="h2" text={problem.title || ''} unit="words" stagger={0.09} duration={0.7} className="text-4xl md:text-5xl lg:text-6xl font-serif text-black leading-[1.1] tracking-tight mb-12" /><p className="text-xl md:text-2xl text-black/60 font-sans leading-relaxed max-w-4xl mx-auto font-light"> {problem.description} </p></Container></AnimatedSection>
+<AnimatedSection className="w-full bg-brand-cream py-32 md:py-48 px-4 sm:px-6 lg:px-8 border-b border-brand-obsidian" id="ecosystem-problem"><Container className="max-w-5xl mx-auto flex flex-col items-center text-center"><MonoLabel className="eyebrow mb-12 relative"><span aria-hidden className="absolute -top-12 left-1/2 block h-8 w-px bg-rule-strong"></span> {problem.eyebrow} </MonoLabel><StaggerText as="h2" text={problem.title || ''} unit="words" stagger={0.09} duration={0.7} className="text-headline font-serif font-semibold text-obsidian mb-12" /><p className="text-lede font-light text-muted max-w-3xl mx-auto"> {problem.description} </p></Container></AnimatedSection>
 
 <AnimatedSection className="w-full bg-brand-obsidian py-16 sm:py-24 md:py-32 lg:py-48 px-4 sm:px-6 lg:px-8 border-b border-white/20 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.03)_0%,transparent_70%)]" id="product-web">
 <Container className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -97,7 +106,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <span className="text-[9px] font-mono tracking-[0.2em] uppercase font-bold text-brand-emerald">LIVE</span>
 </div>
 </div>
-<h2 className="text-4xl md:text-5xl font-serif text-white mb-6">Exvorta Web.</h2>
+<h2 className="text-headline font-serif font-semibold text-white mb-6">Exvorta Web.</h2>
 <p className="text-lg text-white/50 font-sans leading-relaxed mb-10">
                 Bespoke digital architecture for global trading entities. We replace fragile templates with hardcoded, high-performance web infrastructure designed entirely for institutional authority and tier-one lead acquisition.
             </p>
@@ -250,7 +259,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <div className="flex items-center gap-4 mb-6">
 <MonoLabel className="border border-black text-black text-[9px] font-mono font-bold px-3 py-1.5 tracking-widest uppercase">[ CLOSED BETA ]</MonoLabel>
 </div>
-<h2 className="text-4xl md:text-5xl font-serif text-black mb-6">Exvorta Docs.</h2>
+<h2 className="text-headline font-serif font-semibold text-obsidian mb-6">Exvorta Docs.</h2>
 <p className="text-lg text-black/60 font-sans leading-relaxed mb-4">
         Trade documents generated in seconds. Commercial invoices, packing lists, and certificates of origin — auto-built from a single data entry. No formatting errors. No customs delays.
     </p>
@@ -276,7 +285,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <span className="opacity-0 px-3 py-1 border border-white/20 text-white/55 text-[10px] font-mono tracking-widest uppercase">[ COMING SOON ]</span>
 <MonoLabel className="text-white/55 font-mono text-[10px] uppercase tracking-widest">Global Logistics Alpha</MonoLabel>
 </div>
-<h2 className="text-4xl md:text-5xl font-serif text-white mb-6">Exvorta Track.</h2>
+<h2 className="text-headline font-serif font-semibold text-white mb-6">Exvorta Track.</h2>
 <p className="text-lg text-white/60 font-sans leading-relaxed mb-8 max-w-2xl">Real-time, verifiable visibility into your global trade pipeline. Exvorta Track moves asset tracking from static spreadsheets to a dynamic, hardened data ecosystem, connecting directly with major global carriers and freight forwarders.</p>
 <Button className="w-max max-w-full bg-transparent border border-white text-white px-6 sm:px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center gap-3 group" href="/waitlist">
                 [ REQUEST ALPHA ACCESS ]
@@ -500,7 +509,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <div className="flex items-center gap-4 mb-6">
 <MonoLabel className="border border-brand-obsidian text-black text-[9px] font-mono font-bold px-3 py-1.5 tracking-widest uppercase">[ COMING SOON ]</MonoLabel>
 </div>
-<h2 className="text-4xl md:text-5xl font-serif text-black mb-6">Exvorta CRM.</h2>
+<h2 className="text-headline font-serif font-semibold text-obsidian mb-6">Exvorta CRM.</h2>
 <p className="text-lg text-black/60 font-sans leading-relaxed mb-10">Manage every buyer and supplier relationship in one place. Deal pipelines, document history, follow-up reminders — built specifically for how traders actually work.</p>
 <Button className="w-max max-w-full bg-transparent border border-brand-obsidian text-black px-6 sm:px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-brand-obsidian hover:text-white transition-all flex items-center gap-3" href="/waitlist">
                 [ JOIN THE WAITLIST ]
@@ -521,7 +530,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 <MonoLabel className="text-[9px] font-mono tracking-[0.2em] uppercase font-bold text-white/50">COMING SOON</MonoLabel>
 </div>
 </div>
-<h2 className="text-4xl md:text-5xl font-serif text-white mb-6">Exvorta Intel.</h2>
+<h2 className="text-headline font-serif font-semibold text-white mb-6">Exvorta Intel.</h2>
 <p className="text-lg text-white/60 font-sans leading-relaxed mb-6">Intuition does not scale. Exvorta Intel processes millions of global trade data points into actionable, predictive commodity forecasting and supply chain risk analysis.</p>
 <p className="text-md text-white/55 font-sans leading-relaxed mb-10">Monitor macro-economic shifts, track competitor vessel routes, and analyze real-time pricing arbitrage across global ports—all from a single executive terminal.</p>
 <Button className="w-max max-w-full bg-transparent border border-white text-white px-6 sm:px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center gap-3" href="/waitlist">
@@ -654,50 +663,39 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
             </div>
           </AnimatedSection>
 
-          <AnimatedSection className="w-full bg-brand-cream py-16 sm:py-24 md:py-32 lg:py-48 px-4 sm:px-6 lg:px-8 border-b border-brand-obsidian" id="ecosystem-roadmap"><Container className="max-w-4xl mx-auto w-full flex flex-col"><MonoLabel className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-6 block">{roadmap.eyebrow}</MonoLabel><h2 className="text-4xl md:text-5xl font-serif text-black mb-20">{roadmap.title}</h2><div className="relative border-l border-brand-obsidian/20 ml-3 md:ml-4 flex flex-col gap-16 md:gap-24">
-            <m.div aria-hidden initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 1.8, delay: 0.3, ease: EASE_OUT }} style={{ transformOrigin: 'top' }} className="absolute -left-px top-0 bottom-0 w-px bg-brand-obsidian pointer-events-none"></m.div><Reveal y={18} delay={0.12}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-brand-obsidian border border-brand-cream"></div><MonoLabel className="text-[10px] tracking-widest text-brand-obsidian uppercase mb-2">PHASE 0 // ACTIVE</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">Exvorta Web</h3><p className="text-black/60 font-sans leading-relaxed">Foundation established. Deploying hardcoded, high-velocity digital architectures for tier-one trade entities globally.</p></div></Reveal><Reveal y={18} delay={0.24}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-brand-obsidian border border-brand-cream"></div><MonoLabel className="text-[10px] tracking-widest text-brand-obsidian uppercase mb-2">PHASE 1 // Q3 2026</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">Docs &amp; Track Modules</h3><p className="text-black/60 font-sans leading-relaxed">Releasing the zero-trust document data room (Docs) and the real-time supply chain visibility dashboard (Track) to our existing infrastructure partners.</p></div></Reveal><Reveal y={18} delay={0.36}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-transparent border border-brand-obsidian"></div><MonoLabel className="text-[10px] tracking-widest text-black/60 uppercase mb-2">PHASE 2 // Q1 2027</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">Exvorta CRM</h3><p className="text-black/60 font-sans leading-relaxed">Rolling out the first relationship architecture engineered explicitly for international trade desks, integrating KYC and broker networks.</p></div></Reveal><Reveal y={18} delay={0.48}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-transparent border border-brand-obsidian"></div><MonoLabel className="text-[10px] tracking-widest text-black/60 uppercase mb-2">PHASE 3 // Q3 2027</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">Exvorta Intel</h3><p className="text-black/60 font-sans leading-relaxed">Deploying the institutional-grade market intelligence terminal for predictive commodity forecasting and risk correlation.</p></div></Reveal><Reveal y={18} delay={0.6}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-transparent border border-brand-obsidian"></div><MonoLabel className="text-[10px] tracking-widest text-black/60 uppercase mb-2">PHASE 4 // 2028</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">The Exvorta Suite</h3><p className="text-black/60 font-sans leading-relaxed">Complete modular synthesis. All individual products seamlessly converge into the unified global trade operating system.</p></div></Reveal></div></Container></AnimatedSection>
+<AnimatedSection className="w-full bg-brand-cream py-32 md:py-48 px-4 sm:px-6 lg:px-8 border-b border-brand-obsidian" id="ecosystem-roadmap"><Container className="max-w-4xl mx-auto w-full flex flex-col"><MonoLabel className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-6 block">{roadmap.eyebrow}</MonoLabel><h2 className="text-headline font-serif font-semibold text-obsidian mb-20">{roadmap.title}</h2><div className="relative border-l border-brand-obsidian/20 ml-3 md:ml-4 flex flex-col gap-16 md:gap-24">
+<m.div aria-hidden initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 1.8, delay: 0.3, ease: EASE_OUT }} style={{ transformOrigin: 'top' }} className="absolute -left-px top-0 bottom-0 w-px bg-brand-obsidian pointer-events-none"></m.div><Reveal y={18} delay={0.12}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-brand-obsidian border border-brand-cream"></div><MonoLabel className="text-[10px] tracking-widest text-brand-obsidian uppercase mb-2">PHASE 0 // ACTIVE</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">Exvorta Web</h3><p className="text-black/60 font-sans leading-relaxed">Foundation established. Deploying hardcoded, high-velocity digital architectures for tier-one trade entities globally.</p></div></Reveal><Reveal y={18} delay={0.24}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-brand-obsidian border border-brand-cream"></div><MonoLabel className="text-[10px] tracking-widest text-brand-obsidian uppercase mb-2">PHASE 1 // Q3 2026</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">Docs &amp; Track Modules</h3><p className="text-black/60 font-sans leading-relaxed">Releasing the zero-trust document data room (Docs) and the real-time supply chain visibility dashboard (Track) to our existing infrastructure partners.</p></div></Reveal><Reveal y={18} delay={0.36}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-transparent border border-brand-obsidian"></div><MonoLabel className="text-[10px] tracking-widest text-black/60 uppercase mb-2">PHASE 2 // Q1 2027</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">Exvorta CRM</h3><p className="text-black/60 font-sans leading-relaxed">Rolling out the first relationship architecture engineered explicitly for international trade desks, integrating KYC and broker networks.</p></div></Reveal><Reveal y={18} delay={0.48}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-transparent border border-brand-obsidian"></div><MonoLabel className="text-[10px] tracking-widest text-black/60 uppercase mb-2">PHASE 3 // Q3 2027</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">Exvorta Intel</h3><p className="text-black/60 font-sans leading-relaxed">Deploying the institutional-grade market intelligence terminal for predictive commodity forecasting and risk correlation.</p></div></Reveal><Reveal y={18} delay={0.6}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-transparent border border-brand-obsidian"></div><MonoLabel className="text-[10px] tracking-widest text-black/60 uppercase mb-2">PHASE 4 // 2028</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">The Exvorta Suite</h3><p className="text-black/60 font-sans leading-relaxed">Complete modular synthesis. All individual products seamlessly converge into the unified global trade operating system.</p></div></Reveal></div></Container></AnimatedSection>
 
-          <AnimatedSection className="w-full bg-brand-obsidian py-40 px-4 sm:px-6 lg:px-8 border-b border-white/20 flex flex-col items-center text-center relative overflow-hidden" id="ecosystem-cta">
+<AnimatedSection className="on-dark isolate w-full bg-brand-obsidian py-40 px-4 sm:px-6 lg:px-8 border-b border-white/20 flex flex-col items-center text-center relative overflow-hidden" id="ecosystem-cta">
+<div aria-hidden className="pointer-events-none absolute inset-0 -z-10"><div className="bg-aura-dark absolute inset-0 opacity-70"></div><div className="bg-blueprint-grid-dark absolute inset-0"></div></div>
 
-            <MonoLabel className="text-[10px] font-mono tracking-[0.3em] text-white/55 uppercase mb-8 block relative z-10">{cta.eyebrow}</MonoLabel>
+<MonoLabel className="eyebrow eyebrow-dark mb-8 relative z-10">{cta.eyebrow}</MonoLabel>
 
-            <h2 className="text-4xl md:text-6xl font-serif text-white mb-8 leading-tight tracking-tight max-w-4xl relative z-10">
-              <StaggerText
-                as="span"
-                text={cta.title || ''}
-                unit="words"
-                stagger={0.08}
-                duration={0.75}
-                mode="inView"
-              />
-              <br />
-              <span className="text-white/50">
-                <StaggerText
-                  as="span"
-                  text={cta.subtitle || ''}
-                  unit="words"
-                  stagger={0.08}
-                  duration={0.75}
-                  mode="inView"
-                />
-              </span>
-            </h2>
+<StaggerText
+  as="h2"
+  text={`${cta.title} <br/> <span class="text-white/50">${cta.subtitle}</span>`}
+  unit="words"
+  stagger={0.08}
+  duration={0.75}
+  mode="inView"
+  className="text-headline font-serif font-semibold text-white mb-8 max-w-4xl relative z-10"
+/>
 
-<p className="text-lg md:text-xl text-white/60 font-sans leading-relaxed max-w-3xl mb-16 relative z-10">
+<p className="text-lede font-light text-muted-dark max-w-3xl mb-16 relative z-10">
         {cta.description}
     </p>
 
 <div className="flex flex-col sm:flex-row items-center justify-center gap-6 relative z-10 w-full sm:w-auto">
 
-<Button className="w-full sm:w-auto bg-white text-black px-10 py-5 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-mono hover:bg-gray-200 transition-all border border-white flex items-center justify-center gap-3" href="/rfq">
+<Button className="min-h-[52px] w-full px-10 py-4 sm:w-auto" href="/rfq">
             [ UPGRADE WEB ARCHITECTURE ]
         </Button>
 
-<Button className="w-full sm:w-auto bg-transparent border border-white text-white px-10 py-5 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center justify-center gap-3" href="/portfolio">
+<Button variant="ghost" className="min-h-[52px] w-full px-10 py-4 sm:w-auto" href="/portfolio">
             [ SEE THE LIVE PROOF ]
         </Button>
 
-<Button className="w-full sm:w-auto bg-transparent border border-white text-white px-10 py-5 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center justify-center gap-3" href="/waitlist">
+<Button variant="ghost" className="min-h-[52px] w-full px-10 py-4 sm:w-auto" href="/waitlist">
             [ JOIN SOFTWARE WAITLIST ]
         </Button>
 </div>
@@ -708,6 +706,7 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
 </AnimatedSection>
 
       </div>
+    </>
   );
 }
 

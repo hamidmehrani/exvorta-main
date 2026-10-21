@@ -1,120 +1,97 @@
-const { chromium } = require('playwright');
-const fs = require('fs');
-const path = require('path');
+/**
+ * Full-page screenshots of every public route, desktop + mobile, for visual
+ * review against `Exvorta designs/*` (screen.png is the acceptance test).
+ *
+ *   pnpm build && pnpm start -p 3100           # or: pnpm dev (port 3100)
+ *   node scripts/take-screenshots.js            # all routes, both viewports
+ *   node scripts/take-screenshots.js /rfq       # only routes containing "/rfq"
+ *
+ * Env: BASE_URL (default http://localhost:3100), OUT_DIR (default ./screenshots),
+ *      CHROMIUM_PATH (optional explicit browser binary, e.g. /opt/pw-browsers/chromium).
+ *
+ * Notes
+ * - Scrolling uses real wheel events: Lenis smooths programmatic scrollTo, which
+ *   would leave scroll-reveal sections invisible in the capture.
+ * - The consent cookie is pre-set so the cookie banner never covers the page.
+ * - Playwright uses the Chromium that ships with the environment
+ *   (PLAYWRIGHT_BROWSERS_PATH) — never run `playwright install`.
+ */
+const { chromium } = require('playwright')
+const fs = require('fs')
+const path = require('path')
 
-const args = process.argv.slice(2);
-const getArg = (prefix) => {
-  const arg = args.find((a) => a.startsWith(prefix));
-  return arg ? arg.split('=')[1] : null;
-};
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3100'
+const OUT_DIR = process.env.OUT_DIR || path.join(__dirname, '../screenshots')
 
-const BASE_URL = process.env.BASE_URL || getArg('--base') || 'http://localhost:3000';
-const OUT_DIR = process.env.OUT_DIR || getArg('--outDir') || path.join(__dirname, '../verification/phase3/screenshots');
-const specificRoute = getArg('--route');
-const specificName = getArg('--name');
-const specificSelector = getArg('--selector');
-
-const defaultRoutes = [
+const ROUTES = [
   { path: '/', name: 'home' },
+  { path: '/about', name: 'about' },
+  { path: '/web', name: 'web' },
   { path: '/portfolio', name: 'portfolio' },
   { path: '/portfolio/nutave', name: 'nutave' },
+  { path: '/portfolio/spicevo', name: 'spicevo' },
+  { path: '/portfolio/stonvi', name: 'stonvi' },
   { path: '/ecosystem', name: 'ecosystem' },
-  { path: '/insights', name: 'insights' },
-  { path: '/contact', name: 'contact' },
   { path: '/rfq', name: 'rfq' },
   { path: '/waitlist', name: 'waitlist' },
+  { path: '/contact', name: 'contact' },
+  { path: '/login', name: 'login' },
   { path: '/legal', name: 'legal' },
-  { path: '/web', name: 'web' },
-];
+]
+
+const VIEWPORTS = [
+  { label: 'desktop', width: 1440, height: 900 },
+  { label: 'mobile', width: 390, height: 844 },
+]
+
+async function revealEverything(page) {
+  let height = await page.evaluate(() => document.documentElement.scrollHeight)
+  for (let y = 0; y < height + 900; y += 450) {
+    await page.mouse.wheel(0, 450)
+    await page.waitForTimeout(260)
+    height = await page.evaluate(() => document.documentElement.scrollHeight)
+  }
+  await page.waitForTimeout(800)
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
+  await page.waitForTimeout(1200)
+}
 
 async function run() {
-  if (!fs.existsSync(OUT_DIR)) {
-    fs.mkdirSync(OUT_DIR, { recursive: true });
-  }
+  const filter = process.argv.slice(2)
+  const routes = filter.length ? ROUTES.filter((r) => filter.some((f) => r.path.includes(f))) : ROUTES
 
-  console.log(`Launching browser with Playwright...`);
-  const browser = await chromium.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
-  });
+  fs.mkdirSync(OUT_DIR, { recursive: true })
+  const browser = await chromium.launch({ headless: true, executablePath: process.env.CHROMIUM_PATH || undefined })
 
-  const page = await browser.newPage({
-    viewport: { width: 1440, height: 900 },
-  });
+  for (const vp of VIEWPORTS) {
+    const context = await browser.newContext({ viewport: { width: vp.width, height: vp.height } })
+    await context.addCookies([{ name: 'exv_consent', value: 'declined', url: BASE_URL }])
+    const page = await context.newPage()
 
-  const routesToRun = specificRoute
-    ? [{ path: specificRoute, name: specificName || specificRoute.replace(/\//g, '_') || 'page' }]
-    : defaultRoutes;
-
-  for (const route of routesToRun) {
-    const url = route.path.startsWith('http') ? route.path : `${BASE_URL}${route.path}`;
-    const filename = `${route.name}.png`;
-    const outPath = path.join(OUT_DIR, filename);
-
-    console.log(`Taking screenshot: ${url} -> ${filename}`);
-    try {
-      await page.goto(url, { waitUntil: 'load', timeout: 30000 });
-      await page.waitForTimeout(2000);
-
-      // Auto-scroll to trigger reveal animations and image loading
-      await page.evaluate(async () => {
-        await new Promise((resolve) => {
-          let totalHeight = 0;
-          const distance = 150;
-          const timer = setInterval(() => {
-            const scrollHeight = document.body.scrollHeight;
-            window.scrollBy(0, distance);
-            totalHeight += distance;
-
-            if (totalHeight >= scrollHeight - window.innerHeight) {
-              clearInterval(timer);
-              resolve();
-            }
-          }, 80);
-        });
-        window.scrollTo(0, 0);
-      });
-
-      await page.waitForTimeout(1000);
-
-      // Hide overlays like cookie consent for clean screenshot
-      await page.evaluate(() => {
-        const overlays = document.querySelectorAll(
-          'nextjs-portal, #__next-build-watcher, [id*="cookie"], [class*="cookie"], aside[aria-label="Cookie consent"]'
-        );
-        overlays.forEach((el) => {
-          el.style.display = 'none';
-        });
-      });
-
-      await page.waitForTimeout(500);
-
-      if (specificSelector) {
-        const locator = page.locator(specificSelector).first();
-        if (await locator.count() > 0) {
-          await locator.scrollIntoViewIfNeeded();
-          await page.waitForTimeout(1200);
-          await locator.screenshot({ path: outPath });
-          console.log(`  [OK] Saved element screenshot: ${filename} (selector: ${specificSelector})`);
-        } else {
-          console.warn(`Selector "${specificSelector}" not found, falling back to full page screenshot.`);
-          await page.screenshot({ path: outPath, fullPage: true });
-          console.log(`  [OK] Saved fullPage fallback: ${filename}`);
-        }
-      } else {
-        await page.screenshot({ path: outPath, fullPage: true });
-        console.log(`  [OK] Saved fullPage: ${filename}`);
+    for (const route of routes) {
+      const url = `${BASE_URL}${route.path}`
+      const out = path.join(OUT_DIR, `${vp.label}-${route.name}.png`)
+      try {
+        await page.goto(url, { waitUntil: 'load', timeout: 120000 })
+        await page.waitForTimeout(1500)
+        await revealEverything(page)
+        await page.screenshot({ path: out, fullPage: true })
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        )
+        console.log(`[OK] ${vp.label.padEnd(7)} ${route.path.padEnd(20)} ${overflow > 0 ? `⚠ horizontal overflow ${overflow}px` : ''}`)
+      } catch (e) {
+        console.error(`[ERROR] ${vp.label} ${url}: ${e.message}`)
       }
-    } catch (e) {
-      console.error(`  [ERROR] Failed to screenshot ${url}:`, e.message);
     }
+    await context.close()
   }
 
-  await browser.close();
-  console.log('Screenshots completed.');
+  await browser.close()
+  console.log(`Screenshots written to ${OUT_DIR}`)
 }
 
 run().catch((e) => {
-  console.error('Fatal error:', e);
-  process.exit(1);
-});
+  console.error('Fatal error:', e)
+  process.exit(1)
+})

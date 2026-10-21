@@ -1,8 +1,7 @@
-'use client'
-
 import React from 'react'
-import { AnimatedSection } from '@/components/ui/Reveal'
+import { AnimatedSection, Reveal } from '@/components/ui/Reveal'
 import { Marquee } from '@/components/ui/motion/Marquee'
+import { unbracket } from '@/lib/text'
 
 export interface ManualTestimonial {
   id?: string | null
@@ -25,13 +24,13 @@ export interface TestimonialBlockProps {
 
 function TestimonialCard({ t }: { t: ManualTestimonial }) {
   return (
-    <figure className="w-[320px] md:w-[420px] shrink-0 mx-4 bg-cream border border-hairline-light p-8 md:p-10 flex flex-col justify-between min-h-[260px]">
-      <blockquote className="font-serif text-lg md:text-xl text-obsidian leading-snug">
+    <figure className="card-elite mx-3 flex min-h-[260px] w-[320px] shrink-0 flex-col justify-between p-8 md:w-[420px] md:p-10">
+      <blockquote className="font-serif text-xl font-semibold leading-snug text-obsidian md:text-2xl">
         “{t.quote}”
       </blockquote>
       <figcaption className="mt-6 flex items-center gap-3">
-        <span aria-hidden className="inline-block w-8 h-[1px] bg-obsidian" />
-        <span className="text-[11px] font-mono tracking-widest uppercase text-obsidian/60">
+        <span aria-hidden className="inline-block h-px w-8 bg-emerald" />
+        <span className="font-mono text-label uppercase text-muted">
           {t.author}
           {t.company ? ` · ${t.company}` : ''}
           {t.role ? ` — ${t.role}` : ''}
@@ -41,25 +40,33 @@ function TestimonialCard({ t }: { t: ManualTestimonial }) {
   )
 }
 
+function Eyebrow({ children, centered = false }: { children: React.ReactNode; centered?: boolean }) {
+  return (
+    <p className={`eyebrow ${centered ? 'justify-center' : ''}`}>
+      <span className="eyebrow-index" aria-hidden>
+        <i className="block h-1.5 w-1.5 rotate-45 bg-current" />
+      </span>
+      {children}
+    </p>
+  )
+}
+
 export const TestimonialBlock: React.FC<TestimonialBlockProps> = (props) => {
-  try {
-  const eyebrow = props.eyebrow || "[ THE MARKET CONSENSUS ]"
+  const eyebrow = unbracket(props.eyebrow) || 'THE MARKET CONSENSUS'
   const quote = props.quote || "75% of people judge a company's credibility based on their website design alone."
-  const quoteAuthor = props.quoteAuthor || "Stanford Web Credibility Research, B.J. Fogg"
-  const guaranteeTitle = props.guaranteeTitle || "The Zero-Risk Standard"
-  const guaranteeText = props.guaranteeText || "Every engagement begins with a clear scope and mutual agreement. We deliver to standard or we iterate until we do. No ambiguity. No surprises."
-  const guaranteeSignature = props.guaranteeSignature || "The Exvorta Partners"
+  const quoteAuthor = props.quoteAuthor || 'Stanford Web Credibility Research, B.J. Fogg'
+  const guaranteeTitle = props.guaranteeTitle || 'The Zero-Risk Standard'
+  const guaranteeText = props.guaranteeText || 'Every engagement begins with a clear scope and mutual agreement. We deliver to standard or we iterate until we do. No ambiguity. No surprises.'
+  const guaranteeSignature = props.guaranteeSignature || 'The Exvorta Partners'
   const testimonials = (Array.isArray(props.manualTestimonials) ? props.manualTestimonials : []).filter(
     (t): t is ManualTestimonial => Boolean(t && t.quote && t.author),
   )
 
   if (testimonials.length > 0) {
     return (
-      <AnimatedSection className="w-full bg-white py-16 sm:py-24 lg:py-32 px-6 border-b border-hairline-light overflow-hidden">
-        <div className="max-w-7xl mx-auto w-full">
-          <span className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-12 block text-center">
-            {eyebrow}
-          </span>
+      <AnimatedSection className="w-full overflow-hidden border-b border-rule bg-surface py-24 md:py-32">
+        <div className="container-site mb-12">
+          <Eyebrow centered>{eyebrow}</Eyebrow>
         </div>
         <Marquee speed={35} className="py-4">
           {testimonials.map((t, i) => (
@@ -71,46 +78,33 @@ export const TestimonialBlock: React.FC<TestimonialBlockProps> = (props) => {
   }
 
   return (
-    <AnimatedSection className="w-full bg-white py-16 sm:py-24 lg:py-32 px-6 border-b border-hairline-light">
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
-
+    <AnimatedSection className="w-full border-b border-rule bg-surface py-24 md:py-32">
+      <div className="container-site grid grid-cols-1 items-center gap-16 md:grid-cols-2 md:gap-24">
         {/* Left Column: The Market Proof */}
         <div className="flex flex-col">
-          <span className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-8 block">
-            {eyebrow}
-          </span>
-          <h3 className="text-4xl md:text-5xl font-serif text-black leading-tight mb-8">
-            {quote}
-          </h3>
-          <div className="flex items-center gap-4">
-            <div className="w-8 h-[1px] bg-black"></div>
-            <span className="text-xs font-mono tracking-widest text-black/50 uppercase">
-              — {quoteAuthor}
-            </span>
+          <div className="mb-8">
+            <Eyebrow>{eyebrow}</Eyebrow>
           </div>
+          <Reveal y={18}>
+            <h3 className="mb-8 font-serif text-headline font-semibold text-obsidian">{quote}</h3>
+          </Reveal>
+          <p className="eyebrow">
+            <span className="h-px w-8 bg-emerald" aria-hidden />
+            {quoteAuthor}
+          </p>
         </div>
 
         {/* Right Column: The Exvorta Guarantee */}
-        <div className="bg-brand-cream border border-black p-12 md:p-16 rounded-none relative">
-          <h4 className="text-2xl font-serif text-black mb-4">{guaranteeTitle}</h4>
-          <p className="text-black/60 leading-relaxed mb-8">
-            {guaranteeText}
-          </p>
-          <div className="font-serif text-black italic text-xl">
-            {guaranteeSignature}
+        <Reveal y={24} delay={0.12}>
+          <div className="frame relative border border-obsidian bg-cream p-10 md:p-14">
+            <h4 className="mb-4 font-serif text-3xl font-semibold text-obsidian">{guaranteeTitle}</h4>
+            <p className="mb-8 text-base font-light leading-relaxed text-muted">{guaranteeText}</p>
+            <p className="border-t border-rule pt-6 font-serif text-xl font-semibold text-obsidian">{guaranteeSignature}</p>
           </div>
-        </div>
-
+        </Reveal>
       </div>
     </AnimatedSection>
   )
-  } catch (error) {
-    console.error('[TestimonialBlock] render error:', error)
-    if (process.env.NODE_ENV !== 'production') {
-      return <div style={{ padding: 20, color: 'red', border: '1px solid red' }}>Error in TestimonialBlock</div>
-    }
-    return null
-  }
 }
 
 export default TestimonialBlock

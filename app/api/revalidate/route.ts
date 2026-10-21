@@ -21,6 +21,7 @@ export async function POST(request: NextRequest) {
     // Always revalidate global tags to be safe
     revalidateTag('pages')
     revalidateTag('seo-defaults')
+    revalidateTag('globals')
 
     return NextResponse.json({ revalidated: true, now: Date.now() })
   } catch (err) {

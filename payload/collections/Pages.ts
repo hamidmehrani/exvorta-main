@@ -27,7 +27,7 @@ import { ProblemStatementBlock } from '../blocks/ProblemStatementBlock'
 import { VisionBlock } from '../blocks/VisionBlock'
 import { FounderBlock } from '../blocks/FounderBlock'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 const generatePreviewUrl = (doc: Record<string, unknown>, req: { locale?: string | null }) => {
   const slug = doc?.slug || ''
@@ -42,6 +42,7 @@ const revalidateHook = ({ doc }: { doc: { slug?: string; _status?: string } }) =
       ? `/` 
       : `/${slug}`
     try {
+      revalidateTag('pages')
       revalidatePath(path, 'page')
     } catch {
       // Ignore in standalone scripts

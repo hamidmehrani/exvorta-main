@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import Link from '@/components/ui/AppLink'
 import type { Metadata } from 'next'
 import { getPayloadClient } from '@/lib/payload'
 import { headers } from 'next/headers'
@@ -73,7 +73,7 @@ export default async function HomePage() {
 
     if (!user) {
       return (
-        <main className="flex-1 flex flex-col items-center justify-center py-20 px-6 max-w-7xl mx-auto w-full min-h-[70vh]">
+        <div className="flex-1 flex flex-col items-center justify-center py-20 px-6 max-w-7xl mx-auto w-full min-h-[70vh]">
           <div className="text-center p-12 border-2 border-border rounded-none max-w-xl w-full bg-surface">
             <h1 className="text-4xl font-serif font-bold text-text mb-4 tracking-tighter">Restricted Access</h1>
             <p className="text-muted mb-8 text-lg font-mono">This content is for authorized partners only.</p>
@@ -84,7 +84,7 @@ export default async function HomePage() {
               Login to VIP Portal
             </Link>
           </div>
-        </main>
+        </div>
       )
     }
   }

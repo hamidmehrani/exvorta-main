@@ -1,7 +1,7 @@
 import React from 'react'
-import { getPayloadClient } from '@/lib/payload'
-import type { Footer as FooterType } from '@/payload-types'
-import FooterClient from './FooterClient'
+import { getCachedGlobal } from '@/lib/payload-cache'
+import type { Footer as FooterType, SiteSetting } from '@/payload-types'
+import FooterContent from './FooterContent'
 
 interface FooterLinkItem {
   link?: {
@@ -24,28 +24,15 @@ export type FooterColumn = {
 }
 
 export default async function Footer() {
-  let footerData: FooterType | null = null
+  const [settings, footerData] = await Promise.all([
+    getCachedGlobal<SiteSetting>('site-settings'),
+    getCachedGlobal<FooterType>('footer', 2),
+  ])
+
   const brand: { name: string; logoUrl: string | null } = { name: 'EXVORTA', logoUrl: null }
-
-  try {
-    const payload = await getPayloadClient()
-    const settings = await payload.findGlobal({ slug: 'site-settings' })
-    if (settings?.siteName) brand.name = settings.siteName.toUpperCase()
-    if (settings?.logo && typeof settings.logo === 'object' && settings.logo.url) {
-      brand.logoUrl = settings.logo.url
-    }
-  } catch {
-    // keep text fallback
-  }
-
-  try {
-    const payload = await getPayloadClient()
-    footerData = await payload.findGlobal({
-      slug: 'footer',
-      depth: 2,
-    }) as FooterType
-  } catch (error) {
-    console.warn('[Footer] CMS footer unavailable, using fallback', error)
+  if (settings?.siteName) brand.name = settings.siteName.toUpperCase()
+  if (settings?.logo && typeof settings.logo === 'object' && settings.logo.url) {
+    brand.logoUrl = settings.logo.url
   }
 
   const fallbackColumns: NonNullable<FooterType['columns']> = [
@@ -107,5 +94,5 @@ export default async function Footer() {
       .filter((l): l is NonNullable<typeof l> => Boolean(l)),
   }))
 
-  return <FooterClient columns={columns} brand={brand} />
+  return <FooterContent columns={columns} brand={brand} />
 }

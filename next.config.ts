@@ -33,12 +33,19 @@ for (const envVar of optionalEnvVars) {
 const nextConfig: NextConfig = {
   transpilePackages: ['lenis', 'gsap', 'framer-motion'],
   images: {
+    formats: ['image/avif', 'image/webp'],
+    // Cloudinary assets and bundled captures never change under the same URL.
+    minimumCacheTTL: 60 * 60 * 24 * 30,
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
       },
     ],
+  },
+  experimental: {
+    // Barrel-heavy packages: pull in only the symbols a page uses.
+    optimizePackageImports: ['framer-motion', 'gsap'],
   },
   reactStrictMode: true,
   poweredByHeader: false,
@@ -132,8 +139,19 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Versioned public assets (fonts, generated PNGs) — long cache
-        source: '/:file.(png|webp|woff2|jpg|jpeg|svg|ico)',
+        // Self-hosted fonts never change in place (new weights ship under new names).
+        source: '/fonts/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Other public assets — long cache, revalidated via ETag so content
+        // changes propagate without busting.
+        source: '/:file.(png|webp|avif|woff2|jpg|jpeg|svg|ico)',
         headers: [
           {
             key: 'Cache-Control',
@@ -149,4 +167,20 @@ const analyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 })
 
-export default withPayload(analyzer(nextConfig))
+const config = withPayload(analyzer(nextConfig))
+
+// withPayload appends `Accept-CH` / `Vary` / `Critical-CH: Sec-CH-Prefers-Color-Scheme`
+// to EVERY route. Those hints only matter to the admin UI's theme detection, but
+// on the public site `Critical-CH` makes Chrome re-issue the document request on
+// a first visit and `Vary` fragments the CDN cache. Scope the rule to /admin.
+const payloadHeaders = config.headers
+config.headers = async () => {
+  const rules = (await payloadHeaders?.()) ?? []
+  return rules.map((rule) =>
+    rule.source === '/:path*' && rule.headers.some((h) => h.key === 'Critical-CH')
+      ? { ...rule, source: '/admin/:path*' }
+      : rule,
+  )
+}
+
+export default config

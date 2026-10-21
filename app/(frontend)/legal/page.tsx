@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { generateMeta } from '@/utils/generateMeta'
-import Link from 'next/link'
+import Link from '@/components/ui/AppLink'
 import { AnimatedSection, Reveal } from '@/components/ui/Reveal'
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ const Section = ({
   <section id={id} className="border-b border-black/10 py-16 scroll-mt-24">
     <div className="max-w-3xl">
       <Reveal y={16}>
-        <span className="text-[10px] font-mono tracking-[0.3em] text-black/40 uppercase block mb-4">
+        <span className="text-[10px] font-mono tracking-[0.3em] text-black/65 uppercase block mb-4">
           {eyebrow}
         </span>
         <h2 className="text-2xl md:text-3xl font-serif font-semibold text-black mb-8">{title}</h2>
@@ -75,7 +75,7 @@ export default function LegalPage() {
 
       {/* Last Updated */}
       <div className="bg-black/[0.02] border-b border-black/5 px-6 py-4">
-        <div className="max-w-7xl mx-auto text-[10px] font-mono tracking-widest text-black/40 uppercase">
+        <div className="max-w-7xl mx-auto text-[10px] font-mono tracking-widest text-black/65 uppercase">
           Last Updated: August 2026 &nbsp;·&nbsp; Jurisdiction: Dubai, UAE
         </div>
       </div>
@@ -86,7 +86,7 @@ export default function LegalPage() {
         {/* ─── PRIVACY POLICY ─── */}
         <Reveal y={12}>
           <div className="mb-4">
-            <div className="text-[10px] font-mono tracking-[0.3em] text-black/30 uppercase mb-16 flex items-center gap-4">
+            <div className="text-[10px] font-mono tracking-[0.3em] text-black/60 uppercase mb-16 flex items-center gap-4">
               <span className="h-px flex-1 bg-black/10" />
               SECTION I — PRIVACY POLICY
               <span className="h-px flex-1 bg-black/10" />
@@ -152,7 +152,7 @@ export default function LegalPage() {
         {/* ─── TERMS OF SERVICE ─── */}
         <Reveal y={12}>
           <div className="mt-16 mb-4">
-            <div className="text-[10px] font-mono tracking-[0.3em] text-black/30 uppercase mb-16 flex items-center gap-4">
+            <div className="text-[10px] font-mono tracking-[0.3em] text-black/60 uppercase mb-16 flex items-center gap-4">
               <span className="h-px flex-1 bg-black/10" />
               SECTION II — TERMS OF SERVICE
               <span className="h-px flex-1 bg-black/10" />

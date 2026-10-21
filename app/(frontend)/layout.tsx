@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react'
-import type { Metadata } from 'next'
+import React from 'react'
+import type { Metadata, Viewport } from 'next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import PageWrapper from '@/components/layout/PageWrapper'
@@ -7,19 +7,17 @@ import SmoothScrollProvider from '@/components/providers/SmoothScrollProvider'
 import { FramerMotionProvider } from '@/components/providers/FramerMotionProvider'
 import ScrollProgress from '@/components/ui/ScrollProgress'
 import { PageTransition } from '@/components/layout/PageTransition'
-import { LoadingBar } from '@/components/ui/LoadingBar'
+import RevealScript from '@/components/ui/RevealScript'
 import localFont from 'next/font/local'
 import '../globals.css'
 
-import { getCachedSiteSettings, getCachedAnalytics, getCachedWhatsappConfig } from '@/lib/payload-cache'
-
+import { getCachedGlobal } from '@/lib/payload-cache'
 import type { SiteSetting, Analytics, WhatsappConfig } from '@/payload-types'
 import OrganizationSchema from '@/components/seo/OrganizationSchema'
 
 import DeferredWidgets from '@/components/layout/DeferredWidgets'
+import ConsentAnalytics from '@/components/legal/ConsentAnalytics'
 import CursorGlow from '@/components/ui/CursorGlow'
-import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
-import { cookies } from 'next/headers'
 import SkipToContent from '@/components/legal/SkipToContent'
 import { generateMeta } from '@/utils/generateMeta'
 import { reportWarning } from '@/lib/error-reporting'
@@ -31,20 +29,27 @@ const inter = localFont({
   weight: '100 900',
 })
 
+// The design system sets headings in Playfair 600. The single 600 file is
+// declared for the 600–700 range so `font-bold` headings use the same cut
+// instead of synthesising a bold (or downloading a second, near-identical file).
 const playfair = localFont({
-  src: [
-    { path: '../../public/fonts/PlayfairDisplay-600.woff2', weight: '600', style: 'normal' },
-    { path: '../../public/fonts/PlayfairDisplay-700.woff2', weight: '700', style: 'normal' },
-  ],
+  src: [{ path: '../../public/fonts/PlayfairDisplay-600.woff2', weight: '600 700', style: 'normal' }],
   variable: '--font-playfair',
   display: 'swap',
+  adjustFontFallback: 'Times New Roman',
 })
 
+// Literal because <meta name="theme-color"> cannot read CSS variables. Mirrors --color-cream.
+const THEME_COLOR = '#FAFAF8'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: THEME_COLOR,
+}
+
 export async function generateMetadata(): Promise<Metadata> {
-  const [meta, settings] = await Promise.all([
-    generateMeta(),
-    getCachedSiteSettings(),
-  ])
+  const [meta, settings] = await Promise.all([generateMeta(), getCachedGlobal<SiteSetting>('site-settings')])
 
   const faviconUrl =
     settings?.favicon && typeof settings.favicon === 'object' && settings.favicon.url
@@ -68,84 +73,80 @@ export default async function FrontendLayout({
 }: {
   children: React.ReactNode
 }) {
-  const dir = 'ltr'
-
-  // Fetch SiteSettings for Cookie Banner & Maintenance State in parallel using data cache
-  const [siteSettings, analyticsConfig, whatsappConfig] = await Promise.all([
-    getCachedSiteSettings(),
-    getCachedAnalytics(),
-    getCachedWhatsappConfig(),
+  // Everything the shell needs comes from cached globals (tagged, revalidated
+  // on publish) — no cookies()/headers() here, so pages can be statically
+  // generated and served from the CDN instead of rendering per request.
+  const [siteSettingsRaw, analyticsConfig, whatsappRaw] = await Promise.all([
+    getCachedGlobal<SiteSetting>('site-settings'),
+    getCachedGlobal<Analytics>('analytics'),
+    getCachedGlobal<WhatsappConfig>('whatsapp-config'),
   ])
 
-  // Maintenance mode: completely isolate the page — hide Header, Footer, scripts, and layout chrome
-  if (siteSettings?.maintenanceMode) {
-    return (
-      <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-        <body className="bg-cream text-obsidian min-h-screen">
-          <main className="flex flex-col items-center justify-center min-h-screen p-6 bg-cream text-obsidian">
-            <div className="text-center p-12 border-2 border-border-dark rounded-none max-w-xl w-full bg-surface relative overflow-hidden">
-              <div className="absolute top-0 start-0 w-full h-2 bg-obsidian" />
-              <h1 className="text-5xl font-serif font-bold text-obsidian mb-4 tracking-tighter uppercase">
-                Maintenance
-              </h1>
-              <p className="text-obsidian/60 text-sm font-mono uppercase tracking-widest">
-                We are currently updating our systems. Please check back shortly.
-              </p>
-            </div>
-          </main>
-        </body>
-      </html>
-    )
-  }
-
-  // Standard Next.js cookies API for consent
-  const cookieStore = await cookies()
+  const siteSettings: SiteSetting =
+    siteSettingsRaw ?? { id: 0, siteName: 'Exvorta', enableCookieBanner: false, maintenanceMode: false, updatedAt: '', createdAt: '' }
 
   const cookieConfig = {
-    enable: siteSettings?.enableCookieBanner,
-    text: siteSettings?.cookieBannerText,
-    policyUrl: siteSettings?.cookiePolicyUrl,
-    hasResponded: cookieStore.has('cookie-consent'),
+    enable: siteSettings.enableCookieBanner,
+    text: siteSettings.cookieBannerText,
+    policyUrl: siteSettings.cookiePolicyUrl,
   }
 
-  const hasConsent = cookieStore.get('cookie-consent')?.value === 'accepted'
+  const whatsappConfig = whatsappRaw
+    ? {
+        enableWidget: whatsappRaw.enableWidget,
+        phoneNumber: whatsappRaw.phoneNumber,
+        defaultMessage: whatsappRaw.defaultMessage,
+      }
+    : null
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
+      <head>
+        <RevealScript />
+        <noscript>
+          <style>{'[data-reveal],[data-reveal-stagger] [data-reveal-item]{opacity:1!important;transform:none!important}[data-sx-inview] .sx-unit{opacity:1!important}'}</style>
+        </noscript>
+      </head>
       <body>
-        <Suspense fallback={null}>
-          <LoadingBar />
-        </Suspense>
         <ScrollProgress />
         <FramerMotionProvider>
           <SmoothScrollProvider>
-            <PageTransition>
-              <div dir={dir} className="h-full antialiased">
-                <div className="min-h-full flex flex-col bg-cream text-obsidian">
-                  <SkipToContent />
-                  <OrganizationSchema />
-                  {hasConsent && analyticsConfig?.gaId && <GoogleAnalytics gaId={analyticsConfig.gaId} />}
-                  {hasConsent && analyticsConfig?.gtmId && <GoogleTagManager gtmId={analyticsConfig.gtmId} />}
+            <div className="flex min-h-screen flex-col bg-cream text-obsidian">
+              <SkipToContent />
+              <OrganizationSchema />
+              <ConsentAnalytics gaId={analyticsConfig?.gaId} gtmId={analyticsConfig?.gtmId} />
 
+              {siteSettings.maintenanceMode ? (
+                <div className="flex min-h-screen flex-col items-center justify-center bg-cream text-obsidian">
+                  <div className="relative w-full max-w-xl overflow-hidden border-2 border-obsidian bg-surface p-12 text-center">
+                    <div className="absolute inset-x-0 top-0 h-2 bg-obsidian" />
+                    <h1 className="mb-4 font-serif text-5xl font-semibold uppercase tracking-tighter text-obsidian">Maintenance</h1>
+                    <p className="font-mono text-sm uppercase tracking-widest text-muted">We are currently updating our systems. Please check back shortly.</p>
+                  </div>
+                </div>
+              ) : (
+                <>
                   <CursorGlow />
                   <Header />
-                  <PageWrapper>{children}</PageWrapper>
+                  <PageWrapper>
+                    <PageTransition>{children}</PageTransition>
+                  </PageWrapper>
                   <Footer />
                   <DeferredWidgets
                     cookieConfig={cookieConfig}
                     whatsappConfig={whatsappConfig}
                     umamiConfig={
-                      siteSettings?.umamiWebsiteId
+                      siteSettings.umamiWebsiteId
                         ? {
                             websiteId: siteSettings.umamiWebsiteId,
-                            scriptUrl: siteSettings?.umamiScriptUrl || 'https://cloud.umami.is/script.js',
+                            scriptUrl: siteSettings.umamiScriptUrl || 'https://cloud.umami.is/script.js',
                           }
                         : null
                     }
                   />
-                </div>
-              </div>
-            </PageTransition>
+                </>
+              )}
+            </div>
           </SmoothScrollProvider>
         </FramerMotionProvider>
       </body>

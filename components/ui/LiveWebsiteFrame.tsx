@@ -14,9 +14,10 @@ export interface LiveWebsiteFrameProps {
   slug?: string
   /** Kept for API compatibility. */
   live?: boolean
+  /** Preload the capture (above-the-fold cards). */
+  priority?: boolean
   /** Extra classes for the outer wrapper */
   className?: string
-  priority?: boolean
 }
 
 /**
@@ -34,8 +35,8 @@ export function LiveWebsiteFrame({
   volume,
   service,
   slug,
+  priority,
   className = '',
-  priority = false,
 }: LiveWebsiteFrameProps) {
   const liveHref = liveUrl || (slug ? `https://${slug}.exvorta.com` : '')
 
@@ -51,18 +52,18 @@ export function LiveWebsiteFrame({
       url={liveHref || undefined}
       imageUrl={imageUrl}
       tone="light"
-      className={className}
       priority={priority}
+      className={className}
       footer={
         metaRows.length > 0 ? (
-          <div className="bg-white border-t border-black/5 px-4 py-3 space-y-1.5 font-mono text-[9px] uppercase tracking-widest">
+          <dl className="space-y-2 border-t border-rule bg-surface px-5 py-4 font-mono text-label uppercase">
             {metaRows.map(({ label, value }) => (
-              <div key={label} className="flex justify-between text-gray-400">
-                <span>{label}</span>
-                <span className="text-black font-medium truncate max-w-[70%]">{value}</span>
+              <div key={label} className="flex justify-between gap-4 text-muted">
+                <dt>{label}</dt>
+                <dd className="max-w-[70%] truncate text-end font-medium text-obsidian">{value}</dd>
               </div>
             ))}
-          </div>
+          </dl>
         ) : undefined
       }
     />

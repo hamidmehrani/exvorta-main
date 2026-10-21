@@ -1,6 +1,5 @@
 'use client'
 import React from 'react'
-import dynamic from 'next/dynamic'
 import HeroBlock from './HeroBlock'
 import FeatureGridBlock from './FeatureGridBlock'
 import FeatureShowcaseBlock from './FeatureShowcaseBlock'
@@ -24,21 +23,32 @@ import RFQFormBlock from './RFQFormBlock'
 import WaitlistFormBlock from './WaitlistFormBlock'
 import RoadmapBlock from './RoadmapBlock'
 import ProblemStatementBlock from './ProblemStatementBlock'
+import CmsControlBlock from './CmsControlBlock'
+import PortfolioArchiveBlock from './PortfolioArchiveBlock'
+import ProductShowcaseBlock from './ProductShowcaseBlock'
+import PlatformCapabilitiesBlock from './PlatformCapabilitiesBlock'
+import EcosystemBlock from './EcosystemBlock'
+import MarqueeBlock from './MarqueeBlock'
 // Block components declare specific prop interfaces, but the renderer receives
 // untyped CMS layout data by design — entries are cast at lookup time.
+// All blocks are statically imported and server-rendered. They used to be
+// `dynamic(..., { ssr: false })`, which left them out of the HTML entirely
+// (invisible to crawlers, and the page jumped when each chunk arrived);
+// `dynamic()` with SSR is no better — it wraps the block in a Suspense boundary
+// that streams in after first paint and shifts the footer.
 const blockComponents: Record<string, unknown> = {
   hero: HeroBlock, featureGrid: FeatureGridBlock, featureShowcase: FeatureShowcaseBlock, stats: StatsBlock, cta: CTABlock, ctaBanner: CTABannerBlock, richText: RichTextBlock, video: VideoBlock,
   process: ProcessBlock, processBlock: ProcessBlock, faq: FAQBlock, faqBlock: FAQBlock, pricing: PricingBlock, pricingBlock: PricingBlock,
   testimonialBlock: TestimonialBlock, thesis: ThesisBlock, vision: VisionBlock, founder: FounderBlock, globalPresence: GlobalPresenceBlock,
   portfolioShowcase: PortfolioShowcaseBlock, teamShowcase: TeamShowcaseBlock, contactForm: ContactFormBlock, rfqForm: RFQFormBlock,
-  cmsControl: dynamic(() => import('./CmsControlBlock').then(m => m.default || m.CmsControlBlock), { ssr: false }),
+  cmsControl: CmsControlBlock,
   waitlistForm: WaitlistFormBlock, roadmap: RoadmapBlock, problemStatement: ProblemStatementBlock,
-  portfolioArchive: dynamic(() => import('./PortfolioArchiveBlock').then(m => m.default || m.PortfolioArchiveBlock), { ssr: false }),
-  portfolio: dynamic(() => import('./PortfolioArchiveBlock').then(m => m.default || m.PortfolioArchiveBlock), { ssr: false }),
-  productShowcase: dynamic(() => import('./ProductShowcaseBlock').then(m => m.default || m.ProductShowcaseBlock), { ssr: false }),
-  platformCapabilities: dynamic(() => import('./PlatformCapabilitiesBlock').then(m => m.default || m.PlatformCapabilitiesBlock), { ssr: false }),
-  ecosystem: dynamic(() => import('./EcosystemBlock').then(m => m.default || m.EcosystemBlock), { ssr: false }),
-  marquee: dynamic(() => import('./MarqueeBlock').then(m => m.default || m.MarqueeBlock), { ssr: false }),
+  portfolioArchive: PortfolioArchiveBlock,
+  portfolio: PortfolioArchiveBlock,
+  productShowcase: ProductShowcaseBlock,
+  platformCapabilities: PlatformCapabilitiesBlock,
+  ecosystem: EcosystemBlock,
+  marquee: MarqueeBlock,
 }
 interface BlockData {
   blockType?: string

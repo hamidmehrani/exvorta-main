@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { AnimatedSection, AnimatedButton, StaggerContainer, StaggerItem } from '@/components/ui/Reveal';
 import { WeeklyBriefingForm } from '@/components/blocks/WeeklyBriefingForm';
-import Link from 'next/link';
+import Link from '@/components/ui/AppLink';
 import type { Post } from '@/payload-types';
 import { Container } from '@/components/ui/Container';
 import { MonoLabel } from '@/components/ui/MonoLabel';
@@ -12,27 +12,30 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
   return (
     <div className="w-full flex flex-col z-10 relative">
       {/* 01. [HERO] - Purpose: Trade Intelligence Identity */}
-      <AnimatedSection priority id="blog-hero" className="w-full bg-[#0A0A0A] pt-28 sm:pt-40 pb-12 sm:pb-16 lg:pb-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none z-0"></div>
+      <AnimatedSection id="blog-hero" className="on-dark relative isolate w-full overflow-hidden bg-obsidian px-6 pb-20 pt-40">
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="bg-aura-dark absolute inset-0 opacity-70" />
+          <div className="bg-blueprint-grid-dark absolute inset-0" />
+        </div>
         <Container className="relative z-10 flex flex-col items-center text-center">
-          <MonoLabel className="text-white/40 mb-8 block">
+          <MonoLabel className="eyebrow eyebrow-dark mb-8">
             [ EXVORTA INTELLIGENCE NODE ]
           </MonoLabel>
-          <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-serif font-bold text-white leading-[1.0] tracking-tight mb-8">
+          <h1 className="mb-8 font-serif text-display font-semibold text-white">
             Trade Intelligence.<br />
-            <span className="text-white/40 italic">Every week.</span>
+            <span className="text-muted-dark">Every week.</span>
           </h1>
-          <p className="max-w-2xl text-lg md:text-xl text-white/50 font-sans leading-relaxed mb-16">
+          <p className="mb-16 max-w-2xl text-lede font-light text-muted-dark">
             Institutional-grade analysis, regulatory compliance updates, and architectural blueprints for global commodities trading.
           </p>
-          <div className="w-full max-w-4xl pt-8 flex flex-wrap justify-center gap-3 md:gap-4 border-t border-white/10">
-            <span className="inline-flex items-center bg-white text-black px-5 py-2.5 text-[11px] font-mono uppercase tracking-[0.2em] rounded-sm">
+          <div className="flex w-full max-w-4xl flex-wrap justify-center gap-3 border-t border-rule-dark pt-8 md:gap-4">
+            <span className="inline-flex items-center rounded-sm bg-surface px-5 py-2.5 font-mono text-label uppercase text-obsidian">
               [ ALL INSIGHTS ]
             </span>
             {['MARKET INTEL', 'COMPLIANCE', 'DOCUMENTS', 'ARCHITECTURE'].map((topic) => (
               <span
                 key={topic}
-                className="inline-flex items-center bg-white/[0.02] border border-white/10 text-white/60 px-5 py-2.5 text-[11px] font-mono uppercase tracking-[0.2em] rounded-sm"
+                className="inline-flex items-center rounded-sm border border-rule-dark bg-white/[0.02] px-5 py-2.5 font-mono text-label uppercase text-muted-dark"
               >
                 {topic}
               </span>
@@ -175,7 +178,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
       {/* 07. [FINAL CTA] - Purpose: Lead generation */}
       <AnimatedSection id="blog-cta" className="w-full bg-[#0A0A0A] py-14 sm:py-20 lg:py-24 sm:py-32 lg:py-40 px-6">
         <Container className="max-w-4xl text-center flex flex-col items-center">
-          <MonoLabel className="text-white/40 mb-8 block">
+          <MonoLabel className="text-white/60 mb-8 block">
             [ INITIATE PARTNERSHIP ]
           </MonoLabel>
           <h2 className="text-4xl md:text-6xl font-serif text-white mb-12">
