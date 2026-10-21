@@ -6,7 +6,7 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 const isProduction = process.env.NODE_ENV === 'production' && process.env.CI !== 'true'
 
 // Critical variables required for core system execution in production
-const criticalEnvVars = ['DATABASE_URI', 'PAYLOAD_SECRET', 'ADMIN_EMAIL']
+const criticalEnvVars = ['DATABASE_URI', 'PAYLOAD_SECRET']
 for (const envVar of criticalEnvVars) {
   if (!process.env[envVar]) {
     if (isProduction) {
@@ -23,6 +23,7 @@ const optionalEnvVars = [
   'CLOUDINARY_API_KEY',
   'CLOUDINARY_API_SECRET',
   'NEXT_PUBLIC_SERVER_URL',
+  'ADMIN_EMAIL',
 ]
 for (const envVar of optionalEnvVars) {
   if (!process.env[envVar]) {

@@ -150,19 +150,13 @@ export const sendLeadEmails: CollectionAfterChangeHook = async ({ doc, operation
   const isProd = process.env.NODE_ENV === 'production'
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey || isPlaceholder(apiKey)) {
-    if (isProd) {
-      throw new Error('[EXVORTA OS] Fatal: RESEND_API_KEY is missing or configured with a placeholder in production.')
-    }
-    reportWarning('[EXVORTA OS] RESEND_API_KEY is missing or placeholder. Skipping lead email automation in development.')
+    reportWarning('[EXVORTA OS] RESEND_API_KEY is missing or placeholder. Skipping lead email automation.')
     return doc
   }
 
   const adminEmail = process.env.ADMIN_EMAIL
   if (!adminEmail || isPlaceholder(adminEmail)) {
-    if (isProd) {
-      throw new Error('[EXVORTA OS] Fatal: ADMIN_EMAIL is missing or configured with a placeholder in production.')
-    }
-    reportWarning('[EXVORTA OS] ADMIN_EMAIL is missing or placeholder in dev. Skipping admin notification.')
+    reportWarning('[EXVORTA OS] ADMIN_EMAIL is missing or placeholder. Skipping admin notification.')
     return doc
   }
 
