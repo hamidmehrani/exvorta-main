@@ -70,17 +70,19 @@ export const ProcessBlock: React.FC<ProcessBlockProps> = (props) => {
 
               return (
                 <StaggerItem key={index}>
-                  <div className={`group relative ${isLast ? '' : 'mb-20 md:mb-28'}`}>
-                    <div className={`flex flex-col items-start gap-6 md:items-center md:gap-16 ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                  <div className={`group relative ${isLast ? '' : 'mb-14 md:mb-20'}`}>
+                    {/* Both sides start on the same baseline (an eyebrow line) so the node
+                        sits level with the step marker instead of floating mid-row. */}
+                    <div className={`flex flex-col items-start gap-5 md:items-start md:gap-16 ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                       <div className={`w-full md:w-1/2 ${isEven ? 'md:text-end' : ''}`}>
                         <span className={`eyebrow eyebrow-index mb-3 ${isEven ? 'md:flex-row-reverse' : ''}`}>{step.stepNumber}</span>
-                        <h3 className="font-serif text-3xl font-semibold leading-tight text-obsidian">{step.title}</h3>
+                        <h3 className="font-serif text-title font-semibold text-obsidian">{step.title}</h3>
                       </div>
 
                       {/* Node */}
                       <div
                         aria-hidden
-                        className="z-10 hidden h-3.5 w-3.5 shrink-0 rotate-45 border border-obsidian bg-surface transition-all duration-500 group-hover:scale-125 group-hover:border-emerald group-hover:bg-emerald md:block"
+                        className="z-10 hidden h-3.5 w-3.5 shrink-0 rotate-45 border border-obsidian bg-surface transition-all duration-500 group-hover:scale-125 group-hover:border-emerald group-hover:bg-emerald md:mt-px md:block"
                       />
 
                       <div className={`w-full md:w-1/2 ${!isEven ? 'md:flex md:justify-end md:text-end' : ''}`}>
@@ -88,7 +90,7 @@ export const ProcessBlock: React.FC<ProcessBlockProps> = (props) => {
                           {step.subtitle && (
                             <h4 className="eyebrow mb-3 !text-obsidian">{step.subtitle}</h4>
                           )}
-                          <p className="max-w-sm text-base font-light leading-relaxed text-muted">{step.description}</p>
+                          <p className="text-base font-light leading-relaxed text-muted md:max-w-sm">{step.description}</p>
                         </div>
                       </div>
                     </div>

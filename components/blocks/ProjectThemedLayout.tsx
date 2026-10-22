@@ -1,405 +1,473 @@
-'use client';
+import React from 'react'
+import type { Project } from '@/payload-types'
+import AppLink from '@/components/ui/AppLink'
+import BrowserFrame from '@/components/ui/BrowserFrame'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { Reveal, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
+import { getCaseStudy, CASE_STUDIES, type CaseStudyData } from '@/components/blocks/case-study-data'
 
-import React from 'react';
-import type { Project } from '@/payload-types';
-import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal';
-import Link from 'next/link';
-import { m as motion } from 'framer-motion';
-import { easings, useReducedMotion } from '@/lib/animations';
-import { getCaseStudy, CASE_STUDIES, type CaseStudyData } from '@/components/blocks/case-study-data';
-import LiveSitePreview from '@/components/ui/LiveSitePreview';
+/*
+ * Case-study page. Obsidian ⇄ tinted rhythm, blueprint primitives throughout.
+ *
+ * Each project carries its own identity (accent + section tint). The accent is
+ * set once on the page root as CSS variables and consumed through the
+ * `accent` / `accent-ink` / `accent-lift` colour tokens:
+ *   - accent       fills, rules, buttons, glows
+ *   - accent-ink   small text on light/tinted surfaces (accent darkened to AA)
+ *   - accent-lift  small text + numerals on obsidian (accent lifted to AA)
+ */
+
+// Payload `Projects` collection defaults. A value equal to the default means
+// "never customised", so the case study's own theme must win.
+const COLLECTION_DEFAULT_ACCENT = '#059669'
+const COLLECTION_DEFAULT_TINT = '#FAFAF8'
+
+type ThemeVars = React.CSSProperties & Record<`--${string}`, string>
+
+function hexToRgb(value: string): [number, number, number] | null {
+  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(value.trim())
+  if (!m) return null
+  const h = m[1].length === 3 ? m[1].split('').map((c) => c + c).join('') : m[1]
+  return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)]
+}
+
+function luminance(rgb: [number, number, number]): number {
+  const [r, g, b] = rgb.map((v) => {
+    const c = v / 255
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
+  })
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b
+}
+
+// Relative luminance of the obsidian token — used to pick the legible label
+// colour for an accent-filled button.
+const OBSIDIAN_LUMINANCE = 0.004
+
+function labelOnAccent(accent: string): 'text-obsidian' | 'text-white' {
+  const rgb = hexToRgb(accent)
+  if (!rgb) return 'text-white'
+  const l = luminance(rgb)
+  const withWhite = 1.05 / (l + 0.05)
+  const withObsidian = (l + 0.05) / (OBSIDIAN_LUMINANCE + 0.05)
+  return withObsidian >= withWhite ? 'text-obsidian' : 'text-white'
+}
+
+/** Section tints sit under obsidian text — a dark tint falls back to the default cream. */
+function lightTint(value: string): string {
+  const rgb = hexToRgb(value)
+  return rgb && luminance(rgb) < 0.3 ? COLLECTION_DEFAULT_TINT : value
+}
+
+function pickThemeValue(known: boolean, cms: string | null | undefined, authoritative: string, collectionDefault: string) {
+  const value = cms?.trim()
+  if (!value) return authoritative
+  if (known && value.toLowerCase() === collectionDefault.toLowerCase()) return authoritative
+  return value
+}
+
+const rise = (i: number) => ({ '--i': i }) as React.CSSProperties
+
+const LG_COLS: Record<number, string> = { 1: 'lg:grid-cols-1', 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4' }
+
+function Icon({ d, className = 'h-3 w-3' }: { d: string; className?: string }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden>
+      <path d={d} />
+    </svg>
+  )
+}
+const ARROW_OUT = 'M7 17L17 7M7 7h10v10'
+const ARROW_BACK = 'M19 12H5m6-6l-6 6 6 6'
+const ARROW_NEXT = 'M5 12h14m-6-6l6 6-6 6'
+const CHECK = 'M5 12.5l4.5 4.5L19 7.5'
+
+/** The diamond-led blueprint label (same marker `SectionHeading` uses). */
+function Eyebrow({ children, dark = false, className = '' }: { children: React.ReactNode; dark?: boolean; className?: string }) {
+  return (
+    <p className={`eyebrow ${dark ? 'eyebrow-dark' : ''} ${className}`}>
+      <span className="eyebrow-index" aria-hidden>
+        <i className="block h-1.5 w-1.5 rotate-45 bg-current" />
+      </span>
+      {children}
+    </p>
+  )
+}
 
 export function ProjectThemedLayout({ project }: { project?: Project }) {
-  const slug = project?.slug || 'spicevo';
-  const prefersReducedMotion = useReducedMotion();
+  const slug = project?.slug || 'spicevo'
+  const known = getCaseStudy(slug)
 
   // Authoritative teardown data for known deployments; CMS fields override when set.
-  const cs: CaseStudyData = getCaseStudy(slug) || {
+  const cs: CaseStudyData = known || {
     title: project?.title || 'Project',
     domain: `${slug}.exvorta.com`,
     url: `https://${slug}.exvorta.com`,
     tagline: project?.excerpt || 'Custom deployment by Exvorta.',
     category: 'Digital Infrastructure',
     excerpt: project?.excerpt || 'A precision-engineered web presence for global trade.',
-    heroBg: project?.heroBgColor || '#141414',
-    accent: project?.accentColor || '#059669',
+    heroBg: project?.heroBgColor || COLLECTION_DEFAULT_TINT,
+    accent: project?.accentColor || COLLECTION_DEFAULT_ACCENT,
     stats: [],
     certifications: [],
     products: [],
     metrics: [],
-  };
+  }
 
-  const cmsHero = project?.heroImage && typeof project.heroImage === 'object' && project.heroImage.url
-    ? project.heroImage
-    : null;
-  const heroSrc = cmsHero?.url || cs.heroImage;
-  const accent = project?.accentColor || cs.accent;
-  const liveUrl = project?.liveUrl || cs.url;
+  const accent = pickThemeValue(!!known, project?.accentColor, cs.accent, COLLECTION_DEFAULT_ACCENT)
+  const tint = lightTint(pickThemeValue(!!known, project?.heroBgColor, cs.heroBg, COLLECTION_DEFAULT_TINT))
+  const onAccent = labelOnAccent(accent)
 
+  const theme: ThemeVars = {
+    '--case-accent': accent,
+    '--case-accent-ink': `color-mix(in oklab, ${accent} 62%, var(--color-obsidian))`,
+    '--case-accent-lift': `color-mix(in oklab, ${accent} 55%, white)`,
+    '--eyebrow-accent': 'var(--case-accent-ink)',
+    '--eyebrow-accent-dark': 'var(--case-accent-lift)',
+  }
+
+  const cmsHero =
+    project?.heroImage && typeof project.heroImage === 'object' && project.heroImage.url ? project.heroImage.url : null
+  const capture = cmsHero || cs.capture || cs.heroImage
+
+  const liveUrl = project?.liveUrl || cs.url
   const metrics: { label: string; value: string }[] =
     project?.metrics && project.metrics.length > 0
       ? project.metrics.map((mm) => ({ label: mm.label || '', value: mm.value || '' }))
-      : cs.metrics;
+      : cs.metrics
+  const excerpt = project?.excerpt || cs.excerpt
+  const liveName = cs.domain.replace('.exvorta.com', '').toUpperCase()
 
-  const excerpt = project?.excerpt || cs.excerpt;
+  const next = (() => {
+    const keys = Object.keys(CASE_STUDIES)
+    const idx = keys.findIndex((k) => slug.toLowerCase().includes(k))
+    const nextKey = keys[(idx + 1 + keys.length) % keys.length] || keys[0]
+    const entry = CASE_STUDIES[nextKey]
+    return entry && entry.title !== cs.title ? { key: nextKey, ...entry } : null
+  })()
+
+  const productCols = LG_COLS[Math.min(Math.max(cs.products.length, 1), 4)]
+  const accentButton = `btn-primary min-h-[52px] w-full bg-accent px-6 py-4 sm:w-auto sm:px-10 ${onAccent}`
 
   return (
-    <div className="bg-obsidian text-cream">
-      {/* ═══════════════ HERO: split editorial + live frame ═══════════════ */}
-      <div className="min-h-screen pt-32 pb-24 border-b border-white/10 bg-obsidian">
-        <div className="container-site relative z-10">
-          <motion.div
-            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
-            animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: easings.cinematic }}
-            className="mb-12 flex flex-wrap items-center gap-4"
-          >
-            <Link className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest transition-colors hover:opacity-80" style={{ color: accent }} href="/portfolio">
-              <span className="text-[14px]">←</span>
-              ALL CASE STUDIES
-            </Link>
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/55">{cs.category}</span>
-          </motion.div>
+    <div className="bg-obsidian text-white" style={theme}>
+      {/* ═══════════════ HERO: editorial split + live frame ═══════════════ */}
+      <section className="on-dark relative isolate overflow-hidden border-b border-rule-dark bg-obsidian pb-24 pt-36 md:pb-32">
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          {/* Aura takes the project accent instead of the brand emerald. */}
+          <div className="bg-aura-dark absolute inset-0" style={{ '--color-emerald': 'var(--case-accent)' } as ThemeVars} />
+          <div className="bg-blueprint-grid-dark absolute inset-0" />
+        </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+        <div className="container-site">
+          <div className="rise mb-12 flex flex-wrap items-center gap-x-6 gap-y-3" style={rise(0)}>
+            <AppLink href="/portfolio" className="eyebrow eyebrow-dark gap-2 text-accent-lift transition-opacity hover:opacity-80">
+              <Icon d={ARROW_BACK} />
+              All case studies
+            </AppLink>
+            <span className="eyebrow eyebrow-dark">{cs.category}</span>
+          </div>
+
+          <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-20">
             {/* Left: brand story */}
-            <div className="col-span-1 lg:col-span-5 flex flex-col">
-              <AnimatedSection>
-                <div className="flex items-center gap-3 mb-8">
-                  <span className="inline-block w-10 h-[2px]" style={{ backgroundColor: accent }} />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/60">CASE STUDY — {cs.title.toUpperCase()}</span>
-                </div>
-                <h1 className="font-serif text-[44px] md:text-[64px] tracking-tighter leading-[1.05] mb-6 font-semibold">
-                  {cs.title}
-                </h1>
-                <p className="font-serif text-xl md:text-2xl leading-snug mb-6" style={{ color: accent }}>
-                  {cs.tagline}
-                </p>
-                <p className="font-sans text-[16px] text-white/50 leading-relaxed font-light mb-10 max-w-lg">
-                  {excerpt}
-                </p>
-              </AnimatedSection>
+            <div className="flex flex-col lg:col-span-5">
+              <div className="rise mb-8" style={rise(1)}>
+                <Eyebrow dark>Case study — {cs.title}</Eyebrow>
+              </div>
+              <h1 className="rise font-serif text-display font-semibold text-white" style={rise(2)}>
+                {cs.title}
+              </h1>
+              <p className="rise mt-6 font-serif text-title font-semibold text-accent-lift" style={rise(3)}>
+                {cs.tagline}
+              </p>
+              <p className="rise mt-6 max-w-lg text-base font-light leading-relaxed text-muted-dark" style={rise(4)}>
+                {excerpt}
+              </p>
 
-              <AnimatedSection delay={0.1}>
-                {/* Live deployment CTA — the proof */}
-                <Link
-                  href={liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-4 border px-6 py-4 font-mono text-[11px] uppercase tracking-[0.2em] transition-all duration-300 hover:gap-6"
-                  style={{ borderColor: accent, color: accent }}
-                >
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" style={{ backgroundColor: accent }} />
-                    <span className="relative inline-flex rounded-full h-2 w-2" style={{ backgroundColor: accent }} />
+              {/* Live deployment CTA — the proof */}
+              <div className="rise mt-10" style={rise(5)}>
+                <a href={liveUrl} target="_blank" rel="noopener noreferrer" className={accentButton}>
+                  <span className="relative flex h-2 w-2" aria-hidden>
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-current opacity-60 motion-reduce:animate-none" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-current" />
                   </span>
-                  VISIT LIVE — {cs.domain.toUpperCase().replace('.EXVORTA.COM', '')}
-                  <span className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
-                </Link>
-              </AnimatedSection>
+                  Visit live — {liveName}
+                  <Icon d={ARROW_OUT} />
+                </a>
+              </div>
 
               {/* Metrics ledger */}
               {metrics.length > 0 && (
-                <AnimatedSection className="mt-14" delay={0.15}>
-                  <div className="w-full border border-white/10 divide-y divide-white/10">
-                    {metrics.map((metric, i) => (
-                      <div key={i} className="flex items-center justify-between px-5 py-3">
-                        <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/55">{metric.label}</span>
-                        <span className="font-mono text-[10px] uppercase text-white/80">{metric.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </AnimatedSection>
+                <div className="rise frame frame-dark mt-14 w-full divide-y divide-rule-dark border border-rule-dark" style={rise(6)}>
+                  {metrics.map((metric, i) => (
+                    <div key={i} className="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+                      <span className="eyebrow eyebrow-dark shrink-0">{metric.label}</span>
+                      <span className="font-mono text-label uppercase text-white sm:text-end">{metric.value}</span>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
 
-            {/* Right: browser-framed live screenshot */}
-            <div className="col-span-1 lg:col-span-7">
-              <motion.div
-                initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 32 }}
-                animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.25, ease: easings.cinematic }}
-              >
-                <LiveSitePreview
-                  url={liveUrl}
-                  title={cs.title}
-                  poster={heroSrc || undefined}
-                />
-                <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-white/60">
-                  FIG. 01 — LIVE DEPLOYMENT — {cs.domain}
-                </p>
-              </motion.div>
-            </div>
+            {/* Right: browser-framed live capture */}
+            <Reveal className="lg:col-span-7" y={32} duration={0.9} delay={0.15}>
+              <div className="frame frame-dark">
+                <BrowserFrame title={cs.title} url={liveUrl} imageUrl={capture} tone="dark" priority />
+              </div>
+              <p className="eyebrow eyebrow-dark mt-8 flex justify-center text-center">
+                Fig. 01 — Live deployment — {cs.domain}
+              </p>
+            </Reveal>
           </div>
 
           {/* Impact stats band */}
           {cs.stats.length > 0 && (
-            <AnimatedSection className="mt-24" delay={0.1}>
-              <div className="grid grid-cols-1 md:grid-cols-3 border border-white/10 divide-y md:divide-y-0 md:divide-x divide-white/10">
+            <Reveal className="mt-24" y={24}>
+              <div className="frame frame-dark grid grid-cols-1 divide-y divide-rule-dark border border-rule-dark md:grid-cols-3 md:divide-x md:divide-y-0">
                 {cs.stats.map((s, i) => (
-                  <div key={i} className="px-8 py-10 text-center">
-                    <div className="font-serif text-5xl md:text-6xl font-semibold mb-2 tracking-tight" style={{ color: accent }}>
-                      {s.value}
-                    </div>
-                    <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/60">{s.label}</div>
+                  <div key={i} className="px-8 py-10 text-center md:py-12">
+                    <div className="font-serif text-headline font-semibold text-accent-lift">{s.value}</div>
+                    <p className="eyebrow eyebrow-dark mt-3">{s.label}</p>
                   </div>
                 ))}
               </div>
-            </AnimatedSection>
+            </Reveal>
           )}
         </div>
-      </div>
+      </section>
 
-      {/* ═══════════════ SECTION 1: THE BRIEF — why they needed us ═══════════════ */}
-      <section className="py-28 border-t border-white/10" style={{ backgroundColor: cs.heroBg }} id="the-brief">
-        <div className="container-site text-obsidian">
-          <StaggerContainer staggerChildren={0.12} delayChildren={0.05}>
-            <StaggerItem>
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] mb-8" style={{ color: accent }}>[ 01 — THE BRIEF ]</div>
-              <h2 className="font-serif text-[40px] md:text-[56px] tracking-tighter leading-[1.08] mb-10 font-semibold max-w-4xl">
-                {cs.brief?.headline || 'A commodity product. A non-commodity buyer.'}
-              </h2>
+      {/* ═══════════════ 01 · THE BRIEF — why they needed us ═══════════════ */}
+      <section className="border-b border-rule py-24 text-obsidian md:py-32" style={{ backgroundColor: tint }} id="the-brief">
+        <div className="container-site">
+          <SectionHeading index="01" eyebrow="The brief" title={cs.brief?.headline || 'A commodity product. A non-commodity buyer.'} />
+
+          <StaggerContainer className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16" staggerChildren={0.12} delayChildren={0.05}>
+            <StaggerItem className="lg:col-span-5">
+              <p className="text-lede font-light text-muted">
+                {cs.brief?.intro ||
+                  `${cs.title} competes in a market where every offer looks identical — same fairs, same price lists, same PDFs. The buyer's real question is never "what do you sell" but "can I trust this container to arrive exactly as specified."`}
+              </p>
             </StaggerItem>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-              <StaggerItem className="lg:col-span-5">
-                <p className="font-sans text-[17px] leading-relaxed text-black/70 font-light">
-                  {cs.brief?.intro || (
-                    <>
-                      {cs.title} competes in a market where every offer looks identical — same fairs, same
-                      price lists, same PDFs. The buyer&apos;s real question is never &quot;what do you sell&quot;
-                      but <em>&quot;can I trust this container to arrive exactly as specified.&quot;</em>
-                    </>
-                  )}
-                </p>
-              </StaggerItem>
-              <StaggerItem className="lg:col-span-7">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="border border-black/10 p-6 bg-white/40">
-                    <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-black/60 mb-3">THE PROBLEM</div>
-                    <p className="font-sans text-sm text-black/70 leading-relaxed">
-                      {cs.brief?.problem ||
-                        'Credibility gap: institutional buyers judged the company by a website that undersold its certifications, capacity, and compliance depth.'}
-                    </p>
-                  </div>
-                  <div className="border p-6" style={{ borderColor: accent, backgroundColor: `${accent}08` }}>
-                    <div className="font-mono text-[10px] uppercase tracking-[0.25em] mb-3" style={{ color: accent }}>THE EXVORTA ANSWER</div>
-                    <p className="font-sans text-sm text-black/80 leading-relaxed">
-                      {cs.brief?.answer ||
-                        'A spec-grade web presence: every claim verifiable, every certificate one click away, every product documented like an architectural submittal.'}
-                    </p>
-                  </div>
+            <StaggerItem className="lg:col-span-7">
+              <div className="frame grid grid-cols-1 border border-rule-strong bg-surface sm:grid-cols-2">
+                <div className="border-b border-rule p-6 sm:border-b-0 sm:border-e md:p-8">
+                  <p className="eyebrow mb-4">The problem</p>
+                  <p className="text-base leading-relaxed text-muted">
+                    {cs.brief?.problem ||
+                      'Credibility gap: institutional buyers judged the company by a website that undersold its certifications, capacity, and compliance depth.'}
+                  </p>
                 </div>
-              </StaggerItem>
-            </div>
+                <div className="border-t-2 border-accent bg-accent/5 p-6 sm:border-t-0 sm:border-s-0 md:p-8">
+                  <p className="eyebrow mb-4 text-accent-ink">The Exvorta answer</p>
+                  <p className="text-base leading-relaxed text-obsidian">
+                    {cs.brief?.answer ||
+                      'A spec-grade web presence: every claim verifiable, every certificate one click away, every product documented like an architectural submittal.'}
+                  </p>
+                </div>
+              </div>
+            </StaggerItem>
           </StaggerContainer>
         </div>
       </section>
 
-      {/* ═══════════════ SECTION 2: WHAT WE SHIPPED — capabilities ═══════════════ */}
-      <section className="bg-obsidian py-28 border-t border-white/10" id="what-we-shipped">
-        <div className="container-site">
-          <StaggerContainer staggerChildren={0.1} delayChildren={0.05}>
-            <StaggerItem>
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] mb-8" style={{ color: accent }}>[ 02 — WHAT WE SHIPPED ]</div>
-              <h2 className="font-serif text-[40px] md:text-[56px] tracking-tighter leading-[1.08] mb-16 font-semibold">
-                Built to close deals, not just to look good.
-              </h2>
-            </StaggerItem>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+      {/* ═══════════════ 02 · WHAT WE SHIPPED — capabilities ═══════════════ */}
+      {cs.products.length > 0 && (
+        <section className="on-dark border-b border-rule-dark bg-obsidian py-24 md:py-32" id="what-we-shipped">
+          <div className="container-site">
+            <SectionHeading tone="dark" index="02" eyebrow="What we shipped" title="Built to close deals, not just to look good." />
+
+            <StaggerContainer
+              className={`frame mt-14 grid grid-cols-1 border-s border-t border-rule-dark md:grid-cols-2 ${productCols}`}
+              staggerChildren={0.1}
+              delayChildren={0.05}
+            >
               {cs.products.map((p, i) => (
-                <StaggerItem key={i}>
-                  <div className="h-full border border-white/10 bg-sidebar p-8 hover:border-white/25 transition-colors duration-300 group">
-                    <div className="font-mono text-[10px] uppercase tracking-[0.25em] mb-6" style={{ color: accent }}>
-                      {String(i + 1).padStart(2, '0')} — RANGE
-                    </div>
-                    <h3 className="font-serif text-2xl mb-4 font-medium tracking-tight">{p.name}</h3>
-                    <p className="font-sans text-sm text-white/50 leading-relaxed font-light">{p.description}</p>
-                  </div>
+                <StaggerItem
+                  key={i}
+                  className={`group relative border-b border-e border-rule-dark bg-sidebar p-8 md:p-10 ${
+                    cs.products.length % 2 === 1 && i === cs.products.length - 1 ? 'md:col-span-2 lg:col-span-1' : ''
+                  }`}
+                >
+                  <span aria-hidden className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-accent-lift transition-transform duration-500 group-hover:scale-x-100 motion-reduce:transition-none" />
+                  <p className="eyebrow eyebrow-dark mb-8">
+                    <span className="eyebrow-index">{String(i + 1).padStart(2, '0')}</span>
+                    Range
+                  </p>
+                  <h3 className="font-serif text-2xl font-semibold text-white">{p.name}</h3>
+                  <p className="mt-4 text-base font-light leading-relaxed text-muted-dark">{p.description}</p>
                 </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
 
-            {/* certifications strip */}
+            {/* Certifications ledger */}
             {cs.certifications.length > 0 && (
-              <StaggerItem>
-                <div className="border border-white/10 divide-y divide-white/10">
-                  <div className="px-6 py-4 font-mono text-[10px] uppercase tracking-[0.3em] text-white/55 border-b border-white/10">
-                    COMPLIANCE FRONT-AND-CENTER — VERIFIED CLAIMS, ZERO INFLATION
-                  </div>
+              <Reveal className="mt-16" y={20}>
+                <div className="frame divide-y divide-rule-dark border border-rule-dark">
+                  <p className="eyebrow eyebrow-dark flex px-6 py-4 leading-relaxed">Compliance front-and-center — verified claims, zero inflation</p>
                   {cs.certifications.map((c, i) => (
-                    <div key={i} className="px-6 py-4 flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.15em] text-white/70">
-                      <span style={{ color: accent }}>✓</span>
+                    <div key={i} className="flex items-center gap-4 px-6 py-4 font-mono text-label uppercase text-white">
+                      <Icon d={CHECK} className="h-3.5 w-3.5 shrink-0 text-accent-lift" />
                       {c}
                     </div>
                   ))}
                 </div>
-              </StaggerItem>
+              </Reveal>
             )}
-          </StaggerContainer>
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
-      {/* ═══════════════ SECTION 3: YOU OWN THE PANEL (CMS control) ═══════════════ */}
-      <section className="py-28 border-t border-white/10" style={{ backgroundColor: cs.heroBg }} id="own-the-panel">
-        <div className="container-site text-obsidian">
-          <StaggerContainer staggerChildren={0.1}>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              <StaggerItem className="lg:col-span-5">
-                <div className="font-mono text-[10px] uppercase tracking-[0.3em] mb-8" style={{ color: accent }}>[ 03 — YOU OWN IT ]</div>
-                <h2 className="font-serif text-[38px] md:text-[52px] tracking-tighter leading-[1.08] mb-8 font-semibold">
-                  No developer required. Ever.
-                </h2>
-                <p className="font-sans text-[16px] leading-relaxed text-black/70 font-light mb-8">
-                  {cs.title} runs on a custom CMS panel we engineered. From your own browser you can
-                  add products, upload certificates, publish news, change hero copy, swap imagery —
-                  anything, in seconds, without touching a line of code.
-                </p>
-                <ul className="space-y-3 mb-10">
-                  {['Add / edit products & spec sheets', 'Upload certificates & compliance docs', 'Update copy, imagery and hero sections', 'Full multilingual-ready content model'].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 font-sans text-sm text-black/70">
-                      <span className="mt-0.5 font-mono" style={{ color: accent }}>✓</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/web" className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] border-b pb-1 transition-all hover:gap-4" style={{ borderColor: accent, color: accent }}>
-                  SEE WHAT ELSE COMES STANDARD
-                  <span>→</span>
-                </Link>
-              </StaggerItem>
-              <StaggerItem className="lg:col-span-7">
-                {/* Admin panel mock */}
-                <div className="border border-black/10 bg-[#141414] shadow-[0_30px_60px_-25px_rgba(0,0,0,0.35)] overflow-hidden">
-                  <div className="flex items-center gap-2 px-4 py-3 bg-[#0D0D0D] border-b border-white/10">
-                    <span className="w-2 h-2 rounded-full bg-white/20" />
-                    <span className="w-2 h-2 rounded-full bg-white/15" />
-                    <span className="w-2 h-2 rounded-full bg-white/10" />
-                    <span className="ml-3 font-mono text-[10px] text-white/60">{cs.domain}/admin — YOUR PANEL</span>
+      {/* ═══════════════ 03 · YOU OWN THE PANEL (CMS control) ═══════════════ */}
+      <section className="border-b border-rule bg-surface py-24 text-obsidian md:py-32" id="own-the-panel">
+        <div className="container-site">
+          <StaggerContainer className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-20" staggerChildren={0.1}>
+            <StaggerItem className="lg:col-span-5">
+              <SectionHeading index="03" eyebrow="You own it" title="No developer required. Ever." />
+              <p className="mt-8 text-base font-light leading-relaxed text-muted">
+                {cs.title} runs on a custom CMS panel we engineered. From your own browser you can add products, upload
+                certificates, publish news, change hero copy, swap imagery — anything, in seconds, without touching a line
+                of code.
+              </p>
+              <ul className="mt-8 space-y-3">
+                {[
+                  'Add / edit products & spec sheets',
+                  'Upload certificates & compliance docs',
+                  'Update copy, imagery and hero sections',
+                  'Full multilingual-ready content model',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-base text-muted">
+                    <Icon d={CHECK} className="mt-1 h-3.5 w-3.5 shrink-0 text-accent-ink" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <AppLink
+                href="/web"
+                className="group mt-10 inline-flex items-center gap-3 border-b border-accent pb-2 font-mono text-label uppercase text-accent-ink transition-[gap] duration-300 hover:gap-5 motion-reduce:transition-none"
+              >
+                See what else comes standard
+                <Icon d={ARROW_NEXT} />
+              </AppLink>
+            </StaggerItem>
+
+            <StaggerItem className="lg:col-span-7">
+              {/* Admin panel mock */}
+              <div className="frame">
+                <div className="overflow-hidden border border-rule-dark bg-sidebar shadow-lift">
+                  <div className="flex items-center gap-2 border-b border-rule-dark bg-obsidian px-4 py-3">
+                    <span className="h-2 w-2 rounded-full bg-white/20" />
+                    <span className="h-2 w-2 rounded-full bg-white/15" />
+                    <span className="h-2 w-2 rounded-full bg-white/10" />
+                    <span className="ms-3 truncate font-mono text-micro text-muted-dark">{cs.domain}/admin — YOUR PANEL</span>
                   </div>
                   <div className="flex">
-                    <div className="w-14 border-r border-white/10 flex flex-col items-center py-5 gap-4 bg-[#0D0D0D]">
-                      {[0, 1, 2, 3, 4].map(i => (
-                        <span key={i} className="w-5 h-5 border" style={i === 1 ? { backgroundColor: accent, borderColor: accent } : { borderColor: 'rgba(255,255,255,0.2)' }} />
+                    <div className="flex w-12 shrink-0 flex-col items-center gap-4 border-e border-rule-dark bg-obsidian py-5 md:w-14">
+                      {[0, 1, 2, 3, 4].map((i) => (
+                        <span key={i} className={`h-4 w-4 border md:h-5 md:w-5 ${i === 1 ? 'border-accent bg-accent' : 'border-rule-dark'}`} />
                       ))}
                     </div>
-                    <div className="flex-1 p-6">
-                      <div className="flex items-center justify-between mb-6">
-                        <div>
-                          <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/55 mb-2">CONTENT OPERATIONS</div>
-                          <div className="font-serif text-xl text-white">Everything editable</div>
+                    <div className="min-w-0 flex-1 p-4 md:p-6">
+                      <div className="mb-6 flex items-center justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="eyebrow eyebrow-dark mb-2">Content operations</p>
+                          <p className="truncate font-serif text-xl font-semibold text-white">Everything editable</p>
                         </div>
-                        <span className="px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-white" style={{ backgroundColor: accent }}>+ NEW</span>
+                        <span className={`shrink-0 bg-accent px-3 py-1.5 font-mono text-micro uppercase ${onAccent}`}>+ New</span>
                       </div>
                       <div className="space-y-2">
                         {[
-                          ['PRODUCTS', '24 items', accent],
-                          ['CERTIFICATIONS', '9 documents', accent],
-                          ['NEWS & STORIES', '6 published', accent],
-                          ['PAGE SECTIONS', 'drag & drop', accent],
-                          ['MEDIA LIBRARY', 'unlimited', accent],
-                        ].map(([label, meta, c], i) => (
-                          <div key={i} className="flex items-center justify-between gap-3 border border-white/10 px-4 py-3 bg-obsidian hover:bg-white/5 transition-colors">
-                            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/80">{label}</span>
-                            <span className="font-mono text-[10px] text-white/60">{meta}</span>
-                            <span className="font-mono text-[10px] whitespace-nowrap" style={{ color: c }}>[ EDIT ]</span>
+                          ['Products', '24 items'],
+                          ['Certifications', '9 documents'],
+                          ['News & stories', '6 published'],
+                          ['Page sections', 'drag & drop'],
+                          ['Media library', 'unlimited'],
+                        ].map(([label, meta]) => (
+                          <div key={label} className="flex items-center justify-between gap-3 border border-rule-dark bg-obsidian px-3 py-3 md:px-4">
+                            <span className="truncate font-mono text-micro uppercase text-white">{label}</span>
+                            <span className="hidden font-mono text-micro text-muted-dark sm:inline">{meta}</span>
+                            <span className="shrink-0 whitespace-nowrap font-mono text-micro uppercase text-accent-lift">[ Edit ]</span>
                           </div>
                         ))}
                       </div>
                     </div>
                   </div>
                 </div>
-              </StaggerItem>
-            </div>
+              </div>
+            </StaggerItem>
           </StaggerContainer>
         </div>
       </section>
 
-      {/* ═══════════════ SECTION 4: testimonial (when available) ═══════════════ */}
+      {/* ═══════════════ Testimonial (when available) ═══════════════ */}
       {cs.testimonial && (
-        <section className="bg-obsidian py-28 border-t border-white/10">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <AnimatedSection>
-              <div className="font-serif text-3xl md:text-4xl leading-snug italic text-white/90 mb-10">
-                &ldquo;{cs.testimonial.quote}&rdquo;
-              </div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em]" style={{ color: accent }}>
-                {cs.testimonial.author}
-              </div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55 mt-2">
-                {cs.testimonial.role}
-              </div>
-            </AnimatedSection>
+        <section className="on-dark border-b border-rule-dark bg-obsidian py-24 md:py-32">
+          <div className="container-site">
+            <Reveal className="mx-auto max-w-4xl text-center" y={24}>
+              <span aria-hidden className="block font-serif text-8xl font-semibold leading-none text-accent-lift">“</span>
+              <blockquote>
+                <p className="font-serif text-title font-semibold text-white">{cs.testimonial.quote}</p>
+              </blockquote>
+              <p className="eyebrow mt-10 flex justify-center text-accent-lift">{cs.testimonial.author}</p>
+              <p className="eyebrow eyebrow-dark mt-3 flex justify-center">{cs.testimonial.role}</p>
+            </Reveal>
           </div>
         </section>
       )}
 
-      {/* ═══════════════ FINAL CTA: two doors ═══════════════ */}
-      <section className="py-32 border-t border-white/10" style={{ backgroundColor: cs.heroBg }}>
-        <div className="container-site text-obsidian">
-          <AnimatedSection className="text-center mb-16">
-            <div className="font-mono text-[10px] uppercase tracking-[0.3em] mb-6" style={{ color: accent }}>[ NEXT STEPS ]</div>
-            <h2 className="font-serif text-[44px] md:text-[64px] tracking-tighter leading-[1.05] font-semibold mb-6">
-              Judge the work yourself.
-            </h2>
-            <p className="font-sans text-[17px] text-black/60 max-w-xl mx-auto font-light">
-              Explore the live deployment — or let&apos;s build the same standard of digital
-              infrastructure for your trade operation.
-            </p>
-          </AnimatedSection>
-          <AnimatedSection delay={0.1} className="flex flex-col sm:flex-row justify-center gap-5">
-            <Link
-              href={liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-12 py-5 text-white font-mono text-[11px] uppercase tracking-[0.2em] transition-opacity hover:opacity-90"
-              style={{ backgroundColor: accent }}
-            >
-              VIEW LIVE SITE ↗
-            </Link>
-            <Link
-              href="/rfq"
-              className="inline-flex items-center justify-center px-12 py-5 font-mono text-[11px] uppercase tracking-[0.2em] border transition-colors"
-              style={{ borderColor: 'var(--color-obsidian)' }}
-            >
-              [ REQUEST A SIMILAR BUILD ]
-            </Link>
-          </AnimatedSection>
+      {/* ═══════════════ Final CTA: two doors ═══════════════ */}
+      <section className="relative isolate overflow-hidden border-b border-rule py-24 text-obsidian md:py-32" style={{ backgroundColor: tint }}>
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="bg-blueprint-grid absolute inset-0" />
+        </div>
+        <div className="container-site">
+          <div className="frame mx-auto max-w-5xl border border-rule px-4 py-16 text-center sm:px-6 md:px-16 md:py-24">
+            <Reveal y={14}>
+              <Eyebrow className="mb-8 justify-center">Next steps</Eyebrow>
+            </Reveal>
+            <Reveal y={18} delay={0.06}>
+              <h2 className="mx-auto max-w-4xl font-serif text-headline font-semibold text-obsidian">Judge the work yourself.</h2>
+            </Reveal>
+            <Reveal y={14} delay={0.14}>
+              <p className="mx-auto mt-8 max-w-2xl text-lede font-light text-muted">
+                Explore the live deployment — or let&apos;s build the same standard of digital infrastructure for your trade
+                operation.
+              </p>
+            </Reveal>
+            <Reveal y={14} delay={0.22}>
+              <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <a href={liveUrl} target="_blank" rel="noopener noreferrer" className={accentButton}>
+                  View live site
+                  <Icon d={ARROW_OUT} />
+                </a>
+                <AppLink href="/rfq" className="btn-ghost min-h-[52px] w-full px-6 py-4 sm:w-auto sm:px-10">
+                  [ Request a similar build ]
+                </AppLink>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* ═══════════════ NEXT CASE STUDY ═══════════════ */}
-      {(() => {
-        const keys = Object.keys(CASE_STUDIES);
-        const idx = keys.findIndex((k) => slug.toLowerCase().includes(k));
-        const nextKey = keys[(idx + 1 + keys.length) % keys.length] || keys[0];
-        const next = CASE_STUDIES[nextKey];
-        if (!next || next.title === cs.title) return null;
-        return (
-          <Link
-            href={`/portfolio/${nextKey}`}
-            className="group block border-t border-white/10 bg-obsidian py-20 transition-colors hover:bg-sidebar"
-          >
-            <div className="container-site flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-              <div>
-                <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55 mb-4">NEXT CASE STUDY</div>
-                <div className="font-serif text-[36px] md:text-[52px] tracking-tighter leading-none font-semibold text-white">
-                  {next.title}
-                </div>
-                <div className="font-mono text-[10px] uppercase tracking-[0.25em] mt-3 text-white/60">
-                  {next.category}
-                </div>
-              </div>
-              <span
-                className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/50 transition-all group-hover:text-white group-hover:translate-x-2"
-              >
-                VIEW CASE STUDY →
-              </span>
+      {/* ═══════════════ Next case study ═══════════════ */}
+      {next && (
+        <AppLink
+          href={`/portfolio/${next.key}`}
+          className="on-dark group block bg-obsidian py-20 transition-colors hover:bg-sidebar motion-reduce:transition-none md:py-24"
+        >
+          <div className="container-site flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="eyebrow eyebrow-dark mb-5">Next case study</p>
+              <p className="font-serif text-headline font-semibold text-white">{next.title}</p>
+              <p className="eyebrow eyebrow-dark mt-4">{next.category}</p>
             </div>
-          </Link>
-        );
-      })()}
+            <span className="inline-flex items-center gap-3 font-mono text-label uppercase text-muted-dark transition-all duration-300 group-hover:gap-5 group-hover:text-accent-lift motion-reduce:transition-none">
+              View case study
+              <Icon d={ARROW_NEXT} />
+            </span>
+          </div>
+        </AppLink>
+      )}
     </div>
-  );
+  )
 }
 
-export default ProjectThemedLayout;
+export default ProjectThemedLayout

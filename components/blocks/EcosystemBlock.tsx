@@ -1,16 +1,477 @@
-"use client";
-import React from 'react';
-import { AnimatedSection, Reveal, EASE_OUT } from '@/components/ui/Reveal';
-import { m } from 'framer-motion';
-import { Container } from '@/components/ui/Container';
-import { MonoLabel } from '@/components/ui/MonoLabel';
-import { Button } from '@/components/ui/Button';
-import { Hairline } from '@/components/ui/Hairline';
-import { StaggerText } from '@/components/ui/motion';
-import { Parallax } from '@/components/ui/motion';
-// import Link from 'next/link';
+import React from 'react'
+import AppLink from '@/components/ui/AppLink'
+import { AnimatedSection, Reveal, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { CtaBand } from '@/components/ui/CtaBand'
+import { StaggerText } from '@/components/ui/motion/StaggerText'
+import { unbracket } from '@/lib/text'
+import type { Ecosystem } from '@/payload-types'
 
-import type {  Ecosystem  } from '@/payload-types';
+/**
+ * /ecosystem — the Exvorta Suite.
+ *
+ * Section order: hero → problem → five module showcases (Web, Docs, Track, CRM,
+ * Intel) → vision → roadmap → closing CTA. Tone alternates obsidian / cream so
+ * no more than two sections of one tone ever sit together.
+ *
+ * Server component: motion is CSS-only (`Reveal`, `StaggerText`, `.rise`). The
+ * five product mock-ups are decorative (aria-hidden) and fully fluid — secondary
+ * panels drop out below `sm` instead of the mock clipping or scrolling.
+ */
+
+type RiseStyle = React.CSSProperties & Record<`--${string}`, string | number | undefined>
+const rise = (i: number): RiseStyle => ({ '--i': i })
+
+/* ─── Shared pieces ─────────────────────────────────────────────────────── */
+
+function Diamond() {
+  return (
+    <span className="eyebrow-index" aria-hidden>
+      <i className="block h-1.5 w-1.5 rotate-45 bg-current" />
+    </span>
+  )
+}
+
+/** One status badge style for every module: LIVE (lit) or a quiet neutral. */
+function StatusBadge({ children, live = false, dark }: { children: React.ReactNode; live?: boolean; dark: boolean }) {
+  const tone = live
+    ? dark
+      ? 'border-success/50 bg-success-bg text-success'
+      : 'border-emerald/40 bg-emerald/10 text-emerald'
+    : dark
+      ? 'border-rule-dark text-muted-dark'
+      : 'border-rule-strong text-obsidian'
+  return (
+    <span className={`inline-flex items-center gap-2 border px-2.5 py-1.5 font-mono text-label uppercase ${tone}`}>
+      {live && <i className="block h-1.5 w-1.5 rounded-full bg-current motion-safe:animate-pulse" aria-hidden />}
+      {children}
+    </span>
+  )
+}
+
+/**
+ * Product window chrome. The outer `.frame` must not clip (its crosshair marks
+ * bleed 6px), so overflow is hidden on the inner box only.
+ */
+function MockWindow({ tone, url, children }: { tone: 'dark' | 'light'; url: React.ReactNode; children: React.ReactNode }) {
+  const dark = tone === 'dark'
+  return (
+    <Reveal y={32} duration={0.9}>
+      <div aria-hidden className={`frame ${dark ? 'frame-dark' : ''}`}>
+        <div className={`overflow-hidden border ${dark ? 'border-rule-dark bg-card' : 'border-rule-strong bg-surface shadow-lift'}`}>
+          <div
+            className={`flex items-center justify-between gap-3 border-b px-4 py-2.5 ${
+              dark ? 'border-rule-dark bg-sidebar' : 'border-rule bg-surface-2'
+            }`}
+          >
+            <span className="flex shrink-0 gap-1.5">
+              {[0, 1, 2].map((i) => (
+                <i key={i} className={`block h-2 w-2 ${dark ? 'bg-white/20' : 'bg-obsidian/15'}`} />
+              ))}
+            </span>
+            <span className={`min-w-0 truncate font-mono text-micro uppercase ${dark ? 'text-muted-dark' : 'text-muted'}`}>{url}</span>
+            <span className="hidden w-8 shrink-0 sm:block" />
+          </div>
+          {children}
+        </div>
+      </div>
+    </Reveal>
+  )
+}
+
+interface ModuleSectionProps {
+  id: string
+  index: string
+  tone: 'dark' | 'light'
+  status: string
+  live?: boolean
+  title: string
+  /** Put the mock on the start side from `lg` up (the DOM order stays text-first for mobile). */
+  reverse?: boolean
+  cta: { label: string; href: string; variant: 'primary' | 'ghost' }
+  mock: React.ReactNode
+  children: React.ReactNode
+}
+
+function ModuleSection({ id, index, tone, status, live, title, reverse, cta, mock, children }: ModuleSectionProps) {
+  const dark = tone === 'dark'
+  return (
+    <AnimatedSection
+      id={id}
+      className={`relative w-full border-b py-24 md:py-32 ${dark ? 'on-dark border-rule-dark bg-obsidian text-white' : 'border-rule bg-cream text-obsidian'}`}
+    >
+      <div className="container-site grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-20">
+        <div className="flex flex-col lg:col-span-5">
+          <div className="mb-8 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <p className={`eyebrow ${dark ? 'eyebrow-dark' : ''}`}>
+              <span className="eyebrow-index">{index}</span>
+              Module
+            </p>
+            <StatusBadge live={live} dark={dark}>
+              {status}
+            </StatusBadge>
+          </div>
+          <h2 className={`mb-6 font-serif text-headline font-semibold ${dark ? 'text-white' : 'text-obsidian'}`}>{title}</h2>
+          <div className={`space-y-5 text-lede font-light ${dark ? 'text-muted-dark' : 'text-muted'}`}>{children}</div>
+          <div className="mt-10 flex">
+            <AppLink href={cta.href} className={`${cta.variant === 'primary' ? 'btn-primary' : 'btn-ghost'} min-h-13 w-full px-8 py-4 sm:w-auto`}>
+              {cta.label}
+            </AppLink>
+          </div>
+        </div>
+        <div className={`lg:col-span-7 ${reverse ? 'lg:order-first' : ''}`}>{mock}</div>
+      </div>
+    </AnimatedSection>
+  )
+}
+
+/* ─── Product mock-ups (decorative) ─────────────────────────────────────── */
+
+function WebMock() {
+  return (
+    <MockWindow tone="dark" url="Exvorta // RAD_VIEWPORT">
+      <div className="relative p-4 sm:p-6">
+        <div aria-hidden className="bg-blueprint-grid-dark absolute inset-0" />
+        <div className="relative space-y-3 sm:space-y-4">
+          <div className="grid grid-cols-3 gap-3">
+            {[
+              ['w-8', 'w-16 bg-success/30'],
+              ['w-10', 'w-12 bg-white/10'],
+              ['w-6', 'w-14 bg-white/10'],
+            ].map(([top, bottom], i) => (
+              <div key={i} className="flex h-16 flex-col justify-between border border-rule-dark bg-sidebar p-3 sm:h-20">
+                <i className={`block h-1 bg-white/20 ${top}`} />
+                <i className={`block h-2 ${bottom}`} />
+              </div>
+            ))}
+          </div>
+          <div className="relative h-32 border border-rule-dark bg-sidebar sm:h-44">
+            <svg viewBox="0 0 400 100" preserveAspectRatio="none" fill="none" className="absolute inset-0 h-full w-full">
+              <path d="M0 80 Q 50 20, 100 70 T 200 40 T 300 80 T 400 30" className="stroke-success/60" strokeDasharray="4 2" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+              <path d="M0 90 Q 70 40, 150 60 T 280 20 T 400 50" className="stroke-white/15" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+            </svg>
+            <div className="absolute start-4 top-4 space-y-2">
+              <i className="block h-1 w-24 bg-white/10" />
+              <i className="block h-1 w-16 bg-white/5" />
+            </div>
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            {[0, 1, 2].map((i) => (
+              <i key={i} className="block h-1 bg-white/5" />
+            ))}
+          </div>
+        </div>
+      </div>
+    </MockWindow>
+  )
+}
+
+function DocsMock() {
+  const fields: [string, boolean][] = [
+    ['Exporter', true],
+    ['Consignee', false],
+    ['HS Code', false],
+    ['Declared Value', false],
+    ['Origin Country', false],
+  ]
+  return (
+    <MockWindow tone="light" url="docs.exvorta.com // ALPHA">
+      <div className="flex gap-6 overflow-hidden whitespace-nowrap border-b border-rule px-4 pt-4 font-mono text-micro uppercase sm:px-6">
+        <span className="border-b border-emerald pb-2 text-emerald">Commercial Invoice</span>
+        <span className="pb-2 text-muted">Packing List</span>
+        <span className="hidden pb-2 text-muted sm:block">Certificate of Origin</span>
+      </div>
+      <div className="grid gap-5 p-4 sm:grid-cols-2 sm:gap-6 sm:p-6">
+        <div className="flex flex-col justify-between gap-5">
+          <div className="space-y-3">
+            {fields.map(([label, filled], i) => (
+              <div key={label} className={i > 2 ? 'hidden sm:block' : ''}>
+                <div className="mb-1 font-mono text-micro uppercase text-muted">{label}</div>
+                <div className="flex h-8 items-center border border-rule-strong bg-surface px-3">
+                  {filled && <i className="block h-3 w-1.5 bg-emerald" />}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="bg-obsidian py-3 text-center font-mono text-micro font-bold uppercase text-surface">Generate Document</div>
+        </div>
+
+        <div className="relative flex min-h-40 items-center justify-center overflow-hidden border border-rule-strong bg-cream p-5">
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <span className="-rotate-45 font-serif text-title font-semibold tracking-widest text-obsidian/5">EXVORTA</span>
+          </div>
+          <div className="relative w-full space-y-4">
+            <i className="block h-2 w-3/4 bg-obsidian/10" />
+            <i className="block h-2 w-full bg-obsidian/10" />
+            <i className="block h-2 w-5/6 bg-obsidian/10" />
+            <i className="block h-2 w-2/3 bg-obsidian/10" />
+          </div>
+          <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+            <div className="rotate-12 border border-emerald bg-surface px-4 py-2 font-mono text-title font-bold uppercase tracking-widest text-emerald opacity-80">
+              <span className="animated-stamp inline-block" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </MockWindow>
+  )
+}
+
+function TrackMock() {
+  const shipments = [
+    { route: 'Dubai → Rotterdam', carrier: 'Maersk', status: 'In Transit', tone: 'border-success/50 text-success', live: true },
+    { route: 'Shanghai → Jebel Ali', carrier: 'MSC', status: 'At Customs', tone: 'border-warning/50 text-warning' },
+    { route: 'Hamburg → Singapore', carrier: 'DHL', status: 'Delivered', tone: 'border-rule-dark text-muted-dark' },
+    { route: 'Mumbai → New York', carrier: 'FedEx', status: 'Loading', tone: 'border-info/60 text-info' },
+  ]
+  const stages = ['Loaded', 'Shipped', 'In Transit', 'Delivered']
+  return (
+    <MockWindow tone="dark" url="track.exvorta.com // VESSEL_TRACKER_V2">
+      <div className="space-y-4 p-4 font-mono text-micro uppercase text-white/80 sm:space-y-5 sm:p-6">
+        <div className="grid grid-cols-3 gap-3">
+          {[
+            ['Active Shipments', '12'],
+            ['In Transit', '8'],
+            ['Delivered', '47'],
+          ].map(([label, value]) => (
+            <div key={label} className="border border-rule-dark bg-sidebar p-3">
+              <span className="block text-muted-dark">{label}</span>
+              <span className="mt-2 block font-serif text-title font-semibold leading-none text-success">{value}</span>
+            </div>
+          ))}
+        </div>
+
+        <ul className="divide-y divide-rule-dark border border-rule-dark bg-sidebar px-3">
+          {shipments.map((s) => (
+            <li key={s.route} className="flex items-center gap-3 py-3">
+              <span className={`flex h-4 w-4 shrink-0 items-center justify-center border ${s.live ? 'border-success' : 'border-rule-dark'}`}>
+                <i className={`block h-1 w-1 ${s.live ? 'bg-success' : 'bg-white/40'}`} />
+              </span>
+              <span className="min-w-0 flex-1 truncate text-white/90">{s.route}</span>
+              <span className="hidden text-white/40 sm:inline">{s.carrier}</span>
+              <span className={`shrink-0 border px-2 py-0.5 ${s.tone} ${s.live ? 'motion-safe:animate-pulse' : ''}`}>{s.status}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="relative">
+          <i aria-hidden className="absolute inset-x-0 top-1 block h-px bg-white/10" />
+          <i aria-hidden className="absolute start-0 top-1 block h-px w-1/2 bg-success" />
+          <ol className="relative grid grid-cols-4">
+            {stages.map((stage, i) => (
+              <li key={stage} className={`relative pt-5 ${i <= 2 ? 'text-white/80' : 'text-muted-dark'}`}>
+                <i
+                  aria-hidden
+                  className={`absolute start-0 top-0 block h-2 w-2 ${
+                    i < 2 ? 'bg-success' : i === 2 ? 'border border-success bg-card motion-safe:animate-pulse' : 'border border-rule-dark bg-card'
+                  }`}
+                />
+                {stage}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </MockWindow>
+  )
+}
+
+function CrmMock() {
+  const accounts = [
+    { code: 'NP', name: 'Nova Petrochem', country: 'AE', live: true, active: true },
+    { code: 'GL', name: 'Gulf Logistics', country: 'SA', live: true },
+    { code: 'AM', name: 'Armada Metals', country: 'DE', live: false },
+    { code: 'TS', name: 'TradeSource Co', country: 'CN', live: true },
+  ]
+  const stages = [
+    { label: 'Inquiry', state: 'done', extra: false },
+    { label: 'Negotiation', state: 'active', extra: false },
+    { label: 'Confirmed', state: 'todo', extra: true },
+    { label: 'Shipped', state: 'todo', extra: true },
+    { label: 'Paid', state: 'todo', extra: false },
+  ]
+  return (
+    <MockWindow tone="light" url="crm.exvorta.com // RELATIONSHIP_ENGINE">
+      <div className="flex">
+        <div className="hidden w-44 shrink-0 border-e border-rule-strong bg-cream sm:block">
+          <div className="border-b border-rule-strong p-4">
+            <div className="flex h-7 items-center gap-2 border border-rule-strong bg-surface px-2">
+              <svg className="h-3 w-3 text-obsidian/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5" />
+              </svg>
+              <i className="block h-3 w-px bg-emerald" />
+            </div>
+          </div>
+          <ul className="py-2">
+            {accounts.map((a) => (
+              <li
+                key={a.code}
+                className={`flex items-center gap-3 px-4 py-3 ${a.active ? 'border-y border-rule-strong bg-surface' : 'opacity-60'}`}
+              >
+                <span className={`flex h-8 w-8 shrink-0 items-center justify-center border border-rule-strong font-mono text-micro ${a.active ? 'text-emerald' : 'text-obsidian'}`}>
+                  {a.code}
+                </span>
+                <span className="min-w-0">
+                  <span className={`block truncate font-mono text-micro uppercase ${a.active ? 'font-bold' : ''}`}>{a.name}</span>
+                  <span className="mt-1 flex items-center gap-1.5 font-mono text-micro text-muted">
+                    {a.country}
+                    <i className={`block h-1.5 w-1.5 ${a.live ? 'bg-emerald' : 'bg-obsidian/20'}`} />
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="min-w-0 flex-1 bg-surface">
+          <div className="border-b border-rule-strong p-4 sm:p-6">
+            <div className="mb-2 font-mono text-micro uppercase text-muted">Nova Petrochem // UAE // Active Buyer</div>
+            <div className="flex gap-2 font-mono text-micro">
+              <span className="border border-rule-strong px-2 py-0.5">PETROCHEMICAL</span>
+              <span className="border border-rule-strong px-2 py-0.5">VERIFIED</span>
+            </div>
+          </div>
+          <div className="space-y-5 p-4 sm:p-6">
+            <ol className="grid grid-cols-3 gap-2 sm:grid-cols-5">
+              {stages.map((s) => (
+                <li key={s.label} className={s.extra ? 'hidden sm:block' : ''}>
+                  <i
+                    className={`mb-2 block h-1 ${s.state === 'done' ? 'bg-emerald' : s.state === 'active' ? 'bg-emerald motion-safe:animate-pulse' : 'bg-obsidian/10'}`}
+                  />
+                  <span className={`block truncate text-center font-mono text-micro uppercase ${s.state === 'active' ? 'font-bold text-emerald' : 'text-muted'}`}>
+                    {s.label}
+                  </span>
+                </li>
+              ))}
+            </ol>
+            <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border border-rule-strong border-s-2 border-s-emerald bg-surface p-3 font-mono text-micro">
+              <span className="font-bold">Crude Derivative Batch #4471</span>
+              <span className="text-muted">$340,000 · Due: 14 Jun</span>
+            </div>
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              {[
+                ['4 Active Deals', 'w-1/2 bg-obsidian/20'],
+                ['$1.2M Pipeline', 'w-2/3 bg-obsidian/20'],
+                ['2 Docs Pending', 'w-1/3 bg-emerald/60'],
+              ].map(([label, bar]) => (
+                <div key={label} className="border border-rule-strong p-3">
+                  <div className="mb-2 font-mono text-micro uppercase text-muted">{label}</div>
+                  <i className={`block h-1 ${bar}`} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </MockWindow>
+  )
+}
+
+function IntelMock() {
+  const tickers = [
+    { label: 'Crude', delta: '+2.4%', up: true, d: 'M0,15 L10,12 L20,16 L30,5 L40,10 L50,2 L60,8' },
+    { label: 'Copper', delta: '-0.8%', up: false, d: 'M0,5 L10,8 L20,4 L30,12 L40,8 L50,18 L60,15' },
+    { label: 'LNG', delta: '+1.1%', up: true, d: 'M0,10 L10,15 L20,12 L30,8 L40,14 L50,5 L60,3' },
+  ]
+  return (
+    <MockWindow
+      tone="dark"
+      url={
+        <>
+          <i className="me-2 inline-block h-1.5 w-1.5 bg-success align-middle motion-safe:animate-pulse" />
+          [INTEL_ALPHA_ACCESS // LIVE NODE_03]
+        </>
+      }
+    >
+      <div className="p-4 font-mono text-micro uppercase sm:p-6">
+        <div className="relative h-36 border border-rule-dark p-3 sm:h-44 sm:p-4">
+          <p className="truncate text-muted-dark">Predictive neural forecast // commodity_aggregate</p>
+          <svg viewBox="0 0 400 100" preserveAspectRatio="none" fill="none" className="absolute inset-x-3 bottom-3 top-10 h-auto w-[calc(100%-1.5rem)] sm:inset-x-4 sm:bottom-4 sm:w-[calc(100%-2rem)]">
+            <path d="M0,80 C50,75 80,40 150,50 S250,20 300,30" className="stroke-success" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+            <path d="M300,30 Q350,10 400,5" className="stroke-success" strokeDasharray="4 2" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+            <path d="M300,30 Q350,45 400,55" className="stroke-white/25" strokeDasharray="4 2" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+          </svg>
+          <span className="absolute end-3 top-1/2 -translate-y-1/2 border border-rule-dark bg-card px-2 py-1 font-bold text-success sm:end-4">+12.4% Est.</span>
+        </div>
+
+        <div className="mt-3 flex gap-3 sm:mt-4 sm:gap-4">
+          <div className="hidden w-1/3 shrink-0 flex-col border border-rule-dark p-3 sm:flex">
+            <span className="mb-2 text-muted-dark">Risk correlation matrix</span>
+            <div className="grid min-h-12 flex-1 grid-cols-2 grid-rows-2 gap-1.5">
+              <i className="block border border-rule-dark bg-success/20 motion-safe:animate-pulse" />
+              <i className="block border border-rule-dark" />
+              <i className="block border border-rule-dark bg-danger/20" />
+              <i className="block border border-rule-dark bg-success/10 motion-safe:animate-pulse" />
+            </div>
+          </div>
+          <div className="grid flex-1 grid-cols-3 gap-3">
+            {tickers.map((t) => (
+              <div key={t.label} className="flex min-h-20 flex-col justify-between gap-4 border border-rule-dark p-2.5">
+                <div className="flex items-start justify-between gap-1">
+                  <span className="text-muted-dark">{t.label}</span>
+                  <span className={`font-bold ${t.up ? 'text-success' : 'text-danger'}`}>{t.delta}</span>
+                </div>
+                <svg className="h-4 w-full opacity-70" viewBox="0 0 60 20" preserveAspectRatio="none" fill="none">
+                  <path d={t.d} className={t.up ? 'stroke-success' : 'stroke-danger'} strokeWidth="1" vectorEffect="non-scaling-stroke" />
+                </svg>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-3 hidden justify-end gap-4 text-muted-dark sm:flex">
+          <span>[AI MODEL: ACTIVE // LATENCY &lt;5MS]</span>
+          <span className="motion-safe:animate-pulse">[SIGNAL_ACQUISITION_PULSE]</span>
+        </div>
+      </div>
+    </MockWindow>
+  )
+}
+
+/* ─── Roadmap data ──────────────────────────────────────────────────────── */
+
+const PHASES = [
+  {
+    phase: 'Phase 0 // Active',
+    title: 'Exvorta Web',
+    description: 'Foundation established. Deploying hardcoded, high-velocity digital architectures for tier-one trade entities globally.',
+    state: 'active',
+  },
+  {
+    phase: 'Phase 1 // Q3 2026',
+    title: 'Docs & Track Modules',
+    description:
+      'Releasing the zero-trust document data room (Docs) and the real-time supply chain visibility dashboard (Track) to our existing infrastructure partners.',
+    state: 'next',
+  },
+  {
+    phase: 'Phase 2 // Q1 2027',
+    title: 'Exvorta CRM',
+    description: 'Rolling out the first relationship architecture engineered explicitly for international trade desks, integrating KYC and broker networks.',
+    state: 'planned',
+  },
+  {
+    phase: 'Phase 3 // Q3 2027',
+    title: 'Exvorta Intel',
+    description: 'Deploying the institutional-grade market intelligence terminal for predictive commodity forecasting and risk correlation.',
+    state: 'planned',
+  },
+  {
+    phase: 'Phase 4 // 2028',
+    title: 'The Exvorta Suite',
+    description: 'Complete modular synthesis. All individual products seamlessly converge into the unified global trade operating system.',
+    state: 'planned',
+  },
+] as const
+
+const NODE_STYLE: Record<(typeof PHASES)[number]['state'], string> = {
+  active: 'border-emerald bg-emerald',
+  next: 'border-obsidian bg-obsidian',
+  planned: 'border-obsidian bg-cream',
+}
+
+/* ─── Block ─────────────────────────────────────────────────────────────── */
 
 export function EcosystemBlock({ data }: { data?: Ecosystem }) {
   const hero = data?.hero || {
@@ -18,684 +479,284 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
     title: 'A Unifying Core',
     subtitle: 'for Global Trade.',
     description: 'One integrated operating system connecting your web presence, documents, logistics, and intelligence.',
-    badge: 'SUITE'
-  };
+    badge: 'SUITE',
+  }
   const problem = data?.problem || {
     eyebrow: '[ THE FRAGMENTATION PROBLEM ]',
     title: 'Trade runs on scattered tools.',
-    description: 'WhatsApp threads, Excel sheets, and email chains. Your operations deserve better infrastructure.'
-  };
+    description: 'WhatsApp threads, Excel sheets, and email chains. Your operations deserve better infrastructure.',
+  }
   const vision = data?.vision || {
     badge: '[ THE VISION ]',
     title: 'One trade OS.',
     subtitle: 'Every workflow.',
-    description: 'The Exvorta Suite unifies every product into a single, seamless platform for global traders.'
-  };
+    description: 'The Exvorta Suite unifies every product into a single, seamless platform for global traders.',
+  }
   const roadmap = data?.roadmap || {
     eyebrow: '[ ROADMAP ]',
-    title: 'The Master Plan'
-  };
+    title: 'The Master Plan',
+  }
   const cta = data?.cta || {
     eyebrow: '[ GET STARTED ]',
     title: 'Ready to upgrade your trade infrastructure?',
     subtitle: 'Two ways to begin.',
     description: 'Request a web proposal or join the waitlist for the Exvorta Suite.',
     primaryCtaText: '[ REQUEST PROPOSAL ]',
-    primaryCtaLink: '/rfq',
     secondaryCtaText: '[ JOIN SOFTWARE WAITLIST ]',
-    secondaryCtaLink: '/waitlist',
-    disclaimer: '* Web proposals are subject to capacity constraints.'
-  };
+    disclaimer: '* Web proposals are subject to capacity constraints.',
+  }
+
+  // "[ WEB · DOCS · TRACK ]" → ['WEB', 'DOCS', 'TRACK']
+  const chain = unbracket(hero.badge)
+    .split('·')
+    .map((item) => item.trim())
+    .filter(Boolean)
 
   return (
-    <>
-      <style dangerouslySetInnerHTML={{ __html: `
+    <div className="pt-(--header-h)">
+      {/* The DRAFT → READY stamp in the Docs mock. `content` flips discretely. */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         @keyframes stamp-toggle {
-            0%, 45% { content: "DRAFT"; opacity: 1; }
-            50% { opacity: 0; }
-            55%, 100% { content: "READY"; opacity: 1; }
+          0%, 45% { content: "DRAFT"; opacity: 1; }
+          50% { opacity: 0; }
+          55%, 100% { content: "READY"; opacity: 1; }
         }
-        .animated-stamp::before {
-            content: "DRAFT";
-            animation: stamp-toggle 6s infinite;
+        .animated-stamp::before { content: "DRAFT"; animation: stamp-toggle 6s infinite; }
+        @media (prefers-reduced-motion: reduce) { .animated-stamp::before { animation: none; } }
+      `,
+        }}
+      />
+
+      {/* ═══ Hero ═══ */}
+      <section id="ecosystem-hero" className="on-dark relative isolate flex w-full items-center overflow-hidden border-b border-rule-dark bg-obsidian py-28 md:py-40">
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="bg-aura-dark absolute inset-0" />
+          <div className="bg-blueprint-grid-dark absolute inset-0" />
+        </div>
+        <div className="container-site text-center">
+          <p style={rise(0)} className="rise eyebrow eyebrow-dark mb-10 justify-center !leading-relaxed">
+            <span className="eyebrow-index hidden sm:inline-flex" aria-hidden>
+              <i className="block h-1.5 w-1.5 rotate-45 bg-current" />
+            </span>
+            {unbracket(hero.eyebrow)}
+          </p>
+          <StaggerText
+            as="h1"
+            text={`${hero.title} <br/> <span class="text-muted-dark">${hero.subtitle}</span>`}
+            unit="chars"
+            stagger={0.024}
+            duration={0.8}
+            className="mx-auto mb-8 max-w-5xl font-serif text-display font-semibold text-white"
+          />
+          <div aria-hidden style={rise(5)} className="rise mx-auto mb-10 h-px w-40 bg-gradient-to-r from-transparent via-success/60 to-transparent" />
+          <p style={rise(6)} className="rise mx-auto max-w-3xl text-lede font-light text-muted-dark">
+            {hero.description}
+          </p>
+          {chain.length > 0 && (
+            <ul
+              style={rise(7)}
+              aria-label="Suite modules"
+              className="rise mx-auto mt-14 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-label uppercase text-muted-dark"
+            >
+              {chain.map((item) => (
+                <li key={item} className="flex items-center gap-2.5">
+                  <i aria-hidden className="block h-1 w-1 rotate-45 bg-success" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
+
+      {/* ═══ Problem ═══ */}
+      <AnimatedSection id="ecosystem-problem" className="relative isolate w-full border-b border-rule bg-cream py-24 md:py-32">
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="bg-blueprint-grid absolute inset-0" />
+        </div>
+        <div className="container-site">
+          <SectionHeading align="center" eyebrow={unbracket(problem.eyebrow)} title={problem.title || ''} description={problem.description} />
+        </div>
+      </AnimatedSection>
+
+      {/* ═══ Modules ═══ */}
+      <ModuleSection
+        id="product-web"
+        index="01"
+        tone="dark"
+        live
+        status="Live"
+        title="Exvorta Web."
+        cta={{ label: '[ VIEW ARCHITECTURE ]', href: '/web', variant: 'primary' }}
+        mock={<WebMock />}
+      >
+        <p>
+          Bespoke digital architecture for global trading entities. We replace fragile templates with hardcoded, high-performance web infrastructure
+          designed entirely for institutional authority and tier-one lead acquisition.
+        </p>
+      </ModuleSection>
+
+      <ModuleSection
+        id="product-docs"
+        index="02"
+        tone="light"
+        reverse
+        status="Closed Beta"
+        title="Exvorta Docs."
+        cta={{ label: '[ REQUEST BETA ACCESS ]', href: '/waitlist', variant: 'ghost' }}
+        mock={<DocsMock />}
+      >
+        <p>
+          Trade documents generated in seconds. Commercial invoices, packing lists, and certificates of origin — auto-built from a single data entry.
+          No formatting errors. No customs delays.
+        </p>
+        <p className="border-s border-emerald ps-4 text-base text-muted">Currently available exclusively to active Exvorta Web clients.</p>
+      </ModuleSection>
+
+      <ModuleSection
+        id="product-track"
+        index="03"
+        tone="dark"
+        status="Alpha"
+        title="Exvorta Track."
+        cta={{ label: '[ REQUEST ALPHA ACCESS ]', href: '/waitlist', variant: 'ghost' }}
+        mock={<TrackMock />}
+      >
+        <p>
+          Real-time, verifiable visibility into your global trade pipeline. Exvorta Track moves asset tracking from static spreadsheets to a dynamic,
+          hardened data ecosystem, connecting directly with major global carriers and freight forwarders.
+        </p>
+      </ModuleSection>
+
+      <ModuleSection
+        id="product-crm"
+        index="04"
+        tone="light"
+        reverse
+        status="Coming Soon"
+        title="Exvorta CRM."
+        cta={{ label: '[ JOIN THE WAITLIST ]', href: '/waitlist', variant: 'ghost' }}
+        mock={<CrmMock />}
+      >
+        <p>
+          Manage every buyer and supplier relationship in one place. Deal pipelines, document history, follow-up reminders — built specifically for how
+          traders actually work.
+        </p>
+      </ModuleSection>
+
+      <ModuleSection
+        id="product-intel"
+        index="05"
+        tone="dark"
+        status="Coming Soon"
+        title="Exvorta Intel."
+        cta={{ label: '[ JOIN THE WAITLIST ]', href: '/waitlist', variant: 'ghost' }}
+        mock={<IntelMock />}
+      >
+        <p>
+          Intuition does not scale. Exvorta Intel processes millions of global trade data points into actionable, predictive commodity forecasting and
+          supply chain risk analysis.
+        </p>
+        <p className="text-base">
+          Monitor macro-economic shifts, track competitor vessel routes, and analyze real-time pricing arbitrage across global ports—all from a single
+          executive terminal.
+        </p>
+      </ModuleSection>
+
+      {/* ═══ Vision ═══ */}
+      <AnimatedSection id="ecosystem-vision" className="on-dark relative isolate w-full overflow-hidden border-b border-rule-dark bg-obsidian py-24 text-center md:py-32">
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="bg-aura-dark absolute inset-0" />
+          <div className="bg-blueprint-grid-dark absolute inset-0" />
+        </div>
+        <div className="container-site flex flex-col items-center">
+          <p className="eyebrow eyebrow-dark mb-8 justify-center">
+            <Diamond />
+            {unbracket(vision.badge)}
+          </p>
+          <StaggerText
+            as="h2"
+            text={`${vision.title} <br/> <span class="text-muted-dark">${vision.subtitle}</span>`}
+            unit="chars"
+            stagger={0.024}
+            duration={0.8}
+            mode="inView"
+            className="mx-auto mb-8 max-w-5xl font-serif text-display font-semibold text-white"
+          />
+          <Reveal y={14} delay={0.2}>
+            <p className="mx-auto mb-14 max-w-3xl text-lede font-light text-muted-dark">{vision.description}</p>
+          </Reveal>
+          <Reveal y={14} delay={0.3} className="w-full">
+            <ol aria-label="Suite modules" className="mx-auto grid w-full max-w-xl grid-cols-5 divide-x divide-rule-dark border border-rule-dark font-mono text-label uppercase text-muted-dark">
+              {['Web', 'Docs', 'Track', 'CRM', 'Intel'].map((item) => (
+                <li key={item} className="py-3 text-center">
+                  {item}
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+          <Reveal y={14} delay={0.4}>
+            <div className="mt-12">
+              <AppLink href="/waitlist" className="btn-primary min-h-13 px-10 py-4">
+                {cta.secondaryCtaText || '[ JOIN SOFTWARE WAITLIST ]'}
+              </AppLink>
+            </div>
+          </Reveal>
+        </div>
+      </AnimatedSection>
+
+      {/* ═══ Roadmap ═══ */}
+      <AnimatedSection id="ecosystem-roadmap" className="w-full border-b border-rule bg-cream py-24 md:py-32">
+        <div className="container-site grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-20">
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-32">
+              <SectionHeading eyebrow={unbracket(roadmap.eyebrow)} title={roadmap.title || ''} />
+            </div>
+          </div>
+
+          <StaggerContainer as="ol" staggerChildren={0.14} delayChildren={0.15} className="relative border-s border-rule-strong lg:col-span-7">
+            {PHASES.map((p, i) => {
+              const active = p.state === 'active'
+              return (
+                <StaggerItem as="li" key={p.title} className={`group relative ps-10 md:ps-14 ${i === PHASES.length - 1 ? '' : 'pb-14 md:pb-16'}`}>
+                  <span
+                    aria-hidden
+                    className={`absolute start-0 top-1 z-10 h-3.5 w-3.5 -translate-x-1/2 rotate-45 border transition-transform duration-500 group-hover:scale-125 rtl:translate-x-1/2 ${NODE_STYLE[p.state]}`}
+                  />
+                  <p className={`eyebrow mb-3 ${active ? 'text-emerald' : p.state === 'next' ? 'text-obsidian' : ''}`}>{p.phase}</p>
+                  <h3 className="mb-3 font-serif text-title font-semibold text-obsidian">{p.title}</h3>
+                  <p className="max-w-xl text-base font-light leading-relaxed text-muted">{p.description}</p>
+                </StaggerItem>
+              )
+            })}
+          </StaggerContainer>
+        </div>
+      </AnimatedSection>
+
+      {/* ═══ Closing CTA ═══ */}
+      <CtaBand
+        id="ecosystem-cta"
+        tone="dark"
+        eyebrow={unbracket(cta.eyebrow) || undefined}
+        headline={
+          <StaggerText
+            as="span"
+            text={`${cta.title} <br/> <span class="text-muted-dark">${cta.subtitle}</span>`}
+            unit="words"
+            stagger={0.08}
+            duration={0.75}
+            mode="inView"
+          />
         }
-        .grid-bg-brand-emerald {
-            background-size: 40px 40px;
-            background-image: 
-                linear-gradient(to right, rgba(5, 150, 105, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(5, 150, 105, 0.05) 1px, transparent 1px);
-        }
-      `}} />
-      <div className="pt-20">
-
-
-<AnimatedSection className="on-dark isolate w-full bg-brand-obsidian min-h-[75vh] flex items-center justify-center relative px-4 sm:px-6 lg:px-8 py-40 overflow-hidden border-b border-white/20" id="ecosystem-hero">
-<div aria-hidden className="pointer-events-none absolute inset-0 -z-10"><div className="bg-aura-dark absolute inset-0 opacity-70"></div><div className="bg-blueprint-grid-dark absolute inset-0"></div></div>
-<Container className="max-w-6xl w-full flex flex-col items-center text-center relative z-10">
-<Reveal y={16}><MonoLabel className="eyebrow eyebrow-dark mb-10">{hero.eyebrow}</MonoLabel></Reveal>
-<Reveal y={24} delay={0.1} className="w-full">
-<StaggerText
-  as="h1"
-  text={`${hero.title} <br/> <span class="text-white/60">${hero.subtitle}</span>`}
-  unit="chars"
-  stagger={0.024}
-  duration={0.8}
-  className="text-display font-serif font-semibold text-white mb-8"
-/>
-</Reveal>
-<m.div aria-hidden initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 1.2, delay: 0.5, ease: EASE_OUT }} className="w-40 h-px bg-brand-emerald/60 origin-center mb-10" />
-<Reveal y={16} delay={0.45}>
-<p className="max-w-3xl mx-auto text-lede font-light text-muted-dark">
-      {hero.description}
-    </p>
-</Reveal>
-<Reveal y={12} delay={0.55}><MonoLabel className="text-[9px] font-mono text-white/25 tracking-[0.2em] uppercase mt-16 z-10">{hero.badge}</MonoLabel></Reveal>
-</Container>
-</AnimatedSection>
-
-<AnimatedSection className="w-full bg-brand-cream py-32 md:py-48 px-4 sm:px-6 lg:px-8 border-b border-brand-obsidian" id="ecosystem-problem"><Container className="max-w-5xl mx-auto flex flex-col items-center text-center"><MonoLabel className="eyebrow mb-12 relative"><span aria-hidden className="absolute -top-12 left-1/2 block h-8 w-px bg-rule-strong"></span> {problem.eyebrow} </MonoLabel><StaggerText as="h2" text={problem.title || ''} unit="words" stagger={0.09} duration={0.7} className="text-headline font-serif font-semibold text-obsidian mb-12" /><p className="text-lede font-light text-muted max-w-3xl mx-auto"> {problem.description} </p></Container></AnimatedSection>
-
-<AnimatedSection className="w-full bg-brand-obsidian py-32 md:py-48 px-4 sm:px-6 lg:px-8 border-b border-white/20 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.03)_0%,transparent_70%)]" id="product-web">
-<Container className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-
-<div className="lg:col-span-5 flex flex-col justify-center">
-<div className="flex items-center gap-4 mb-6">
-<MonoLabel className="text-[10px] font-mono tracking-[0.2em] text-white/55 uppercase">[ MODULE 01 ]</MonoLabel>
-<div className="px-2.5 py-1 border border-brand-emerald flex items-center gap-2 bg-brand-emerald/20">
-<div className="w-1.5 h-1.5 animate-pulse bg-brand-emerald"></div>
-<span className="text-[9px] font-mono tracking-[0.2em] uppercase font-bold text-brand-emerald">LIVE</span>
-</div>
-</div>
-<h2 className="text-headline font-serif font-semibold text-white mb-6">Exvorta Web.</h2>
-<p className="text-lg text-white/50 font-sans leading-relaxed mb-10">
-                Bespoke digital architecture for global trading entities. We replace fragile templates with hardcoded, high-performance web infrastructure designed entirely for institutional authority and tier-one lead acquisition.
-            </p>
-<Button className="w-max bg-white text-black px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-gray-200 transition-all border border-white flex items-center gap-3" href="/web">
-                [ VIEW ARCHITECTURE ]
-            </Button>
-</div>
-
-<div className="lg:col-span-7">
-<Parallax speed={24}>
-<Reveal y={36} duration={0.9}>
-<div className="bg-mockup-card border border-white/20 aspect-[4/3] overflow-hidden relative group shadow-[0_30px_80px_-30px_rgba(0,0,0,0.5)]">
-
-<div className="h-10 bg-white/[0.03] border-b border-white/20 flex items-center px-4 justify-between">
-<div className="flex gap-1.5">
-<div className="w-2.5 h-2.5 bg-white/20"></div>
-<div className="w-2.5 h-2.5 bg-white/20"></div>
-<div className="w-2.5 h-2.5 bg-white/20"></div>
-</div>
-<div className="font-mono text-[9px] tracking-[0.3em] text-white/30">EXVORTA // RAD_VIEWPORT</div>
-<div className="w-12"></div>
-</div>
-
-<div className="p-6 h-full relative overflow-hidden grid-bg-brand-emerald opacity-20"></div>
-<div className="absolute inset-0 p-8 flex flex-col gap-6 overflow-x-auto">
-<div className="mt-4 grid grid-cols-3 gap-4 min-w-[500px]">
-<div className="h-20 bg-mockup-card border border-white/20 p-3 flex flex-col justify-between">
-<div className="w-8 h-1 bg-white/20"></div>
-<div className="w-16 h-2 bg-brand-emerald/20"></div>
-</div>
-<div className="h-20 bg-mockup-card border border-white/20 p-3 flex flex-col justify-between">
-<div className="w-10 h-1 bg-white/20"></div>
-<div className="w-12 h-2 bg-white/5"></div>
-</div>
-<div className="h-20 bg-mockup-card border border-white/20 p-3 flex flex-col justify-between">
-<div className="w-6 h-1 bg-white/20"></div>
-<div className="w-14 h-2 bg-white/5"></div>
-</div>
-</div>
-
-<div className="flex-1 bg-mockup-card border border-white/20 relative p-6">
-<div className="absolute inset-0 flex items-center justify-center">
-<svg className="w-full h-32 opacity-40" fill="none" preserveAspectRatio="none" viewBox="0 0 400 100">
-<path d="M0 80 Q 50 20, 100 70 T 200 40 T 300 80 T 400 30" fill="none" stroke="var(--color-brand-emerald)" strokeDasharray="4 2" strokeWidth="1"></path>
-<path d="M0 90 Q 70 40, 150 60 T 280 20 T 400 50" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1"></path>
-</svg>
-</div>
-<div className="relative z-10 space-y-3 min-w-[500px]">
-<div className="w-1/3 h-1 bg-white/10"></div>
-<div className="w-1/4 h-1 bg-white/5"></div>
-</div>
-</div>
-
-<div className="flex gap-4">
-<div className="flex-1 h-1 bg-white/5"></div>
-<div className="flex-1 h-1 bg-white/5"></div>
-<div className="flex-1 h-1 bg-white/5"></div>
-</div>
-</div>
-</div>
-</Reveal>
-</Parallax>
-</div>
-</Container>
-</AnimatedSection>
-
-<AnimatedSection className="w-full bg-brand-cream py-32 md:py-48 px-4 sm:px-6 lg:px-8 border-b border-brand-obsidian" id="product-docs">
-<Container className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-
-<div className="lg:col-span-7">
-<Parallax speed={24}>
-<Reveal y={36} duration={0.9}>
-<div className="bg-white border border-brand-obsidian aspect-[4/3] overflow-hidden relative group shadow-[0_30px_80px_-30px_rgba(0,0,0,0.25)]">
-
-<div className="h-10 bg-brand-cream border-b border-brand-obsidian flex items-center px-4 justify-between">
-<div className="flex gap-1.5">
-<div className="w-2.5 h-2.5 bg-black/10"></div>
-<div className="w-2.5 h-2.5 bg-black/10"></div>
-<div className="w-2.5 h-2.5 bg-black/10"></div>
-</div>
-<div className="font-mono text-[9px] tracking-[0.3em] text-black/50 uppercase">docs.exvorta.com // ALPHA</div>
-<div className="w-12"></div>
-</div>
-
-<div className="flex flex-col h-[calc(100%-2.5rem)] bg-white">
-
-<div className="flex border-b border-brand-obsidian px-4 sm:px-6 lg:px-8 pt-4 gap-6">
-<div className="text-[9px] font-mono tracking-widest text-brand-emerald border-b border-brand-emerald pb-2 uppercase">[ Commercial Invoice ]</div>
-<div className="text-[9px] font-mono tracking-widest text-black/40 pb-2 uppercase">[ Packing List ]</div>
-<div className="text-[9px] font-mono tracking-widest text-black/40 pb-2 uppercase">[ Certificate of Origin ]</div>
-</div>
-
-<div className="flex flex-col md:flex-row flex-1 p-6 gap-8 overflow-x-auto">
-
-<div className="w-1/2 flex flex-col justify-between">
-<div className="space-y-4">
-<div>
-<div className="text-[8px] font-mono text-black/60 uppercase mb-1">Exporter</div>
-<div className="h-8 border border-brand-obsidian bg-white flex items-center px-3">
-<div className="w-1.5 h-3" style={{backgroundColor: "var(--color-brand-emerald)"}}></div>
-</div>
-</div>
-<div>
-<div className="text-[8px] font-mono text-black/60 uppercase mb-1">Consignee</div>
-<div className="h-8 border border-brand-obsidian bg-white"></div>
-</div>
-<div>
-<div className="text-[8px] font-mono text-black/60 uppercase mb-1">HS Code</div>
-<div className="h-8 border border-brand-obsidian bg-white"></div>
-</div>
-<div>
-<div className="text-[8px] font-mono text-black/60 uppercase mb-1">Declared Value</div>
-<div className="h-8 border border-brand-obsidian bg-white"></div>
-</div>
-<div>
-<div className="text-[8px] font-mono text-black/60 uppercase mb-1">Origin Country</div>
-<div className="h-8 border border-brand-obsidian bg-white"></div>
-</div>
-</div>
-<Button className="w-full bg-brand-obsidian text-white text-[9px] font-mono tracking-widest uppercase py-3 border border-brand-obsidian font-bold hover:bg-[#1a1a1a] transition-colors mt-4">
-                        Generate Document
-                    </Button>
-</div>
-
-<div className="w-full md:w-1/2 bg-brand-cream border border-brand-obsidian p-6 relative overflow-hidden flex flex-col justify-center items-center">
-<div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
-<span className="font-serif text-3xl font-bold tracking-widest -rotate-45 text-black">EXVORTA</span>
-</div>
-<div className="w-full space-y-4 relative z-10">
-<div className="w-3/4 h-2 bg-black/10"></div>
-<div className="w-full h-2 bg-black/10"></div>
-<div className="w-5/6 h-2 bg-black/10"></div>
-<div className="w-2/3 h-2 bg-black/10"></div>
-</div>
-
-<div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-<div className="border border-brand-emerald text-brand-emerald font-mono text-3xl font-bold tracking-widest px-4 py-2 rotate-12 opacity-80 relative bg-white">
-<span className="animated-stamp inline-block"></span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</Reveal>
-</Parallax>
-</div>
-
-<div className="lg:col-span-5 flex flex-col justify-center">
-<div className="flex items-center gap-4 mb-6">
-<MonoLabel className="border border-black text-black text-[9px] font-mono font-bold px-3 py-1.5 tracking-widest uppercase">[ CLOSED BETA ]</MonoLabel>
-</div>
-<h2 className="text-headline font-serif font-semibold text-obsidian mb-6">Exvorta Docs.</h2>
-<p className="text-lg text-black/60 font-sans leading-relaxed mb-4">
-        Trade documents generated in seconds. Commercial invoices, packing lists, and certificates of origin — auto-built from a single data entry. No formatting errors. No customs delays.
-    </p>
-<p className="text-sm text-black/40 font-sans leading-relaxed mb-10 italic">
-        Currently available exclusively to active Exvorta Web clients.
-    </p>
-<Button className="w-max bg-transparent border border-brand-obsidian text-black px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-brand-obsidian hover:text-white transition-all flex items-center gap-3" href="/waitlist">
-        [ REQUEST BETA ACCESS ]
-        <svg fill="none" height="12" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="12">
-<line x1="5" x2="19" y1="12" y2="12"></line>
-<polyline points="12 5 19 12 12 19"></polyline>
-</svg>
-</Button>
-</div>
-</Container>
-</AnimatedSection>
-
-<AnimatedSection className="w-full bg-brand-obsidian py-32 md:py-48 px-4 sm:px-6 lg:px-8 border-b border-white/20" id="product-track">
-<Container className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-
-<div className="lg:col-span-5 flex flex-col justify-center text-white">
-<div className="flex items-center gap-3 mb-6">
-<span className="opacity-0 px-3 py-1 border border-white/20 text-white/55 text-[10px] font-mono tracking-widest uppercase">[ COMING SOON ]</span>
-<MonoLabel className="text-white/55 font-mono text-[10px] uppercase tracking-widest">Global Logistics Alpha</MonoLabel>
-</div>
-<h2 className="text-headline font-serif font-semibold text-white mb-6">Exvorta Track.</h2>
-<p className="text-lg text-white/60 font-sans leading-relaxed mb-8 max-w-2xl">Real-time, verifiable visibility into your global trade pipeline. Exvorta Track moves asset tracking from static spreadsheets to a dynamic, hardened data ecosystem, connecting directly with major global carriers and freight forwarders.</p>
-<Button className="w-max bg-transparent border border-white text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center gap-3 group" href="/waitlist">
-                [ REQUEST ALPHA ACCESS ]
-                <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
-</Button>
-</div>
-
-<div className="lg:col-span-7">
-<Parallax speed={24}>
-<Reveal y={36} duration={0.9}>
-<div className="relative w-full aspect-[4/3] bg-mockup-card border border-white/20 overflow-hidden flex flex-col shadow-[0_30px_80px_-30px_rgba(0,0,0,0.5)]">
-
-<div className="w-full h-12 border-b border-white/20 flex items-center px-4 sm:px-6 lg:px-8 gap-2 bg-mockup-sidebar">
-<div className="w-2.5 h-2.5 bg-white/20"></div>
-<div className="w-2.5 h-2.5 bg-white/20"></div>
-<div className="w-2.5 h-2.5 bg-white/20"></div>
-<div className="ml-auto text-[9px] font-mono text-white/55 uppercase tracking-widest">track.exvorta.com // VESSEL_TRACKER_V2</div>
-</div>
-
-<div className="p-8 md:p-12 flex flex-col gap-8 flex-grow overflow-x-auto"><div className="flex flex-col gap-6 h-full font-mono text-[10px] text-white/70 min-w-[600px]">
-<div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-<div className="bg-mockup-card border border-white/20 p-4 flex flex-col gap-2">
-<span className="text-white/55 tracking-widest">[ ACTIVE SHIPMENTS ]</span>
-<span className="text-brand-emerald text-lg font-bold">12</span>
-</div>
-<div className="bg-mockup-card border border-white/20 p-4 flex flex-col gap-2">
-<span className="text-white/55 tracking-widest">[ IN TRANSIT ]</span>
-<span className="text-brand-emerald text-lg font-bold">8</span>
-</div>
-<div className="bg-mockup-card border border-white/20 p-4 flex flex-col gap-2">
-<span className="text-white/55 tracking-widest">[ DELIVERED ]</span>
-<span className="text-brand-emerald text-lg font-bold">47</span>
-</div>
-</div>
-<div className="flex-1 bg-mockup-card border border-white/20 p-4 overflow-hidden">
-<div className="flex flex-col divide-y divide-[white/20]">
-<div className="py-3 flex items-center gap-4">
-<div className="w-4 h-4 border border-brand-emerald flex items-center justify-center"><div className="w-1 h-1 bg-brand-emerald"></div></div>
-<span className="flex-1 text-white/90">DUBAI → ROTTERDAM</span>
-<span className="text-white/30">MAERSK</span>
-<span className="px-2 py-0.5 border border-brand-emerald text-brand-emerald text-[8px] animate-pulse">IN TRANSIT</span>
-</div>
-<div className="py-3 flex items-center gap-4">
-<div className="w-4 h-4 border border-white/20 flex items-center justify-center"><div className="w-1 h-1 bg-white/40"></div></div>
-<span className="flex-1 text-white/90">SHANGHAI → JEBEL ALI</span>
-<span className="text-white/30">MSC</span>
-<span className="px-2 py-0.5 border border-warning-amber text-warning-amber text-[8px]">AT CUSTOMS</span>
-</div>
-<div className="py-3 flex items-center gap-4">
-<div className="w-4 h-4 border border-white/20 flex items-center justify-center"><div className="w-1 h-1 bg-white/40"></div></div>
-<span className="flex-1 text-white/90">HAMBURG → SINGAPORE</span>
-<span className="text-white/30">DHL</span>
-<span className="px-2 py-0.5 border border-outline text-outline text-[8px]">DELIVERED</span>
-</div>
-<div className="py-3 flex items-center gap-4">
-<div className="w-4 h-4 border border-white/20 flex items-center justify-center"><div className="w-1 h-1 bg-white/40"></div></div>
-<span className="flex-1 text-white/90">MUMBAI → NEW YORK</span>
-<span className="text-white/30">FEDEX</span>
-<span className="px-2 py-0.5 border border-info-blue text-info-blue text-[8px]">LOADING</span>
-</div>
-</div>
-</div>
-<div className="mt-auto pb-4">
-<div className="flex justify-between items-center mb-3 text-[8px] text-white/30 tracking-widest">
-<span className="">[ LOADED ]</span>
-<span className="">[ SHIPPED ]</span>
-<span className="text-brand-emerald/80">[ IN TRANSIT ]</span>
-<span className="">[ DELIVERED ]</span>
-</div>
-<div className="relative h-px bg-white/10">
-<div className="absolute top-1/2 left-0 w-2/3 h-px bg-brand-emerald -translate-y-1/2"></div>
-<div className="absolute top-1/2 left-0 -translate-y-1/2 w-2 h-2 bg-brand-emerald"></div>
-<div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-2 h-2 bg-brand-emerald"></div>
-<div className="absolute top-1/2 left-2/3 -translate-y-1/2 w-2 h-2 border border-brand-emerald bg-zinc-dark animate-pulse"></div>
-<div className="absolute top-1/2 right-0 -translate-y-1/2 w-2 h-2 border border-white/20 bg-zinc-dark"></div>
-</div>
-</div>
-</div></div>
-</div>
-</Reveal>
-</Parallax>
-</div>
-</Container>
-</AnimatedSection>
-
-<AnimatedSection className="w-full bg-brand-cream py-32 md:py-48 px-4 sm:px-6 lg:px-8 border-b border-brand-obsidian" id="product-crm">
-<Container className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-
-<div className="lg:col-span-7">
-<Parallax speed={24}>
-<Reveal y={36} duration={0.9}>
-<div className="bg-white border border-brand-obsidian aspect-[4/3] overflow-hidden relative group flex flex-col shadow-[0_30px_80px_-30px_rgba(0,0,0,0.25)]">
-
-<div className="h-10 bg-brand-cream border-b border-brand-obsidian flex items-center px-4 justify-between">
-<div className="flex gap-1.5">
-<div className="w-2.5 h-2.5 bg-black/10"></div>
-<div className="w-2.5 h-2.5 bg-black/10"></div>
-<div className="w-2.5 h-2.5 bg-black/10"></div>
-</div>
-<div className="font-mono text-[9px] tracking-[0.3em] text-black/50 uppercase">crm.exvorta.com // RELATIONSHIP_ENGINE</div>
-<div className="w-12"></div>
-</div>
-
-<div className="flex-1 flex bg-brand-cream overflow-hidden">
-
-<div className="w-48 border-r border-brand-obsidian hidden md:flex flex-col bg-brand-cream">
-<div className="p-4 border-b border-brand-obsidian">
-<div className="h-7 bg-white border border-brand-obsidian px-2 flex items-center gap-2">
-<svg className="w-3 h-3 text-black/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
-<div className="w-[1px] h-3 bg-brand-emerald animate-cursor-blink"></div>
-</div>
-</div>
-<div className="flex-1 py-2 overflow-y-auto">
-<div className="px-4 py-3 bg-white border-y border-brand-obsidian flex items-center gap-3">
-<div className="w-8 h-8 border border-brand-obsidian flex items-center justify-center text-[10px] font-mono text-brand-emerald">NP</div>
-<div className="flex-1">
-<div className="text-[9px] font-mono font-bold uppercase">Nova Petrochem</div>
-<div className="flex items-center gap-1.5">
-<span className="text-[9px]">🇦🇪</span>
-<div className="w-1.5 h-1.5 bg-brand-emerald"></div>
-</div>
-</div>
-</div>
-<div className="px-4 py-3 flex items-center gap-3 opacity-60">
-<div className="w-8 h-8 border border-brand-obsidian flex items-center justify-center text-[10px] font-mono">GL</div>
-<div className="flex-1">
-<div className="text-[9px] font-mono uppercase">Gulf Logistics</div>
-<div className="flex items-center gap-1.5">
-<span className="text-[9px]">🇸🇦</span>
-<div className="w-1.5 h-1.5 bg-brand-emerald"></div>
-</div>
-</div>
-</div>
-<div className="px-4 py-3 flex items-center gap-3 opacity-60">
-<div className="w-8 h-8 border border-brand-obsidian flex items-center justify-center text-[10px] font-mono">AM</div>
-<div className="flex-1">
-<div className="text-[9px] font-mono uppercase">Armada Metals</div>
-<div className="flex items-center gap-1.5">
-<span className="text-[9px]">🇩🇪</span>
-<div className="w-1.5 h-1.5 bg-black/20"></div>
-</div>
-</div>
-</div>
-<div className="px-4 py-3 flex items-center gap-3 opacity-60">
-<div className="w-8 h-8 border border-brand-obsidian flex items-center justify-center text-[10px] font-mono">TS</div>
-<div className="flex-1">
-<div className="text-[9px] font-mono uppercase">TradeSource Co</div>
-<div className="flex items-center gap-1.5">
-<span className="text-[9px]">🇨🇳</span>
-<div className="w-1.5 h-1.5 bg-brand-emerald"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div className="flex-1 flex flex-col bg-white">
-<div className="p-6 border-b border-brand-obsidian">
-<div className="text-[10px] font-mono text-black/60 uppercase tracking-[0.2em] mb-2">Nova Petrochem // UAE // Active Buyer</div>
-<div className="flex gap-2">
-<span className="text-[8px] font-mono border border-brand-obsidian px-2 py-0.5">PETROCHEMICAL</span>
-<span className="text-[8px] font-mono border border-brand-obsidian px-2 py-0.5">VERIFIED</span>
-</div>
-</div>
-<div className="flex-1 p-6">
-<div className="flex items-center gap-1 mb-8">
-<div className="flex-1 flex flex-col gap-2">
-<div className="h-1 bg-brand-emerald"></div>
-<div className="text-[7px] font-mono text-black/60 text-center uppercase">INQUIRY</div>
-</div>
-<div className="w-2 border-t border-brand-obsidian"></div>
-<div className="flex-1 flex flex-col gap-2">
-<div className="h-1 bg-brand-emerald animate-pulse"></div>
-<div className="text-[7px] font-mono text-brand-emerald font-bold text-center uppercase">NEGOTIATION</div>
-
-<div className="mt-4 p-3 bg-white border border-brand-obsidian border-l-2 border-l-emerald relative group">
-<div className="text-[9px] font-mono font-bold mb-1">Crude Derivative Batch #4471</div>
-<div className="text-[8px] font-mono text-black/60">$340,000 · Due: 14 Jun</div>
-</div>
-</div>
-<div className="w-2 border-t border-brand-obsidian"></div>
-<div className="flex-1 flex flex-col gap-2">
-<div className="h-1 bg-black/10"></div>
-<div className="text-[7px] font-mono text-black/60 text-center uppercase">CONFIRMED</div>
-</div>
-<div className="w-2 border-t border-brand-obsidian"></div>
-<div className="flex-1 flex flex-col gap-2">
-<div className="h-1 bg-black/10"></div>
-<div className="text-[7px] font-mono text-black/60 text-center uppercase">SHIPPED</div>
-</div>
-<div className="w-2 border-t border-brand-obsidian"></div>
-<div className="flex-1 flex flex-col gap-2">
-<div className="h-1 bg-black/10"></div>
-<div className="text-[7px] font-mono text-black/60 text-center uppercase">PAID</div>
-</div>
-</div>
-</div>
-
-<div className="p-6 pt-0 flex flex-col md:flex-row gap-4 mt-auto">
-<div className="flex-1 p-3 border border-brand-obsidian">
-<div className="text-[7px] font-mono text-black/60 uppercase mb-1">4 Active Deals</div>
-<div className="h-1 w-1/2 bg-black/20"></div>
-</div>
-<div className="flex-1 p-3 border border-brand-obsidian">
-<div className="text-[7px] font-mono text-black/60 uppercase mb-1">$1.2M Pipeline</div>
-<div className="h-1 w-2/3 bg-black/20"></div>
-</div>
-<div className="flex-1 p-3 border border-brand-obsidian">
-<div className="text-[7px] font-mono text-black/60 uppercase mb-1">2 Docs Pending</div>
-<div className="h-1 w-1/3 bg-brand-emerald/60"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</Reveal>
-</Parallax>
-</div>
-
-<div className="lg:col-span-5 flex flex-col justify-center">
-<div className="flex items-center gap-4 mb-6">
-<MonoLabel className="border border-brand-obsidian text-black text-[9px] font-mono font-bold px-3 py-1.5 tracking-widest uppercase">[ COMING SOON ]</MonoLabel>
-</div>
-<h2 className="text-headline font-serif font-semibold text-obsidian mb-6">Exvorta CRM.</h2>
-<p className="text-lg text-black/60 font-sans leading-relaxed mb-10">Manage every buyer and supplier relationship in one place. Deal pipelines, document history, follow-up reminders — built specifically for how traders actually work.</p>
-<Button className="w-max bg-transparent border border-brand-obsidian text-black px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-brand-obsidian hover:text-white transition-all flex items-center gap-3" href="/waitlist">
-                [ JOIN THE WAITLIST ]
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m5 8 4 4-4 4" /><path d="M12 17h7" /></svg>
-</Button>
-</div>
-</Container>
-</AnimatedSection>
-
-<AnimatedSection className="w-full bg-brand-obsidian py-32 md:py-48 px-4 sm:px-6 lg:px-8 border-b border-white/20" id="product-intel">
-<Container className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-
-<div className="lg:col-span-5 flex flex-col justify-center text-white">
-<div className="flex items-center gap-4 mb-6">
-<MonoLabel className="text-[10px] font-mono tracking-[0.2em] text-white/55 uppercase">[ MODULE 05 ]</MonoLabel>
-<div className="px-2.5 py-1 border border-white/20 flex items-center gap-2">
-<div className="w-1.5 h-1.5 bg-white/30"></div>
-<MonoLabel className="text-[9px] font-mono tracking-[0.2em] uppercase font-bold text-white/50">COMING SOON</MonoLabel>
-</div>
-</div>
-<h2 className="text-headline font-serif font-semibold text-white mb-6">Exvorta Intel.</h2>
-<p className="text-lg text-white/60 font-sans leading-relaxed mb-6">Intuition does not scale. Exvorta Intel processes millions of global trade data points into actionable, predictive commodity forecasting and supply chain risk analysis.</p>
-<p className="text-md text-white/55 font-sans leading-relaxed mb-10">Monitor macro-economic shifts, track competitor vessel routes, and analyze real-time pricing arbitrage across global ports—all from a single executive terminal.</p>
-<Button className="w-max bg-transparent border border-white text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono hover:bg-white hover:text-black transition-all flex items-center gap-3" href="/waitlist">
-                [ JOIN THE WAITLIST ]
-            </Button>
-</div>
-
-<div className="lg:col-span-7">
-<Parallax speed={24}>
-<Reveal y={36} duration={0.9}>
-<div className="relative w-full aspect-[4/3] bg-mockup-card border border-white/20 overflow-hidden flex flex-col shadow-[0_30px_80px_-30px_rgba(0,0,0,0.5)]">
-<div className="w-full h-10 border-b border-white/20 flex items-center justify-between px-4 bg-mockup-card">
-<div className="flex items-center gap-2">
-<div className="w-1.5 h-1.5 bg-brand-emerald animate-pulse"></div>
-<MonoLabel className="text-[8px] font-mono text-white/50 tracking-widest uppercase">[INTEL_ALPHA_ACCESS // LIVE NODE_03]</MonoLabel>
-</div>
-<div className="flex gap-1">
-<div className="w-2 h-2 bg-white/20"></div>
-<div className="w-2 h-2 bg-white/20"></div>
-</div>
-</div>
-
-<div className="relative flex-grow bg-mockup-card overflow-x-auto">
-
-<div className="relative z-10 p-6 h-full flex flex-col justify-between min-w-[600px]">
-
-<div className="h-1/2 relative border border-white/20 p-4 overflow-hidden">
-<div className="text-[8px] font-mono text-white/55 uppercase mb-4 tracking-tighter">PREDICTIVE NEURAL FORECAST // COMMODITY_AGGREGATE</div>
-<svg className="w-full h-32" preserveAspectRatio="none" viewBox="0 0 400 100">
-
-<path d="M0,80 C50,75 80,40 150,50 S250,20 300,30" fill="none" stroke="var(--color-brand-emerald)" strokeWidth="2"></path>
-
-<path d="M300,30 Q350,10 400,5" fill="none" stroke="var(--color-brand-emerald)" strokeDasharray="4 2" strokeWidth="1.5"></path>
-
-<path d="M300,30 Q350,45 400,55" fill="none" stroke="rgba(255,255,255,0.2)" strokeDasharray="4 2" strokeWidth="1"></path>
-</svg>
-<div className="absolute right-4 top-1/2 -translate-y-1/2 text-brand-emerald font-mono text-[10px] font-bold bg-mockup-card px-2 py-1 border border-white/20">+12.4% Est.</div>
-</div>
-
-<div className="flex gap-4 h-1/3 mt-4">
-
-<div className="w-1/3 border border-white/20 p-3 flex flex-col">
-<MonoLabel className="text-[7px] font-mono text-white/55 uppercase mb-2 tracking-widest">[ RISK CORRELATION MATRIX ]</MonoLabel>
-<div className="grid grid-cols-2 grid-rows-2 gap-1.5 flex-grow">
-<div className="bg-brand-emerald/20 border border-white/20 animate-pulse"></div>
-<div className="border border-white/20"></div>
-<div className="bg-red-500/20 border border-white/20"></div>
-<div className="bg-brand-emerald/10 border border-white/20 animate-pulse [animation-delay:1s]"></div>
-</div>
-</div>
-
-<div className="flex-1 grid grid-cols-3 gap-3">
-<div className="border border-white/20 p-2.5 flex flex-col justify-between">
-<div className="flex justify-between items-start">
-<MonoLabel className="text-[7px] font-mono text-white/55 uppercase">CRUDE</MonoLabel>
-<span className="text-brand-emerald font-mono text-[10px] font-bold">+2.4%</span>
-</div>
-<svg className="h-4 w-full opacity-60" viewBox="0 0 60 20"><path d="M0,15 L10,12 L20,16 L30,5 L40,10 L50,2 L60,8" fill="none" stroke="var(--color-brand-emerald)" strokeWidth="1"></path></svg>
-</div>
-<div className="border border-white/20 p-2.5 flex flex-col justify-between">
-<div className="flex justify-between items-start">
-<MonoLabel className="text-[7px] font-mono text-white/55 uppercase">COPPER</MonoLabel>
-<span className="text-red-400 font-mono text-[10px] font-bold">-0.8%</span>
-</div>
-<svg className="h-4 w-full opacity-60" viewBox="0 0 60 20"><path d="M0,5 L10,8 L20,4 L30,12 L40,8 L50,18 L60,15" fill="none" stroke="#f87171" strokeWidth="1"></path></svg>
-</div>
-<div className="border border-white/20 p-2.5 flex flex-col justify-between">
-<div className="flex justify-between items-start">
-<MonoLabel className="text-[7px] font-mono text-white/55 uppercase">LNG</MonoLabel>
-<span className="text-brand-emerald font-mono text-[10px] font-bold">+1.1%</span>
-</div>
-<svg className="h-4 w-full opacity-60" viewBox="0 0 60 20"><path d="M0,10 L10,15 L20,12 L30,8 L40,14 L50,5 L60,3" fill="none" stroke="var(--color-brand-emerald)" strokeWidth="1"></path></svg>
-</div>
-</div>
-</div>
-
-<div className="absolute bottom-2 right-4 flex gap-4 pointer-events-none">
-<MonoLabel className="text-[6px] font-mono text-white/55 uppercase">[AI MODEL: ACTIVE // LATENCY &lt;5MS]</MonoLabel>
-<MonoLabel className="text-[6px] font-mono text-white/55 uppercase animate-pulse">[SIGNAL_ACQUISITION_PULSE]</MonoLabel>
-</div>
-</div>
-</div></div>
-</Reveal>
-</Parallax>
-</div>
-</Container>
-</AnimatedSection>
-
-<AnimatedSection className="w-full bg-brand-obsidian py-48 md:py-64 px-4 sm:px-6 lg:px-8 relative overflow-hidden flex flex-col items-center justify-center text-center border-b border-white/20" id="ecosystem-vision">
-
-<div className="relative z-10 flex flex-col items-center mb-10">
-<div className="px-3 py-1 border border-white/20 flex items-center gap-2">
-<div className="w-1.5 h-1.5 bg-white/40 animate-pulse"></div>
-<MonoLabel className="text-[9px] font-mono tracking-[0.3em] uppercase font-bold text-white/60">{vision.badge}</MonoLabel>
-</div>
-</div>
-
-<StaggerText
-  as="h2"
-  text={`${vision.title} <br/> <span class="text-white/40">${vision.subtitle}</span>`}
-  unit="chars"
-  stagger={0.024}
-  duration={0.8}
-  mode="inView"
-  className="relative z-10 text-4xl sm:text-5xl md:text-[5.5rem] lg:text-[7rem] font-serif font-bold text-white leading-[1.0] tracking-tight mb-8"
-/>
-
-<p className="relative z-10 max-w-3xl mx-auto text-lg md:text-xl text-white/50 leading-relaxed font-sans mb-16">
-        {vision.description}
-    </p>
-
-<div className="relative z-10 flex flex-wrap justify-center items-center gap-2 sm:gap-4 text-[8px] font-mono tracking-widest text-white/55 uppercase">
-<span className="">WEB</span> <span className="w-2 sm:w-4 h-[1px] bg-white/20"></span>
-<span className="">DOCS</span> <span className="w-2 sm:w-4 h-[1px] bg-white/20"></span>
-<span className="">TRACK</span> <span className="w-2 sm:w-4 h-[1px] bg-white/20"></span>
-<span className="">CRM</span> <span className="w-2 sm:w-4 h-[1px] bg-white/20"></span>
-<span className="">INTEL</span>
-</div>
-</AnimatedSection>
-
-<AnimatedSection className="w-full bg-brand-cream py-32 md:py-48 px-4 sm:px-6 lg:px-8 border-b border-brand-obsidian" id="ecosystem-roadmap"><Container className="max-w-4xl mx-auto w-full flex flex-col"><MonoLabel className="text-[10px] font-mono tracking-[0.2em] text-black/40 uppercase mb-6 block">{roadmap.eyebrow}</MonoLabel><h2 className="text-headline font-serif font-semibold text-obsidian mb-20">{roadmap.title}</h2><div className="relative border-l border-brand-obsidian/20 ml-3 md:ml-4 flex flex-col gap-16 md:gap-24">
-<m.div aria-hidden initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 1.8, delay: 0.3, ease: EASE_OUT }} style={{ transformOrigin: 'top' }} className="absolute -left-px top-0 bottom-0 w-px bg-brand-obsidian pointer-events-none"></m.div><Reveal y={18} delay={0.12}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-brand-obsidian border border-brand-cream"></div><MonoLabel className="text-[10px] tracking-widest text-brand-obsidian uppercase mb-2">PHASE 0 // ACTIVE</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">Exvorta Web</h3><p className="text-black/60 font-sans leading-relaxed">Foundation established. Deploying hardcoded, high-velocity digital architectures for tier-one trade entities globally.</p></div></Reveal><Reveal y={18} delay={0.24}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-brand-obsidian border border-brand-cream"></div><MonoLabel className="text-[10px] tracking-widest text-brand-obsidian uppercase mb-2">PHASE 1 // Q3 2026</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">Docs &amp; Track Modules</h3><p className="text-black/60 font-sans leading-relaxed">Releasing the zero-trust document data room (Docs) and the real-time supply chain visibility dashboard (Track) to our existing infrastructure partners.</p></div></Reveal><Reveal y={18} delay={0.36}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-transparent border border-brand-obsidian"></div><MonoLabel className="text-[10px] tracking-widest text-black/60 uppercase mb-2">PHASE 2 // Q1 2027</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">Exvorta CRM</h3><p className="text-black/60 font-sans leading-relaxed">Rolling out the first relationship architecture engineered explicitly for international trade desks, integrating KYC and broker networks.</p></div></Reveal><Reveal y={18} delay={0.48}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-transparent border border-brand-obsidian"></div><MonoLabel className="text-[10px] tracking-widest text-black/60 uppercase mb-2">PHASE 3 // Q3 2027</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">Exvorta Intel</h3><p className="text-black/60 font-sans leading-relaxed">Deploying the institutional-grade market intelligence terminal for predictive commodity forecasting and risk correlation.</p></div></Reveal><Reveal y={18} delay={0.6}><div className="relative pl-8 md:pl-12"><div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-transparent border border-brand-obsidian"></div><MonoLabel className="text-[10px] tracking-widest text-black/60 uppercase mb-2">PHASE 4 // 2028</MonoLabel><h3 className="text-2xl font-serif text-black mb-3">The Exvorta Suite</h3><p className="text-black/60 font-sans leading-relaxed">Complete modular synthesis. All individual products seamlessly converge into the unified global trade operating system.</p></div></Reveal></div></Container></AnimatedSection>
-
-<AnimatedSection className="on-dark isolate w-full bg-brand-obsidian py-40 px-4 sm:px-6 lg:px-8 border-b border-white/20 flex flex-col items-center text-center relative overflow-hidden" id="ecosystem-cta">
-<div aria-hidden className="pointer-events-none absolute inset-0 -z-10"><div className="bg-aura-dark absolute inset-0 opacity-70"></div><div className="bg-blueprint-grid-dark absolute inset-0"></div></div>
-
-<MonoLabel className="eyebrow eyebrow-dark mb-8 relative z-10">{cta.eyebrow}</MonoLabel>
-
-<StaggerText
-  as="h2"
-  text={`${cta.title} <br/> <span class="text-white/50">${cta.subtitle}</span>`}
-  unit="words"
-  stagger={0.08}
-  duration={0.75}
-  mode="inView"
-  className="text-headline font-serif font-semibold text-white mb-8 max-w-4xl relative z-10"
-/>
-
-<p className="text-lede font-light text-muted-dark max-w-3xl mb-16 relative z-10">
-        {cta.description}
-    </p>
-
-<div className="flex flex-col sm:flex-row items-center justify-center gap-6 relative z-10 w-full sm:w-auto">
-
-<Button className="min-h-[52px] w-full px-10 py-4 sm:w-auto" href="/rfq">
-            [ UPGRADE WEB ARCHITECTURE ]
-        </Button>
-
-<Button variant="ghost" className="min-h-[52px] w-full px-10 py-4 sm:w-auto" href="/portfolio">
-            [ SEE THE LIVE PROOF ]
-        </Button>
-
-<Button variant="ghost" className="min-h-[52px] w-full px-10 py-4 sm:w-auto" href="/waitlist">
-            [ JOIN SOFTWARE WAITLIST ]
-        </Button>
-</div>
-
-<MonoLabel className="text-[9px] font-mono tracking-[0.2em] text-white/55 uppercase mt-12 block relative z-10">
-        * Web proposals are subject to capacity constraints.
-    </MonoLabel>
-</AnimatedSection>
-
-      </div>
-    </>
-  );
+        description={cta.description}
+        primary={{ label: cta.primaryCtaText || '[ UPGRADE WEB ARCHITECTURE ]', href: '/rfq' }}
+        secondary={{ label: '[ SEE THE LIVE PROOF ]', href: '/portfolio' }}
+        footnote={cta.disclaimer || undefined}
+      />
+    </div>
+  )
 }
 
-export default EcosystemBlock;
+export default EcosystemBlock

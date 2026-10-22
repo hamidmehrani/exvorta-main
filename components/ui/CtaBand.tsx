@@ -78,12 +78,12 @@ export function CtaBand({
             <Reveal delay={0.3} y={14}>
               <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 {primary && (
-                  <Link href={primary.href} className="btn-primary min-h-[52px] px-10 py-4">
+                  <Link href={primary.href} className="btn-primary min-h-[52px] w-full px-6 py-4 sm:w-auto sm:px-10">
                     {primary.label}
                   </Link>
                 )}
                 {secondary && (
-                  <Link href={secondary.href} className="btn-ghost min-h-[52px] px-10 py-4">
+                  <Link href={secondary.href} className="btn-ghost min-h-[52px] w-full px-6 py-4 sm:w-auto sm:px-10">
                     {secondary.label}
                   </Link>
                 )}
@@ -92,7 +92,7 @@ export function CtaBand({
           )}
 
           {footnote && (
-            <p className={`eyebrow mt-10 justify-center ${dark ? 'eyebrow-dark' : ''}`}>{footnote}</p>
+            <p className={`eyebrow mt-10 justify-center !leading-relaxed ${dark ? 'eyebrow-dark' : ''}`}>{footnote}</p>
           )}
         </div>
       </div>

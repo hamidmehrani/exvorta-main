@@ -18,6 +18,8 @@ export default async function PortfolioArchivePage() {
       collection: 'projects',
       limit: 10,
       depth: 1,
+      // Oldest first — same order as the homepage "Proof of Execution" row.
+      sort: 'createdAt',
     });
     projects = result.docs as unknown as Project[];
   } catch (error) {

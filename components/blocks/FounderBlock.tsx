@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import { AnimatedSection, Reveal } from '@/components/ui/Reveal'
 import { StaggerText } from '@/components/ui/motion'
 import { CMSImage } from '@/components/ui/CMSImage'
@@ -23,8 +22,13 @@ export const FounderBlock: React.FC<FounderBlockProps> = (props) => {
   const bio = props.bio || "Based in Dubai. Background in digital engineering and international trade operations. Founded Exvorta to bridge the credibility gap facing global trading firms."
   const role = props.role || "PRINCIPAL ARCHITECT, EXVORTA"
 
-  // Default image URL from HTML if not provided from CMS
-  const defaultImageUrl = "/founder-portrait.png"
+  const initials = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join('')
+
   const hasCMSImage = props.image && typeof props.image === 'object' && props.image.url
   // Legacy rows: imageSrc as a plain URL string (pre-upload field)
   const legacyImageUrl = !hasCMSImage && typeof props.imageSrc === 'string' && props.imageSrc.trim() !== '' && props.imageSrc !== '#'
@@ -44,7 +48,7 @@ export const FounderBlock: React.FC<FounderBlockProps> = (props) => {
         <div className="mt-16 grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-5 lg:gap-16">
           {/* Left Column: Editorial Quote & Signature */}
           <div className="flex flex-col lg:col-span-3">
-            <span aria-hidden className="mb-4 block font-serif text-8xl font-semibold leading-none text-emerald">“</span>
+            <span aria-hidden className="mb-4 block font-serif text-display font-semibold leading-none text-emerald">“</span>
             <blockquote>
               <StaggerText
                 as="p"
@@ -58,7 +62,7 @@ export const FounderBlock: React.FC<FounderBlockProps> = (props) => {
             </blockquote>
 
             <div className="border-t border-rule pt-8">
-              <div className="mb-3 font-serif text-3xl font-semibold text-obsidian">{name}</div>
+              <div className="mb-3 font-serif text-title font-semibold text-obsidian">{name}</div>
               <p className="mb-5 max-w-md text-base font-light leading-relaxed text-muted">{bio}</p>
               <p className="eyebrow !text-obsidian">{role}</p>
             </div>
@@ -77,14 +81,28 @@ export const FounderBlock: React.FC<FounderBlockProps> = (props) => {
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img src={legacyImageUrl} alt={`${name}, ${role}`} className="h-full w-full rounded-none object-cover contrast-125 grayscale" />
                 ) : (
-                  <div className="relative h-full w-full">
-                    <Image
-                      alt={`${name}, ${role}`}
-                      src={defaultImageUrl}
-                      fill
-                      sizes="(min-width: 1024px) 40vw, 100vw"
-                      className="rounded-none object-cover contrast-125 grayscale"
-                    />
+                  /* No portrait uploaded yet: an on-brand monogram plate, never a
+                     stock placeholder. Upload a portrait in the CMS to replace it. */
+                  <div className="on-dark relative flex h-full w-full flex-col justify-between overflow-hidden p-8 text-white md:p-10">
+                    <div aria-hidden className="bg-aura-dark absolute inset-0" />
+                    <div aria-hidden className="bg-blueprint-grid-dark absolute inset-0" />
+                    <p className="eyebrow eyebrow-dark relative">
+                      <span className="eyebrow-index" aria-hidden>
+                        <i className="block h-1.5 w-1.5 rotate-45 bg-current" />
+                      </span>
+                      Dubai
+                    </p>
+                    <div
+                      aria-hidden
+                      className="relative flex h-44 w-44 select-none items-center justify-center self-center rounded-full border border-rule-dark bg-white/[0.03] md:h-52 md:w-52"
+                    >
+                      <span className="absolute inset-3 rounded-full border border-rule-dark" />
+                      <span className="font-serif text-display font-semibold text-white">{initials}</span>
+                    </div>
+                    <div className="relative border-t border-rule-dark pt-5">
+                      <p className="font-serif text-title font-semibold">{name}</p>
+                      <p className="eyebrow eyebrow-dark mt-3">{role}</p>
+                    </div>
                   </div>
                 )}
               </div>

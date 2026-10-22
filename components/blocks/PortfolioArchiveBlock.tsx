@@ -8,6 +8,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { CtaBand } from '@/components/ui/CtaBand'
 import { StaggerText } from '@/components/ui/motion'
 import { unbracket } from '@/lib/text'
+import { getCaseStudy } from '@/components/blocks/case-study-data'
 
 // ── Strict Type Definitions ───────────────────────────────────────────────────
 
@@ -91,10 +92,24 @@ function extractMediaUrl(media?: number | Media | null, fallbackSlug?: string): 
   return '';
 }
 
+/**
+ * A project's ledger value: the CMS metric when filled in, else the authoritative
+ * case-study teardown, else a neutral default — so cards never read "Various".
+ */
+function projectMetric(project: Project, labels: string[], fallback: string): string {
+  const wanted = labels.map((l) => l.toLowerCase());
+  const fromCms = project.metrics?.find((m) => wanted.includes(m.label.toLowerCase()))?.value;
+  if (fromCms) return fromCms;
+  const fromCaseStudy = project.slug
+    ? getCaseStudy(project.slug)?.metrics.find((m) => wanted.includes(m.label.toLowerCase()))?.value
+    : undefined;
+  return fromCaseStudy || fallback;
+}
+
 /** Shared card shell: hairline surface, lifts on hover, content below the browser frame. */
 function CardBody({ title, as: Heading = 'h3', children }: { title: string; as?: 'h2' | 'h3'; children: React.ReactNode }) {
   return (
-    <div className="flex flex-grow flex-col p-7">
+    <div className="flex flex-grow flex-col p-6 md:p-7">
       <Heading className="mb-3 font-serif text-3xl font-semibold leading-tight text-obsidian">{title}</Heading>
       {children}
     </div>
@@ -151,8 +166,8 @@ function HomepagePortfolioSection({
                     {project.description && (
                       <p className="mb-8 flex-grow text-base font-light leading-relaxed text-muted">{project.description}</p>
                     )}
-                    <div className="mt-auto flex flex-wrap items-center gap-2.5">
-                      <Link href={csUrl} className="btn-ghost px-5 py-3.5">
+                    <div className="mt-auto flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
+                      <Link href={csUrl} className="btn-ghost w-full px-5 py-3.5 sm:w-auto">
                         {(project.linkLabel || 'VIEW CASE STUDY').replace(/\s*[↗→]\s*$/, '')} ↗
                       </Link>
                       {liveHref && (
@@ -161,7 +176,7 @@ function HomepagePortfolioSection({
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`Open ${project.title} live website`}
-                          className="btn-mono gap-2 px-4 py-3.5"
+                          className="btn-mono w-full gap-2 px-4 py-3.5 sm:w-auto"
                         >
                           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald" aria-hidden />
                           Live site
@@ -223,11 +238,14 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
           {hasProjects ? (
             <StaggerContainer className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" staggerChildren={0.14} delayChildren={0.1}>
               {projects?.map((project, index) => {
-                const industry = project.metrics?.find((m) => m.label.toLowerCase() === 'industry')?.value || 'Various';
-                const stack = project.metrics?.find((m) => m.label.toLowerCase() === 'tech stack' || m.label.toLowerCase() === 'stack')?.value || 'Next.js';
+                const industry = projectMetric(project, ['industry'], 'Global trade');
+                const stack = projectMetric(project, ['tech stack', 'stack'], 'Next.js');
                 // Type narrowing for dynamic Payload CMS fields if any
                 const projAny = project as unknown as Record<string, unknown>;
-                const excerpt = typeof projAny.excerpt === 'string' ? projAny.excerpt : 'Premium web design and CMS platform.';
+                const excerpt =
+                  (typeof projAny.excerpt === 'string' && projAny.excerpt.trim()) ||
+                  (project.slug && getCaseStudy(project.slug)?.tagline) ||
+                  'Premium web design and CMS platform.';
 
                 return (
                   <StaggerItem key={project.id || index} className="h-full" y={28}>
@@ -254,8 +272,8 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
                           </div>
                         </dl>
 
-                        <div className="mt-auto self-start">
-                          <Link href={`/portfolio/${project.slug}`} className="btn-ghost px-6 py-3.5">
+                        <div className="mt-auto">
+                          <Link href={`/portfolio/${project.slug}`} className="btn-ghost w-full px-6 py-3.5 sm:w-auto">
                             READ CASE STUDY ↗
                           </Link>
                         </div>

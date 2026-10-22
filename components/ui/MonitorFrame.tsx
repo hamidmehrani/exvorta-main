@@ -22,22 +22,23 @@ export function MonitorFrame({ url, title, poster, className = '' }: MonitorFram
   return (
     <div className={`select-none ${className}`}>
       {/* Caption strip — above the frame, like a drawing index */}
-      <div className="flex items-center justify-between border-b border-black/15 pb-3 mb-6">
-        <span className="font-mono text-[9px] tracking-[0.3em] text-black/40 uppercase">
-          FIG. 01 — {title}
-        </span>
+      <div className="mb-6 flex items-center justify-between border-b border-rule-strong pb-3">
+        <span className="eyebrow">FIG. 01 — {title}</span>
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="group/visit inline-flex items-center gap-1.5 font-mono text-[9px] tracking-[0.25em] text-black/40 uppercase hover:text-black transition-colors"
+          className="eyebrow group/visit transition-colors hover:text-obsidian"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden />
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald" aria-hidden />
           LIVE ↗
         </a>
       </div>
 
-      <BrowserFrame title={title} url={url} imageUrl={poster} tone="light" />
+      {/* Crosshairs sit on the frame itself, clear of the caption strip. */}
+      <div className="frame">
+        <BrowserFrame title={title} url={url} imageUrl={poster} tone="light" />
+      </div>
     </div>
   )
 }

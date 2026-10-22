@@ -171,3 +171,37 @@ Cream → white (`bg-surface`, tonal layer) → obsidian. A page should never ha
 Hero: visible grid + rails, survey strip (Dubai coordinates), dual CTA, stat ledger, crosshair-framed OS panel that
 peeks above the fold. Reach strip below. Manifesto as a ledger. Closing statement is a framed `CtaBand`.
 Footer: bordered link ledger and the cropped `text-mega` wordmark.
+
+## Design pass v3 — 2026-10-22 (consistency + responsive polish)
+
+Same brief as v2 ("perfect the design"): the brand language is untouched; this pass removed the last off-system pages
+and fixed real defects found in a desktop + mobile review of every public route.
+
+### New tokens / primitives (`app/globals.css`)
+
+| Token | Use |
+|---|---|
+| `text-micro` (9px mono, 0.14em) | Decorative product mock-ups only (dashboards, tickers, paper documents). Real UI copy never goes below `text-label`. |
+| `accent`, `accent-ink`, `accent-lift` colours | Runtime-themable per-project accent (`--case-accent*` set on the page root). `accent` = fills/rules/buttons, `accent-ink` = small text on light, `accent-lift` = small text/numerals on obsidian. Fall back to emerald/success. |
+| `--eyebrow-accent` / `--eyebrow-accent-dark` | Recolours the `.eyebrow-index` chip inside a themed section. |
+| `shadow-deep` | Framed product viewport on obsidian. |
+| `.hairline` | `<Hairline>` had no CSS (0px high → every divider using it was invisible). Now a 1px `rule` line. |
+
+### Pages brought onto the system
+
+- **Case studies** (`ProjectThemedLayout`): server component, index-chip eyebrows, `frame` ledgers, per-project identity
+  (nutave gold, spicevo rust, stonvi slate). A known case study ignores CMS colours that still equal the Payload
+  collection defaults (`#059669` / `#FAFAF8`), otherwise every project rendered emerald. The hero frame prefers the
+  bundled `/portfolio-<slug>.webp` capture (`capture` in `case-study-data.ts`) over Cloudinary.
+- **Ecosystem** (`EcosystemBlock`): server component; one `MockWindow` chrome for the five product mock-ups, fluid
+  (no `min-w` + horizontal scroll), a single module eyebrow/badge pattern, diamond-node roadmap, `CtaBand` close.
+- **Legal**: hero/strip/body on tokens, sticky in-page index on desktop, readable 2xl measure.
+- **Document Engine** (home): stacks on mobile (template tabs → paper → action); desktop layout unchanged.
+
+### Rules this pass enforced
+
+- Cards that contain a `BrowserFrame` use `bare` so the frame never draws a second, differently-toned border.
+- The URL pill in `BrowserFrame` never truncates the host: the live dot and the word "Open" drop out on narrow screens.
+- Never render an empty placeholder in a "proof" surface: `PortfolioShowcaseBlock` falls back to the flagship case study.
+- `FounderBlock` without a CMS portrait renders an on-brand monogram plate, never a stock placeholder image.
+- Primary/ghost CTAs inside bands and cards are `w-full sm:w-auto` so labels never wrap to an orphaned `]`.

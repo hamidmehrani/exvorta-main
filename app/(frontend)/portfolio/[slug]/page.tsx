@@ -11,6 +11,12 @@ import { generateMeta } from '@/utils/generateMeta';
 // window below is the safety net.
 export const revalidate = 300;
 
+const FALLBACK_TITLES: Record<string, string> = {
+  spicevo: 'Spicevo',
+  nutave: 'Nutave',
+  stonvi: 'Stonvi',
+};
+
 type Props = {
   params: Promise<{ slug: string }>;
 };
@@ -80,15 +86,13 @@ export default async function ProjectSinglePage({ params }: Props) {
   }
 
   if (!project) {
-    if (resolvedParams.slug === 'spicevo') {
-      project = { id: '1', title: 'Spicevo', slug: 'spicevo', heroBgColor: '#FAFAF8', accentColor: '#059669', excerpt: 'Organic Herbs & Spices Exporter.', metrics: [{label: 'Industry', value: 'Agriculture'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project;
-    } else if (resolvedParams.slug === 'nutave') {
-      project = { id: '2', title: 'Nutave', slug: 'nutave', heroBgColor: '#3B2314', accentColor: '#C8922A', excerpt: 'Premium Dried Fruits & Nuts Exporter.', metrics: [{label: 'Industry', value: 'Agriculture'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project;
-    } else if (resolvedParams.slug === 'stonvi') {
-      project = { id: '3', title: 'Stonvi', slug: 'stonvi', heroBgColor: '#F4F6F7', accentColor: '#2C3E50', excerpt: 'Ceramic & Building Materials Exporter.', metrics: [{label: 'Industry', value: 'Construction'}, {label: 'Stack', value: 'Next.js'}] } as unknown as Project;
-    } else {
+    // DB unavailable or project not yet created: the case-study data in
+    // `case-study-data.ts` is authoritative, so the fallback carries identity only.
+    const fallbackTitle = FALLBACK_TITLES[resolvedParams.slug];
+    if (!fallbackTitle) {
       notFound();
     }
+    project = { id: 0, title: fallbackTitle, slug: resolvedParams.slug } as unknown as Project;
   }
 
   let breadcrumbsHtml = '';

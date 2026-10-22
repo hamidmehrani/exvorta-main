@@ -79,7 +79,7 @@ export const VisionBlock: React.FC<VisionBlockProps> = (props) => {
                   <span className="eyebrow-index">{num}</span>
                   {p.category}
                 </p>
-                <h3 className="mb-4 font-serif text-3xl font-semibold leading-tight text-white">{p.title}</h3>
+                <h3 className="mb-4 font-serif text-title font-semibold text-white">{p.title}</h3>
                 <p className="text-base font-light leading-relaxed text-muted-dark">{p.description}</p>
               </StaggerItem>
             )

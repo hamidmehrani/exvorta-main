@@ -21,7 +21,7 @@ export default async function EcosystemPage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col w-full bg-brand-cream">
+    <div className="flex-1 flex flex-col w-full bg-cream">
       {/* Block falls back to design-spec content when data is null */}
       <EcosystemBlock data={ecosystemData ?? undefined} />
     </div>

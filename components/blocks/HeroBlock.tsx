@@ -66,11 +66,9 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
           <div className="bg-blueprint-grid absolute inset-0" />
         </div>
         {/* Status Pill */}
-        <div style={rise(0)} className="rise relative z-10 mb-10 flex items-center gap-2 rounded-full border border-rule-strong bg-surface/70 px-4 py-1.5">
-          <span className="inline-flex h-1.5 w-1.5 bg-emerald" />
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted">
-            {props.eyebrow || '[ EXVORTA WEB ]'}
-          </span>
+        <div style={rise(0)} className="rise relative z-10 mb-10 inline-flex items-center justify-center rounded-full border border-rule-strong bg-surface/70 px-3.5 py-1.5 font-mono text-label uppercase text-muted">
+          <span className="me-2.5 h-1.5 w-1.5 animate-pulse rounded-full bg-emerald" aria-hidden />
+          [ {unbracket(props.eyebrow) || 'EXVORTA WEB'} ]
         </div>
 
         {/* Monumental Headline */}
@@ -136,7 +134,8 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
           </span>
         </div>
 
-        <div className="relative mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
+        {/* Same 24px mobile gutter as .container-site so the hero lines up with every section below it. */}
+        <div className="relative mx-auto max-w-[1400px] px-6 lg:px-8">
           {/* Hero Content */}
           <div className="mx-auto mb-14 max-w-4xl text-center md:mb-16">
             <div style={rise(0)} className="rise mb-8 inline-flex items-center justify-center rounded-full border border-rule-strong bg-surface/70 px-3.5 py-1.5 font-mono text-label uppercase text-muted">
@@ -179,7 +178,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
                   key={item.label}
                   className="flex items-baseline justify-center gap-3 border-b border-rule px-4 py-4 last:border-b-0 sm:flex-col sm:items-center sm:gap-1.5 sm:border-b-0 sm:border-e sm:last:border-e-0"
                 >
-                  <span className="font-serif text-3xl font-semibold leading-none text-obsidian">{item.value}</span>
+                  <span className="font-serif text-title font-semibold leading-none text-obsidian">{item.value}</span>
                   <span className="eyebrow">{item.label}</span>
                 </li>
               ))}

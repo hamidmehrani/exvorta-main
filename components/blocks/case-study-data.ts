@@ -15,6 +15,8 @@ export interface CaseStudyData {
   excerpt: string
   heroBg: string
   accent: string
+  /** Hero capture. Preferred over `heroImage`: bundled in /public, so no remote fetch. */
+  capture?: string
   heroImage?: string
   stats: { label: string; value: string }[]
   certifications: string[]
@@ -41,6 +43,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
       'Direct access to 12 premium manufacturing partners across the Turkish ceramic cluster. Complete technical compliance, zero-defect execution, and direct factory-to-project logistics.',
     heroBg: '#F4F6F7',
     accent: '#2C3E50',
+    capture: '/portfolio-stonvi.webp',
     heroImage:
       'https://res.cloudinary.com/dqafwzu5l/image/upload/f_auto,q_auto,w_1600/v1785398954/stonvi/high_end_brutalist_architecture_large_scale_textured_concrete_slabs_and_glass.webp',
     stats: [
@@ -81,6 +84,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
       'Spicevo exports 480+ metric tons of certified organic herbs and spices annually to 28 countries. EU Organic, USDA NOP, and ISO 22000 certified. Full traceability from farm to freight.',
     heroBg: '#E8DDD0',
     accent: '#8B3A0F',
+    capture: '/portfolio-spicevo.webp',
     heroImage:
       'https://res.cloudinary.com/dqafwzu5l/image/upload/c_fill,g_auto,f_auto,q_auto,w_1600/spicevo/hero_oregano_flatlay_1784630117441.jpg',
     stats: [
@@ -121,6 +125,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
       'Nutave exports 650+ metric tons of premium-grade dried fruits and nuts annually. BRC Grade A, ISO 22000, Halal, and Kosher certified. Trusted by retailers and food manufacturers in 40+ countries.',
     heroBg: '#FAF7F2',
     accent: '#C8922A',
+    capture: '/portfolio-nutave.webp',
     heroImage:
       'https://res.cloudinary.com/dqafwzu5l/image/upload/f_auto,q_auto,w_1600/v1785402989/nutave/jid6s2ca2lfjgbqgqv8n.webp',
     stats: [

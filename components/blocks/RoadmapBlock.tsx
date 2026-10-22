@@ -85,7 +85,7 @@ export function RoadmapBlock(props: any) {
                         ))}
                       </span>
                     </div>
-                    <h3 className="mb-4 font-serif text-2xl font-semibold text-white">{phase.name}</h3>
+                    <h3 className="mb-4 font-serif text-title font-semibold text-white">{phase.name}</h3>
                     <p className="mb-8 text-base font-light leading-relaxed text-muted-dark">{phase.description}</p>
                     <Link
                       href="/waitlist"
@@ -100,17 +100,23 @@ export function RoadmapBlock(props: any) {
 
               {/* The vision: suite */}
               <Reveal y={16}>
-                <div className="relative flex flex-col items-center gap-12 overflow-hidden border-t border-rule-dark p-8 md:flex-row md:p-14">
+                <div className="relative flex flex-col items-center gap-12 overflow-hidden border-t border-rule-dark p-6 sm:p-8 md:flex-row md:p-14">
                   <div aria-hidden className="bg-aura-dark pointer-events-none absolute inset-0 opacity-60" />
                   <div className="relative w-full md:w-2/3">
-                    <p className="eyebrow eyebrow-dark mb-6">[ THE VISION ]</p>
+                    <p className="eyebrow eyebrow-dark mb-6">
+                      <span className="eyebrow-index" aria-hidden>
+                        <i className="block h-1.5 w-1.5 rotate-45 bg-current" />
+                      </span>
+                      The vision
+                    </p>
                     <h3 className="mb-6 font-serif text-title font-semibold text-white">Exvorta Suite</h3>
                     <p className="max-w-xl text-lede font-light text-muted-dark">
                       The ultimate convergence. A singular, unified digital infrastructure seamlessly integrating your web presence, automated compliance, logistics, and intelligence into one trade OS.
                     </p>
                     <div className="mt-10">
-                      <Link href="/waitlist" className="btn-primary min-h-[52px] px-8 py-4">
-                        [ JOIN THE SUITE WAITLIST ] →
+                      {/* Full width on phones with the arrow dropped, so the label never wraps to an orphaned "] →". */}
+                      <Link href="/waitlist" className="btn-primary min-h-[52px] w-full px-4 py-4 sm:w-auto sm:px-8">
+                        [ JOIN THE SUITE WAITLIST ]<span aria-hidden className="hidden sm:inline">→</span>
                       </Link>
                     </div>
                   </div>

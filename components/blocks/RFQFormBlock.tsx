@@ -74,7 +74,9 @@ export const RFQFormBlock: React.FC<RFQFormBlockType> = (props) => {
               <div className="mt-14 grid grid-cols-1 gap-6 border-t border-rule pt-8 sm:grid-cols-3">
                 {GUARANTEES.map(([t, d]) => (
                   <div key={t} className="flex flex-col gap-2">
-                    <span className="flex items-center gap-2 font-mono text-label font-medium uppercase text-emerald">
+                    {/* Wide label tracking wrapped "YOUR DATA STAYS YOURS" onto two lines and
+                        pushed its copy out of line with the other columns. */}
+                    <span className="flex items-center gap-2 whitespace-nowrap font-mono text-label font-medium uppercase tracking-widest text-emerald">
                       <svg className="h-3 w-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 13l4 4L19 7" /></svg>
                       {t}
                     </span>

@@ -4,6 +4,7 @@ import { AnimatedSection, Reveal } from '@/components/ui/Reveal'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import MonitorFrame from '@/components/ui/MonitorFrame'
 import { unbracket } from '@/lib/text'
+import { getCaseStudy } from '@/components/blocks/case-study-data'
 
 export interface PortfolioShowcaseBlockProps {
   label?: string
@@ -27,6 +28,10 @@ export const PortfolioShowcaseBlock: React.FC<PortfolioShowcaseBlockProps> = (pr
   const firstProject = props.projects && props.projects.length > 0 ? props.projects[0] : null
   // We handle whether projects are populated (objects) or just IDs (strings)
   const projectData = firstProject && typeof firstProject === 'object' ? firstProject : null
+  const slug: string = projectData?.slug || 'nutave'
+  const caseStudy = getCaseStudy(slug)
+  const featuredImage: string | undefined =
+    projectData && typeof projectData.featuredImage === 'object' ? projectData.featuredImage?.url : undefined
 
   return (
     <AnimatedSection className="w-full border-b border-rule bg-surface py-24 md:py-32">
@@ -42,26 +47,14 @@ export const PortfolioShowcaseBlock: React.FC<PortfolioShowcaseBlockProps> = (pr
             </Reveal>
           </div>
 
-          {/* Right Column — professional monitor running the live site */}
+          {/* Right Column — the work itself: a CMS-picked project, else the flagship case study.
+              Never an empty placeholder — a "proof" section must always show proof. */}
           <div className="md:col-span-7">
-            {projectData ? (
-              <MonitorFrame
-                url={projectData.liveUrl || (projectData.slug ? `https://${projectData.slug}.exvorta.com` : 'https://spicevo.exvorta.com')}
-                title={projectData.title || 'Portfolio Project'}
-                poster={
-                  typeof projectData.featuredImage === 'object'
-                    ? projectData.featuredImage?.url
-                    : undefined
-                }
-              />
-            ) : (
-              <div className="on-dark frame flex aspect-[16/10] w-full flex-col items-center justify-center gap-3 border border-rule-strong bg-obsidian">
-                <div className="flex h-10 w-14 items-center justify-center rounded-[2px] border border-rule-dark">
-                  <div className="h-5 w-7 rounded-[1px] border border-white/20" />
-                </div>
-                <span className="eyebrow eyebrow-dark">[ DEPLOYMENT PREVIEW — {title} ]</span>
-              </div>
-            )}
+            <MonitorFrame
+              url={projectData?.liveUrl || caseStudy?.url || `https://${slug}.exvorta.com`}
+              title={projectData?.title || caseStudy?.title || 'Portfolio Project'}
+              poster={featuredImage || caseStudy?.capture}
+            />
           </div>
         </div>
       </div>

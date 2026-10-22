@@ -36,18 +36,20 @@ export default function ContactForm() {
   }, [state.success])
 
   return (
-    <form ref={formRef} action={formAction} className="flex w-full max-w-lg flex-col gap-6 text-start">
+    <form ref={formRef} action={formAction} className="flex w-full flex-col gap-6 text-start">
       {/* Invisible Honeypot Field */}
       <input type="text" name="bot-field" className="hidden" tabIndex={-1} autoComplete="off" />
 
-      <div>
-        <label htmlFor="name" className="field-label">Name</label>
-        <input id="name" name="name" type="text" required autoComplete="name" className="field" placeholder="John Doe" />
-      </div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div>
+          <label htmlFor="name" className="field-label">Name</label>
+          <input id="name" name="name" type="text" required autoComplete="name" className="field" placeholder="John Doe" />
+        </div>
 
-      <div>
-        <label htmlFor="email" className="field-label">Email</label>
-        <input id="email" name="email" type="email" required autoComplete="email" className="field" placeholder="john@company.com" />
+        <div>
+          <label htmlFor="email" className="field-label">Email</label>
+          <input id="email" name="email" type="email" required autoComplete="email" className="field" placeholder="john@company.com" />
+        </div>
       </div>
 
       <div>

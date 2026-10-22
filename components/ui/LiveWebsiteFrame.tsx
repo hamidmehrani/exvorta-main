@@ -53,6 +53,7 @@ export function LiveWebsiteFrame({
       imageUrl={imageUrl}
       tone="light"
       priority={priority}
+      bare
       className={className}
       footer={
         metaRows.length > 0 ? (
