@@ -5,6 +5,11 @@
 @source "../app";
 @source "../components";
 
+/* `pin:` — viewports tall enough to hold a pinned (position: sticky) full-height
+   stage. Shorter laptop windows fall back to a normal scrolling block so the
+   hero copy is never clipped. Keep in sync with PIN_QUERY in HomeHeroStage. */
+@custom-variant pin (@media (min-width: 1024px) and (min-height: 701px));
+
 /* ─── Design tokens ─────────────────────────────────────────────────────────
    Single source of truth. `static` emits every variable even when no utility
    references it, so raw CSS (`var(--color-obsidian)`) and inline styles keep

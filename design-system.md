@@ -205,3 +205,39 @@ and fixed real defects found in a desktop + mobile review of every public route.
 - Never render an empty placeholder in a "proof" surface: `PortfolioShowcaseBlock` falls back to the flagship case study.
 - `FounderBlock` without a CMS portrait renders an on-brand monogram plate, never a stock placeholder image.
 - Primary/ghost CTAs inside bands and cards are `w-full sm:w-auto` so labels never wrap to an orphaned `]`.
+
+## Design pass v4 — 2026-10-26 ("Blueprint Atlas" home hero + 3D)
+
+Done at the owner's explicit request (redesign, 3D, "most perfect design"), which overrides the "port `code.html`
+1:1" rule for the home hero. Direction picked from Mobbin references (Atlas exploded-view process, basement.studio
+wireframes, Spline's axis cube): **A — Blueprint Atlas**, evolving the existing blueprint language rather than replacing it.
+
+### What changed
+
+- **Home hero is an obsidian stage** (`components/blocks/HomeHeroStage.tsx`), used only by the default branch of
+  `HeroBlock` (the `/web` and about heroes are untouched). Copy left, WebGL right, a module index + proof strip along the
+  bottom. The `ExvortaOsPanel` moved into its own cream section directly below (`data-purpose="hero-product"`).
+- **The 3D object is the module roadmap**: five slabs — Web (live), Docs & Track, CRM, Intel, Suite — in the same order and
+  dates as `EcosystemBlock`'s `PHASES`. Data lives in `components/three/infra-stack-data.ts`; change a module there and the
+  3D scene, poster and DOM index all follow.
+- **Scroll choreography** (desktop, viewport ≥ 701px tall): the stage pins for ~115vh of scroll. 0–32 % explodes the stack,
+  the rest sweeps a highlight through the five modules (lit slab, scan line, callout, caption, bottom index). Below `lg` or on
+  short windows the stage is a normal block and the sweep follows the scene through the viewport.
+
+### New primitives
+
+| Piece | Use |
+|---|---|
+| `pin:` variant (`@custom-variant` in `globals.css`) | Applies only where a full-height sticky stage fits (≥1024×701). Mirrors `PIN_QUERY` in `HomeHeroStage`. |
+| `components/three/stack-colors.ts` | Reads `--color-surface/success/emerald/card/dashboard` at runtime. **The scene never hard-codes a colour** — a token change re-skins WebGL too. |
+| `InfraPoster` | SSR isometric SVG of the stack. First paint, no-WebGL, data-saver and the canvas cross-fade all use it. |
+
+### Rules for 3D on this site
+
+- three.js / R3F load only through `next/dynamic(..., { ssr: false })` and mount on `requestIdleCallback`, only if WebGL2
+  exists, `saveData` is off and device memory ≥ 2 GB. Never import `three` from a server component or the main bundle.
+- The canvas renders only while on screen (IntersectionObserver → `frameloop`), caps DPR at 1.75 (1.5 on phones), and a
+  frame-time watchdog drops DPR to 1 after two slow windows.
+- `prefers-reduced-motion`: one still frame (`frameloop="demand"`), all callouts visible, no scroll coupling, no pointer parallax.
+- The h1 and lede stay server-rendered CSS/HTML (invariants 4 + the un-animated LCP paragraph still apply).
+- Prefer unlit `MeshBasicMaterial`/`ShaderMaterial` ending in `#include <colorspace_fragment>` so token colours match the DOM.
