@@ -60,8 +60,11 @@ Every builder and orchestrator card must adhere strictly to these conventions:
 - Engines must be deterministic functions accepting typed input parameters and returning typed output objects.
 
 ### 2. Unit Testing Convention
-- Every engine must have an accompanying test suite located in `lib/tools/<tool-name>.test.ts` (or `__tests__/tools/<tool-name>.test.ts`).
-- Unit tests will run via **Vitest** (see ADR-004 proposal). Tests must achieve full branch coverage for calculation edge cases.
+- **Harness & Runner:** Unit tests run via **Vitest** (`pnpm test` or `pnpm exec vitest run`, blueprint ADR-004).
+- **Test Location & Colocation:** Tests may live alongside source modules (e.g. `lib/tools/<tool-name>.test.ts`, `utils/<util-name>.test.ts`) or within `__tests__/` (e.g. `__tests__/smoke.test.ts`, `__tests__/tools/<tool-name>.test.ts`).
+- **Naming Convention:** Test files must use the pattern `*.test.ts`, `*.test.tsx`, `*.spec.ts`, or `*.spec.tsx`.
+- **One-File-Per-Run Rule:** In resource-constrained environments (shared host / RAM gate), test runners during local development should target the active file under test (e.g. `pnpm exec vitest run <path/to/file.test.ts>`) rather than running the full suite continuously. Full test suites run at pre-commit and gate verification (`scripts/agent/gate.sh`).
+- **Purity & Dependencies:** Tests for calculation engines and utilities must be pure and fast. Keep tests decoupled from DOM / jsdom dependencies unless UI component rendering is explicitly under test.
 
 ### 3. Email & Lead Capture Convention
 - **Single Path Rule:** All lead capture, waitlist subscriptions, and contact submissions MUST route through the existing server actions:
