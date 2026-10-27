@@ -58,7 +58,7 @@ export const generateMeta = async (args?: GenerateMetaArgs): Promise<Metadata> =
     args?.image ||
     docImageUrl ||
     fallbackOgImageUrl ||
-    '/og-default.png'
+    '/og-linkedin.png'
 
   // Ensure absolute URL with https:// protocol for LinkedIn, Telegram, Twitter, WhatsApp crawlers
   const ogImageUrl = rawOgImage.startsWith('http://') || rawOgImage.startsWith('https://')
