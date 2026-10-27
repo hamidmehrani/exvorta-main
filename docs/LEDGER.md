@@ -6,3 +6,4 @@
 | 2026-10-27 | PLAT-11 | fcf5c301 | R0 | DB backup & restore runbook and drill checklist |
 | 2026-10-27 | t_fad6cf4e | 018fb0be | R0 | docs(ground-0): add contracts and verification architecture guides |
 | 2026-10-27 | CONV-08 | 8a473d07 | R0 | CONV-08 Legal pack: ToS advisory framing, liability cap, privacy compliance |
+| 2026-10-27 | CONV-05 | 48d66807 | R0 | add CONV-05 24-hour concierge export audit playbook |
