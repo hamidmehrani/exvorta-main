@@ -63,3 +63,6 @@ DEBUG_EDIT_REPORT.md
 .agents/
 .wrangler_config/
 .mcp.json
+
+# kanban factory card worktrees (never commit)
+.worktrees/

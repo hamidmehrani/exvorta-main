@@ -16,7 +16,8 @@ criteria. The rules are `AGENTS.md`; the visual law is `design-system.md` + `Exv
    renders; a doc exists). Not-met → request changes with the exact gap.
 3. **Design fidelity:** UI changes use tokens/primitives only, Header/Footer untouched per page, animations only via
    existing components; new UI states are flagged "new state, per design-system" by the builder — check they truly follow
-   `design-system.md`.
+   `design-system.md`. **DES-\* cards must carry Mobbin citations** (`mobbin-ref cite` output / `docs/design-refs/<card>.json`)
+   for every adopted reference — a DES card without citations goes back with `kanban_request_changes`.
 4. **Secrets & public-repo hygiene:** nothing credential-shaped, no client data, no internal pricing/strategy, no real
    `.env`. The gate's secrets step must be green.
 5. **Honesty:** the builder's summary ends with `Not verified:`; every external fact is VERIFIED/UNVERIFIED/ASSUMPTION.
