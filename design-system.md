@@ -295,3 +295,23 @@ callouts and this timeline. Web links to `/web`; the planned modules link to `/w
 `InfraPoster` with a slow CSS float (`@keyframes float`, off under reduced motion) instead of decorative spinning circles.
 The waitlist form is unchanged. The header was reviewed and deliberately left as is (active route, hide-on-scroll, mobile menu
 already work).
+
+### Ecosystem + case studies (v4, round five)
+
+Both pages are long, so the round is about **orientation** and one 3D moment, not more decoration.
+
+- **`SectionNav`** (`components/ui/SectionNav.tsx`, client): sticky chapter strip under the header for long pages. Plain anchors
+  (works without JS, uses `scroll-padding-top`); the active chapter is the section crossing the viewport's midline; on phones the
+  strip scrolls horizontally and keeps the active chapter centred. It slides up into the header's slot while the header is hidden —
+  `HeaderClient` mirrors its hide state to `html[data-header="hidden|shown"]`, the nav reads it in CSS only. `tone="accent"` uses the
+  case-study accent. Used on `/ecosystem` (Web → Roadmap) and every `/portfolio/[slug]` (Brief → Next steps).
+- **Ecosystem hero** (`EcosystemHero`, client): the module stack as an explorer, not a scroll-coupled scene. After the first frame
+  the stack opens and lights each module in turn (`AUTOPLAY_MS`, only while visible); a click or keyboard focus on a tab takes over
+  and stops the autoplay. The read-out under the tabs carries the module's caption and an "Open module" anchor to its section.
+  `progressForModule(i)` (in `infra-stack-data.ts`) maps a module to the scene's progress value. No WebGL / reduced motion →
+  poster stays, tabs still switch the read-out. The CMS `hero.badge` chain is no longer rendered (the tabs replace it).
+- **`useStageMount`** (`components/three/useStageMount.ts`): the idle-mount + poster-fallback policy, extracted from
+  `HomeHeroStage` so every hero-class stage shares it.
+- **Case study**: the hero frame tilts toward a fine pointer (`TiltFrame`, CSS variables only, flat for touch / reduced motion),
+  the impact stats count up (existing `CountUp`), and "Next case study" shows the next project's real capture instead of text only.
+  No new claims were added; the "own the panel" mock is unchanged.

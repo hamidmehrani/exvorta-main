@@ -62,6 +62,13 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { 
     return () => window.removeEventListener('scroll', onScroll)
   }, [isMobileMenuOpen])
 
+  // Sticky page-level navs (SectionNav) slide up into the header's slot when it hides.
+  useEffect(() => {
+    const root = document.documentElement
+    root.dataset.header = hidden ? 'hidden' : 'shown'
+    return () => { delete root.dataset.header }
+  }, [hidden])
+
   // Lock body scroll while the mobile drawer is open
   useEffect(() => {
     document.documentElement.style.overflow = isMobileMenuOpen ? 'hidden' : ''

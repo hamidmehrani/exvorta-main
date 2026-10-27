@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { useMotionValue, useMotionValueEvent, useScroll } from 'framer-motion'
@@ -8,7 +8,7 @@ import { StaggerText } from '@/components/ui/motion/StaggerText'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { CaretBlink } from '@/components/ui/terminal-motion'
 import { InfraPoster } from '@/components/three/InfraPoster'
-import { canRunWebGL } from '@/components/three/capability'
+import { useStageMount } from '@/components/three/useStageMount'
 import { STACK_MODULES, activeFromProgress } from '@/components/three/infra-stack-data'
 import { useReducedMotion } from '@/lib/animations'
 import { unbracket } from '@/lib/text'
@@ -49,8 +49,8 @@ export function HomeHeroStage({ eyebrow, headline, subheadline, ctaHref, ctaLabe
   const scene = useRef<HTMLDivElement>(null)
   const pinned = useRef(false)
 
-  const [mode, setMode] = useState<'poster' | 'webgl'>('poster')
-  const [ready, setReady] = useState(false)
+  // Mount the canvas only when the page is idle and the device can take it.
+  const { mode, ready, onReady: handleReady, onFail: handleFail } = useStageMount()
   const [active, setActive] = useState(-1)
 
   const progress = useMotionValue(0)
@@ -79,25 +79,6 @@ export function HomeHeroStage({ eyebrow, headline, subheadline, ctaHref, ctaLabe
     mq.addEventListener('change', sync)
     return () => mq.removeEventListener('change', sync)
   }, [progress, pinnedProgress, inlineProgress])
-
-  // Mount the canvas only when the page is idle and the device can take it.
-  useEffect(() => {
-    if (!canRunWebGL()) return
-    const start = () => setMode('webgl')
-    // Safari has no requestIdleCallback; the lib typings pretend it always exists.
-    if (typeof window.requestIdleCallback === 'function') {
-      const id = window.requestIdleCallback(start, { timeout: 1800 })
-      return () => window.cancelIdleCallback(id)
-    }
-    const id = window.setTimeout(start, 700)
-    return () => window.clearTimeout(id)
-  }, [])
-
-  const handleReady = useCallback(() => setReady(true), [])
-  const handleFail = useCallback(() => {
-    setReady(false)
-    setMode('poster')
-  }, [])
 
   const current = active >= 0 ? STACK_MODULES[active] : null
 

@@ -38,6 +38,12 @@ export function activeFromProgress(p: number): number {
   return Math.min(STACK_MODULES.length - 1, Math.floor(t * STACK_MODULES.length))
 }
 
+/** The scroll progress that lights module `i` — the centre of its slice of the sweep. */
+export function progressForModule(i: number): number {
+  const n = STACK_MODULES.length
+  return SWEEP_START + ((Math.max(0, Math.min(n - 1, i)) + 0.5) / n) * (1 - SWEEP_START)
+}
+
 /* ─── 2D segment helpers (x, z on the slab plane) ─────────────────────────── */
 
 type Seg = number[]

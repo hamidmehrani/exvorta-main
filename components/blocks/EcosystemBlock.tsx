@@ -4,23 +4,24 @@ import { AnimatedSection, Reveal, StaggerContainer, StaggerItem } from '@/compon
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { CtaBand } from '@/components/ui/CtaBand'
 import { StaggerText } from '@/components/ui/motion/StaggerText'
+import SectionNav from '@/components/ui/SectionNav'
+import { EcosystemHero } from '@/components/blocks/EcosystemHero'
 import { unbracket } from '@/lib/text'
 import type { Ecosystem } from '@/payload-types'
 
 /**
  * /ecosystem — the Exvorta Suite.
  *
- * Section order: hero → problem → five module showcases (Web, Docs, Track, CRM,
- * Intel) → vision → roadmap → closing CTA. Tone alternates obsidian / cream so
- * no more than two sections of one tone ever sit together.
+ * Section order: hero (3D module explorer) → chapter nav → problem → five module
+ * showcases (Web, Docs, Track, CRM, Intel) → vision → roadmap → closing CTA. Tone
+ * alternates obsidian / cream so no more than two sections of one tone ever sit
+ * together.
  *
- * Server component: motion is CSS-only (`Reveal`, `StaggerText`, `.rise`). The
+ * Server component with two client islands (EcosystemHero, SectionNav); the rest
+ * of the motion is CSS-only (`Reveal`, `StaggerText`). The
  * five product mock-ups are decorative (aria-hidden) and fully fluid — secondary
  * panels drop out below `sm` instead of the mock clipping or scrolling.
  */
-
-type RiseStyle = React.CSSProperties & Record<`--${string}`, string | number | undefined>
-const rise = (i: number): RiseStyle => ({ '--i': i })
 
 /* ─── Shared pieces ─────────────────────────────────────────────────────── */
 
@@ -429,6 +430,18 @@ function IntelMock() {
   )
 }
 
+/* ─── Chapter nav ───────────────────────────────────────────────────────── */
+
+const CHAPTERS = [
+  { id: 'product-web', label: 'Web' },
+  { id: 'product-docs', label: 'Docs' },
+  { id: 'product-track', label: 'Track' },
+  { id: 'product-crm', label: 'CRM' },
+  { id: 'product-intel', label: 'Intel' },
+  { id: 'ecosystem-vision', label: 'Vision' },
+  { id: 'ecosystem-roadmap', label: 'Roadmap' },
+] as const
+
 /* ─── Roadmap data ──────────────────────────────────────────────────────── */
 
 const PHASES = [
@@ -506,12 +519,6 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
     disclaimer: '* Web proposals are subject to capacity constraints.',
   }
 
-  // "[ WEB · DOCS · TRACK ]" → ['WEB', 'DOCS', 'TRACK']
-  const chain = unbracket(hero.badge)
-    .split('·')
-    .map((item) => item.trim())
-    .filter(Boolean)
-
   return (
     <div className="pt-(--header-h)">
       {/* The DRAFT → READY stamp in the Docs mock. `content` flips discretely. */}
@@ -529,47 +536,17 @@ export function EcosystemBlock({ data }: { data?: Ecosystem }) {
         }}
       />
 
-      {/* ═══ Hero ═══ */}
-      <section id="ecosystem-hero" className="on-dark relative isolate flex w-full items-center overflow-hidden border-b border-rule-dark bg-obsidian py-28 md:py-40">
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="bg-aura-dark absolute inset-0" />
-          <div className="bg-blueprint-grid-dark absolute inset-0" />
-        </div>
-        <div className="container-site text-center">
-          <p style={rise(0)} className="rise eyebrow eyebrow-dark mb-10 justify-center !leading-relaxed">
-            <span className="eyebrow-index hidden sm:inline-flex" aria-hidden>
-              <i className="block h-1.5 w-1.5 rotate-45 bg-current" />
-            </span>
-            {unbracket(hero.eyebrow)}
-          </p>
-          <StaggerText
-            as="h1"
-            text={`${hero.title} <br/> <span class="text-muted-dark">${hero.subtitle}</span>`}
-            unit="chars"
-            stagger={0.024}
-            duration={0.8}
-            className="mx-auto mb-8 max-w-5xl font-serif text-display font-semibold text-white"
-          />
-          <div aria-hidden style={rise(5)} className="rise mx-auto mb-10 h-px w-40 bg-gradient-to-r from-transparent via-success/60 to-transparent" />
-          <p style={rise(6)} className="rise mx-auto max-w-3xl text-lede font-light text-muted-dark">
-            {hero.description}
-          </p>
-          {chain.length > 0 && (
-            <ul
-              style={rise(7)}
-              aria-label="Suite modules"
-              className="rise mx-auto mt-14 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-label uppercase text-muted-dark"
-            >
-              {chain.map((item) => (
-                <li key={item} className="flex items-center gap-2.5">
-                  <i aria-hidden className="block h-1 w-1 rotate-45 bg-success" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </section>
+      {/* ═══ Hero: 3D module explorer ═══ */}
+      <EcosystemHero
+        eyebrow={unbracket(hero.eyebrow)}
+        title={hero.title || ''}
+        subtitle={hero.subtitle || ''}
+        description={hero.description || ''}
+        primary={{ label: cta.secondaryCtaText || '[ JOIN SOFTWARE WAITLIST ]', href: '/waitlist' }}
+        secondary={{ label: cta.primaryCtaText || '[ REQUEST PROPOSAL ]', href: '/rfq' }}
+      />
+
+      <SectionNav label="On this page" items={CHAPTERS} />
 
       {/* ═══ Problem ═══ */}
       <AnimatedSection id="ecosystem-problem" className="relative isolate w-full border-b border-rule bg-cream py-24 md:py-32">

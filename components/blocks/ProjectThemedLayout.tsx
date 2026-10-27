@@ -1,7 +1,11 @@
 import React from 'react'
 import type { Project } from '@/payload-types'
 import AppLink from '@/components/ui/AppLink'
+import Image from 'next/image'
 import BrowserFrame from '@/components/ui/BrowserFrame'
+import CountUp from '@/components/ui/CountUp'
+import SectionNav from '@/components/ui/SectionNav'
+import TiltFrame from '@/components/ui/TiltFrame'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Reveal, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 import { getCaseStudy, CASE_STUDIES, type CaseStudyData } from '@/components/blocks/case-study-data'
@@ -145,6 +149,12 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
     return entry && entry.title !== cs.title ? { key: nextKey, ...entry } : null
   })()
 
+  const chapters = [
+    { id: 'the-brief', label: 'Brief' },
+    ...(cs.products.length > 0 ? [{ id: 'what-we-shipped', label: 'Shipped' }] : []),
+    { id: 'own-the-panel', label: 'Ownership' },
+    { id: 'next-steps', label: 'Next steps' },
+  ]
   const productCols = LG_COLS[Math.min(Math.max(cs.products.length, 1), 4)]
   const accentButton = `btn-primary min-h-[52px] w-full bg-accent px-6 py-4 sm:w-auto sm:px-10 ${onAccent}`
 
@@ -210,9 +220,11 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
 
             {/* Right: browser-framed live capture */}
             <Reveal className="lg:col-span-7" y={32} duration={0.9} delay={0.15}>
-              <div className="frame frame-dark">
-                <BrowserFrame title={cs.title} url={liveUrl} imageUrl={capture} tone="dark" priority />
-              </div>
+              <TiltFrame>
+                <div className="frame frame-dark">
+                  <BrowserFrame title={cs.title} url={liveUrl} imageUrl={capture} tone="dark" priority />
+                </div>
+              </TiltFrame>
               <p className="eyebrow eyebrow-dark mt-8 flex justify-center text-center">
                 Fig. 01 — Live deployment — {cs.domain}
               </p>
@@ -225,7 +237,9 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
               <div className="frame frame-dark grid grid-cols-1 divide-y divide-rule-dark border border-rule-dark md:grid-cols-3 md:divide-x md:divide-y-0">
                 {cs.stats.map((s, i) => (
                   <div key={i} className="px-8 py-10 text-center md:py-12">
-                    <div className="font-serif text-headline font-semibold text-accent-lift">{s.value}</div>
+                    <div className="font-serif text-headline font-semibold text-accent-lift">
+                      <CountUp value={s.value} duration={1.6} />
+                    </div>
                     <p className="eyebrow eyebrow-dark mt-3">{s.label}</p>
                   </div>
                 ))}
@@ -234,6 +248,8 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
           )}
         </div>
       </section>
+
+      <SectionNav label="On this page" tone="accent" items={chapters} />
 
       {/* ═══════════════ 01 · THE BRIEF — why they needed us ═══════════════ */}
       <section className="border-b border-rule py-24 text-obsidian md:py-32" style={{ backgroundColor: tint }} id="the-brief">
@@ -414,7 +430,7 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
       )}
 
       {/* ═══════════════ Final CTA: two doors ═══════════════ */}
-      <section className="relative isolate overflow-hidden border-b border-rule py-24 text-obsidian md:py-32" style={{ backgroundColor: tint }}>
+      <section id="next-steps" className="relative isolate overflow-hidden border-b border-rule py-24 text-obsidian md:py-32" style={{ backgroundColor: tint }}>
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="bg-blueprint-grid absolute inset-0" />
         </div>
@@ -453,16 +469,34 @@ export function ProjectThemedLayout({ project }: { project?: Project }) {
           href={`/portfolio/${next.key}`}
           className="on-dark group block bg-obsidian py-20 transition-colors hover:bg-sidebar motion-reduce:transition-none md:py-24"
         >
-          <div className="container-site flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-            <div>
+          <div className="container-site grid items-center gap-10 md:grid-cols-12 md:gap-14">
+            <div className="md:col-span-6">
               <p className="eyebrow eyebrow-dark mb-5">Next case study</p>
               <p className="font-serif text-headline font-semibold text-white">{next.title}</p>
               <p className="eyebrow eyebrow-dark mt-4">{next.category}</p>
+              <div className="mt-10">
+                <span className="inline-flex items-center gap-3 font-mono text-label uppercase text-muted-dark transition-all duration-300 group-hover:gap-5 group-hover:text-accent-lift motion-reduce:transition-none">
+                  View case study
+                  <Icon d={ARROW_NEXT} />
+                </span>
+              </div>
             </div>
-            <span className="inline-flex items-center gap-3 font-mono text-label uppercase text-muted-dark transition-all duration-300 group-hover:gap-5 group-hover:text-accent-lift motion-reduce:transition-none">
-              View case study
-              <Icon d={ARROW_NEXT} />
-            </span>
+            {next.capture && (
+              <div className="md:col-span-6">
+                <div className="frame frame-dark">
+                  <div className="relative aspect-[16/10] overflow-hidden border border-rule-dark bg-sidebar">
+                    <Image
+                      src={next.capture}
+                      alt={`${next.title} website preview`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 560px"
+                      className="object-cover object-top transition-transform duration-700 ease-[var(--ease-cinematic)] group-hover:scale-[1.03] motion-reduce:transition-none"
+                    />
+                    <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-obsidian/70 to-transparent" />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </AppLink>
       )}
