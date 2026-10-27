@@ -34,10 +34,18 @@ shows accounts, cooldowns and 24 h token use. There is no other model in the fac
 
 ## Workflow
 1. `kanban_comment` a short plan (what you will brief, which files, test strategy, risks).
-2. **UI card? Get the design spec first.** The design source is the repo itself: `Exvorta designs/<page>/` (`code.html`
-   ported 1:1, `screen.png` as the acceptance test) and `design-system.md` (tokens, primitives, type scale). New pages
-   that have no design folder yet follow `design-system.md` primitives and the closest existing page's structure
-   (see `app/(frontend)/`), and you mark every invented-free choice as "new state, per design-system" in your summary.
+2. **UI card? Get the design spec first.** Two design sources, in order: (a) the repo itself — `Exvorta designs/<page>/`
+   (`code.html` ported 1:1, `screen.png` as the acceptance test) and `design-system.md` (tokens, primitives, type scale);
+   (b) for **DES-\* design-evolution cards**: Mobbin references via the judged `mobbin-ref` loop — save the card body to
+   `.agent/card-body.md`, run `mobbin-ref pull .agent/card-body.md`, then for each section the card names run in the
+   background, ONE screen at a time: `mobbin-ref find "<ONE screen in plain words>" --need "<3-5 must-haves of ONE
+   screen state>" --platform web > .agent/find-N.out 2>&1 &`, wait in slices under 3 minutes with `kanban_heartbeat`.
+   OPEN and judge every candidate image; port the chosen pattern through `design-system.md` tokens/primitives (never
+   copy brand identity, photos or copy). Cite before you finish: `mobbin-ref cite --slice <CARD-ID> --ref <id> --for
+   <repo path>` and keep `docs/design-refs/<card-id>.json`. Never commit `.design-refs/`, never call Mobbin from product
+   code. Exit 3 = only a weak pick (rerun once with different wording, else accept and log a design-gap). New pages with
+   no design folder and no Mobbin pick follow `design-system.md` primitives and the closest existing page's structure,
+   marked "new state, per design-system" in your summary.
 3. Brief the worker per file with the card's scope for that file (one file per round where possible); apply its diffs with
    `git apply --recount`, and after every apply run the relevant check (`pnpm exec vitest run <file>`, `pnpm exec tsc
    --noEmit`) before continuing.

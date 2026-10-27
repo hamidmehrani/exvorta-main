@@ -47,7 +47,7 @@ fi
 
 branch="$(git rev-parse --abbrev-ref HEAD)"
 CHANGED="$( (git diff --name-only "$BASE"...HEAD; git diff --name-only "$BASE"; git ls-files --others --exclude-standard) \
-  | grep -v -E '^(node_modules/|\.next/|\.agent/|pnpm-lock\.yaml$)' | sort -u )"
+  | grep -v -E '^(node_modules/|\.next/|\.agent/|\.design-refs/|pnpm-lock\.yaml$)' | sort -u )"
 NCH="$(printf '%s\n' "$CHANGED" | grep -c . || true)"
 echo "gate: base=$BASE risk=$RISK branch=$branch changed=$NCH files"
 if [ "$NCH" -eq 0 ]; then echo "GATE OK (nothing changed against $BASE)"; exit 0; fi
@@ -57,7 +57,7 @@ step changed "$(printf '%s\n' "$CHANGED" | head -12 | tr '\n' ' ')"
 [ "$NCH" -le 12 ] || step changed "(+ $((NCH - 12)) more)"
 
 # 2 scope
-FORB="$(printf '%s\n' "$CHANGED" | grep -E '(^|/)\.env($|\.local$|\.production$)|\.pem$|id_rsa|\.db$|\.vercel/|^create_vercel_projects\.sh$|^push_repos\.sh$' || true)"
+FORB="$(printf '%s\n' "$CHANGED" | grep -E '(^|/)\.env($|\.local$|\.production$)|\.pem$|id_rsa|\.db$|\.vercel/|^create_vercel_projects\.sh$|^push_repos\.sh$|^\.design-refs/|^\(?frontend\)?/.*mobbin' || true)"
 if [ -n "$FORB" ]; then fail scope "forbidden path(s) changed: $(printf '%s' "$FORB" | tr '\n' ' ')";
 else
   PROT="$(printf '%s\n' "$CHANGED" | grep -E '^next\.config\.ts$|^payload\.config\.ts$|^vercel\.json$|^middleware\.ts$|^\.env\.example$|^docker-compose\.yml$|^drizzle\.config\.ts$|^\(payload\)/|^app/\(payload\)/|^app/api/|^app/\(frontend\)/login/' || true)"

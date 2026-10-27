@@ -36,11 +36,14 @@ You are implementing ONE card in the git worktree you are in. The card text is i
 Every commit is world-readable, forever. No credentials, no client material, no internal pricing or strategy. If a card
 seems to require committing anything confidential, stop and say so.
 
-## Design source: the repo's own designs (never invent)
-Visual spec = `Exvorta designs/<page>/` (`code.html` is the spec, port 1:1; `screen.png` is the acceptance test) and
-`design-system.md` (tokens, type scale, primitives). Header and Footer are shared — never rebuild per page. A UI state the
-designs do not show comes from `design-system.md` primitives, never from your imagination; mark it "new state, per
-design-system" in your summary. Never commit anything from the designs folder into a page as an asset you did not check.
+## Design source: repo designs first, Mobbin for design evolution (ADR-005)
+Base law = `Exvorta designs/<page>/` (`code.html` port 1:1; `screen.png` acceptance) and `design-system.md` (tokens, type
+scale, primitives). Header and Footer are shared — never rebuild per page. A UI state nothing covers comes from
+`design-system.md` primitives, never from your imagination; mark it "new state, per design-system" in your summary.
+**DES-\* cards additionally use Mobbin via `mobbin-ref`** (judged loop: find → open and judge → port through tokens →
+`mobbin-ref cite --slice <CARD-ID> --ref <id> --for <path>`). Never commit anything from `.design-refs/`, never link,
+embed or call Mobbin from product code (the gate checks). Look at the rendered page next to the reference at the same
+width before you call it done.
 
 ## R2 cards
 The behaviour/config change needs owner sign-off via the orchestrator (`needs_input`). You never enable, deploy or turn on
