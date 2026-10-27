@@ -3,19 +3,60 @@ import Link from '@/components/ui/AppLink'
 import Image from 'next/image'
 import type { FooterColumn } from './Footer'
 import ExvortaLogo from '@/components/brand/ExvortaLogo'
+import DubaiClock from './DubaiClock'
+import FooterWordmark from './FooterWordmark'
 
 /**
  * Site footer. Server-rendered: nothing here needs hydration, so it adds no
  * client JS (the previous version animated every column in with framer-motion
  * and kept them invisible until the page had booted).
  *
- * Composition: brand + link ledger, a hairline legal bar, and an oversized
- * wordmark cropped by the page edge as the closing signature.
+ * Composition: a three-cell "reach us" ledger (email, live Dubai time, start a
+ * project), brand + link ledger, a hairline legal bar, and an oversized
+ * wordmark cropped by the page edge as the closing signature. Only the clock and
+ * the wordmark spotlight are client islands.
  */
 export default function FooterContent({ columns, brand = { name: 'EXVORTA', logoUrl: null } }: { columns: FooterColumn[]; brand?: { name: string; logoUrl: string | null } }) {
   return (
     <footer className="relative w-full overflow-hidden border-t border-rule bg-cream">
       <div className="container-site pt-20 md:pt-24">
+        {/* Reach us: the three things a visitor needs before they commit */}
+        <ul aria-label="Contact" className="frame mb-16 grid divide-y divide-rule border border-rule bg-surface md:mb-20 md:grid-cols-3 md:divide-x md:divide-y-0">
+          <li>
+            <a
+              href="mailto:hello@exvorta.com"
+              className="group flex min-h-[88px] items-center justify-between gap-4 px-6 py-5 transition-colors hover:bg-cream"
+            >
+              <span>
+                <span className="eyebrow mb-2 block">Write to us</span>
+                <span className="font-serif text-title font-semibold text-obsidian">hello@exvorta.com</span>
+              </span>
+              <span aria-hidden className="font-mono text-emerald transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </a>
+          </li>
+          <li className="flex min-h-[88px] items-center gap-4 px-6 py-5">
+            <span className="relative flex h-2 w-2 shrink-0" aria-hidden>
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald opacity-60 motion-reduce:animate-none" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald" />
+            </span>
+            <span>
+              <span className="eyebrow mb-2 block">Dubai, UAE</span>
+              <span className="font-serif text-title font-semibold text-obsidian">
+                <DubaiClock /> <span className="font-mono text-label uppercase tracking-[0.22em] text-muted">GST</span>
+              </span>
+            </span>
+          </li>
+          <li>
+            <Link href="/rfq" className="group flex min-h-[88px] items-center justify-between gap-4 px-6 py-5 transition-colors hover:bg-cream">
+              <span>
+                <span className="eyebrow mb-2 block">Start a project</span>
+                <span className="font-serif text-title font-semibold text-obsidian">Request a custom scope</span>
+              </span>
+              <span aria-hidden className="font-mono text-emerald transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </Link>
+          </li>
+        </ul>
+
         <div className="grid gap-x-8 gap-y-14 md:grid-cols-12">
           {/* Brand */}
           <div className="md:col-span-4">
@@ -89,13 +130,7 @@ export default function FooterContent({ columns, brand = { name: 'EXVORTA', logo
       </div>
 
       {/* Closing signature: oversized wordmark, cropped by the page edge */}
-      {/* Painted from a data attribute (::before) so it is pure decoration — a text node
-          would be audited for contrast even though it is aria-hidden. */}
-      <div
-        aria-hidden
-        data-wordmark={brand.name}
-        className="pointer-events-none -mb-[0.08em] select-none overflow-hidden whitespace-nowrap text-center font-sans text-mega font-bold uppercase text-obsidian/[0.045] [mask-image:linear-gradient(to_bottom,black_45%,transparent)] before:content-[attr(data-wordmark)]"
-      />
+      <FooterWordmark name={brand.name} />
     </footer>
   )
 }

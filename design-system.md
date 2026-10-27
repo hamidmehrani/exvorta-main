@@ -268,3 +268,21 @@ one website is built in front of the visitor while the steps scroll past.
 
 New 3D sections should be: a `*Scene.tsx`, a `*Canvas.tsx` that wraps it in `StageCanvas`, an SSR `*Poster.tsx`, and a section
 component that `next/dynamic`s the canvas. Nothing else may import `three`.
+
+### Closing sections — footer, portfolio, pricing (v4, round three)
+
+References chosen from Mobbin: Sequence's contact card + Structured's oversized wordmark (footer), Customer.io / Contractbook
+metric-first cards + Grammarly's snap carousel (portfolio), Linear's elevated recommended column + Amplemarket's "Custom" path
+(pricing). The rule for all three: **no invented facts** — no prices, response times or claims that are not already in the repo.
+
+- **Footer**: a three-cell "reach us" ledger above the link grid — `hello@exvorta.com` (the public address from the Contact page),
+  live Dubai time (`DubaiClock`, client island, fixed-width placeholder so no hydration shift), and "Request a custom scope" → `/rfq`.
+  The wordmark is `FooterWordmark` (client island): an emerald spotlight follows a mouse pointer via CSS variables
+  (`.wordmark-spot` in `globals.css`); touch and reduced-motion get the static faint wordmark. Still pure decoration.
+- **Portfolio (home section)**: each card leads with two proof metrics from `case-study-data` (`CardStats`), the title is a
+  stretched link (whole card is the target; "Live site" sits above it with `z-10`), and phones get a swipeable snap carousel
+  with the next card peeking. The frame's duplicated volume/service rows were dropped.
+- **Pricing**: the CMS repeats "All packages include…" on every tier — it is now stated once above the ledger (chips) and a per-tier
+  line only renders when tiers differ. Every column has price slot + CTA before the feature list, and "Recommended" marks the
+  middle tier. A "not sure?" strip offers two next steps (scope request, see the work). Prices stay "Pricing upon proposal":
+  there is no real number to show, so the planned glass-numeral treatment was intentionally not built.

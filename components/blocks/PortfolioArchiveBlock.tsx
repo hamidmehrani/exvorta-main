@@ -107,12 +107,37 @@ function projectMetric(project: Project, labels: string[], fallback: string): st
 }
 
 /** Shared card shell: hairline surface, lifts on hover, content below the browser frame. */
-function CardBody({ title, as: Heading = 'h3', children }: { title: string; as?: 'h2' | 'h3'; children: React.ReactNode }) {
+function CardBody({ title, as: Heading = 'h3', href, children }: { title: string; as?: 'h2' | 'h3'; href?: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-grow flex-col p-6 md:p-7">
-      <Heading className="mb-3 font-serif text-3xl font-semibold leading-tight text-obsidian">{title}</Heading>
+      <Heading className="mb-3 font-serif text-3xl font-semibold leading-tight text-obsidian">
+        {/* Stretched link: the whole card is one large click target (secondary actions sit above it with z-10). */}
+        {href ? (
+          <Link href={href} className="after:absolute after:inset-0 after:content-['']">
+            {title}
+          </Link>
+        ) : (
+          title
+        )}
+      </Heading>
       {children}
     </div>
+  )
+}
+
+/** Two headline proof points for a case study (from the authoritative teardown data). */
+function CardStats({ slug }: { slug?: string }) {
+  const stats = (slug && getCaseStudy(slug)?.stats.slice(0, 2)) || []
+  if (stats.length === 0) return null
+  return (
+    <dl className="mb-6 grid grid-cols-2 border-y border-rule">
+      {stats.map((stat) => (
+        <div key={stat.label} className="flex flex-col py-4 first:border-e first:border-rule first:pe-4 last:ps-4">
+          <dd className="order-1 font-serif text-title font-semibold leading-none text-obsidian">{stat.value}</dd>
+          <dt className="eyebrow order-2 mt-2.5 !leading-snug">{stat.label}</dt>
+        </div>
+      ))}
+    </dl>
   )
 }
 
@@ -145,29 +170,33 @@ function HomepagePortfolioSection({
           </Reveal>
         </div>
 
-        {/* 1 col mobile, 2 col tablet, 3 col desktop */}
-        <StaggerContainer className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" staggerChildren={0.14} delayChildren={0.1}>
+        {/* Phones: swipeable snap carousel (next card peeks). Tablet 2 cols, desktop 3. */}
+        <StaggerContainer
+          className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden"
+          staggerChildren={0.14}
+          delayChildren={0.1}
+        >
           {safeProjects.map((project, index) => {
             const csUrl = resolveCaseStudyUrl(project);
-            const liveHref = csUrl.startsWith('/portfolio/') ? `https://${csUrl.split('/').pop()}.exvorta.com` : '';
+            const caseSlug = csUrl.startsWith('/portfolio/') ? csUrl.split('/').pop() : undefined;
+            const liveHref = caseSlug ? `https://${caseSlug}.exvorta.com` : '';
             return (
-              <StaggerItem key={project.id || index} className="h-full" y={28}>
-                <article className="card-elite group flex h-full flex-col">
+              <StaggerItem key={project.id || index} className="h-auto w-[84%] shrink-0 snap-center md:h-full md:w-auto" y={28}>
+                <article className="card-elite group flex h-full flex-col focus-within:border-rule-strong focus-within:shadow-lift">
                   <LiveWebsiteFrame
                     title={project.title}
                     imageUrl={resolveProjectImage(project)}
                     liveUrl={liveHref || undefined}
                     live
                     industry={project.industry}
-                    volume={project.volume}
-                    service={project.service}
                   />
-                  <CardBody title={project.title}>
+                  <CardBody title={project.title} href={csUrl}>
+                    <CardStats slug={caseSlug} />
                     {project.description && (
                       <p className="mb-8 flex-grow text-base font-light leading-relaxed text-muted">{project.description}</p>
                     )}
                     <div className="mt-auto flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
-                      <Link href={csUrl} className="btn-ghost w-full px-5 py-3.5 sm:w-auto">
+                      <Link href={csUrl} tabIndex={-1} aria-hidden className="btn-ghost relative z-10 w-full px-5 py-3.5 sm:w-auto">
                         {(project.linkLabel || 'VIEW CASE STUDY').replace(/\s*[↗→]\s*$/, '')} ↗
                       </Link>
                       {liveHref && (
@@ -176,7 +205,7 @@ function HomepagePortfolioSection({
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`Open ${project.title} live website`}
-                          className="btn-mono w-full gap-2 px-4 py-3.5 sm:w-auto"
+                          className="btn-mono relative z-10 w-full gap-2 px-4 py-3.5 sm:w-auto"
                         >
                           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald" aria-hidden />
                           Live site

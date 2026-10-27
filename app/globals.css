@@ -645,6 +645,19 @@ html.lenis body { height: auto; }
   .on-dark .eyebrow-index,
   .eyebrow-dark .eyebrow-index { color: var(--eyebrow-accent-dark, var(--color-success)); }
 
+  /* Footer wordmark: faint letters, plus an emerald spotlight that follows the pointer
+     (FooterWordmark sets --mx/--my; without them the spot sits below the letters). Painted
+     from data-wordmark so the glyphs are decoration, not text. */
+  .wordmark-spot::before {
+    content: attr(data-wordmark);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image:
+      radial-gradient(circle 280px at var(--mx, 50%) var(--my, 160%), color-mix(in oklab, var(--color-emerald) 65%, transparent), transparent 72%),
+      linear-gradient(color-mix(in oklab, var(--color-obsidian) 5%, transparent), color-mix(in oklab, var(--color-obsidian) 5%, transparent));
+  }
+
   /* <Hairline>: a 1px structural rule. The class was never defined, so every
      <Hairline> rendered at 0px height and the dividers it was placed for were
      invisible. Pass `bg-rule-dark` etc. to recolour. */
