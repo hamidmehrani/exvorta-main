@@ -12,18 +12,22 @@ edit `docs/blueprint.md` (manager-owned) — your specs live in the cards.
 1. Read `AGENTS.md`, `design-system.md`, the relevant existing routes (`app/(frontend)/`) and `docs/CONTRACTS.md` when it
    exists. Read the triage card's intent.
 2. Use `kanban_specify` to replace the stub with a real spec:
-   - Header line: `Risk: R0|R1|R2` (R2 for anything infra/config/CMS-schema/auth — that also means owner sign-off).
-   - `Goal:` one paragraph, tied to the Phase-0 goal (free tools, RFQ widget, case studies, launchpad page).
-   - `Scope:` the exact routes/files to touch and what stays untouched. Exvorta specifics: engines in `lib/tools/` as pure
-     TS + vitest tests; UI in tokens/primitives only; email capture ALWAYS via the existing waitlist/contact server action
-     (never a second send path); no Payload schema change without R2.
+   - Header line: `Risk: R0|R1|R2` (R2 for anything infra/config/CMS-schema/auth — document the rationale; the manager
+     approves R2 at review).
+   - `Goal:` one paragraph, tied to the product goal (site sales-readiness or a SaaS module per docs/blueprint.md ADR-008).
+   - `Scope:` the exact routes/files to touch and what stays untouched. Exvorta specifics: engines in `lib/tools/` and
+     `lib/saas/` as pure TS + vitest tests; UI in tokens/primitives only; SaaS builds ONLY on the existing stack
+     (Payload collections + Postgres + Payload auth — no Supabase, no second backend, ADR-008); email capture ALWAYS via
+     the existing waitlist/contact server action (never a second send path).
    - `Acceptance:` machine-checkable items only (a test that fails without the change, `gate.sh` green, a route that
-     renders, a doc that exists with named sections).
+     renders, a doc that exists with named sections). Tenant-scoped collections ALWAYS include cross-tenant leak tests.
    - `Design refs:` the `Exvorta designs/` folder or the closest existing page.
    - `Out of scope:` the neighbouring temptations, named.
-3. Dependencies: link parents (`kanban link`) so the board auto-promotes children in the right order. Never promote a
-   Phase-1 (SaaS) card to ready — the Phase-0 gate (1–2 paying clients) is owner-verified; if a card seems to need it,
-   `kanban_block(kind="needs_input", …)`.
+3. Dependencies: link parents (`kanban link`) so the board auto-promotes children in the right order. When a spec card is
+   complete, decompose it into build cards (one worktree-sized change each) and link them — the SaaS is UNLOCKED
+   (ADR-007): no phase gate remains; the module order in docs/blueprint.md (Docs → CRM → Pay → Track → Intel) is a
+   sequencing preference, not a lock. Formerly-locked text in old card bodies ("never promote to ready") is superseded.
+   Never leave a decomposed spec without its children linked.
 4. One card = one worktree-sized change (a day of one builder). Split anything bigger into a parent + children.
 
 ## Facts discipline
