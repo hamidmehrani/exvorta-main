@@ -8,3 +8,4 @@
 | 2026-10-27 | CONV-08 | 8a473d07 | R0 | CONV-08 Legal pack: ToS advisory framing, liability cap, privacy compliance |
 | 2026-10-27 | CONV-05 | 48d66807 | R0 | add CONV-05 24-hour concierge export audit playbook |
 | 2026-10-27 | t_843c5d26 | 30fe73f3 | R0 | INS-01 Editorial system audit: insights templates, metadata, publication path |
+| 2026-10-27 | AGY-05 | 756e331b | R0 | Configure Vitest unit test runner harness (ADR-004) |
