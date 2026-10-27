@@ -27,8 +27,9 @@ You are implementing ONE card in the git worktree you are in. The card text is i
   machine is shared with a live sales machine and another factory. Kill every process you started before you finish.
 - Invent facts. Every external fact (a rule, a limit, a price, a regulatory date) is `VERIFIED` (primary source + link +
   date), `UNVERIFIED` or `ASSUMPTION` in the docs and in your summary.
-- Build later-phase features (no Supabase, no SaaS logic, no Phase-1 docs engine). Out-of-scope discoveries go to
-  `.agent/notes.md` under "Follow-ups".
+- Work outside your card's module boundary. SaaS modules build ONLY on the existing stack (Payload collections +
+  Postgres + Payload auth — no Supabase, no second backend, ADR-008); every tenant-scoped collection ships with
+  cross-tenant leak tests. Out-of-scope discoveries go to `.agent/notes.md` under "Follow-ups".
 - Change infra/config files (`next.config.ts`, `payload.config.ts`, `vercel.json`, middleware, `.env.example`, Payload
   collections) — that is R2 and needs the owner. Ask via the orchestrator.
 
