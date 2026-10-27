@@ -286,3 +286,12 @@ metric-first cards + Grammarly's snap carousel (portfolio), Linear's elevated re
   line only renders when tiers differ. Every column has price slot + CTA before the feature list, and "Recommended" marks the
   middle tier. A "not sure?" strip offers two next steps (scope request, see the work). Prices stay "Pricing upon proposal":
   there is no real number to show, so the planned glass-numeral treatment was intentionally not built.
+
+### Roadmap block (v4, round four)
+
+`RoadmapBlock` now renders the same five modules as the hero stack and the ecosystem page, straight from `STACK_MODULES`
+(name, date, one-line caption), so a roadmap change is made in one place (`infra-stack-data.ts`) and shows up in the hero, the
+callouts and this timeline. Web links to `/web`; the planned modules link to `/waitlist`. The suite vision panel uses the SSR
+`InfraPoster` with a slow CSS float (`@keyframes float`, off under reduced motion) instead of decorative spinning circles.
+The waitlist form is unchanged. The header was reviewed and deliberately left as is (active route, hide-on-scroll, mobile menu
+already work).

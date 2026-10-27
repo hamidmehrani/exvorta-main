@@ -6,24 +6,17 @@ import { AnimatedSection, Reveal, StaggerContainer, StaggerItem } from '../ui/Re
 import { Container } from '../ui/Container';
 import { SectionHeading } from '../ui/SectionHeading';
 import { submitLead } from '@/actions/submitLead';
+import { InfraPoster } from '@/components/three/InfraPoster';
+import { STACK_MODULES } from '@/components/three/infra-stack-data';
 
-const PHASES = [
-  {
-    name: 'Exvorta Track',
-    description: 'End-to-end multimodal logistics telemetry and predictive freight visibility.',
-    cta: 'JOIN TRACK WAITLIST',
-  },
-  {
-    name: 'Exvorta CRM',
-    description: 'Trade-specific counterparty risk management and global vendor intelligence.',
-    cta: 'JOIN CRM WAITLIST',
-  },
-  {
-    name: 'Exvorta Intel',
-    description: 'Proprietary market data, trade flows, and real-time commodities pricing benchmarks.',
-    cta: 'JOIN INTEL WAITLIST',
-  },
-] as const;
+/** Where each module's call to action goes: the live product has a page, the rest a waitlist. */
+const MODULE_LINKS: Record<string, { href: string; label: string }> = {
+  web: { href: '/web', label: 'SEE EXVORTA WEB' },
+  docs: { href: '/waitlist', label: 'JOIN THE WAITLIST' },
+  crm: { href: '/waitlist', label: 'JOIN THE WAITLIST' },
+  intel: { href: '/waitlist', label: 'JOIN THE WAITLIST' },
+  suite: { href: '/waitlist', label: 'JOIN THE WAITLIST' },
+};
 
 export function RoadmapBlock(props: any) {
   const [email, setEmail] = useState('');
@@ -61,41 +54,50 @@ export function RoadmapBlock(props: any) {
             className="mb-16 md:mb-20"
           />
 
-          {/* Roadmap console: three phases + the suite, one obsidian panel */}
+          {/* Roadmap console: the five modules + the suite vision, one obsidian panel */}
           <div className="frame mb-20">
             <div className="on-dark relative isolate overflow-hidden bg-obsidian text-white">
               <div aria-hidden className="bg-blueprint-grid-dark pointer-events-none absolute inset-0 -z-10" />
 
+              {/* Timeline: the same five modules, order and dates as the hero and the ecosystem page */}
               <StaggerContainer
-                className="grid grid-cols-1 divide-y divide-rule-dark md:grid-cols-3 md:divide-x md:divide-y-0"
-                staggerChildren={0.14}
+                className="grid grid-cols-1 divide-y divide-rule-dark lg:grid-cols-5 lg:divide-x lg:divide-y-0"
+                staggerChildren={0.12}
                 delayChildren={0.15}
               >
-                {PHASES.map((phase, i) => (
-                  <StaggerItem key={phase.name} className="group relative flex flex-col p-8 md:p-10">
-                    <span
-                      aria-hidden
-                      className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-success transition-transform duration-500 ease-[var(--ease-cinematic)] group-hover:scale-x-100"
-                    />
-                    <div className="mb-10 flex items-center gap-4 font-mono text-label uppercase text-muted-dark">
-                      <span>[ PHASE {i + 1} ]</span>
-                      <span className="flex gap-1" aria-hidden>
-                        {PHASES.map((_, step) => (
-                          <i key={step} className={`block h-1 w-5 ${step <= i ? 'bg-success' : 'bg-rule-dark'}`} />
-                        ))}
-                      </span>
-                    </div>
-                    <h3 className="mb-4 font-serif text-title font-semibold text-white">{phase.name}</h3>
-                    <p className="mb-8 text-base font-light leading-relaxed text-muted-dark">{phase.description}</p>
-                    <Link
-                      href="/waitlist"
-                      className="mt-auto inline-flex min-h-[44px] items-center gap-2 self-start font-mono text-label uppercase text-white/70 transition-colors group-hover:text-success"
-                    >
-                      {phase.cta}
-                      <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                    </Link>
-                  </StaggerItem>
-                ))}
+                {STACK_MODULES.map((m) => {
+                  const link = MODULE_LINKS[m.key];
+                  return (
+                    <StaggerItem key={m.key} className="group relative flex flex-col p-7 lg:p-8">
+                      <span
+                        aria-hidden
+                        className={`absolute inset-x-0 top-0 h-0.5 origin-left transition-transform duration-500 ease-[var(--ease-cinematic)] ${
+                          m.live ? 'scale-x-100 bg-success' : 'scale-x-0 bg-success group-hover:scale-x-100'
+                        }`}
+                      />
+                      <div className="mb-8 flex items-center justify-between gap-3 font-mono text-label uppercase">
+                        <span className="tabular-nums text-white/90">{m.index}</span>
+                        <span
+                          className={`flex items-center gap-1.5 border px-2 py-1.5 ${
+                            m.live ? 'border-success/50 text-success' : 'border-rule-dark text-muted-dark'
+                          }`}
+                        >
+                          {m.live && <span className="h-1 w-1 rotate-45 bg-success" aria-hidden />}
+                          {m.status}
+                        </span>
+                      </div>
+                      <h3 className="mb-3 font-serif text-title font-semibold text-white">{m.name}</h3>
+                      <p className="mb-8 text-base font-light leading-relaxed text-muted-dark">{m.caption}</p>
+                      <Link
+                        href={link.href}
+                        className="mt-auto inline-flex min-h-[44px] items-center gap-2 self-start font-mono text-label uppercase text-white/70 transition-colors group-hover:text-success"
+                      >
+                        {link.label}
+                        <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                      </Link>
+                    </StaggerItem>
+                  );
+                })}
               </StaggerContainer>
 
               {/* The vision: suite */}
@@ -121,17 +123,7 @@ export function RoadmapBlock(props: any) {
                     </div>
                   </div>
                   <div className="relative flex w-full items-center justify-center md:w-1/3" aria-hidden>
-                    <div className="relative flex h-48 w-48 items-center justify-center">
-                      <div className="absolute h-full w-full animate-[spin_22s_linear_infinite] rounded-full border border-rule-dark motion-reduce:animate-none" />
-                      <div className="absolute h-2/3 w-2/3 animate-[spin_15s_linear_infinite_reverse] rounded-full border border-rule-dark motion-reduce:animate-none" />
-                      <svg className="absolute inset-0 h-full w-full opacity-30" viewBox="0 0 100 100">
-                        <path d="M50 50 L50 0 M50 50 L100 75 M50 50 L0 75" fill="none" stroke="currentColor" strokeDasharray="2,2" strokeWidth="0.5" />
-                      </svg>
-                      <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 rounded-full bg-white/50" />
-                      <span className="absolute bottom-1/4 right-0 h-2 w-2 rounded-full bg-warning/70" />
-                      <span className="absolute left-0 top-1/4 h-1.5 w-1.5 rounded-full bg-white/30" />
-                      <span className="relative z-10 h-4 w-4 animate-pulse rounded-full bg-warning shadow-[0_0_24px_color-mix(in_oklab,var(--color-warning)_60%,transparent)] motion-reduce:animate-none" />
-                    </div>
+                    <InfraPoster className="h-56 w-auto animate-[float_9s_ease-in-out_infinite] motion-reduce:animate-none md:h-64" />
                   </div>
                 </div>
               </Reveal>

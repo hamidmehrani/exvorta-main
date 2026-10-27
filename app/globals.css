@@ -131,6 +131,12 @@
   to { transform: translateX(-100%); }
 }
 
+/* Gentle idle float for isometric posters (Roadmap suite visual) */
+@keyframes float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -8px, 0); }
+}
+
 /* Portfolio card hover: sweeping scanline over LiveWebsiteFrame */
 @keyframes framescan {
   0% { transform: translateY(-100%); }
