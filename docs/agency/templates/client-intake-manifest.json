@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Exvorta Launchpad Client Intake Manifest",
+  "description": "Standardized machine-readable client intake manifest template for Exvorta Launchpad agency onboarding engine adhering to PLAT-11 zero-secrets policy.",
+  "version": "1.0.0",
+  "client": {
+    "slug": "client-slug",
+    "legalName": "Client Trading Enterprise FZCO",
+    "jurisdiction": "AE",
+    "commercialRegistrationNumber": "CR-12345678",
+    "taxRegistrationNumber": "TRN-100200300400003",
+    "contact": {
+      "name": "Trade Operations Lead",
+      "email": "operations@example-client.com",
+      "phone": "+971-4-000-0000"
+    }
+  },
+  "branding": {
+    "colors": {
+      "primary": "#0F172A",
+      "accent": "#2563EB",
+      "background": "#FFFFFF",
+      "surface": "#F8FAFC",
+      "border": "#E2E8F0"
+    },
+    "typography": {
+      "fontFamilySans": "Inter, sans-serif",
+      "fontFamilySerif": "Newsreader, serif",
+      "fontFamilyMono": "JetBrains Mono, monospace"
+    },
+    "assets": {
+      "logoLightUrl": "https://assets.exvorta.com/clients/template/logo-light.svg",
+      "logoDarkUrl": "https://assets.exvorta.com/clients/template/logo-dark.svg",
+      "faviconUrl": "https://assets.exvorta.com/clients/template/favicon.ico",
+      "ogImageUrl": "https://assets.exvorta.com/clients/template/og-preview.png"
+    }
+  },
+  "catalog": {
+    "hsChapters": [
+      {
+        "chapter": "72",
+        "title": "Iron and Steel",
+        "defaultOrigin": "EG",
+        "standardTariffDigits": 12
+      },
+      {
+        "chapter": "76",
+        "title": "Aluminium and articles thereof",
+        "defaultOrigin": "AE",
+        "standardTariffDigits": 12
+      },
+      {
+        "chapter": "31",
+        "title": "Fertilisers",
+        "defaultOrigin": "SA",
+        "standardTariffDigits": 12
+      }
+    ],
+    "featuredTradeLanes": [
+      {
+        "laneId": "LANE-AE-EG-SEA",
+        "originPort": "JEA",
+        "destinationPort": "SOK",
+        "transitMode": "sea",
+        "requiresAci": true
+      },
+      {
+        "laneId": "LANE-SA-AE-LAND",
+        "originPort": "DMM",
+        "destinationPort": "DXB",
+        "transitMode": "land",
+        "requiresSaber": true
+      }
+    ],
+    "rfqRouting": {
+      "recipientEmails": [
+        "rfq-desk@example-client.com",
+        "tenders@example-client.com"
+      ],
+      "notificationWebhookUrl": "https://vault.internal/placeholder/webhook"
+    }
+  },
+  "deployment": {
+    "subdomain": "client.exvorta.trade",
+    "customDomain": "trade.example-client.com",
+    "vercelTeamId": "team_exvorta_launchpad",
+    "environment": "staging",
+    "secretsVault": {
+      "vaultProvider": "1password",
+      "vaultItemReference": "op://Launchpad-Clients/client-slug/staging",
+      "secretKeysRequired": [
+        "DATABASE_URI",
+        "DATABASE_URI_UNPOOLED",
+        "PAYLOAD_SECRET",
+        "RESEND_API_KEY",
+        "CLOUDINARY_API_SECRET"
+      ]
+    }
+  }
+}
