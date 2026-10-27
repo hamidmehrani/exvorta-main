@@ -253,8 +253,14 @@ export default function InfraStackScene({ colors, progress, pointer, overlay, re
     st.intro = Math.min(1, st.intro + dt / 2.2)
 
     // Frame-time watchdog: two consecutive slow windows → ask the parent to drop quality.
-    st.frames += 1
-    st.acc += dtRaw
+    // Long gaps (tab hidden, scrolled away, shader compile) are not a performance signal.
+    if (dtRaw > 0.25) {
+      st.frames = 0
+      st.acc = 0
+    } else {
+      st.frames += 1
+      st.acc += dtRaw
+    }
     if (st.frames >= 90) {
       st.slow = st.acc / st.frames > 0.034 ? st.slow + 1 : 0
       if (st.slow >= 2) {
@@ -375,7 +381,7 @@ export default function InfraStackScene({ colors, progress, pointer, overlay, re
         line.setAttribute('y1', ay.toFixed(1))
         line.setAttribute('x2', x2.toFixed(1))
         line.setAttribute('y2', ay.toFixed(1))
-        line.style.opacity = String(show * (activeIdx === -1 || activeIdx === i ? 1 : 0.45))
+        line.style.opacity = String(show * (activeIdx === -1 || activeIdx === i ? 1 : 0.65))
       }
       if (dot) {
         dot.setAttribute('cx', ax.toFixed(1))
@@ -384,7 +390,7 @@ export default function InfraStackScene({ colors, progress, pointer, overlay, re
       }
       if (label) {
         label.style.transform = `translate3d(${labelX.toFixed(1)}px, ${ay.toFixed(1)}px, 0) translateY(-50%)`
-        label.style.opacity = String(show * (activeIdx === -1 || activeIdx === i ? 1 : 0.5))
+        label.style.opacity = String(show * (activeIdx === -1 || activeIdx === i ? 1 : 0.78))
         const on = activeIdx === i ? 1 : 0
         if (st.labelOn[i] !== on) {
           st.labelOn[i] = on

@@ -1,3 +1,5 @@
+import { iso as isoProject, polyPath } from './iso'
+import type { P } from './iso'
 import { SLAB, STACK_MODULES } from './infra-stack-data'
 
 /**
@@ -7,18 +9,11 @@ import { SLAB, STACK_MODULES } from './infra-stack-data'
  * cross-fades from once it has drawn.
  */
 
-const COS = Math.cos(Math.PI / 6)
-const SIN = Math.sin(Math.PI / 6)
 const SCALE = 46
 const GAP = 1.12
 
-type P = [number, number]
-
-function iso(x: number, y: number, z: number): P {
-  return [(x - z) * COS * SCALE, (x + z) * SIN * SCALE - y * SCALE]
-}
-
-const path = (pts: P[]) => `M${pts.map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`).join('L')}Z`
+const iso = (x: number, y: number, z: number): P => isoProject(x, y, z, SCALE)
+const path = polyPath
 
 function slabPaths(yTop: number) {
   const hw = SLAB.w / 2

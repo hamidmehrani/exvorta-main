@@ -241,3 +241,30 @@ wireframes, Spline's axis cube): **A — Blueprint Atlas**, evolving the existin
 - `prefers-reduced-motion`: one still frame (`frameloop="demand"`), all callouts visible, no scroll coupling, no pointer parallax.
 - The h1 and lede stay server-rendered CSS/HTML (invariants 4 + the un-animated LCP paragraph still apply).
 - Prefer unlit `MeshBasicMaterial`/`ShaderMaterial` ending in `#include <colorspace_fragment>` so token colours match the DOM.
+
+### Process section — 3D build sequence (v4, round two)
+
+`ProcessBlock` (server, CMS-driven `steps[]`) now renders `ProcessStage` (client): an obsidian scrollytelling section where
+one website is built in front of the visitor while the steps scroll past.
+
+- **Stages** (`components/three/site-build-data.ts` → `SiteBuildScene`): 0 Blueprint (grid paper + survey/dimension marks) →
+  1 Compose (blocks fill in) → 2 Extrude (blocks rise into architecture) → 3 Deploy (site lifts, arcs launch to a ring of edge
+  nodes). The scene is decoupled from the step count: step *i* of *n* sits at `i / (n − 1)` along the 0…3 stage axis
+  (`stageFromProgress`), so 3 or 6 CMS steps both work.
+- **Layout**: desktop = steps left, sticky full-height stage right; mobile = stage sticks to the top (40svh), steps scroll
+  beneath. The stage column uses `display: contents` on phones so it sticks against the whole run of steps.
+- **Step labels**: `stepNumber`, else `icon`, else `01…`. The home "dark-split" seed variant (steps with `icon`, no
+  `stepNumber`) renders correctly.
+- **Fallbacks**: `SiteBuildPoster` (SSR iso SVG), no-WebGL / data-saver → poster, reduced-motion → still frame at stage 2.7
+  and the stage tag is hidden. The canvas chunk only starts loading when the section is within 900px of the viewport.
+
+### Shared 3D plumbing
+
+| Piece | Role |
+|---|---|
+| `StageCanvas` | The one WebGL wrapper: on-screen gating, DPR cap + frame-time watchdog (ignores gaps > 250ms), reduced motion, pointer ref, token colours. A scene is `children: (ctx) => <Scene {...ctx} />`. |
+| `capability.ts` → `canRunWebGL()` | WebGL2 present, `saveData` off, ≥ 2 GB device memory. |
+| `iso.ts` | Isometric projection for SSR posters. |
+
+New 3D sections should be: a `*Scene.tsx`, a `*Canvas.tsx` that wraps it in `StageCanvas`, an SSR `*Poster.tsx`, and a section
+component that `next/dynamic`s the canvas. Nothing else may import `three`.

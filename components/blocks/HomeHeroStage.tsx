@@ -8,6 +8,7 @@ import { StaggerText } from '@/components/ui/motion/StaggerText'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { CaretBlink } from '@/components/ui/terminal-motion'
 import { InfraPoster } from '@/components/three/InfraPoster'
+import { canRunWebGL } from '@/components/three/capability'
 import { STACK_MODULES, activeFromProgress } from '@/components/three/infra-stack-data'
 import { useReducedMotion } from '@/lib/animations'
 import { unbracket } from '@/lib/text'
@@ -35,22 +36,6 @@ const STATS = [
 
 /** Viewports that pin the stage. Mirrors the `pin:` variant in globals.css. */
 const PIN_QUERY = '(min-width: 1024px) and (min-height: 701px)'
-
-/** True when this browser can (and should) run the WebGL scene. */
-function canRunWebGL(): boolean {
-  const nav = navigator as Navigator & { connection?: { saveData?: boolean }; deviceMemory?: number }
-  if (nav.connection?.saveData) return false
-  if (typeof nav.deviceMemory === 'number' && nav.deviceMemory < 2) return false
-  try {
-    const probe = document.createElement('canvas')
-    const gl = probe.getContext('webgl2')
-    if (!gl) return false
-    gl.getExtension('WEBGL_lose_context')?.loseContext()
-    return true
-  } catch {
-    return false
-  }
-}
 
 /**
  * Home hero — "Blueprint Atlas". An obsidian stage with the Exvorta module

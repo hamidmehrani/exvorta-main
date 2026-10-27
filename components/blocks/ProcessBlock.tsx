@@ -1,7 +1,8 @@
 import { sanitizeHeadingHtml } from '@/utils/heading-sanitize'
 import React from 'react'
-import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { ProcessStage } from '@/components/blocks/ProcessStage'
+import type { ProcessStageStep } from '@/components/blocks/ProcessStage'
 import { unbracket } from '@/lib/text'
 
 export interface ProcessStep {
@@ -9,11 +10,13 @@ export interface ProcessStep {
   title: string
   subtitle?: string
   description: string
+  icon?: string
 }
 
 export interface ProcessBlockProps {
   eyebrow?: string
   headline?: string
+  description?: string
   steps?: ProcessStep[]
   [key: string]: any
 }
@@ -46,62 +49,26 @@ const defaultSteps: ProcessStep[] = [
 ]
 
 /**
- * Deployment pipeline: a vertical rule with alternating steps. Each step is a
- * node on the line, labelled with its timeline marker in emerald.
+ * Deployment pipeline. The copy comes from the CMS (steps[]); the section turns
+ * it into a scroll-driven 3D build — see ProcessStage. This wrapper stays a
+ * server component so the heading and every step are in the static HTML.
  */
 export const ProcessBlock: React.FC<ProcessBlockProps> = (props) => {
   const eyebrow = unbracket(props.eyebrow) || 'THE DEPLOYMENT PIPELINE'
-  const headline = sanitizeHeadingHtml(props.headline || 'Zero Friction. Infinite Precision.')
-  const steps = props.steps && props.steps.length > 0 ? props.steps : defaultSteps
+  const headline = sanitizeHeadingHtml(props.headline || 'Zero Friction. Infinite Precision.', { onDark: true })
+  const source: ProcessStep[] = props.steps && props.steps.length > 0 ? props.steps : defaultSteps
+
+  const steps: ProcessStageStep[] = source.map((step, i) => ({
+    label: step.stepNumber || step.icon || String(i + 1).padStart(2, '0'),
+    title: step.title,
+    subtitle: step.subtitle,
+    description: step.description,
+  }))
 
   return (
-    <AnimatedSection className="w-full border-y border-rule bg-surface py-24 md:py-32">
-      <div className="container-site">
-        <SectionHeading align="center" eyebrow={eyebrow} title="" titleHtml={headline} className="mb-20 md:mb-28" />
-
-        <div className="relative mx-auto max-w-4xl">
-          {/* The pipeline rule */}
-          <div aria-hidden className="absolute bottom-0 top-0 hidden w-px -translate-x-1/2 bg-rule-strong md:left-1/2 md:block" />
-
-          <StaggerContainer staggerChildren={0.18} delayChildren={0.2}>
-            {steps.map((step: ProcessStep, index: number) => {
-              const isEven = index % 2 === 0
-              const isLast = index === steps.length - 1
-
-              return (
-                <StaggerItem key={index}>
-                  <div className={`group relative ${isLast ? '' : 'mb-14 md:mb-20'}`}>
-                    {/* Both sides start on the same baseline (an eyebrow line) so the node
-                        sits level with the step marker instead of floating mid-row. */}
-                    <div className={`flex flex-col items-start gap-5 md:items-start md:gap-16 ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                      <div className={`w-full md:w-1/2 ${isEven ? 'md:text-end' : ''}`}>
-                        <span className={`eyebrow eyebrow-index mb-3 ${isEven ? 'md:flex-row-reverse' : ''}`}>{step.stepNumber}</span>
-                        <h3 className="font-serif text-title font-semibold text-obsidian">{step.title}</h3>
-                      </div>
-
-                      {/* Node */}
-                      <div
-                        aria-hidden
-                        className="z-10 hidden h-3.5 w-3.5 shrink-0 rotate-45 border border-obsidian bg-surface transition-all duration-500 group-hover:scale-125 group-hover:border-emerald group-hover:bg-emerald md:mt-px md:block"
-                      />
-
-                      <div className={`w-full md:w-1/2 ${!isEven ? 'md:flex md:justify-end md:text-end' : ''}`}>
-                        <div>
-                          {step.subtitle && (
-                            <h4 className="eyebrow mb-3 !text-obsidian">{step.subtitle}</h4>
-                          )}
-                          <p className="text-base font-light leading-relaxed text-muted md:max-w-sm">{step.description}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </StaggerItem>
-              )
-            })}
-          </StaggerContainer>
-        </div>
-      </div>
-    </AnimatedSection>
+    <ProcessStage steps={steps}>
+      <SectionHeading tone="dark" eyebrow={eyebrow} title="" titleHtml={headline} description={props.description} className="mb-6 md:mb-10" />
+    </ProcessStage>
   )
 }
 

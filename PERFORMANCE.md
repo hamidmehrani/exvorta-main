@@ -15,8 +15,8 @@ These are what keep the public site fast. Break one and the numbers below regres
 9. **Images:** portfolio captures are produced with `scripts/capture-portfolio-screenshots.mjs` → `scripts/optimize-portfolio-captures.mjs` (1440 px WebP, ≤ 6400 px tall). Never commit multi-megabyte PNGs to `public/`.
 10. **`next.config.ts` strips withPayload's `Critical-CH` / `Vary` hints from public routes** (they force a second document request in Chrome and fragment the CDN cache). Keep that wrapper when upgrading Payload.
 11. **WebGL is lazy and optional.** `three` / `@react-three/fiber` are imported only from `components/three/*`, which is loaded
-    via `next/dynamic(..., { ssr: false })` after idle (see `HomeHeroStage`). Check after a build that no chunk containing
-    `WebGLRenderer` is referenced from `.next/server/app/index.html`. Measured when added: `/` first-load JS 191 → 195 kB;
+    via `next/dynamic(..., { ssr: false })` after idle (see `HomeHeroStage`, `ProcessStage`; every scene goes through `StageCanvas`). Check after a build that no chunk containing
+    `WebGLRenderer` is referenced from `.next/server/app/index.html`. Measured when added: `/` first-load JS 191 → 196 kB (hero 195 + process section 1);
     the ~130 kB (gzip) three payload is on-demand only.
 
 ---
