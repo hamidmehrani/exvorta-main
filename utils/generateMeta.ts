@@ -54,11 +54,12 @@ export const generateMeta = async (args?: GenerateMetaArgs): Promise<Metadata> =
       ? docImage.url
       : undefined
 
+  const defaultOgPath = args?.url === '/launchpad' ? '/launchpad/opengraph-image' : '/opengraph-image'
   const rawOgImage =
     args?.image ||
     docImageUrl ||
     fallbackOgImageUrl ||
-    '/og-linkedin.png'
+    defaultOgPath
 
   // Ensure absolute URL with https:// protocol for LinkedIn, Telegram, Twitter, WhatsApp crawlers
   const ogImageUrl = rawOgImage.startsWith('http://') || rawOgImage.startsWith('https://')
@@ -72,9 +73,10 @@ export const generateMeta = async (args?: GenerateMetaArgs): Promise<Metadata> =
       ? `${fallbackTitle} | Digital Infrastructure for Global Traders`
       : `${title} | ${fallbackTitle}`
 
-  const canonicalUrl = args?.url
-    ? `${baseUrl.replace(/\/$/, '')}${args.url.startsWith('/') ? '' : '/'}${args.url}`
-    : baseUrl
+  const normalizedPath = args?.url && args.url !== '/'
+    ? `/${args.url.replace(/^\/+|\/+$/g, '')}`
+    : ''
+  const canonicalUrl = `${baseUrl.replace(/\/+$/, '')}${normalizedPath}`
 
   return {
     title: {

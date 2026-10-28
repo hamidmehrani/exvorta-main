@@ -93,3 +93,57 @@ export function getCachedGlobal<T>(slug: GlobalSlug, depth = 0): Promise<T | nul
     { revalidate: 300, tags: ['globals', `global-${slug}`] },
   )();
 }
+
+export type SitemapDoc = { slug?: string | null; updatedAt?: string | null; _status?: string | null }
+
+/**
+ * Cached fetch of collection documents for sitemap generation.
+ * Revalidated every 300s or on collection tag invalidation.
+ */
+export function getCachedSitemapCollection(
+  collection: 'pages' | 'projects' | 'posts'
+): Promise<SitemapDoc[]> {
+  return unstable_cache(
+    async () => {
+      try {
+        const payload = await getPayloadClient()
+        const { docs } = await payload.find({
+          collection,
+          limit: 1000,
+          depth: 0,
+        })
+        return (docs || []) as SitemapDoc[]
+      } catch (error) {
+        console.warn(`[cms] sitemap collection "${collection}" unavailable:`, error instanceof Error ? error.message : error)
+        return []
+      }
+    },
+    ['payload-sitemap-collection', collection],
+    { revalidate: 300, tags: [collection, 'sitemap'] }
+  )()
+}
+
+/**
+ * Cached read of CMS redirects to exclude redirected routes from the sitemap.
+ */
+export function getCachedRedirects(): Promise<string[]> {
+  return unstable_cache(
+    async () => {
+      try {
+        const payload = await getPayloadClient()
+        const { docs } = await payload.find({
+          collection: 'redirects',
+          limit: 1000,
+          depth: 0,
+        })
+        return (docs || []).map((r) => r.from).filter(Boolean) as string[]
+      } catch (error) {
+        console.warn('[cms] redirects unavailable for sitemap:', error instanceof Error ? error.message : error)
+        return []
+      }
+    },
+    ['payload-sitemap-redirects'],
+    { revalidate: 300, tags: ['redirects', 'sitemap'] }
+  )()
+}
+

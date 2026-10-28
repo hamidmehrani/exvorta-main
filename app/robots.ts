@@ -1,18 +1,15 @@
 import { MetadataRoute } from 'next'
-import { getPayloadClient } from '@/lib/payload'
+import { getCachedGlobal } from '@/lib/payload-cache'
 import { getSiteUrl } from '@/lib/site-url'
+import type { SiteSetting } from '@/payload-types'
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  const baseUrl = getSiteUrl()
+  const baseUrl = getSiteUrl().replace(/\/+$/, '')
 
-  const payload = await getPayloadClient()
   let maintenanceMode = false
-
   try {
-    const siteSettings = await payload.findGlobal({
-      slug: 'site-settings',
-    })
-    maintenanceMode = siteSettings?.maintenanceMode || false
+    const siteSettings = await getCachedGlobal<SiteSetting>('site-settings')
+    maintenanceMode = Boolean(siteSettings?.maintenanceMode)
   } catch (error) {
     console.warn('[robots] site-settings unavailable, assuming live', error)
   }
@@ -23,6 +20,7 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
         userAgent: '*',
         disallow: '/',
       },
+      sitemap: `${baseUrl}/sitemap.xml`,
     }
   }
 
