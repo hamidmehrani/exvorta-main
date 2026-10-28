@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import Script from 'next/script'
 const CookieBanner = dynamic(() => import('@/components/legal/CookieBanner'), { ssr: false, loading: () => null })
@@ -20,6 +21,7 @@ interface DeferredWidgetsProps {
 }
 
 export default function DeferredWidgets({ cookieConfig, whatsappConfig, umamiConfig }: DeferredWidgetsProps) {
+  const pathname = usePathname()
   // Umami only: defer the analytics script past first paint. The cookie banner
   // must not be delayed — consent UI should be available immediately.
   const [showUmami, setShowUmami] = useState(false)
@@ -27,6 +29,10 @@ export default function DeferredWidgets({ cookieConfig, whatsappConfig, umamiCon
     const t = setTimeout(() => setShowUmami(true), 3000)
     return () => clearTimeout(t)
   }, [])
+
+  if (pathname?.startsWith('/rfq/embed')) {
+    return null
+  }
 
   const waReady = Boolean(whatsappConfig?.enableWidget && whatsappConfig?.phoneNumber)
 

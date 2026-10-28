@@ -1,10 +1,12 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { m as motion, useScroll, useSpring } from "framer-motion"
 import { useReducedMotion } from '@/lib/animations'
 
 export function ScrollProgress() {
+  const pathname = usePathname()
   const { scrollYProgress } = useScroll()
   const prefersReducedMotion = useReducedMotion()
   
@@ -32,7 +34,7 @@ export function ScrollProgress() {
     return () => window.removeEventListener('resize', checkHeight)
   }, [])
 
-  if (prefersReducedMotion || !isVisible) return null
+  if (pathname?.startsWith('/rfq/embed') || prefersReducedMotion || !isVisible) return null
 
   return (
     <motion.div

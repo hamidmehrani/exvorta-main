@@ -726,3 +726,12 @@ section[class*="bg-obsidian"] :focus-visible {
   background: var(--color-success);
   animation: caret-blink 1.1s steps(1) infinite;
 }
+
+/* Embed minimal chrome reset (e.g. /rfq/embed) */
+html.rfq-embed-mode,
+html.rfq-embed-mode body,
+html.rfq-embed-mode .min-h-screen,
+html.rfq-embed-mode [class*="min-h-"] {
+  min-height: auto !important;
+}
+

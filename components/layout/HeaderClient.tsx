@@ -82,6 +82,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { 
   const isActive = (href: string) =>
     href !== '/' && (pathname === href || pathname.startsWith(`${href}/`))
 
+  if (pathname?.startsWith('/rfq/embed')) {
+    return null
+  }
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 border-b bg-cream transition-[transform,box-shadow,border-color] duration-300 ease-[var(--ease-cinematic)] ${
