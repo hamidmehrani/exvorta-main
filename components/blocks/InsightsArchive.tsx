@@ -1,12 +1,53 @@
 import React from 'react';
 import Image from 'next/image';
-import { AnimatedSection, AnimatedButton, StaggerContainer, StaggerItem } from '@/components/ui/Reveal';
+import { Reveal, AnimatedSection, AnimatedButton, StaggerContainer, StaggerItem } from '@/components/ui/Reveal';
 import { WeeklyBriefingForm } from '@/components/blocks/WeeklyBriefingForm';
 import Link from '@/components/ui/AppLink';
 import type { Post } from '@/payload-types';
 import { Container } from '@/components/ui/Container';
 import { MonoLabel } from '@/components/ui/MonoLabel';
 import { Hairline } from '@/components/ui/Hairline';
+
+export function InsightsArchiveEmptyState() {
+  return (
+    <Reveal y={16} duration={0.6} className="mx-auto w-full max-w-3xl">
+      <div
+        role="status"
+        aria-label="No insights found"
+        className="frame relative isolate mx-auto w-full border border-rule bg-surface px-6 py-14 text-center sm:px-12 sm:py-16 md:px-16 md:py-20"
+      >
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="bg-blueprint-grid absolute inset-0" />
+        </div>
+
+        <div className="relative z-10 flex flex-col items-center">
+          <div className="mb-6 flex justify-center">
+            <MonoLabel className="eyebrow inline-flex items-center gap-2 border border-rule bg-surface-2 px-3.5 py-1.5 font-medium">
+              [ 00 // NO_INSIGHTS_FOUND ]
+            </MonoLabel>
+          </div>
+
+          <h2 className="mb-4 font-serif text-3xl font-semibold text-obsidian sm:text-4xl">
+            No Insights Published
+          </h2>
+
+          <p className="mx-auto mb-10 max-w-lg font-sans text-lede font-light text-muted">
+            There are currently no published reports in the insights archive. Explore our interactive commodity tools or contact our advisory team directly.
+          </p>
+
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link href="/tools" className="btn-primary min-h-[52px] w-full px-8 py-4 sm:w-auto">
+              [ EXPLORE TOOLS ]
+            </Link>
+            <Link href="/contact" className="btn-ghost min-h-[52px] w-full px-8 py-4 sm:w-auto">
+              [ CONTACT US ]
+            </Link>
+          </div>
+        </div>
+      </div>
+    </Reveal>
+  );
+}
 
 export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
   return (
@@ -68,9 +109,9 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
       {/* 03. [ARTICLE GRID] - Purpose: News and reports index */}
       <AnimatedSection id="blog-grid" className="w-full bg-[#FCFAF8] pb-16 sm:pb-24 lg:pb-32 px-6 pt-32">
         <Container>
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" staggerChildren={0.08} delayChildren={0.15}>
-            {posts && posts.length > 0 ? (
-              posts?.map((post) => (
+          {posts && posts.length > 0 ? (
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" staggerChildren={0.08} delayChildren={0.15}>
+              {posts.map((post) => (
                 <StaggerItem key={post.id} className="h-full">
                 <Link href={`/insights/${post.slug}`} className="w-full h-full flex flex-col group cursor-pointer block">
                   <div className="w-full aspect-[4/3] bg-black/[0.03] rounded-lg mb-6 border border-black/5 overflow-hidden relative">
@@ -99,21 +140,11 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
                   </h3>
                 </Link>
                 </StaggerItem>
-              ))
-            ) : (
-              [1, 2, 3, 4, 5, 6]?.map((i) => (
-                <div key={i} className="w-full flex flex-col">
-                  <div className="w-full aspect-[4/3] bg-black/[0.03] rounded-lg mb-6 border border-black/5 animate-pulse"></div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-1/3 h-3 bg-black/[0.05] rounded"></div>
-                    <div className="w-1/4 h-3 bg-black/[0.03] rounded"></div>
-                  </div>
-                  <div className="w-full h-6 bg-black/[0.06] rounded mb-2 animate-pulse"></div>
-                  <div className="w-2/3 h-6 bg-black/[0.06] rounded animate-pulse"></div>
-                </div>
-              ))
-            )}
-          </StaggerContainer>
+              ))}
+            </StaggerContainer>
+          ) : (
+            <InsightsArchiveEmptyState />
+          )}
         </Container>
       </AnimatedSection>
       <Hairline className="bg-black/5 w-full" />
