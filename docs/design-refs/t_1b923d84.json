@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "slice": "t_1b923d84",
+  "references": [
+    {
+      "id": "a02b2613-3fdb-4284-80c2-9b51840ef360",
+      "kind": "screen",
+      "app_name": "Base44",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/a02b2613-3fdb-4284-80c2-9b51840ef360",
+      "used_for": "components/blocks/PlatformCapabilitiesBlock.tsx",
+      "selected_by": "judge",
+      "score": 10.0
+    },
+    {
+      "id": "78bb5866-1d24-46ff-be30-a35cbdce7a8d",
+      "kind": "screen",
+      "app_name": "Gemini Notebook",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/78bb5866-1d24-46ff-be30-a35cbdce7a8d",
+      "used_for": "components/blocks/PortfolioArchiveBlock.tsx",
+      "selected_by": "judge",
+      "score": 8.0
+    },
+    {
+      "id": "c68570fa-e631-430d-ad00-131a38a836ca",
+      "kind": "screen",
+      "app_name": "Uxcel",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/c68570fa-e631-430d-ad00-131a38a836ca",
+      "used_for": "components/blocks/TestimonialBlock.tsx",
+      "selected_by": "judge",
+      "score": 8.0
+    },
+    {
+      "id": "5c9a7654-c392-4609-a5ad-4b5f39f84765",
+      "kind": "screen",
+      "app_name": "Shopify",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/5c9a7654-c392-4609-a5ad-4b5f39f84765",
+      "used_for": "components/blocks/CTABannerBlock.tsx",
+      "selected_by": "judge",
+      "score": 9.0
+    }
+  ]
+}
