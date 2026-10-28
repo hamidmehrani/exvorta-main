@@ -667,3 +667,8 @@ export function deserializeToolState(input?: string | URLSearchParams | null): I
 
   return result
 }
+
+// Backward compatibility / convenience aliases
+export const INCOTERMS_2020 = INCOTERMS
+export const calculateFreight = calculateChargeableWeight
+

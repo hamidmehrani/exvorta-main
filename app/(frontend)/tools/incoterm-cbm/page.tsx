@@ -6,12 +6,24 @@ import CtaBand from '@/components/ui/CtaBand'
 import IncotermCbmCalculator from './IncotermCbmCalculator'
 
 export async function generateMetadata(): Promise<Metadata> {
-  return generateMeta({
+  const meta = await generateMeta({
     title: 'Incoterm & CBM Calculator',
     description:
       'Free international trade calculator for Incoterms 2020 responsibility matrices, CBM volume math, volumetric weight, and container fit estimation.',
     url: '/tools/incoterm-cbm',
   })
+
+  return {
+    ...meta,
+    alternates: {
+      canonical: '/tools/incoterm-cbm',
+      languages: {
+        en: '/tools/incoterm-cbm',
+        ar: '/tools/incoterm-cbm/ar',
+        'x-default': '/tools/incoterm-cbm',
+      },
+    },
+  }
 }
 
 function CalculatorSkeleton() {

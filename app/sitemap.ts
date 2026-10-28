@@ -22,6 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/waitlist',
     '/legal',
     '/tools/incoterm-cbm',
+    '/tools/incoterm-cbm/ar',
   ]
   const seenUrls = new Set<string>()
   const sitemapEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => {
@@ -30,7 +31,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return {
       url,
       lastModified: new Date(),
-      changeFrequency: route === '/tools/incoterm-cbm' ? 'monthly' : 'weekly',
+      changeFrequency:
+        route === '/tools/incoterm-cbm' || route === '/tools/incoterm-cbm/ar'
+          ? 'monthly'
+          : 'weekly',
       priority: route === '' ? 1.0 : 0.8,
     }
   })
