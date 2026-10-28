@@ -11,3 +11,4 @@
 | 2026-10-27 | AGY-05 | 756e331b | R0 | Configure Vitest unit test runner harness (ADR-004) |
 | 2026-10-27 | t_4f386a0e | 6e53d8ba | R0 | RES-01 Competitor scan: exporter-focused web agencies in UAE/GCC |
 | 2026-10-28 | GROWTH-1 | aa2aa602 | R1 | - |
+| 2026-10-28 | t_a118bc22 | 546c3723 | R0 | RES-03: HS tariff dataset provenance for TOOL-4 |
