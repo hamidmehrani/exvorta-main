@@ -91,18 +91,39 @@ const nextConfig: NextConfig = {
       .filter(Boolean)
       .join('; ')
 
+    const embedCspDirectives = cspDirectives.replace("frame-ancestors 'self'", 'frame-ancestors *')
+
+    const baselineHeaders = [
+      {
+        key: 'X-DNS-Prefetch-Control',
+        value: 'on',
+      },
+      {
+        key: 'X-XSS-Protection',
+        value: '1; mode=block',
+      },
+      {
+        key: 'X-Content-Type-Options',
+        value: 'nosniff',
+      },
+      {
+        key: 'Referrer-Policy',
+        value: 'strict-origin-when-cross-origin',
+      },
+      {
+        key: 'Strict-Transport-Security',
+        value: 'max-age=31536000; includeSubDomains; preload',
+      },
+      {
+        key: 'Permissions-Policy',
+        value: 'camera=(), microphone=(), geolocation=(), payment=(), browsing-topics=()',
+      },
+    ]
+
     return [
       {
         source: '/(.*)',
         headers: [
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
           {
             key: 'X-Frame-Options',
             value: 'SAMEORIGIN',
@@ -111,22 +132,18 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: cspDirectives,
           },
+          ...baselineHeaders,
+        ],
+      },
+      {
+        // Embed route: permissive framing for external integrations (/rfq/embed)
+        source: '/rfq/embed/:path*',
+        headers: [
           {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
+            key: 'Content-Security-Policy',
+            value: embedCspDirectives,
           },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin',
-          },
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=31536000; includeSubDomains; preload',
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(), payment=(), browsing-topics=()',
-          },
+          ...baselineHeaders,
         ],
       },
       {

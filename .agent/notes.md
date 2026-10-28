@@ -1,33 +1,27 @@
-# Agent Notes — TOOL-1: Incoterm & CBM calculator (/tools/incoterm-cbm)
+# Agent Notes — PLAT-07: Security headers + embed framing policy
 
-- **Card:** `TOOL-1` (Task `t_f10ca839`)
+- **Card:** `PLAT-07` (Task `t_2a9122fc`)
 - **Assignee:** `exvorta-builder`
-- **Risk Level:** `R0`
-- **Branch:** `card/tool-1-incoterm-cbm`
-- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_f10ca839`
+- **Risk Level:** `R2`
+- **Branch:** `card/plat-07-headers`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_2a9122fc`
 
 ## Objectives & Scope
-1. **Pure TS Engine (`lib/tools/incoterm-cbm.ts`):**
-   - 11 Incoterms 2020 responsibility matrix (EXW, FCA, CPT, CIP, DAP, DPU, DDP, FAS, FOB, CFR, CIF).
-   - CBM math (pieces × L × W × H with cm/in unit toggle).
-   - kg ↔ CBM volume estimation and volumetric/chargeable weight calculations (air, sea LCL, courier).
-   - Container-fit estimator with 20', 40', 40HC usable CBM constants labeled with an "indicative, not a quote" comment.
-   - URL query parameter state serialization and deserialization helpers.
-   - Purity guarantee per `docs/CONTRACTS.md`: 100% pure TypeScript, zero React/DOM imports, zero network calls, zero side effects.
-2. **Unit Tests (`lib/tools/incoterm-cbm.test.ts`):**
-   - Comprehensive Vitest unit test suite covering matrix integrity, calculation accuracy, unit conversions, container fit edge cases, and query param roundtripping (28/28 tests passing).
-3. **Frontend Route (`app/(frontend)/tools/incoterm-cbm/page.tsx`):**
-   - Interactive client-side calculator adhering to `design-system.md` tokens and primitives ("new state, per design-system").
-   - Preserves shared global Header and Footer; zero network requests during user interaction.
-   - Lead capture CTA reusing existing waitlist/contact action patterns.
-4. **Sitemap Integration (`app/sitemap.ts`):**
-   - Add `/tools/incoterm-cbm` to static marketing routes.
+1. **Security Headers in `next.config.ts`:**
+   - Enforce baseline security headers on `/(.*)`: `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`, `Strict-Transport-Security`.
+   - Dedicated embed framing rule for `/rfq/embed` and `/rfq/embed/(.*)`: permissive `frame-ancestors *` and no `X-Frame-Options: SAMEORIGIN` block so client websites can iframe the RFQ widget.
+   - Retain Payload admin header scoping and asset cache headers.
+2. **Preserve Dynamic Security.txt:**
+   - Dynamic Route Handler at `app/.well-known/security.txt/route.ts` remains intact with `text/plain; charset=utf-8`.
+3. **Vitest Unit Tests (`__tests__/headers.test.ts`):**
+   - Validate header rules for general routes and `/rfq/embed` framing.
+   - Validate Route Handler `GET()` response status and headers.
 
 ## Verification Checklist
-- [x] Merged upstream `origin/main` containing PLAT-01 Vitest harness (commit `da9da7e`).
-- [x] Initial baseline gate verification clean (`CARD_RISK=R0 bash scripts/agent/gate.sh` -> GATE OK).
-- [x] Brief Antigravity worker via `agy-pool` for `lib/tools/incoterm-cbm.ts` and `lib/tools/incoterm-cbm.test.ts`.
-- [x] Execute engine unit tests via `pnpm exec vitest run lib/tools/incoterm-cbm.test.ts` (28/28 PASSED).
-- [ ] Brief Antigravity worker for `app/(frontend)/tools/incoterm-cbm/page.tsx` and sitemap entry.
-- [ ] Execute `CARD_RISK=R0 bash scripts/agent/gate.sh` until GATE OK.
-- [ ] Push branch `card/tool-1-incoterm-cbm` and hand off via `kanban_request_review`.
+- [x] Initial worktree setup and dependencies verified (`bash scripts/agent/worktree-setup.sh`).
+- [x] Inspected existing `next.config.ts` headers, `security.txt`, and test conventions.
+- [x] Plan comment #56 posted to task `t_2a9122fc`.
+- [x] Brief Antigravity worker via `agy-pool` for `next.config.ts` and `__tests__/headers.test.ts`.
+- [ ] Verify test suite passes (`pnpm exec vitest run __tests__/headers.test.ts`).
+- [ ] Run full gate check (`CARD_RISK=R2 bash scripts/agent/gate.sh`) until `GATE OK`.
+- [ ] Push branch `card/plat-07-headers` and hand off via `kanban_request_review`.
