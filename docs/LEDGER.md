@@ -21,3 +21,4 @@
 | 2026-10-28 | t_19072124 | 87710e68 | R0 | PLAT-04 SEO technical pack: sitemap, robots, canonicals, structured data, OG images |
 | 2026-10-28 | t_6ad9c1dd | cba47c75 | R0 | PLAT-09 Playwright E2E smoke against preview deploys |
 | 2026-10-28 | t_7c627195 | c3412b35 | R1 | PLAT-12 formalize Arabic locale architecture, contracts, and tests |
+| 2026-10-28 | t_6722d4c6 | 3e168598 | R0 | PLAT-13 uptime verification script and runbook |
