@@ -94,3 +94,59 @@ Every builder and orchestrator card must adhere strictly to these conventions:
 - **R1 (Modifications):** Edits to existing routes, shared components, or SEO metadata.
 - **R2 (Infra / Schema):** Edits to `next.config.ts`, `payload.config.ts`, collections, `vercel.json`, `middleware.ts`, `app/(payload)`, `app/api`, or `app/(frontend)/login`. Requires explicit owner sign-off.
 - **Docs Guard:** `docs/blueprint.md` is strictly manager-owned. Workers never edit `docs/blueprint.md` on `card/*` branches. All architecture recommendations must be proposed via card comments.
+
+---
+
+## 4. Arabic Locale Architecture & Internationalization Contract
+
+### 1. Static Mirror Routing Strategy
+- **Zero Heavy Runtime i18n:** Exvorta strictly avoids heavy runtime internationalization frameworks (such as `next-intl`, `react-i18next`, or middleware-based locale negotiation). All Arabic pages are served as deterministic, pre-rendered static mirror routes directly from the CDN with zero runtime execution overhead.
+- **Path Mirror Pattern:** Arabic routes strictly mirror their English counterparts with an `/ar` path segment:
+  - Institutional Homepage: `/` <-> `/ar`
+  - Trade Tools Index: `/tools` <-> `/tools/ar`
+  - Pricing & Engagement: `/pricing` <-> `/pricing/ar`
+  - Incoterm & CBM Calculator: `/tools/incoterm-cbm` <-> `/tools/incoterm-cbm/ar`
+- **Sitemap Registration:** All deployed static Arabic mirror routes must be registered in `STATIC_ROUTES` within `app/sitemap.ts` alongside their English counterparts, maintaining crawl-directive consistency with `robots.txt` (never indexing disallowed paths like `/admin`, `/login`, or `/api`).
+
+### 2. Bidirectional Alternates Contract (hreflang)
+Every page—whether English canonical or Arabic mirror—must declare explicit `alternates` metadata conforming to the following structure:
+```ts
+alternates: {
+  canonical: '<canonical-url>',
+  languages: {
+    en: '<en-url>',
+    ar: '<ar-url>',
+    'x-default': '<en-url>',
+  },
+}
+```
+
+#### Invariants & Rules:
+1. **Self-Referential Canonical:** The `canonical` field must match the exact canonical URL of the current page (`<en-url>` on the English page, `<ar-url>` on the Arabic page).
+2. **Bidirectional Reciprocity:** Both the English and Arabic pages must declare identical `languages` objects referencing each other symmetrically:
+   - On `<en-url>`: `languages.en = '<en-url>'`, `languages.ar = '<ar-url>'`.
+   - On `<ar-url>`: `languages.en = '<en-url>'`, `languages.ar = '<ar-url>'`.
+3. **`x-default` Fallback:** `languages['x-default']` must always resolve to the primary English route (`<en-url>`), ensuring global search crawlers have an unambiguous default for unlocalized regions.
+4. **Implementation Helper:** Pages should use `@/lib/locale` helper `buildLocaleAlternates(enPath, locale)` or declare the shape directly in page `generateMetadata()`.
+
+### 3. RTL & Logical Properties Architecture
+1. **Root Language & Direction Wrapper:** All Arabic views and mirror layouts must mount a root wrapper declaring `dir="rtl"` and `lang="ar"`:
+   ```tsx
+   <div dir="rtl" lang="ar" className="...">
+     {/* Arabic localized view tree */}
+   </div>
+   ```
+2. **Strict CSS Logical Properties:** Never use physical left/right CSS utilities in bilingual or Arabic components. All spacing, borders, alignment, and positioning must utilize CSS logical properties:
+   - **Margins:** Use `ms-*` (margin-inline-start) and `me-*` (margin-inline-end). Never use `ml-*` or `mr-*`.
+   - **Paddings:** Use `ps-*` (padding-inline-start) and `pe-*` (padding-inline-end). Never use `pl-*` or `pr-*`.
+   - **Text Alignment:** Use `text-start` and `text-end`. Never use `text-left` or `text-right` (except for code snippets, raw numeric IDs, or LTR-locked data tables wrapped in `dir="ltr"`).
+   - **Borders:** Use `border-s-*` and `border-e-*`. Never use `border-l-*` or `border-r-*`.
+   - **Insets & Positioning:** Use `start-*` and `end-*`. Never use `left-*` or `right-*`.
+   - **Float / Clear:** Use `float-start` and `float-end`.
+
+### 4. Font Stack & Typography Fallback Contract
+1. **Self-Hosted Font Discipline:** Exvorta operates strictly without third-party CDNs, external Google Fonts, or hotlinked font files (adhering to zero-external-network policy).
+2. **Typography Integrity:** Arabic typography renders cleanly using design-system fallbacks without breaking Playfair or Inter variables:
+   - **Sans Fallback:** Uses `--font-sans` with high-legibility Arabic system fallbacks (`system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif`) and self-hosted Vazirmatn fallbacks, ensuring crisp letterforms for Arabic trade terms while preserving `--font-inter` for Latin scripts.
+   - **Serif Accents:** Latin headings retain Playfair Display (`--font-playfair`), while Arabic headings gracefully fall back to clean, high-contrast typography without clipping, unintended line-height inflation, or layout shifts.
+   - **Monospace Enclaves:** Code blocks, numeric container IDs, and calculation metrics retain `--font-mono` wrapped in `dir="ltr"` to preserve mathematical and tabular legibility.
