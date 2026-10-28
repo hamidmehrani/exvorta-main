@@ -15,3 +15,4 @@
 | 2026-10-28 | t_7e14b6bc | b3c33aec | R0 | RES-05 portfolio evidence pack |
 | 2026-10-28 | t_8b217bcb | 00804449 | R0 | PLAT-01 adopt vitest unit tests for lib/text |
 | 2026-10-28 | t_8ae7b0cf | c8d533c1 | R1 | TOOL-3 RFQ Cart widget: embeddable /rfq/embed + catalog JSON + /for-agencies docs |
+| 2026-10-28 | t_5277cc94 | 2734d33c | R0 | SAAS-0 build graph decomposition |
