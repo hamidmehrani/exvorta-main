@@ -70,11 +70,11 @@ export default function IncotermCbmArabicPage() {
       </section>
 
       {/* Main Interactive Tool Area wrapped in Suspense for static pre-rendering */}
-      <main className="py-12 md:py-16">
+      <div className="py-12 md:py-16">
         <Suspense fallback={<CalculatorSkeleton />}>
           <IncotermCbmCalculatorAr />
         </Suspense>
-      </main>
+      </div>
 
       {/* Section E: Lead-Gen End CTA */}
       <CtaBand

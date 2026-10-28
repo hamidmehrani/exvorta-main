@@ -479,67 +479,78 @@ export function IncotermCbmCalculator() {
 
                   <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 flex-1">
                     <div>
-                      <label className="block text-[10px] font-mono uppercase text-muted mb-1">Pieces</label>
+                      <label htmlFor={`cargo-pieces-${item.id || idx}`} className="block text-[10px] font-mono uppercase text-muted mb-1">Pieces</label>
                       <input
+                        id={`cargo-pieces-${item.id || idx}`}
                         type="number"
                         min="1"
                         step="1"
                         value={item.pieces || ''}
                         onChange={e => handleUpdateItem(idx, { pieces: Math.max(1, parseInt(e.target.value, 10) || 0) })}
-                        className="field min-h-[40px] px-2 text-sm"
+                        className="field min-h-[40px] px-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
                         placeholder="1"
+                        aria-label={`Pieces for package ${idx + 1}`}
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-mono uppercase text-muted mb-1">Length</label>
+                      <label htmlFor={`cargo-length-${item.id || idx}`} className="block text-[10px] font-mono uppercase text-muted mb-1">Length</label>
                       <input
+                        id={`cargo-length-${item.id || idx}`}
                         type="number"
                         min="0"
                         step="any"
                         value={item.length || ''}
                         onChange={e => handleUpdateItem(idx, { length: Math.max(0, parseFloat(e.target.value) || 0) })}
-                        className="field min-h-[40px] px-2 text-sm"
+                        className="field min-h-[40px] px-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
                         placeholder="0"
+                        aria-label={`Length for package ${idx + 1}`}
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-mono uppercase text-muted mb-1">Width</label>
+                      <label htmlFor={`cargo-width-${item.id || idx}`} className="block text-[10px] font-mono uppercase text-muted mb-1">Width</label>
                       <input
+                        id={`cargo-width-${item.id || idx}`}
                         type="number"
                         min="0"
                         step="any"
                         value={item.width || ''}
                         onChange={e => handleUpdateItem(idx, { width: Math.max(0, parseFloat(e.target.value) || 0) })}
-                        className="field min-h-[40px] px-2 text-sm"
+                        className="field min-h-[40px] px-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
                         placeholder="0"
+                        aria-label={`Width for package ${idx + 1}`}
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-mono uppercase text-muted mb-1">Height</label>
+                      <label htmlFor={`cargo-height-${item.id || idx}`} className="block text-[10px] font-mono uppercase text-muted mb-1">Height</label>
                       <input
+                        id={`cargo-height-${item.id || idx}`}
                         type="number"
                         min="0"
                         step="any"
                         value={item.height || ''}
                         onChange={e => handleUpdateItem(idx, { height: Math.max(0, parseFloat(e.target.value) || 0) })}
-                        className="field min-h-[40px] px-2 text-sm"
+                        className="field min-h-[40px] px-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
                         placeholder="0"
+                        aria-label={`Height for package ${idx + 1}`}
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-mono uppercase text-muted mb-1">Unit</label>
+                      <label htmlFor={`cargo-unit-${item.id || idx}`} className="block text-[10px] font-mono uppercase text-muted mb-1">Unit</label>
                       <select
+                        id={`cargo-unit-${item.id || idx}`}
                         value={item.unit}
                         onChange={e => handleUpdateItem(idx, { unit: e.target.value as 'cm' | 'in' })}
-                        className="field min-h-[40px] px-2 text-sm"
+                        className="field min-h-[40px] px-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
+                        aria-label={`Dimension unit for package ${idx + 1}`}
                       >
                         <option value="cm">cm</option>
                         <option value="in">inches</option>
                       </select>
                     </div>
                     <div>
-                      <label className="block text-[10px] font-mono uppercase text-muted mb-1">Weight/pc (kg)</label>
+                      <label htmlFor={`cargo-weight-${item.id || idx}`} className="block text-[10px] font-mono uppercase text-muted mb-1">Weight/pc (kg)</label>
                       <input
+                        id={`cargo-weight-${item.id || idx}`}
                         type="number"
                         min="0"
                         step="any"
@@ -548,8 +559,9 @@ export function IncotermCbmCalculator() {
                           const val = e.target.value === '' ? undefined : Math.max(0, parseFloat(e.target.value) || 0)
                           handleUpdateItem(idx, { weightKg: val })
                         }}
-                        className="field min-h-[40px] px-2 text-sm"
+                        className="field min-h-[40px] px-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
                         placeholder="Optional"
+                        aria-label={`Weight per piece in kg for package ${idx + 1}`}
                       />
                     </div>
                   </div>

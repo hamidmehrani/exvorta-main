@@ -11,7 +11,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="btn-primary mt-2 min-h-[52px] w-full disabled:cursor-not-allowed disabled:opacity-60"
+      className="btn-primary mt-2 min-h-[52px] w-full disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
     >
       {pending ? (
         <span className="flex items-center gap-2">
@@ -35,29 +35,81 @@ export default function ContactForm() {
     }
   }, [state.success])
 
+  const fieldFocusClass = "field focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
+
   return (
     <form ref={formRef} action={formAction} className="flex w-full max-w-lg flex-col gap-6 text-start">
       {/* Invisible Honeypot Field */}
-      <input type="text" name="bot-field" className="hidden" tabIndex={-1} autoComplete="off" />
-
-      <div>
-        <label htmlFor="name" className="field-label">Name</label>
-        <input id="name" name="name" type="text" required autoComplete="name" className="field" placeholder="John Doe" />
+      <div aria-hidden="true" className="sr-only">
+        <label htmlFor="contact-bot-field">Do not fill this field</label>
+        <input id="contact-bot-field" type="text" name="bot-field" tabIndex={-1} autoComplete="off" />
       </div>
 
       <div>
-        <label htmlFor="email" className="field-label">Email</label>
-        <input id="email" name="email" type="email" required autoComplete="email" className="field" placeholder="john@company.com" />
+        <label htmlFor="name" className="field-label">
+          Name <span aria-hidden="true">*</span><span className="sr-only"> (required)</span>
+        </label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          aria-required="true"
+          aria-invalid={state.error ? 'true' : undefined}
+          aria-describedby={state.error ? 'contact-form-error' : undefined}
+          autoComplete="name"
+          className={fieldFocusClass}
+          placeholder="John Doe"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="email" className="field-label">
+          Email <span aria-hidden="true">*</span><span className="sr-only"> (required)</span>
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          aria-required="true"
+          aria-invalid={state.error ? 'true' : undefined}
+          aria-describedby={state.error ? 'contact-form-error' : undefined}
+          autoComplete="email"
+          className={fieldFocusClass}
+          placeholder="john@company.com"
+        />
       </div>
 
       <div>
         <label htmlFor="phone" className="field-label">Phone (optional)</label>
-        <input id="phone" name="phone" type="tel" autoComplete="tel" className="field" placeholder="+1 (555) 000-0000" />
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          autoComplete="tel"
+          aria-invalid={state.error ? 'true' : undefined}
+          aria-describedby={state.error ? 'contact-form-error' : undefined}
+          className={fieldFocusClass}
+          placeholder="+1 (555) 000-0000"
+        />
       </div>
 
       <div>
-        <label htmlFor="message" className="field-label">Message</label>
-        <textarea id="message" name="message" required rows={4} className="field resize-y" placeholder="How can we help your business scale?" />
+        <label htmlFor="message" className="field-label">
+          Message <span aria-hidden="true">*</span><span className="sr-only"> (required)</span>
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          aria-required="true"
+          aria-invalid={state.error ? 'true' : undefined}
+          aria-describedby={state.error ? 'contact-form-error' : undefined}
+          rows={4}
+          className={`${fieldFocusClass} resize-y`}
+          placeholder="How can we help your business scale?"
+        />
       </div>
 
       {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
@@ -76,7 +128,7 @@ export default function ContactForm() {
           </p>
         )}
         {state.error && (
-          <p role="alert" className="border border-danger/30 bg-danger/10 p-4 text-center font-mono text-xs uppercase tracking-widest text-danger">
+          <p id="contact-form-error" role="alert" className="border border-danger/30 bg-danger/10 p-4 text-center font-mono text-xs uppercase tracking-widest text-danger">
             {state.error}
           </p>
         )}

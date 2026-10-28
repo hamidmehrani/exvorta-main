@@ -788,85 +788,97 @@ export function IncotermCbmCalculatorAr() {
                   <div className="grid grid-cols-2 sm:grid-cols-7 gap-3 flex-1">
                     {/* Description / Package */}
                     <div className="col-span-2 sm:col-span-1">
-                      <label className="block text-[10px] font-mono text-muted mb-1">الوصف / الطرد</label>
+                      <label htmlFor={`cargo-ar-desc-${item.id || idx}`} className="block text-[10px] font-mono text-muted mb-1">الوصف / الطرد</label>
                       <input
+                        id={`cargo-ar-desc-${item.id || idx}`}
                         type="text"
                         value={item.description || ''}
                         onChange={e => handleUpdateItem(idx, { description: e.target.value })}
-                        className="field min-h-[40px] px-2 text-sm w-full"
+                        className="field min-h-[40px] px-2 text-sm w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
                         placeholder="طرد تجاري"
+                        aria-label={`وصف الطرد ${idx + 1}`}
                       />
                     </div>
 
                     {/* Pieces / Quantity */}
                     <div>
-                      <label className="block text-[10px] font-mono text-muted mb-1">الكمية</label>
+                      <label htmlFor={`cargo-ar-pieces-${item.id || idx}`} className="block text-[10px] font-mono text-muted mb-1">الكمية</label>
                       <input
+                        id={`cargo-ar-pieces-${item.id || idx}`}
                         type="number"
                         min="1"
                         step="1"
                         value={item.pieces || ''}
                         onChange={e => handleUpdateItem(idx, { pieces: Math.max(1, parseInt(e.target.value, 10) || 0) })}
-                        className="field min-h-[40px] px-2 text-sm w-full"
+                        className="field min-h-[40px] px-2 text-sm w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
                         placeholder="1"
+                        aria-label={`الكمية للطرد ${idx + 1}`}
                       />
                     </div>
 
                     {/* Length */}
                     <div>
-                      <label className="block text-[10px] font-mono text-muted mb-1">
+                      <label htmlFor={`cargo-ar-length-${item.id || idx}`} className="block text-[10px] font-mono text-muted mb-1">
                         الطول ({item.unit === 'in' ? 'بوصة' : 'سم'})
                       </label>
                       <input
+                        id={`cargo-ar-length-${item.id || idx}`}
                         type="number"
                         min="0"
                         step="any"
                         value={item.length || ''}
                         onChange={e => handleUpdateItem(idx, { length: Math.max(0, parseFloat(e.target.value) || 0) })}
-                        className="field min-h-[40px] px-2 text-sm w-full"
+                        className="field min-h-[40px] px-2 text-sm w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
                         placeholder="0"
+                        aria-label={`الطول للطرد ${idx + 1}`}
                       />
                     </div>
 
                     {/* Width */}
                     <div>
-                      <label className="block text-[10px] font-mono text-muted mb-1">
+                      <label htmlFor={`cargo-ar-width-${item.id || idx}`} className="block text-[10px] font-mono text-muted mb-1">
                         العرض ({item.unit === 'in' ? 'بوصة' : 'سم'})
                       </label>
                       <input
+                        id={`cargo-ar-width-${item.id || idx}`}
                         type="number"
                         min="0"
                         step="any"
                         value={item.width || ''}
                         onChange={e => handleUpdateItem(idx, { width: Math.max(0, parseFloat(e.target.value) || 0) })}
-                        className="field min-h-[40px] px-2 text-sm w-full"
+                        className="field min-h-[40px] px-2 text-sm w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
                         placeholder="0"
+                        aria-label={`العرض للطرد ${idx + 1}`}
                       />
                     </div>
 
                     {/* Height */}
                     <div>
-                      <label className="block text-[10px] font-mono text-muted mb-1">
+                      <label htmlFor={`cargo-ar-height-${item.id || idx}`} className="block text-[10px] font-mono text-muted mb-1">
                         الارتفاع ({item.unit === 'in' ? 'بوصة' : 'سم'})
                       </label>
                       <input
+                        id={`cargo-ar-height-${item.id || idx}`}
                         type="number"
                         min="0"
                         step="any"
                         value={item.height || ''}
                         onChange={e => handleUpdateItem(idx, { height: Math.max(0, parseFloat(e.target.value) || 0) })}
-                        className="field min-h-[40px] px-2 text-sm w-full"
+                        className="field min-h-[40px] px-2 text-sm w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
                         placeholder="0"
+                        aria-label={`الارتفاع للطرد ${idx + 1}`}
                       />
                     </div>
 
                     {/* Dimension Unit */}
                     <div>
-                      <label className="block text-[10px] font-mono text-muted mb-1">الوحدة</label>
+                      <label htmlFor={`cargo-ar-unit-${item.id || idx}`} className="block text-[10px] font-mono text-muted mb-1">الوحدة</label>
                       <select
+                        id={`cargo-ar-unit-${item.id || idx}`}
                         value={item.unit}
                         onChange={e => handleUpdateItem(idx, { unit: e.target.value as 'cm' | 'in' })}
-                        className="field min-h-[40px] px-2 text-sm w-full"
+                        className="field min-h-[40px] px-2 text-sm w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
+                        aria-label={`وحدة الأبعاد للطرد ${idx + 1}`}
                       >
                         <option value="cm">سم (cm)</option>
                         <option value="in">بوصة (in)</option>
@@ -875,10 +887,11 @@ export function IncotermCbmCalculatorAr() {
 
                     {/* Weight per Unit */}
                     <div>
-                      <label className="block text-[10px] font-mono text-muted mb-1">
+                      <label htmlFor={`cargo-ar-weight-${item.id || idx}`} className="block text-[10px] font-mono text-muted mb-1">
                         الوزن للوحدة ({weightUnit === 'lb' ? 'رطل' : 'كجم'})
                       </label>
                       <input
+                        id={`cargo-ar-weight-${item.id || idx}`}
                         type="number"
                         min="0"
                         step="any"
@@ -892,8 +905,9 @@ export function IncotermCbmCalculatorAr() {
                             handleUpdateItem(idx, { weightKg: convertedKg })
                           }
                         }}
-                        className="field min-h-[40px] px-2 text-sm w-full"
+                        className="field min-h-[40px] px-2 text-sm w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
                         placeholder="اختياري"
+                        aria-label={`الوزن للوحدة للطرد ${idx + 1}`}
                       />
                     </div>
                   </div>

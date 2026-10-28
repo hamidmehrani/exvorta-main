@@ -80,7 +80,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ navLinks, brand = { 
   const closeMenu = useCallback(() => setIsMobileMenuOpen(false), [])
 
   const isActive = (href: string) =>
-    href !== '/' && (pathname === href || pathname.startsWith(`${href}/`))
+    href !== '/' && (pathname === href || Boolean(pathname?.startsWith(`${href}/`)))
 
   if (pathname?.startsWith('/rfq/embed')) {
     return null

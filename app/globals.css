@@ -711,14 +711,14 @@ input:focus + label[class*="top-2"] {
 
 /* Keyboard focus indicator — global a11y guarantee (dark & light sections) */
 :focus-visible {
-  outline: 2px solid var(--color-obsidian);
+  outline: 2px solid var(--color-emerald);
   outline-offset: 2px;
 }
 .on-dark :focus-visible,
 section[class*="bg-[#0D0D0D]"] :focus-visible,
 section[class*="bg-[#0A0A0A]"] :focus-visible,
 section[class*="bg-obsidian"] :focus-visible {
-  outline-color: #ffffff;
+  outline-color: var(--color-emerald);
 }
 
 /* Terminal caret — terminal-motion.tsx companion */
