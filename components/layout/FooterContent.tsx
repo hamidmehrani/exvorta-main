@@ -1,18 +1,24 @@
+'use client'
+
 import React from 'react'
+import { usePathname } from 'next/navigation'
 import Link from '@/components/ui/AppLink'
 import Image from 'next/image'
 import type { FooterColumn } from './Footer'
 import ExvortaLogo from '@/components/brand/ExvortaLogo'
 
 /**
- * Site footer. Server-rendered: nothing here needs hydration, so it adds no
- * client JS (the previous version animated every column in with framer-motion
- * and kept them invisible until the page had booted).
+ * Site footer. Suppressed on embedded routes (e.g. /rfq/embed).
  *
  * Composition: brand + link ledger, a hairline legal bar, and an oversized
  * wordmark cropped by the page edge as the closing signature.
  */
 export default function FooterContent({ columns, brand = { name: 'EXVORTA', logoUrl: null } }: { columns: FooterColumn[]; brand?: { name: string; logoUrl: string | null } }) {
+  const pathname = usePathname()
+  if (pathname?.startsWith('/rfq/embed')) {
+    return null
+  }
+
   return (
     <footer className="relative w-full overflow-hidden border-t border-rule bg-cream">
       <div className="container-site pt-20 md:pt-24">

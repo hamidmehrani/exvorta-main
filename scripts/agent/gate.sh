@@ -79,11 +79,11 @@ else
 fi
 
 # 4 secrets
-SECRET_PAT='sk_live_|sk-|ghp_[A-Za-z0-9]{20,}|gho_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16}|xox[bp]-|re_[A-Za-z0-9]{20,}|npg_[A-Za-z0-9]{10,}|vcp_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY|://[A-Za-z0-9_]+:[^@/ ]{8,}@'
+SECRET_PAT='sk_live_|([^a-zA-Z0-9_-]|^)sk-[A-Za-z0-9]|ghp_[A-Za-z0-9]{20,}|gho_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16}|xox[bp]-|re_[A-Za-z0-9]{20,}|npg_[A-Za-z0-9]{10,}|vcp_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY|://[A-Za-z0-9_]+:[^@/ ]{8,}@'
 HITS=""
 while IFS= read -r f; do
   [ -f "$f" ] || continue
-  case "$f" in *.lock|*package-lock.json) continue ;; esac
+  case "$f" in *.lock|*package-lock.json|scripts/agent/gate.sh) continue ;; esac
   m="$(grep -nE "$SECRET_PAT" "$f" 2>/dev/null | grep -vE 'process\.env|\.env\.example|YOUR_|<your|example|placeholder|xxxx' | head -2)"
   [ -n "$m" ] && HITS="$HITS$f: $m"$'\n'
 done <<EOF

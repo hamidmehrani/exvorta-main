@@ -1,0 +1,24 @@
+{
+  "slug": "example",
+  "name": "Standard Export Catalog",
+  "products": [
+    {
+      "id": "prod-1",
+      "name": "Refined Sunflower Oil",
+      "unit": "MT",
+      "moq": 20
+    },
+    {
+      "id": "prod-2",
+      "name": "Organic Wheat Flour",
+      "unit": "MT",
+      "moq": 50
+    },
+    {
+      "id": "prod-3",
+      "name": "White Cane Sugar ICUMSA 45",
+      "unit": "MT",
+      "moq": 100
+    }
+  ]
+}
