@@ -11,7 +11,7 @@ export default defineConfig({
     environment: 'node',
     globals: true,
     include: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx'],
-    exclude: ['node_modules', '.next', 'dist', '.agent'],
+    exclude: ['node_modules', '.next', 'dist', '.agent', 'e2e/**'],
   },
   resolve: {
     alias: {

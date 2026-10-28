@@ -59,12 +59,22 @@ Every builder and orchestrator card must adhere strictly to these conventions:
 - **Purity Guarantee:** Pure engines must be 100% pure TypeScript. They must have **ZERO React imports**, **ZERO DOM references**, **ZERO network calls**, and **ZERO side effects**.
 - Engines must be deterministic functions accepting typed input parameters and returning typed output objects.
 
-### 2. Unit Testing Convention
+### 2. Testing Conventions
+
+#### Unit Testing (Vitest)
 - **Harness & Runner:** Unit tests run via **Vitest** (`pnpm test` or `pnpm exec vitest run`, blueprint ADR-004).
 - **Test Location & Colocation:** Tests may live alongside source modules (e.g. `lib/tools/<tool-name>.test.ts`, `utils/<util-name>.test.ts`) or within `__tests__/` (e.g. `__tests__/smoke.test.ts`, `__tests__/tools/<tool-name>.test.ts`).
 - **Naming Convention:** Test files must use the pattern `*.test.ts`, `*.test.tsx`, `*.spec.ts`, or `*.spec.tsx`.
 - **One-File-Per-Run Rule:** In resource-constrained environments (shared host / RAM gate), test runners during local development should target the active file under test (e.g. `pnpm exec vitest run <path/to/file.test.ts>`) rather than running the full suite continuously. Full test suites run at pre-commit and gate verification (`scripts/agent/gate.sh`).
 - **Purity & Dependencies:** Tests for calculation engines and utilities must be pure and fast. Keep tests decoupled from DOM / jsdom dependencies unless UI component rendering is explicitly under test.
+
+#### E2E Smoke Testing (Playwright)
+- **Harness & Runner:** End-to-end smoke tests run via **Playwright** (`pnpm test:e2e` or `pnpm exec playwright test`).
+- **Target & PREVIEW_URL Contract:** Tests evaluate against live remote preview deployments configured via `PREVIEW_URL` (e.g. `PREVIEW_URL=https://exvorta-preview.vercel.app pnpm test:e2e`).
+- **Zero Local Dev Server (ADR-001):** Strictly no `webServer` configuration in `playwright.config.ts`. Tests never start local dev servers or background watchers.
+- **Graceful Skip Behavior:** When `PREVIEW_URL` is unset, tests must cleanly skip with status `UNVERIFIED` without failing local gate or CI steps.
+- **Shared Host Constraints (~16 GB RAM):** Strictly single browser instance (`chromium` / `Desktop Chrome`) and `workers: 1` to prevent memory exhaustion on shared host infrastructure.
+- **Reviewer Verification:** Reviewers verify deployed preview branches by running `PREVIEW_URL=<vercel-preview-url> pnpm test:e2e`.
 
 ### 3. Email & Lead Capture Convention
 - **Single Path Rule:** All lead capture, waitlist subscriptions, and contact submissions MUST route through the existing server actions:
