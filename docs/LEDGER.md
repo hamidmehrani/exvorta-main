@@ -17,3 +17,4 @@
 | 2026-10-28 | t_8ae7b0cf | c8d533c1 | R1 | TOOL-3 RFQ Cart widget: embeddable /rfq/embed + catalog JSON + /for-agencies docs |
 | 2026-10-28 | t_5277cc94 | 2734d33c | R0 | SAAS-0 build graph decomposition |
 | 2026-10-28 | t_f10ca839 | 31d6ccd0 | R0 | TOOL-1 Incoterm & CBM calculator (/tools/incoterm-cbm) |
+| 2026-10-28 | t_66d7cb4d | f284e928 | R0 | TOOL-1B Calculator AR/RTL mirror + SEO pack |
