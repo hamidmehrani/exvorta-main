@@ -21,6 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/rfq',
     '/waitlist',
     '/legal',
+    '/tools/incoterm-cbm',
   ]
   const seenUrls = new Set<string>()
   const sitemapEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => {
@@ -29,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return {
       url,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: route === '/tools/incoterm-cbm' ? 'monthly' : 'weekly',
       priority: route === '' ? 1.0 : 0.8,
     }
   })
