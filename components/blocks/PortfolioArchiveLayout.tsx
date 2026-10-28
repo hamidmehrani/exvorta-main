@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { MonoLabel } from '@/components/ui/MonoLabel';
 import { Button } from '@/components/ui/Button';
+import { PortfolioEmptyState } from '@/components/blocks/PortfolioArchiveBlock';
 import { m as motion, type Variants } from "framer-motion";
 import { easings } from "@/lib/animations";
 
@@ -105,8 +106,10 @@ export function PortfolioArchiveLayout({ projects }: { projects?: Project[] }) {
             );
           })
         ) : (
-          <div className="py-16 sm:py-24 lg:py-32 text-center text-brand-obsidian/40 font-mono text-[10px] uppercase tracking-widest">
-            No projects found.
+          <div className="py-24 md:py-32">
+            <Container>
+              <PortfolioEmptyState />
+            </Container>
           </div>
         )}
       </motion.section>

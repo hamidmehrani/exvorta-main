@@ -223,6 +223,50 @@ function CardBody({ title, as: Heading = 'h3', children }: { title: string; as?:
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// EMPTY STATE
+// ─────────────────────────────────────────────────────────────────────────────
+export function PortfolioEmptyState() {
+  return (
+    <Reveal y={16} duration={0.6} className="mx-auto w-full max-w-3xl">
+      <section
+        role="status"
+        aria-label="No projects found"
+        className="frame relative isolate mx-auto w-full border border-rule bg-surface px-6 py-14 text-center sm:px-12 sm:py-16 md:px-16 md:py-20"
+      >
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="bg-blueprint-grid absolute inset-0" />
+        </div>
+
+        <div className="relative z-10">
+          <div className="mb-6 flex justify-center">
+            <span className="eyebrow inline-flex items-center gap-2 border border-rule bg-surface-2 px-3.5 py-1.5 font-medium">
+              [ 00 // NO_PROJECTS_FOUND ]
+            </span>
+          </div>
+
+          <h2 className="mb-4 font-serif text-3xl font-semibold text-obsidian sm:text-4xl">
+            No Projects Available
+          </h2>
+
+          <p className="mx-auto mb-10 max-w-lg font-sans text-lede font-light text-muted">
+            There are currently no published case studies in the portfolio archive. Explore our interactive commodity tools or contact our advisory team directly.
+          </p>
+
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link href="/tools" className="btn-primary min-h-[52px] w-full px-8 py-4 sm:w-auto">
+              [ EXPLORE TOOLS ]
+            </Link>
+            <Link href="/contact" className="btn-ghost min-h-[52px] w-full px-8 py-4 sm:w-auto">
+              [ CONTACT US ]
+            </Link>
+          </div>
+        </div>
+      </section>
+    </Reveal>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // HOMEPAGE SECTION MODE (Proof of Execution)
 // ─────────────────────────────────────────────────────────────────────────────
 function HomepagePortfolioSection({
@@ -252,78 +296,82 @@ function HomepagePortfolioSection({
         </div>
 
         {/* 1 col mobile, 2 col tablet, 3 col desktop */}
-        <StaggerContainer className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" staggerChildren={0.14} delayChildren={0.1}>
-          {safeProjects.map((project, index) => {
-            const proof = resolveExporterProofPoints(project);
-            const csUrl = resolveCaseStudyUrl(project);
-            const liveHref = csUrl.startsWith('/portfolio/') ? `https://${csUrl.split('/').pop()}.exvorta.com` : '';
-            return (
-              <StaggerItem key={project.id || index} className="h-full" y={28}>
-                <article className="card-elite group flex h-full flex-col">
-                  <LiveWebsiteFrame
-                    title={project.title}
-                    imageUrl={resolveProjectImage(project)}
-                    liveUrl={liveHref || undefined}
-                    slug={proof.slug || undefined}
-                    live
-                    priority={index < 3}
-                  />
-                  <CardBody title={project.title}>
-                    {project.description && (
-                      <p className="mb-6 flex-grow text-base font-light leading-relaxed text-muted">{project.description}</p>
-                    )}
-
-                    {proof.badges.length > 0 && (
-                      <div className="mb-6 flex flex-wrap gap-1.5" aria-label="Certifications">
-                        {proof.badges.map((badge) => (
-                          <span
-                            key={badge}
-                            className="font-mono text-[10px] tracking-wider uppercase border border-rule px-2 py-0.5 bg-paper/50 bg-cream/50 text-muted"
-                          >
-                            {badge}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    <dl className="mb-8 space-y-2.5 font-mono text-label uppercase">
-                      <div className="flex justify-between gap-4 border-b border-rule pb-2">
-                        <dt className="text-muted">Export Volume</dt>
-                        <dd className="max-w-[60%] truncate font-medium text-obsidian">{proof.exportVolume}</dd>
-                      </div>
-                      <div className="flex justify-between gap-4 border-b border-rule pb-2">
-                        <dt className="text-muted">Destination Markets</dt>
-                        <dd className="max-w-[60%] truncate font-medium text-obsidian">{proof.destinationMarkets}</dd>
-                      </div>
-                      <div className="flex justify-between gap-4 border-b border-rule pb-2">
-                        <dt className="text-muted">Active Ports</dt>
-                        <dd className="max-w-[60%] truncate font-medium text-obsidian">{proof.activePorts}</dd>
-                      </div>
-                    </dl>
-
-                    <div className="mt-auto flex flex-wrap items-center gap-2.5">
-                      <Link href={csUrl} className="btn-ghost px-5 py-3.5">
-                        {(project.linkLabel || 'VIEW CASE STUDY').replace(/\s*[↗→]\s*$/, '')} ↗
-                      </Link>
-                      {liveHref && (
-                        <a
-                          href={liveHref}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`Open ${project.title} live website`}
-                          className="btn-mono gap-2 px-4 py-3.5"
-                        >
-                          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald" aria-hidden />
-                          Live site
-                        </a>
+        {safeProjects.length > 0 ? (
+          <StaggerContainer className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" staggerChildren={0.14} delayChildren={0.1}>
+            {safeProjects.map((project, index) => {
+              const proof = resolveExporterProofPoints(project);
+              const csUrl = resolveCaseStudyUrl(project);
+              const liveHref = csUrl.startsWith('/portfolio/') ? `https://${csUrl.split('/').pop()}.exvorta.com` : '';
+              return (
+                <StaggerItem key={project.id || index} className="h-full" y={28}>
+                  <article className="card-elite group flex h-full flex-col">
+                    <LiveWebsiteFrame
+                      title={project.title}
+                      imageUrl={resolveProjectImage(project)}
+                      liveUrl={liveHref || undefined}
+                      slug={proof.slug || undefined}
+                      live
+                      priority={index < 3}
+                    />
+                    <CardBody title={project.title}>
+                      {project.description && (
+                        <p className="mb-6 flex-grow text-base font-light leading-relaxed text-muted">{project.description}</p>
                       )}
-                    </div>
-                  </CardBody>
-                </article>
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
+
+                      {proof.badges.length > 0 && (
+                        <div className="mb-6 flex flex-wrap gap-1.5" aria-label="Certifications">
+                          {proof.badges.map((badge) => (
+                            <span
+                              key={badge}
+                              className="font-mono text-[10px] tracking-wider uppercase border border-rule px-2 py-0.5 bg-paper/50 bg-cream/50 text-muted"
+                            >
+                              {badge}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <dl className="mb-8 space-y-2.5 font-mono text-label uppercase">
+                        <div className="flex justify-between gap-4 border-b border-rule pb-2">
+                          <dt className="text-muted">Export Volume</dt>
+                          <dd className="max-w-[60%] truncate font-medium text-obsidian">{proof.exportVolume}</dd>
+                        </div>
+                        <div className="flex justify-between gap-4 border-b border-rule pb-2">
+                          <dt className="text-muted">Destination Markets</dt>
+                          <dd className="max-w-[60%] truncate font-medium text-obsidian">{proof.destinationMarkets}</dd>
+                        </div>
+                        <div className="flex justify-between gap-4 border-b border-rule pb-2">
+                          <dt className="text-muted">Active Ports</dt>
+                          <dd className="max-w-[60%] truncate font-medium text-obsidian">{proof.activePorts}</dd>
+                        </div>
+                      </dl>
+
+                      <div className="mt-auto flex flex-wrap items-center gap-2.5">
+                        <Link href={csUrl} className="btn-ghost px-5 py-3.5">
+                          {(project.linkLabel || 'VIEW CASE STUDY').replace(/\s*[↗→]\s*$/, '')} ↗
+                        </Link>
+                        {liveHref && (
+                          <a
+                            href={liveHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Open ${project.title} live website`}
+                            className="btn-mono gap-2 px-4 py-3.5"
+                          >
+                            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald" aria-hidden />
+                            Live site
+                          </a>
+                        )}
+                      </div>
+                    </CardBody>
+                  </article>
+                </StaggerItem>
+              );
+            })}
+          </StaggerContainer>
+        ) : (
+          <PortfolioEmptyState />
+        )}
       </Container>
     </section>
   );
@@ -458,9 +506,7 @@ function FullPagePortfolioArchive({ projects }: { projects: Project[] }) {
               })}
             </StaggerContainer>
           ) : (
-            <div className="py-32 text-center">
-              <p className="eyebrow justify-center">No projects found.</p>
-            </div>
+            <PortfolioEmptyState />
           )}
         </Container>
       </section>
