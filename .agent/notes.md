@@ -1,21 +1,24 @@
-# Agent Notes — RES-05: Portfolio evidence pack (owner interview → real case studies)
+# Agent Notes — SAAS-0: Exvorta Suite SaaS build graph decomposition
 
-- **Card:** `RES-05` (Task `t_7e14b6bc`)
-- **Assignee:** `exvorta-researcher`
+- **Card:** `SAAS-0` (Task `t_5277cc94`)
+- **Assignee:** `exvorta-architect`
 - **Risk Level:** `R0`
-- **Branch:** `card/res-05-portfolio-evidence`
-- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_7e14b6bc`
+- **Branch:** `card/saas-0-build-graph`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_5277cc94`
 
-## Completed Actions
-1. Initialized worktree environment and set card risk (`CARD_RISK=R0`).
-2. Inspected in-repo case study data in `components/blocks/case-study-data.ts` and component usage in `ProjectThemedLayout.tsx`.
-3. Extracted and audited live production deployments on subdomains: Stonvi (`stonvi.exvorta.com`), Spicevo (`spicevo.exvorta.com/en`), and Nutave (`nutave.exvorta.com/en`).
-4. Cross-referenced live claims, stats, compliance certificates, and client references against in-repo fallbacks, identifying metric drift and rich production assets (Stonvi 49+ markets / 1M SQM / Dubai Creek Harbour; Spicevo Control Union CU-TR-2847691 / CCOF / Bureau Veritas certs and named references; Nutave BRC Grade A / 72h GCC transit / NT SKU tracking).
-5. Formulated Client Permissions & Legal Attribution Protocol (Tier 1 Named, Tier 2 Masked Person, Tier 3 Anonymized Company).
-6. Established a 6-cluster Future Client Evidence Pack Checklist (Entity & Jurisdiction, Regulatory Certifications, Trade Volumes, Batch Proof, Testimonials, High-Fidelity Visuals).
-7. Authored research document `docs/research/t_7e14b6bc-portfolio-evidence-pack.md` adhering strictly to facts discipline (VERIFIED / UNVERIFIED / ASSUMPTION labels, primary URLs, access dates).
-
-## Verification & Next Steps
-- Run repository gate verification: `CARD_RISK=R0 bash scripts/agent/gate.sh`.
-- Commit changes (`docs/research/t_7e14b6bc-portfolio-evidence-pack.md` and `.agent/notes.md`) and push branch `card/res-05-portfolio-evidence` to `origin HEAD`.
-- Hand off task via `kanban_request_review(summary, reviewer="exvorta-reviewer", metadata)`.
+## Build Graph Architecture & Dependency Wiring
+1. **Foundation Decomposed (ADR-007 / ADR-008):**
+   - Modular monolith on existing Next.js 15.4 App Router + Payload CMS 3.88 + Neon Postgres stack.
+   - Tenancy isolation via `organizations` collection and mandatory Vitest cross-tenant leak tests.
+2. **Card Boundaries & Execution Order:**
+   - `SAAS-1` (t_842434ec, R2, todo): Tenant model (organizations, membership roles, leak tests). Parent: t_5277cc94. Actionable on land.
+   - `SAAS-2` (t_a29fe334, R2, todo): SaaS auth (login/register/invite, Turnstile). Parent: t_5277cc94. Actionable on land.
+   - `SAAS-3` (t_b7e70702, R0, todo): App shell (app/(app) layout, nav, tokens). Parent: t_5277cc94. Actionable on land.
+   - `SAAS-4` (t_b7e59ea7, R2, todo): Trade File core (state machine, vitest). Parents: t_5277cc94, t_842434ec (SAAS-1).
+   - `SAAS-5` (t_579e43a9, R1, todo): Docs engine (headless Chromium, Quote template). Parents: t_5277cc94, t_b7e59ea7 (SAAS-4).
+   - `SAAS-6` (t_0052eb73, R2, todo): Stripe pay & billing. Parents: t_5277cc94, t_eef1da06 (RES-04 blocked on UAE license).
+   - `SAAS-7` (t_63c1fa51, R1, todo): Tracking quotas & integration. Parents: t_5277cc94, t_b7e59ea7 (SAAS-4), t_d5a9e103 (P1-TRACK-01).
+   - `SAAS-8` (t_6a0f95c6, R1, todo): Resend transactional notifications. Parents: t_5277cc94, t_a29fe334 (SAAS-2).
+3. **Verification:**
+   - Exactly the first three foundation cards (`SAAS-1`, `SAAS-2`, `SAAS-3`) promote to ready when `t_5277cc94` lands.
+   - All subsequent cards strictly gated behind internal and external prerequisites.
