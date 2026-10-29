@@ -17,8 +17,8 @@ interface SentryConfig {
   publicKey: string
 }
 
-function parseSentryDsn(dsn?: string): SentryConfig | null {
-  if (!dsn || !dsn.startsWith('http')) return null
+export function parseSentryDsn(dsn?: string): SentryConfig | null {
+  if (!dsn || typeof dsn !== 'string' || !dsn.startsWith('http')) return null
   try {
     const url = new URL(dsn)
     const publicKey = url.username
@@ -33,13 +33,26 @@ function parseSentryDsn(dsn?: string): SentryConfig | null {
   }
 }
 
-async function sendToSentry(level: 'error' | 'warning', message: string, error?: Error, extra?: ErrorContext): Promise<void> {
+export async function sendToSentry(
+  level: 'error' | 'warning',
+  message: string,
+  error?: Error,
+  extra?: ErrorContext
+): Promise<void> {
   const dsn = process.env.SENTRY_DSN
   const config = parseSentryDsn(dsn)
   if (!config) return
 
   try {
-    const eventId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+    const release =
+      process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ||
+      process.env.VERCEL_GIT_COMMIT_SHA ||
+      process.env.GIT_COMMIT_SHA ||
+      undefined
+
+    const eventId =
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15)
     const header = JSON.stringify({
       event_id: eventId,
       sent_at: new Date().toISOString(),
@@ -55,6 +68,7 @@ async function sendToSentry(level: 'error' | 'warning', message: string, error?:
       platform: 'javascript',
       level,
       message,
+      release,
       exception: error
         ? {
             values: [
@@ -72,6 +86,8 @@ async function sendToSentry(level: 'error' | 'warning', message: string, error?:
 
     const body = `${header}\n${itemHeader}\n${payload}\n`
 
+    if (typeof fetch !== 'function') return
+
     await fetch(config.endpoint, {
       method: 'POST',
       headers: {
@@ -87,28 +103,30 @@ async function sendToSentry(level: 'error' | 'warning', message: string, error?:
 
 /**
  * Report a non-fatal warning.
- * In production, forwards to Sentry if configured.
+ * Forwards to Sentry if configured.
  */
 export const reportWarning = (message: string, context?: ErrorContext): void => {
+  const msg = typeof message === 'string' ? message : String(message)
   if (process.env.NODE_ENV !== 'production') {
-    console.warn('[WARNING]', message, context)
-    return
+    console.warn('[WARNING]', msg, context)
+  } else {
+    console.warn('[WARN]', msg, context)
   }
-  console.warn('[WARN]', message, context)
-  sendToSentry('warning', message, undefined, context).catch(() => {})
+  sendToSentry('warning', msg, undefined, context).catch(() => {})
 }
 
 /**
  * Report a fatal or unexpected error.
- * In production, forwards to Sentry if configured.
+ * Forwards to Sentry if configured.
  */
 export const reportError = (error: Error, context?: ErrorContext): void => {
+  const err = error instanceof Error ? error : new Error(String(error))
   if (process.env.NODE_ENV !== 'production') {
-    console.error('[ERROR]', error.message, context, error.stack)
-    return
+    console.error('[ERROR]', err.message, context, err.stack)
+  } else {
+    console.error('[ERROR]', err.message, context)
   }
-  console.error('[ERROR]', error.message, context)
-  sendToSentry('error', error.message, error, context).catch(() => {})
+  sendToSentry('error', err.message, err, context).catch(() => {})
 }
 
 /**

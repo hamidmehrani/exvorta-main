@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
+import { reportError } from '@/lib/error-reporting'
 
 export default function FrontendError({
   error,
@@ -11,6 +12,7 @@ export default function FrontendError({
 }) {
   useEffect(() => {
     console.error('[EXVORTA] Unhandled page error:', error)
+    reportError(error, { digest: error.digest, boundary: 'frontend-error' })
   }, [error])
 
   return (
