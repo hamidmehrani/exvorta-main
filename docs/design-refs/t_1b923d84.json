@@ -41,6 +41,46 @@
       "used_for": "components/blocks/CTABannerBlock.tsx",
       "selected_by": "judge",
       "score": 9.0
+    },
+    {
+      "id": "229b032b-ffad-47c5-a84d-4627d2e2c3ae",
+      "kind": "screen",
+      "app_name": "Dribbble",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/229b032b-ffad-47c5-a84d-4627d2e2c3ae",
+      "used_for": "components/blocks/FeatureGridBlock.tsx",
+      "selected_by": "judge",
+      "score": 8.0
+    },
+    {
+      "id": "82191ee5-24df-47d6-901f-958b97ca2ea0",
+      "kind": "screen",
+      "app_name": "Gemini Notebook",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/82191ee5-24df-47d6-901f-958b97ca2ea0",
+      "used_for": "components/blocks/PortfolioArchiveBlock.tsx",
+      "selected_by": "judge",
+      "score": 9.0
+    },
+    {
+      "id": "08a5584c-a6bc-444c-a1db-2c40fcdb8f59",
+      "kind": "screen",
+      "app_name": "Hers",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/08a5584c-a6bc-444c-a1db-2c40fcdb8f59",
+      "used_for": "components/blocks/TestimonialBlock.tsx",
+      "selected_by": "judge",
+      "score": 8.0
+    },
+    {
+      "id": "fe7c5bed-bdf9-4e60-a62d-be8205db191c",
+      "kind": "screen",
+      "app_name": "Higgsfield",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/fe7c5bed-bdf9-4e60-a62d-be8205db191c",
+      "used_for": "components/blocks/CTABannerBlock.tsx",
+      "selected_by": "judge",
+      "score": 10.0
     }
   ]
 }
