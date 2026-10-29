@@ -28,3 +28,4 @@
 | 2026-10-29 | t_7ef57f8a | 7a9deacd | R0 | feat(tools): add bilingual invoice, packing list and CMR generator at /tools/docs-generator |
 | 2026-10-29 | t_2a9122fc | 9793e14a | R2 | PLAT-07: Security headers and embed framing policy |
 | 2026-10-29 | t_052d3cae | 8dae81c8 | R1 | DES-07 Mobbin design pass: Launchpad page |
+| 2026-10-29 | t_eef1da06 | 152df15f | R0 | RES-04 Payment rails decision memo (Dubai entity) |
