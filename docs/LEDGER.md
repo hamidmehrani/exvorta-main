@@ -25,3 +25,4 @@
 | 2026-10-29 | AGY-03.2 | 695f0c86 | R0 | Launchpad 2-milestone delivery specifications & acceptance gates |
 | 2026-10-29 | AGY-03.1 | 9bb60207 | R0 | add client onboarding runbook & intake manifest template |
 | 2026-10-29 | t_84ab9c1c | f1063f54 | R1 | DES-03 Mobbin design pass: portfolio index + case-study detail |
+| 2026-10-29 | t_7ef57f8a | 7a9deacd | R0 | feat(tools): add bilingual invoice, packing list and CMR generator at /tools/docs-generator |
