@@ -24,3 +24,4 @@
 | 2026-10-28 | t_6722d4c6 | 3e168598 | R0 | PLAT-13 uptime verification script and runbook |
 | 2026-10-29 | AGY-03.2 | 695f0c86 | R0 | Launchpad 2-milestone delivery specifications & acceptance gates |
 | 2026-10-29 | AGY-03.1 | 9bb60207 | R0 | add client onboarding runbook & intake manifest template |
+| 2026-10-29 | t_84ab9c1c | f1063f54 | R1 | DES-03 Mobbin design pass: portfolio index + case-study detail |
