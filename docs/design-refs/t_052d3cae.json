@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "slice": "t_052d3cae",
+  "references": [
+    {
+      "id": "ed7a8366-15fd-4469-a1bc-169ef71a7730",
+      "kind": "screen",
+      "app_name": "Cloudflare",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/ed7a8366-15fd-4469-a1bc-169ef71a7730",
+      "used_for": "app/(frontend)/launchpad/page.tsx",
+      "selected_by": "judge",
+      "score": 10.0,
+      "note": "Deliverables grid breakdown"
+    },
+    {
+      "id": "cbd48fc3-9b4f-4a91-9030-0e06a391e281",
+      "kind": "screen",
+      "app_name": "Obvious",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/cbd48fc3-9b4f-4a91-9030-0e06a391e281",
+      "used_for": "app/(frontend)/launchpad/page.tsx",
+      "selected_by": "weak",
+      "score": 6.0,
+      "note": "2-milestone delivery process timeline"
+    },
+    {
+      "id": "b1816033-29d0-4a84-b8bc-3b992a43a375",
+      "kind": "screen",
+      "app_name": "Apollo",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/b1816033-29d0-4a84-b8bc-3b992a43a375",
+      "used_for": "app/(frontend)/launchpad/page.tsx",
+      "selected_by": "weak",
+      "score": 6.0,
+      "note": "Who it is for qualification checklist"
+    },
+    {
+      "id": "f02c0558-4a87-4027-9a9f-717d7855455a",
+      "kind": "screen",
+      "app_name": "GetYourGuide",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/f02c0558-4a87-4027-9a9f-717d7855455a",
+      "used_for": "app/(frontend)/launchpad/page.tsx",
+      "selected_by": "judge",
+      "score": 10.0,
+      "note": "FAQ accordion"
+    },
+    {
+      "id": "5f70065b-e00b-4313-bfd5-c0090951a041",
+      "kind": "screen",
+      "app_name": "Bloom",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/5f70065b-e00b-4313-bfd5-c0090951a041",
+      "used_for": "app/(frontend)/launchpad/page.tsx",
+      "selected_by": "judge",
+      "score": 8.0,
+      "note": "Order CTA flagship anchor"
+    }
+  ]
+}
