@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "slice": "t_84ab9c1c",
+  "references": [
+    {
+      "id": "51008fc6-928a-47d5-9d12-1d9dca042ec1",
+      "kind": "screen",
+      "app_name": "Base44",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/51008fc6-928a-47d5-9d12-1d9dca042ec1",
+      "used_for": "components/blocks/PortfolioArchiveBlock.tsx",
+      "selected_by": "manual",
+      "score": 6.0,
+      "note": "Exporter proof cards and metric counters"
+    },
+    {
+      "id": "27ea4a5f-7e05-4ae4-99cb-c65a23c76180",
+      "kind": "screen",
+      "app_name": "Uxcel",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/27ea4a5f-7e05-4ae4-99cb-c65a23c76180",
+      "used_for": "components/blocks/ProjectThemedLayout.tsx",
+      "selected_by": "manual",
+      "score": 4.0,
+      "note": "Problem build result narrative sections and metrics band"
+    }
+  ]
+}
