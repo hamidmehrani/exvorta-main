@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Exvorta Launchpad Client Intake Manifest - Mock Client Drill",
+  "description": "Simulated mock client intake manifest for Exvorta Launchpad QA validation drill (Card AGY-03.3) under PLAT-11 zero-secrets policy.",
+  "version": "1.0.0",
+  "client": {
+    "slug": "gulf-horizon-trade",
+    "legalName": "Gulf Horizon Industrial Trading FZCO",
+    "jurisdiction": "AE",
+    "commercialRegistrationNumber": "CR-98765432",
+    "taxRegistrationNumber": "TRN-100456789012345",
+    "contact": {
+      "name": "Tariq Al-Mansoor",
+      "email": "t.almansoor@gulfhorizon-trade.example",
+      "phone": "+971-4-321-9870"
+    }
+  },
+  "branding": {
+    "colors": {
+      "primary": "#0B192C",
+      "accent": "#1E3E62",
+      "background": "#F5F5F7",
+      "surface": "#FFFFFF",
+      "border": "#E0E5EC"
+    },
+    "typography": {
+      "fontFamilySans": "Inter, sans-serif",
+      "fontFamilySerif": "Newsreader, serif",
+      "fontFamilyMono": "JetBrains Mono, monospace"
+    },
+    "assets": {
+      "logoLightUrl": "https://assets.exvorta.com/clients/gulf-horizon-trade/logo-light.svg",
+      "logoDarkUrl": "https://assets.exvorta.com/clients/gulf-horizon-trade/logo-dark.svg",
+      "faviconUrl": "https://assets.exvorta.com/clients/gulf-horizon-trade/favicon.ico",
+      "ogImageUrl": "https://assets.exvorta.com/clients/gulf-horizon-trade/og-preview.png"
+    }
+  },
+  "catalog": {
+    "hsChapters": [
+      {
+        "chapter": "72",
+        "title": "Iron and Steel",
+        "defaultOrigin": "EG",
+        "standardTariffDigits": 12
+      },
+      {
+        "chapter": "76",
+        "title": "Aluminium and articles thereof",
+        "defaultOrigin": "AE",
+        "standardTariffDigits": 12
+      },
+      {
+        "chapter": "31",
+        "title": "Fertilisers",
+        "defaultOrigin": "SA",
+        "standardTariffDigits": 12
+      }
+    ],
+    "featuredTradeLanes": [
+      {
+        "laneId": "LANE-AE-EG-SEA",
+        "originPort": "JEA",
+        "destinationPort": "SOK",
+        "transitMode": "sea",
+        "requiresAci": true
+      },
+      {
+        "laneId": "LANE-SA-AE-LAND",
+        "originPort": "DMM",
+        "destinationPort": "DXB",
+        "transitMode": "land",
+        "requiresSaber": true
+      }
+    ],
+    "rfqRouting": {
+      "recipientEmails": [
+        "rfq@gulfhorizon-trade.example",
+        "tenders@gulfhorizon-trade.example"
+      ],
+      "notificationWebhookUrl": "https://vault.internal/placeholder/webhook"
+    }
+  },
+  "deployment": {
+    "subdomain": "gulf-horizon.exvorta.trade",
+    "customDomain": "trade.gulfhorizon-industrial.example",
+    "vercelTeamId": "team_exvorta_launchpad",
+    "environment": "staging",
+    "secretsVault": {
+      "vaultProvider": "1password",
+      "vaultItemReference": "op://Launchpad-Clients/gulf-horizon-trade/staging",
+      "secretKeysRequired": [
+        "DATABASE_URI",
+        "DATABASE_URI_UNPOOLED",
+        "PAYLOAD_SECRET",
+        "RESEND_API_KEY",
+        "CLOUDINARY_API_SECRET"
+      ]
+    }
+  }
+}
