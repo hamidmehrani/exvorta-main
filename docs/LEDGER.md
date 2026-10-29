@@ -23,3 +23,4 @@
 | 2026-10-28 | t_7c627195 | c3412b35 | R1 | PLAT-12 formalize Arabic locale architecture, contracts, and tests |
 | 2026-10-28 | t_6722d4c6 | 3e168598 | R0 | PLAT-13 uptime verification script and runbook |
 | 2026-10-29 | AGY-03.2 | 695f0c86 | R0 | Launchpad 2-milestone delivery specifications & acceptance gates |
+| 2026-10-29 | AGY-03.1 | 9bb60207 | R0 | add client onboarding runbook & intake manifest template |
