@@ -15,6 +15,7 @@ export const STATIC_ROUTES: readonly StaticRouteConfig[] = [
   { path: '', priority: 1.0, changeFrequency: 'daily' },
   { path: '/web', priority: 0.9, changeFrequency: 'weekly' },
   { path: '/launchpad', priority: 0.9, changeFrequency: 'weekly' },
+  { path: '/pricing', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/portfolio', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/ecosystem', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/insights', priority: 0.8, changeFrequency: 'daily' },
