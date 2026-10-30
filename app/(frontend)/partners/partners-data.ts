@@ -50,6 +50,12 @@ export interface DirectPartnerContact {
   channel: string
 }
 
+export interface CommissionHighlight {
+  value: string
+  label: string
+  description?: string
+}
+
 export const PARTNER_CATEGORIES: readonly PartnerCategory[] = [
   {
     id: 'tax-consultants',
@@ -98,8 +104,8 @@ export const COMMISSION_TIERS: readonly CommissionTier[] = [
     code: '[ TIER 01 ]',
     tier: 'TIER 01',
     name: 'Starter Platform',
-    projectValue: '$2,500',
-    partnerShare: '$500',
+    projectValue: '$1,500',
+    partnerShare: '$300',
     rate: '20%',
     turnaround: '5-day turnaround',
     description:
@@ -116,8 +122,8 @@ export const COMMISSION_TIERS: readonly CommissionTier[] = [
     code: '[ TIER 02 ]',
     tier: 'TIER 02',
     name: 'Growth Platform',
-    projectValue: '$5,000',
-    partnerShare: '$1,000',
+    projectValue: '$3,000',
+    partnerShare: '$600',
     rate: '20%',
     turnaround: '10-day turnaround',
     description:
@@ -308,3 +314,26 @@ export const DIRECT_PARTNER_CONTACT: DirectPartnerContact = {
   desk: 'Exvorta Partner Desk',
   channel: 'Direct Partner Inquiries & Introductions',
 } as const
+
+export const COMMISSION_HIGHLIGHTS: readonly CommissionHighlight[] = [
+  {
+    value: '20%',
+    label: 'Revenue Share',
+    description: 'Uncapped rev-share on all project tiers and add-ons',
+  },
+  {
+    value: '5-10 Days',
+    label: 'Delivery SLA',
+    description: 'Guaranteed turnaround for client deployment',
+  },
+  {
+    value: '< 14 Days',
+    label: 'Payout Velocity',
+    description: 'Net-15 post-settlement electronic wire',
+  },
+  {
+    value: 'Zero Risk',
+    label: 'Execution Assured',
+    description: 'Institutional delivery guarantee with zero partner liability',
+  },
+] as const
