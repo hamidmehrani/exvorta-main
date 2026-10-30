@@ -36,3 +36,4 @@
 | 2026-10-30 | t_aa994a73 | 41991493 | R1 | PG-01 Pricing & packages page |
 | 2026-10-30 | INS-02 | 0f48b6f1 | R0 | docs(research): 12-month cross-border content backlog (INS-02) |
 | 2026-10-30 | t_cfc26138 | 7f1abdd9 | R0 | PG-07 Partner program page (tax consultants, clearing agents, free-zone setup agencies) |
+| 2026-10-30 | t_532db4e8 | 3f7b2f4a | R1 | PG-08 Contact page upgrade: project brief form + expectations |
