@@ -1,32 +1,33 @@
-# Agent Notes — PG-07: Partner program page (tax consultants, clearing agents, free-zone setup agencies)
+# Agent Notes — TOOL-5: Egypt ACI & KSA SABER Corridor Compliance Engine
 
-- **Card:** `PG-07` (Task `t_cfc26138`)
+- **Card:** `TOOL-5` (Task `t_99baf9e9`)
 - **Assignee:** `exvorta-builder`
-- **Risk Level:** `R0`
-- **Branch:** `card/pg-07-partners`
-- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_cfc26138`
+- **Risk Level:** `R1`
+- **Branch:** `card/tool-5-aci-saber`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_99baf9e9`
 
 ## Objectives & Scope
-1. Implement institutional Channel Partner Program page (`/partners`) targeting key professional intermediaries:
-   - Tax Consultants & Corporate Tax Advisors
-   - Clearing Agents & Customs Brokers
-   - Free-Zone Setup & Company Formation Agencies
-2. Institutional 20% flat revenue share across all Exvorta web platform tiers (Starter $1,500 / $300 share, Growth $3,000 / $600 share, Custom Enterprise $10,000+ / $2,000+ share, Retainers/Add-ons).
-3. Client-side interactive accreditation form (`PartnerApplicationForm.tsx`) using `useActionState`, tokenized design system primitives, honeypot spam detection, and `submitLeadAction` integration.
-4. Server-side page layout (`page.tsx`) with metadata, OpenGraph, JSON-LD schemas (`FAQPage`, `Service`), structured commission ledger, 4-step referral workflow, value stack, and FAQ.
-5. Register `/partners` in `app/sitemap.ts` (`STATIC_ROUTES` priority 0.8, weekly).
-6. Document route contract and submission semantics in `docs/CONTRACTS.md`.
-7. Author comprehensive Vitest test suite (`__tests__/partners.test.ts`) covering partner categories, commission calculations, form rendering, ARIA semantics, and sitemap registration.
+1. Implement pure TypeScript corridor compliance validation engine in `lib/tools/aci-saber.ts`:
+   - Egypt ACI (Nafeza / CargoX): Sea freight mandate (1 Oct 2021, Decree 38/2021), Air freight mandate (1 Jan 2026), 19-digit ACID validation (marked provisional pending forwarder confirmation), Egyptian Importer Tax ID validation (9 digits), CargoX foreign exporter account requirements.
+   - KSA SABER (SASO / FASAH): Regulated (PCoC 1-year validity with accredited CAB and ISO/IEC 17025 test report) vs Non-regulated (SDoC), mandatory SCoC for 100% of shipments linked to FASAH.
+   - Readiness math (0-100 score, READY / AT_RISK / BLOCKED verdict) and state serialization for query string sharing.
+2. Author comprehensive Vitest test suite in `lib/tools/aci-saber.test.ts`:
+   - 17 unit tests verifying ACID format validation, Tax ID check, SABER certificate format check, item generation per corridor/mode/regulation, readiness score calculation, and URL state serialization/deserialization.
+3. Build interactive UI in `app/(frontend)/tools/corridor-checker/`:
+   - English route (`page.tsx`) & Client Component (`CorridorChecker.tsx`): Interactive corridor switcher, mode toggle (sea/air), product regulation selector, live identifier validators, filterable checklist with Ready/Pending/Missing toggles and consequence highlights, URL sharing, and A4 print stylesheet (`@media print`).
+   - Arabic RTL mirror route (`ar/page.tsx`) & Client Component (`ar/CorridorCheckerAr.tsx`): Fully localized RTL view with Arabic typography, labels, statutory references, and print layout.
+   - Redirect aliases: `app/(frontend)/tools/egypt-aci/page.tsx` and `app/(frontend)/tools/saber-compliance/page.tsx`.
+   - Lead/Waitlist capture: Integration with `submitWaitlist` and `submitLead` permitted for `'Corridor-Checker'`.
+4. Register static routes in `app/sitemap.ts` (`/tools/corridor-checker`, `/tools/corridor-checker/ar`).
 
 ## Verification Checklist
 - [x] Orient worktree and confirm baseline dependencies (`bash scripts/agent/worktree-setup.sh`).
-- [x] Author structured partner data & constants in `app/(frontend)/partners/partners-data.ts`.
-- [x] Build accessible `PartnerApplicationForm` component in `app/(frontend)/partners/PartnerApplicationForm.tsx`.
-- [x] Build institutional `/partners` landing page in `app/(frontend)/partners/page.tsx`.
-- [x] Register `/partners` route in `app/sitemap.ts`.
-- [x] Document route contract in `docs/CONTRACTS.md`.
-- [x] Add comprehensive test coverage in `__tests__/partners.test.ts`.
-- [x] Run full test suite (`pnpm exec vitest run` -> 137 passed).
-- [x] Run TypeScript check (`pnpm exec tsc --noEmit` -> 0 errors).
-- [x] Run linter (`pnpm lint` -> 0 errors).
-- [x] Run factory gate (`CARD_RISK=R0 bash scripts/agent/gate.sh` -> GATE OK).
+- [x] Implement core logic in `lib/tools/aci-saber.ts`.
+- [x] Implement unit tests in `lib/tools/aci-saber.test.ts`.
+- [x] Implement UI in `app/(frontend)/tools/corridor-checker/` (EN and AR).
+- [x] Configure redirects `/tools/egypt-aci` and `/tools/saber-compliance`.
+- [x] Update `app/sitemap.ts` and `__tests__/seo.test.ts`.
+- [x] Run test suite: `pnpm test` (all 168 tests pass across repository).
+- [x] Run TypeScript check: `pnpm exec tsc --noEmit` (0 errors).
+- [x] Run linter: `pnpm lint` (0 errors).
+- [x] Run factory gate: `CARD_RISK=R1 bash scripts/agent/gate.sh` -> `GATE OK`.
