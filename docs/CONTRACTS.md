@@ -107,6 +107,7 @@ Every builder and orchestrator card must adhere strictly to these conventions:
   - Trade Tools Index: `/tools` <-> `/tools/ar`
   - Pricing & Engagement: `/pricing` <-> `/pricing/ar`
   - Incoterm & CBM Calculator: `/tools/incoterm-cbm` <-> `/tools/incoterm-cbm/ar`
+  - GCC HS 8→12-Digit Converter & Duty Lookup: `/tools/hs-lookup` <-> `/tools/hs-lookup/ar` (with `/tools/hs-converter` redirect alias)
 - **Sitemap Registration:** All deployed static Arabic mirror routes must be registered in `STATIC_ROUTES` within `app/sitemap.ts` alongside their English counterparts, maintaining crawl-directive consistency with `robots.txt` (never indexing disallowed paths like `/admin`, `/login`, or `/api`).
 
 ### 2. Bidirectional Alternates Contract (hreflang)
@@ -172,3 +173,20 @@ To guarantee high-speed responsiveness across GCC mobile networks and desktop cl
 - **LCP (Largest Contentful Paint):** <= 2.5 seconds on simulated GCC 4G mobile profiles.
 - **CLS (Cumulative Layout Shift):** <= 0.1 across all standard viewport widths.
 - **Asset Transfer Budgets:** Initial HTML document <= 50 KB compressed; critical font payload <= 150 KB.
+
+---
+
+## 6. Trade Tools Contracts (TOOL-4: HS Code Converter)
+
+### 1. Pure Calculation & Tariff Conversion Engine (`lib/tools/hs-converter.ts`)
+- **`convert8to12(code8: string, jurisdiction?: Jurisdiction)`**: Expands 8-digit GCC base tariff codes into 12-digit national lines for UAE (Notice 10/2025) and KSA (ZATCA Resolution 1447-88-5).
+- **`calculateDutyAndTaxes(params: DutyCalculationParams)`**: Pure CIF-based calculation of customs duties, excise tax, and VAT with zero network side effects.
+- **`searchTariff(query: string, jurisdiction?: Jurisdiction)`**: Deterministic search engine supporting 6/8/12-digit codes and bilingual (English/Arabic) commodity queries.
+- **Statutory Datasets**: Embedded static data grounded in Dubai Customs Notice 10/2025, UAE Cabinet Resolution 119/2024, and KSA ZATCA Resolution 1447-88-5.
+
+### 2. Route Architecture & Localization
+- **English Canonical Route**: `/tools/hs-lookup` (`app/(frontend)/tools/hs-lookup/page.tsx`).
+- **Arabic Mirror Route**: `/tools/hs-lookup/ar` (`app/(frontend)/tools/hs-lookup/ar/page.tsx`) with `dir="rtl" lang="ar"`, CSS logical properties, and bidirectional `alternates` metadata.
+- **Parity Alias Route**: `/tools/hs-converter` (`app/(frontend)/tools/hs-converter/page.tsx`) redirecting to `/tools/hs-lookup`.
+- **Sitemap Registration**: Both `/tools/hs-lookup` and `/tools/hs-lookup/ar` registered in `STATIC_ROUTES` (`app/sitemap.ts`).
+

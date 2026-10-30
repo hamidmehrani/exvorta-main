@@ -1,32 +1,32 @@
-# Agent Notes — PG-07: Partner program page (tax consultants, clearing agents, free-zone setup agencies)
+# Agent Notes — TOOL-4: GCC HS 8→12-digit converter & duty lookup
 
-- **Card:** `PG-07` (Task `t_cfc26138`)
+- **Card:** `TOOL-4` (Task `t_b3094344`)
 - **Assignee:** `exvorta-builder`
-- **Risk Level:** `R0`
-- **Branch:** `card/pg-07-partners`
-- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_cfc26138`
+- **Risk Level:** `R0` (Additive)
+- **Branch:** `card/tool-4-hs-converter`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_b3094344`
 
 ## Objectives & Scope
-1. Implement institutional Channel Partner Program page (`/partners`) targeting key professional intermediaries:
-   - Tax Consultants & Corporate Tax Advisors
-   - Clearing Agents & Customs Brokers
-   - Free-Zone Setup & Company Formation Agencies
-2. Institutional 20% flat revenue share across all Exvorta web platform tiers (Starter $1,500 / $300 share, Growth $3,000 / $600 share, Custom Enterprise $10,000+ / $2,000+ share, Retainers/Add-ons).
-3. Client-side interactive accreditation form (`PartnerApplicationForm.tsx`) using `useActionState`, tokenized design system primitives, honeypot spam detection, and `submitLeadAction` integration.
-4. Server-side page layout (`page.tsx`) with metadata, OpenGraph, JSON-LD schemas (`FAQPage`, `Service`), structured commission ledger, 4-step referral workflow, value stack, and FAQ.
-5. Register `/partners` in `app/sitemap.ts` (`STATIC_ROUTES` priority 0.8, weekly).
-6. Document route contract and submission semantics in `docs/CONTRACTS.md`.
-7. Author comprehensive Vitest test suite (`__tests__/partners.test.ts`) covering partner categories, commission calculations, form rendering, ARIA semantics, and sitemap registration.
+1. Implement pure calculation and tariff lookup engine (`lib/tools/hs-converter.ts`) grounded in GCC Unified Customs Tariff (8-digit) and national 12-digit extensions for UAE (Dubai Customs Notice 10/2025, Cabinet Resolution 119/2024) and KSA (ZATCA Resolution 1447-88-5).
+2. Author comprehensive Vitest test suite (`lib/tools/hs-converter.test.ts`) covering 8-to-12 digit conversion, code normalization, CIF duty/VAT/excise calculations, and search across codes and bilingual descriptions (29 tests).
+3. Author interactive client UI component (`app/(frontend)/tools/hs-lookup/HsConverterTool.tsx`) with search, jurisdiction filters, quick-select preset chips, 8→12 digit breakdown panel, dynamic CIF duty estimator, controlling authority notes, statutory citation badges, and URL state synchronization.
+4. Author server page route (`app/(frontend)/tools/hs-lookup/page.tsx`) with SEO metadata, bidirectional hreflang alternates, `<Suspense>` boundary, and closing lead-gen CTA band.
+5. Author Arabic mirror (`app/(frontend)/tools/hs-lookup/ar/HsConverterToolAr.tsx` and `app/(frontend)/tools/hs-lookup/ar/page.tsx`) with `dir="rtl" lang="ar"`, CSS logical properties (`ms-`, `me-`, `ps-`, `pe-`, `text-start`), and professional Arabic customs terminology.
+6. Author parity redirect alias (`app/(frontend)/tools/hs-converter/page.tsx`) forwarding to `/tools/hs-lookup`.
+7. Author route and sitemap tests (`__tests__/tools/hs-lookup.test.ts`).
+8. Register `/tools/hs-lookup` and `/tools/hs-lookup/ar` in `app/sitemap.ts` (`STATIC_ROUTES`).
+9. Document tool contract in `docs/CONTRACTS.md`.
 
 ## Verification Checklist
 - [x] Orient worktree and confirm baseline dependencies (`bash scripts/agent/worktree-setup.sh`).
-- [x] Author structured partner data & constants in `app/(frontend)/partners/partners-data.ts`.
-- [x] Build accessible `PartnerApplicationForm` component in `app/(frontend)/partners/PartnerApplicationForm.tsx`.
-- [x] Build institutional `/partners` landing page in `app/(frontend)/partners/page.tsx`.
-- [x] Register `/partners` route in `app/sitemap.ts`.
-- [x] Document route contract in `docs/CONTRACTS.md`.
-- [x] Add comprehensive test coverage in `__tests__/partners.test.ts`.
-- [x] Run full test suite (`pnpm exec vitest run` -> 137 passed).
-- [x] Run TypeScript check (`pnpm exec tsc --noEmit` -> 0 errors).
-- [x] Run linter (`pnpm lint` -> 0 errors).
-- [x] Run factory gate (`CARD_RISK=R0 bash scripts/agent/gate.sh` -> GATE OK).
+- [x] Brief pure calculation engine and tests via Antigravity worker (`lib/tools/hs-converter.ts`, `lib/tools/hs-converter.test.ts`).
+- [x] Brief frontend UI components and App Router pages via Antigravity worker (`HsConverterTool.tsx`, `page.tsx`, `HsConverterToolAr.tsx`, `ar/page.tsx`, `hs-converter/page.tsx`).
+- [x] Register routes in `app/sitemap.ts`.
+- [x] Document route and engine contracts in `docs/CONTRACTS.md`.
+- [x] Author metadata and sitemap tests in `__tests__/tools/hs-lookup.test.ts`.
+- [x] Verify tests: `pnpm exec vitest run lib/tools/hs-converter.test.ts` (29 passed).
+- [x] Verify tests: `pnpm exec vitest run __tests__/tools/hs-lookup.test.ts` (5 passed).
+- [x] Verify full test suite: `pnpm exec vitest run` (159 passed).
+- [x] Verify TypeScript: `pnpm exec tsc --noEmit` (0 errors).
+- [x] Verify Lint: `pnpm lint` (0 errors).
+- [x] Run factory gate: `CARD_RISK=R0 bash scripts/agent/gate.sh` (GATE OK).
