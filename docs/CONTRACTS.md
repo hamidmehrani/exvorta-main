@@ -150,3 +150,24 @@ alternates: {
    - **Sans Fallback:** Uses `--font-sans` with high-legibility Arabic system fallbacks (`system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif`) and self-hosted Vazirmatn fallbacks, ensuring crisp letterforms for Arabic trade terms while preserving `--font-inter` for Latin scripts.
    - **Serif Accents:** Latin headings retain Playfair Display (`--font-playfair`), while Arabic headings gracefully fall back to clean, high-contrast typography without clipping, unintended line-height inflation, or layout shifts.
    - **Monospace Enclaves:** Code blocks, numeric container IDs, and calculation metrics retain `--font-mono` wrapped in `dir="ltr"` to preserve mathematical and tabular legibility.
+
+---
+
+## 5. Performance Budgets & Core Web Vitals (PLAT-05)
+
+To guarantee high-speed responsiveness across GCC mobile networks and desktop clients, all routes must satisfy these performance contracts:
+
+### 1. Font Loading & Self-Hosting
+- **Zero Remote Font Dependencies:** No external font requests to Google Fonts (`fonts.googleapis.com` or `fonts.gstatic.com`).
+- **Local Variable Fonts:** The Persian typeface Vazirmatn is self-hosted at `public/fonts/Vazirmatn-Variable.woff2` and configured via `next/font/local` in `app/(frontend)/layout.tsx` with `display: 'swap'` and `--font-vazirmatn` variable binding.
+- **FOUT/CLS Prevention:** Font metrics and fallback serif/sans stacks are declared to prevent cumulative layout shift during font swaps.
+
+### 2. Image Optimization & Layout Shift Prevention
+- **Mandatory `sizes` Attribute:** Every `<Image>` using the `fill` layout must specify an accurate `sizes` attribute matching its responsive column/container bounds (e.g., `sizes="(min-width: 1024px) 50vw, 100vw"`). Omitting `sizes` triggers Next.js performance warnings and degrades responsive payload delivery.
+- **LCP Image Priority:** Above-the-fold hero and featured video poster images must include `priority` to accelerate Largest Contentful Paint.
+- **CLS Guarantee:** All image containers must enforce fixed aspect ratios (e.g. `aspect-[16/9]`, `aspect-[4/3]`, `aspect-video`) or explicit `width`/`height` to guarantee zero visual shift upon load.
+
+### 3. Core Web Vitals Budgets
+- **LCP (Largest Contentful Paint):** <= 2.5 seconds on simulated GCC 4G mobile profiles.
+- **CLS (Cumulative Layout Shift):** <= 0.1 across all standard viewport widths.
+- **Asset Transfer Budgets:** Initial HTML document <= 50 KB compressed; critical font payload <= 150 KB.

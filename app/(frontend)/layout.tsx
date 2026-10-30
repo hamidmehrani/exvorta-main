@@ -29,6 +29,13 @@ const inter = localFont({
   weight: '100 900',
 })
 
+const vazirmatn = localFont({
+  src: '../../public/fonts/Vazirmatn-Variable.woff2',
+  variable: '--font-vazirmatn',
+  display: 'swap',
+  weight: '100 900',
+})
+
 // The design system sets headings in Playfair 600. The single 600 file is
 // declared for the 600–700 range so `font-bold` headings use the same cut
 // instead of synthesising a bold (or downloading a second, near-identical file).
@@ -100,7 +107,7 @@ export default async function FrontendLayout({
     : null
 
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${playfair.variable} ${vazirmatn.variable}`} suppressHydrationWarning>
       <head>
         <RevealScript />
         <noscript>

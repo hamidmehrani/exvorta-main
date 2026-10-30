@@ -44,7 +44,7 @@ function VideoEmbed({ url, poster }: { url: string; poster?: Media }) {
       ) : (
         <button type="button" onClick={() => setStarted(true)} className="absolute inset-0 w-full h-full cursor-pointer group">
           {poster && typeof poster === 'object' && poster.url ? (
-            <Image src={poster.url} alt={poster.alt || 'Video cover'} fill priority className="object-cover transition-transform duration-700 group-hover:scale-[1.02]" />
+            <Image src={poster.url} alt={poster.alt || 'Video cover'} fill priority sizes="(min-width: 1152px) 1152px, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.02]" />
           ) : (
             <div className="absolute inset-0 bg-[#0A0A0A]" />
           )}

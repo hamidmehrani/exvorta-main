@@ -79,6 +79,7 @@ export const InsightsArchive: React.FC<{ posts?: Post[] }> = ({ posts }) => {
                         src={post.coverImage.url}
                         alt={post.coverImage.alt || post.title}
                         fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     ) : (

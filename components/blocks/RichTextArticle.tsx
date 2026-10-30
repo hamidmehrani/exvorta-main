@@ -53,7 +53,7 @@ export const RichTextArticle: React.FC<RichTextArticleProps> = ({ post, content,
               {typeof post.coverImage === 'object' && post.coverImage?.url && (
                 <Reveal delay={0.25} y={24} className="mb-16">
                   <div className="w-full aspect-video border border-black/10 relative overflow-hidden">
-                    <Image src={post.coverImage.url} alt={post.coverImage.alt || post.title} className="object-cover" fill priority />
+                    <Image src={post.coverImage.url} alt={post.coverImage.alt || post.title} className="object-cover" fill priority sizes="(min-width: 1024px) 1000px, 100vw" />
                   </div>
                 </Reveal>
               )}

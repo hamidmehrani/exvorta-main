@@ -54,6 +54,7 @@ export const TeamShowcaseBlock: React.FC<Props> = (props) => {
                       src={image.url}
                       alt={image.alt || member.name || 'Team member'}
                       fill
+                      sizes="(min-width: 1024px) 40vw, 100vw"
                       className="object-cover grayscale contrast-125 rounded-none"
                     />
                   ) : (

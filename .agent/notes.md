@@ -1,26 +1,19 @@
-# Agent Notes — PLAT-02: Sentry wiring, DSN, error boundary, release tagging
+# Agent Notes — PLAT-05: Performance pass: fonts, images, budgets
 
-- **Card:** `PLAT-02` (Task `t_b51690ce`)
+- **Card:** `PLAT-05` (Task `t_95d07e32`)
 - **Assignee:** `exvorta-builder`
-- **Risk Level:** `R0` (effective risk confirmed by owner: monitoring/SDK only, no infra changes)
-- **Branch:** `card/plat-02-sentry`
-- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_b51690ce`
+- **Risk Level:** `R0`
+- **Branch:** `card/plat-05-perf`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_95d07e32`
 
-## Requirements & Scope
-1. Sentry error monitoring layer with optional DSN via `SENTRY_DSN` env var (inactive when unset, non-blocking).
-2. Git SHA release tagging in Sentry envelope payload (`process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || 'development'`).
-3. Connect `reportError` in `app/(frontend)/error.tsx`.
-4. Create `app/global-error.tsx` (root error boundary for App Router).
-5. Unit tests with Vitest verifying envelope dispatch and graceful no-op when `SENTRY_DSN` is unset.
-6. Zero paid SaaS or self-hosted dependencies; keep Vitest test runner.
+## Scope (Owner Decision)
+- Scope is strictly performance optimizations:
+  1. Self-host local Vazirmatn font (`public/fonts/Vazirmatn-Variable.woff2`) via `next/font/local` in `app/(frontend)/layout.tsx` / `app/globals.css`.
+  2. Optimize image rendering via `next/image` with explicit `sizes` across components to eliminate layout shifts and warnings.
+  3. Document performance budgets (LCP/CLS) in `docs/CONTRACTS.md`.
+- Vitest, Sentry, Umami, and SEO tasks are excluded from this card.
 
-## Progress & Completed Actions
-- [x] Initialized card context and confirmed owner unblock instructions (R0 risk, no paid SaaS, Vitest test runner).
-- [x] Verified existing worktree environment, pnpm dependencies, and vitest baseline (5 tests passing).
-- [x] Inspected `lib/error-reporting.ts`, `app/(frontend)/error.tsx`, and `docs/sentry-setup.md`.
-- [x] Prepared worker brief in `.agent/brief-plat-02.md` for `agy-pool` dispatch.
-
-## Next Steps
-- Dispatch worker turn via `agy-pool` to implement release tagging in `lib/error-reporting.ts`, `app/(frontend)/error.tsx`, `app/global-error.tsx`, and vitest unit tests in `__tests__/error-reporting.test.ts`.
-- Run vitest and gate: `CARD_RISK=R0 bash scripts/agent/gate.sh`.
-- Push branch and hand off via `kanban_request_review`.
+## Status & Progress
+- Font asset downloaded to `public/fonts/Vazirmatn-Variable.woff2`.
+- Worktree rebased onto origin/main to clear divergence false positives.
+- Resolving merge conflicts in `.agent/notes.md` and `docs/CONTRACTS.md`.

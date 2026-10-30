@@ -11,7 +11,7 @@
    working. Values must be literal — `--color-x: var(--color-x)` is circular
    and Tailwind v4 drops the token entirely.
    Fonts come from next/font (see app/(frontend)/layout.tsx) which defines
-   --font-inter / --font-playfair on <html>; no @font-face lives here, so each
+   --font-inter / --font-playfair / --font-vazirmatn on <html>; no @font-face lives here, so each
    font file is downloaded exactly once.
    ─────────────────────────────────────────────────────────────────────────── */
 @theme static {
@@ -61,8 +61,8 @@
   --color-danger: #DC2626;
 
   /* Typography */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-inter), var(--font-vazirmatn), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-playfair), var(--font-vazirmatn), Georgia, serif;
   --font-mono: ui-monospace, 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
 
   /* Type scale — fluid, mirrors DESIGN.md (display 84 → 48, headline 60 → 36,

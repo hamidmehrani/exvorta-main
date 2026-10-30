@@ -94,7 +94,7 @@ export function PortfolioArchiveLayout({ projects }: { projects?: Project[] }) {
                     </div>
                     <div className="lg:col-span-6 w-full aspect-[16/9] bg-brand-obsidian/5 overflow-hidden relative">
                       {heroImageUrl ? (
-                        <Image alt={project.title} className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-in-out" src={heroImageUrl} fill />
+                        <Image alt={project.title} className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-in-out" src={heroImageUrl} fill sizes="(min-width: 1024px) 50vw, 100vw" />
                       ) : (
                         <div className="w-full h-full bg-brand-obsidian/5" />
                       )}
