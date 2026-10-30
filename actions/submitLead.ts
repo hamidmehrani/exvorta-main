@@ -85,16 +85,16 @@ export async function submitLead(data: LeadSubmission) {
 }
 
 export async function submitLeadAction(prevState: unknown, formData: FormData) {
-  const source = formData.get('source') as 'Waitlist' | 'RFQ'
+  const source = (formData.get('source') as 'Waitlist' | 'RFQ') || 'RFQ'
   const email = formData.get('email') as string
-  const company = formData.get('company') as string | undefined
+  const company = (formData.get('company') as string | undefined)?.trim() || undefined
   const botField = formData.get('bot-field') as string | undefined
   const turnstileToken = formData.get('cf-turnstile-response') as string | undefined
 
   const entries = Array.from(formData.entries())
   const extraData: Record<string, string> = {}
   for (const [key, value] of entries) {
-    if (!['source', 'email', 'company', 'bot-field', 'cf-turnstile-response'].includes(key)) {
+    if (!['source', 'email', 'company', 'bot-field', 'cf-turnstile-response'].includes(key) && !key.startsWith('$')) {
       extraData[key] = value.toString()
     }
   }

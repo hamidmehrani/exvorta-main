@@ -1,4 +1,43 @@
-# Agent Notes — PG-07: Partner program page (tax consultants, clearing agents, free-zone setup agencies)
+# Agent Notes — PG-08 Contact page upgrade: project brief form + expectations
+
+- **Card:** `PG-08` (Task `t_532db4e8`)
+- **Assignee:** `exvorta-builder`
+- **Risk Level:** `R1`
+- **Branch:** `card/pg-08-contact`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_532db4e8`
+
+## Objectives & Scope
+1. Transform `/contact` contact form into a structured project brief form.
+2. Form fields:
+   - Full Name (`name`, required)
+   - Business Email (`email`, required)
+   - Company Name (`company`, required)
+   - Type of Trade (`tradeType`, required: Agricultural Commodities & Food, Building Materials & Construction, Chemicals & Polymers, Consumer / FMCG / Retail, Industrial Equipment & Machinery, Metals & Minerals, Textiles & Apparel, General Trading & Commodities, Other / Specialized)
+   - Current Website / Digital Presence (`currentSite`, optional)
+   - Budget Band (`budgetBand`, required: $25k–$50k, $50k–$100k, $100k–$250k, $250k+)
+   - Target Timeline (`timeline`, required: Immediate (< 1 mo), 1–3 months, 3–6 months, Exploring / Planning)
+   - Project Scope & Requirements (`message`, required)
+   - Preferred Communication (`callPreference`, required: Async Review Only [default], Request Intro Call)
+3. Async-first expectation copy:
+   - Clear expectation note: "Strictly async-first: Every brief is evaluated directly by senior engineers within 1 business day. No unsolicited sales calls and zero spam."
+4. Structured success state ("What happens next"):
+   - 3-step timeline:
+     - 01: Engineering Review (Direct analysis of technical requirements and trade constraints within 1 business day)
+     - 02: Architectural Scope & Estimate (Detailed written response with fixed-price or milestone estimates)
+     - 03: Alignment (Direct kickoff or async specification review per communication preference)
+5. Integration & Security:
+   - Passes extra brief fields via `actions/submitLead.ts` into Payload lead record JSON `payload` object.
+   - Defaults `source` to `'RFQ'` if not supplied or empty.
+   - Cloudflare Turnstile token validation and honeypot (`bot-field`).
+   - WCAG-AA compliant accessible form controls, labels, and status announcements.
+6. Verification & Test Coverage:
+   - Unit tests added in `__tests__/contact-lead.test.ts` exercising `submitLeadAction` payload extraction, bot-field rejection, email validation, and Turnstile checking.
+   - Full test suite passing (131 tests).
+   - Gate verification passing cleanly (`GATE OK` under `CARD_RISK=R1`).
+
+---
+
+# Previous Notes — PG-07: Partner program page (tax consultants, clearing agents, free-zone setup agencies)
 
 - **Card:** `PG-07` (Task `t_cfc26138`)
 - **Assignee:** `exvorta-builder`
