@@ -38,26 +38,67 @@ export default function ContactForm() {
   return (
     <form ref={formRef} action={formAction} className="flex w-full max-w-lg flex-col gap-6 text-start">
       {/* Invisible Honeypot Field */}
-      <input type="text" name="bot-field" className="hidden" tabIndex={-1} autoComplete="off" />
+      <input type="text" name="bot-field" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
       <div>
         <label htmlFor="name" className="field-label">Name</label>
-        <input id="name" name="name" type="text" required autoComplete="name" className="field" placeholder="John Doe" />
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          aria-required="true"
+          aria-invalid={Boolean(state.error)}
+          aria-describedby={state.error ? 'contact-form-error' : undefined}
+          autoComplete="name"
+          className="field"
+          placeholder="John Doe"
+        />
       </div>
 
       <div>
         <label htmlFor="email" className="field-label">Email</label>
-        <input id="email" name="email" type="email" required autoComplete="email" className="field" placeholder="john@company.com" />
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          aria-required="true"
+          aria-invalid={Boolean(state.error)}
+          aria-describedby={state.error ? 'contact-form-error' : undefined}
+          autoComplete="email"
+          className="field"
+          placeholder="john@company.com"
+        />
       </div>
 
       <div>
         <label htmlFor="phone" className="field-label">Phone (optional)</label>
-        <input id="phone" name="phone" type="tel" autoComplete="tel" className="field" placeholder="+1 (555) 000-0000" />
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          aria-invalid={Boolean(state.error)}
+          aria-describedby={state.error ? 'contact-form-error' : undefined}
+          autoComplete="tel"
+          className="field"
+          placeholder="+1 (555) 000-0000"
+        />
       </div>
 
       <div>
         <label htmlFor="message" className="field-label">Message</label>
-        <textarea id="message" name="message" required rows={4} className="field resize-y" placeholder="How can we help your business scale?" />
+        <textarea
+          id="message"
+          name="message"
+          required
+          aria-required="true"
+          aria-invalid={Boolean(state.error)}
+          aria-describedby={state.error ? 'contact-form-error' : undefined}
+          rows={4}
+          className="field resize-y"
+          placeholder="How can we help your business scale?"
+        />
       </div>
 
       {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
@@ -76,7 +117,7 @@ export default function ContactForm() {
           </p>
         )}
         {state.error && (
-          <p role="alert" className="border border-danger/30 bg-danger/10 p-4 text-center font-mono text-xs uppercase tracking-widest text-danger">
+          <p id="contact-form-error" role="alert" className="border border-danger/30 bg-danger/10 p-4 text-center font-mono text-xs uppercase tracking-widest text-danger">
             {state.error}
           </p>
         )}
