@@ -30,3 +30,4 @@
 | 2026-10-29 | t_052d3cae | 8dae81c8 | R1 | DES-07 Mobbin design pass: Launchpad page |
 | 2026-10-29 | t_eef1da06 | 152df15f | R0 | RES-04 Payment rails decision memo (Dubai entity) |
 | 2026-10-29 | t_f12e6ec3 | f2d4afd2 | R0 | - |
+| 2026-10-30 | t_b51690ce | 7c77c5a2 | R0 | PLAT-02 Sentry wiring: DSN, source maps, error boundary, release tagging |
