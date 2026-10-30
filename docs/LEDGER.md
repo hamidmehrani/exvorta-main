@@ -34,3 +34,4 @@
 | 2026-10-30 | t_95d07e32 | 76701bcd | R0 | feat(perf): self-host vazirmatn font, optimize image sizes, and record budgets (PLAT-05) |
 | 2026-10-30 | PLAT-08 | e4487cca | R1 | PLAT-08 404/500 + empty/error states per design system |
 | 2026-10-30 | t_aa994a73 | 41991493 | R1 | PG-01 Pricing & packages page |
+| 2026-10-30 | INS-02 | 0f48b6f1 | R0 | docs(research): 12-month cross-border content backlog (INS-02) |
