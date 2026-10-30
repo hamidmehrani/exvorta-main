@@ -47,6 +47,8 @@ describe('SEO Technical Pack', () => {
         '/rfq',
         '/waitlist',
         '/legal',
+        '/tools/corridor-checker',
+        '/tools/corridor-checker/ar',
       ]
 
       const normalizedPaths = STATIC_ROUTES.map((route) => (route.path === '' ? '/' : route.path))

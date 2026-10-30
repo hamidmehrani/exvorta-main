@@ -111,8 +111,10 @@ export interface ReadinessResult {
   pendingCount: number
   missingCount: number
   scorePct: number
+  readinessScore: number
   verdict: Verdict
   blockingItemIds: string[]
+  missingMandatoryItems: string[]
   warnings: string[]
   warningsAr: string[]
 }
@@ -737,8 +739,10 @@ export function calculateReadiness(
     pendingCount,
     missingCount,
     scorePct,
+    readinessScore: scorePct,
     verdict,
     blockingItemIds,
+    missingMandatoryItems: blockingItemIds,
     warnings,
     warningsAr,
   }

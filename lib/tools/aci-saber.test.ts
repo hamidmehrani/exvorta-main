@@ -553,4 +553,11 @@ describe('URL State Serialization & Deserialization', () => {
       valid_item_3: 'pending',
     })
   })
+
+  it('provides readinessScore and missingMandatoryItems in ReadinessResult', () => {
+    const items = getChecklistItems({ corridor: 'egypt_aci', mode: 'sea' })
+    const res = calculateReadiness(items, {})
+    expect(res.readinessScore).toBe(res.scorePct)
+    expect(res.missingMandatoryItems).toEqual(res.blockingItemIds)
+  })
 })
