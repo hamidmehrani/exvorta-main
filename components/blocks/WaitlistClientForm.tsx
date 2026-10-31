@@ -7,6 +7,7 @@ import { m, AnimatePresence } from 'framer-motion'
 import { EASE_OUT } from '@/components/ui/Reveal'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { MonoLabel } from '@/components/ui/MonoLabel'
+import { trackEvent, WAITLIST_JOIN } from '@/lib/analytics'
 
 interface Props {
   placeholder?: string
@@ -58,6 +59,7 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
         payload: Object.keys(payloadData).length > 0 ? payloadData : undefined
       })
       if (result.success) {
+        trackEvent(WAITLIST_JOIN, { source: source || 'waitlist' })
         setSuccess(true)
       } else {
         setError(result.error || 'Something went wrong')

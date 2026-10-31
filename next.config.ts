@@ -75,11 +75,11 @@ const nextConfig: NextConfig = {
 
     const cspDirectives = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://www.google-analytics.com https://static.hotjar.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://www.google-analytics.com https://static.hotjar.com https://analytics.exvorta.com https://cloud.umami.is",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com",
       "img-src 'self' data: https: blob: res.cloudinary.com images.unsplash.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "connect-src 'self' https://api.resend.com https://challenges.cloudflare.com wss: ws:",
+      "connect-src 'self' https://api.resend.com https://challenges.cloudflare.com wss: ws: https://analytics.exvorta.com https://cloud.umami.is",
       "frame-src https://challenges.cloudflare.com www.youtube.com player.vimeo.com",
       "frame-ancestors 'self'",
       "object-src 'none'",

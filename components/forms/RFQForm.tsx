@@ -8,6 +8,7 @@ import { MagneticButton } from '@/components/ui/MagneticButton'
 import { MonoLabel } from '@/components/ui/MonoLabel'
 import { Hairline } from '@/components/ui/Hairline'
 import { Turnstile } from '@marsidev/react-turnstile'
+import { trackEvent, RFQ_SUBMIT } from '@/lib/analytics'
 
 const InputWrapper = ({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) => (
   <StaggerItem className="relative w-full group">
@@ -48,6 +49,11 @@ export default function RFQForm() {
       })
 
       if (res.success) {
+        trackEvent(RFQ_SUBMIT, {
+          business_type: (formData.get('businessType') as string) || undefined,
+          main_markets: (formData.get('mainMarkets') as string) || undefined,
+          budget: (formData.get('budget') as string) || undefined,
+        })
         setSuccess(true)
       } else {
         setError(res.error || 'Submission failed')

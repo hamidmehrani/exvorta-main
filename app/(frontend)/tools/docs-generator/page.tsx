@@ -19,6 +19,7 @@ import {
   createDefaultDoc,
 } from '@/lib/tools/docgen';
 import { submitWaitlist } from '@/actions/submitWaitlist';
+import { trackEvent, TOOL_RESULT_GENERATED, TOOL_SHARE } from '@/lib/analytics';
 
 // Default sensible demo data populated on top of createDefaultDoc
 const INITIAL_DEMO_DATA: Partial<ExportDocData> = {
@@ -177,6 +178,7 @@ export default function DocsGeneratorPage() {
 
   // Switch document type
   const handleDocTypeChange = (type: DocType) => {
+    trackEvent(TOOL_RESULT_GENERATED, { tool_id: 'docs-generator', doc_type: type });
     setDoc((prev) => ({
       ...prev,
       docType: type,
@@ -185,6 +187,7 @@ export default function DocsGeneratorPage() {
 
   // Trigger print
   const handlePrint = () => {
+    trackEvent(TOOL_SHARE, { tool_id: 'docs-generator', method: 'print_pdf' });
     window.print();
   };
 

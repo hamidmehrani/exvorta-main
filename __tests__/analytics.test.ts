@@ -260,6 +260,91 @@ describe('trackEvent', () => {
       step: 'final',
     })
   })
+
+  it('sanitizes sensitive keys (name, email, phone, token, message, ip) before dispatching', () => {
+    const trackMock = vi.fn()
+    ;(globalThis as unknown as { window: unknown }).window = {
+      umami: {
+        track: trackMock,
+      },
+    }
+
+    trackEvent(CONTACT_SUBMIT, {
+      name: 'John Doe',
+      email: 'john@example.com',
+      phone: '+971501234567',
+      token: 'turnstile-token-secret',
+      message: 'Confidential commercial inquiry',
+      ip: '192.168.1.1',
+      form: 'contact',
+    })
+
+    expect(trackMock).toHaveBeenCalledTimes(1)
+    expect(trackMock).toHaveBeenCalledWith(CONTACT_SUBMIT, {
+      form: 'contact',
+    })
+  })
+
+  it('tracks all 5 standard PLAT-03 event types correctly', () => {
+    const trackMock = vi.fn()
+    ;(globalThis as unknown as { window: unknown }).window = {
+      umami: {
+        track: trackMock,
+      },
+    }
+
+    // 1. TOOL_RESULT_GENERATED
+    trackEvent(TOOL_RESULT_GENERATED, {
+      tool_id: 'incoterm-cbm',
+      incoterm: 'FOB',
+      transport_mode: 'sea',
+      doc_type: 'commercial-invoice',
+    })
+    expect(trackMock).toHaveBeenNthCalledWith(1, TOOL_RESULT_GENERATED, {
+      tool_id: 'incoterm-cbm',
+      incoterm: 'FOB',
+      transport_mode: 'sea',
+      doc_type: 'commercial-invoice',
+    })
+
+    // 2. RFQ_SUBMIT
+    trackEvent(RFQ_SUBMIT, {
+      business_type: 'freight-forwarder',
+      main_markets: 'Middle East',
+      budget: '$50k-$100k',
+    })
+    expect(trackMock).toHaveBeenNthCalledWith(2, RFQ_SUBMIT, {
+      business_type: 'freight-forwarder',
+      main_markets: 'Middle East',
+      budget: '$50k-$100k',
+    })
+
+    // 3. CONTACT_SUBMIT
+    trackEvent(CONTACT_SUBMIT, {
+      form: 'contact',
+    })
+    expect(trackMock).toHaveBeenNthCalledWith(3, CONTACT_SUBMIT, {
+      form: 'contact',
+    })
+
+    // 4. WAITLIST_JOIN
+    trackEvent(WAITLIST_JOIN, {
+      source: 'waitlist',
+    })
+    expect(trackMock).toHaveBeenNthCalledWith(4, WAITLIST_JOIN, {
+      source: 'waitlist',
+    })
+
+    // 5. TOOL_SHARE
+    trackEvent(TOOL_SHARE, {
+      tool_id: 'docs-generator',
+      method: 'print_pdf',
+    })
+    expect(trackMock).toHaveBeenNthCalledWith(5, TOOL_SHARE, {
+      tool_id: 'docs-generator',
+      method: 'print_pdf',
+    })
+  })
 })
 
 describe('Event Constants and Exports', () => {

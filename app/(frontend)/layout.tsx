@@ -106,6 +106,12 @@ export default async function FrontendLayout({
       }
     : null
 
+  const umamiWebsiteId = siteSettings.umamiWebsiteId || process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID
+  const umamiScriptUrl =
+    siteSettings.umamiScriptUrl ||
+    process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ||
+    'https://analytics.exvorta.com/script.js'
+
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable} ${vazirmatn.variable}`} suppressHydrationWarning>
       <head>
@@ -143,10 +149,10 @@ export default async function FrontendLayout({
                     cookieConfig={cookieConfig}
                     whatsappConfig={whatsappConfig}
                     umamiConfig={
-                      siteSettings.umamiWebsiteId
+                      umamiWebsiteId
                         ? {
-                            websiteId: siteSettings.umamiWebsiteId,
-                            scriptUrl: siteSettings.umamiScriptUrl || 'https://cloud.umami.is/script.js',
+                            websiteId: umamiWebsiteId,
+                            scriptUrl: umamiScriptUrl,
                           }
                         : null
                     }

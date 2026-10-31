@@ -4,6 +4,7 @@ import React, { useRef, useActionState, useEffect } from 'react'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { submitLeadAction } from '@/actions/submitLead'
 import { useFormStatus } from 'react-dom'
+import { trackEvent, CONTACT_SUBMIT } from '@/lib/analytics'
 
 function SubmitButton() {
   const { pending } = useFormStatus()
@@ -31,6 +32,7 @@ export default function ContactForm() {
 
   useEffect(() => {
     if (state.success) {
+      trackEvent(CONTACT_SUBMIT, { form: 'contact' })
       formRef.current?.reset()
     }
   }, [state.success])

@@ -171,3 +171,41 @@ To guarantee high-speed responsiveness across GCC mobile networks and desktop cl
 - **LCP (Largest Contentful Paint):** <= 2.5 seconds on simulated GCC 4G mobile profiles.
 - **CLS (Cumulative Layout Shift):** <= 0.1 across all standard viewport widths.
 - **Asset Transfer Budgets:** Initial HTML document <= 50 KB compressed; critical font payload <= 150 KB.
+
+---
+
+## 6. Analytics & Event Taxonomy Contract (Umami, PLAT-03)
+
+Exvorta uses self-hosted Umami for privacy-first, zero-cookie-dependent behavioral analytics. All tracking adheres strictly to zero-PII and performance architecture contracts.
+
+### 1. Infrastructure & Cost Model
+- **Self-Hosted Umami Host:** `https://analytics.exvorta.com` (with fallback to `https://cloud.umami.is`).
+- **Cost:** Zero monthly cost; run independently of third-party advertising ecosystems.
+- **Content Security Policy (CSP):** `next.config.ts` explicitly whitelists `https://analytics.exvorta.com` and `https://cloud.umami.is` within both `script-src` and `connect-src` directives.
+
+### 2. Loading Strategy & Performance Discipline
+- **DeferredWidgets Integration:** The tracking script is deferred past initial paint via `<DeferredWidgets />` in `app/(frontend)/layout.tsx`.
+- **Strategy:** `strategy="lazyOnload"` with a 3-second post-mount delay, ensuring **zero impact on LCP, FCP, and zero CLS** (Cumulative Layout Shift).
+- **Configuration Fallback:** Script configuration reads `siteSettings.umamiWebsiteId` or falls back to `process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID`. The script URL defaults to `siteSettings.umamiScriptUrl || process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL || 'https://analytics.exvorta.com/script.js'`.
+
+### 3. Event Taxonomy (Standard Constants)
+All client-side tracking dispatches through `trackEvent(eventName, data)` exported from `@/lib/analytics`. Five standard event constants are defined:
+1. **`tool_result_generated`** (`TOOL_RESULT_GENERATED`): Triggered when interactive calculation or document generation states change.
+   - Allowed properties: `tool_id`, `transport_mode`, `incoterm`, `doc_type`.
+2. **`rfq_submit`** (`RFQ_SUBMIT`): Fired on successful enterprise Request for Proposal submission.
+   - Allowed properties: `business_type`, `main_markets`, `budget`.
+3. **`contact_submit`** (`CONTACT_SUBMIT`): Fired on successful institutional contact form submission.
+   - Allowed properties: `form`.
+4. **`waitlist_join`** (`WAITLIST_JOIN`): Fired on successful product waitlist registration.
+   - Allowed properties: `source`.
+5. **`tool_share`** (`TOOL_SHARE`): Fired on interactive tool result copying or export.
+   - Allowed properties: `tool_id`, `method` (e.g. `copy_link`, `copy_report`, `print_pdf`).
+
+### 4. Zero-PII Guarantee & Sanitization Contract
+The client tracking utility (`sanitizeAnalyticsPayload`) enforces an uncompromising Zero-PII contract before any payload reaches `window.umami.track`:
+- **Strict Key Blocklist:** Discards any key matching (case-insensitive and normalized): `email`, `phone`, `name`, `fullname`, `firstname`, `lastname`, `company`, `companyname`, `message`, `notes`, `token`, `turnstiletoken`, `botfield`, `ip`, `ipaddress`, `address`, `username`, `contactname`, `clientname`, and credentials.
+- **Regex Inspection:** Inspects all string values with regex to catch and strip unkeyed email addresses (`EMAIL_REGEX`) and international/local phone numbers (`isPhone`).
+- **Maximum String Length Clamping:** Drops string attributes exceeding 100 characters to prevent accidental leakage of freeform messages or payload blobs.
+- **Nested Structures Dropped:** Rejects nested objects and arrays; retains only clean primitive strings, finite numbers, and booleans.
+- **Empty Payload Elimination:** If sanitization strips all properties, returns `undefined`, preventing empty or contaminated metadata transmission.
+- **SSR & Runtime Safety:** Safe in server-side rendering (`typeof window === 'undefined'`) and gracefully handles environments where `window.umami` or ad-blockers are active without throwing errors.

@@ -18,6 +18,7 @@ import {
   type Party,
   type IncotermResponsibilities,
 } from '@/lib/tools/incoterm-cbm'
+import { trackEvent, TOOL_RESULT_GENERATED, TOOL_SHARE } from '@/lib/analytics'
 
 interface StageMeta {
   key: keyof IncotermResponsibilities
@@ -65,7 +66,7 @@ export function IncotermCbmCalculator() {
   const [cargoItems, setCargoItems] = useState<CargoItem[]>(initialItems)
   const [copiedLink, setCopiedLink] = useState(false)
 
-  // Reactive URL query parameter synchronization
+  // Reactive URL query parameter synchronization & tracking
   useEffect(() => {
     if (typeof window === 'undefined') return
     const query = serializeToolState({
@@ -75,6 +76,12 @@ export function IncotermCbmCalculator() {
     })
     const newPath = query ? `${window.location.pathname}?${query}` : window.location.pathname
     window.history.replaceState(null, '', newPath)
+
+    trackEvent(TOOL_RESULT_GENERATED, {
+      tool_id: 'incoterm-cbm',
+      incoterm: selectedCode,
+      transport_mode: transportMode,
+    })
   }, [selectedCode, transportMode, cargoItems])
 
   // Calculations
@@ -141,6 +148,7 @@ export function IncotermCbmCalculator() {
     const fullUrl = `${window.location.origin}${window.location.pathname}${query ? `?${query}` : ''}`
     try {
       await navigator.clipboard.writeText(fullUrl)
+      trackEvent(TOOL_SHARE, { tool_id: 'incoterm-cbm', method: 'copy_link' })
       setCopiedLink(true)
       setTimeout(() => setCopiedLink(false), 2200)
     } catch {
@@ -154,6 +162,7 @@ export function IncotermCbmCalculator() {
         textArea.select()
         document.execCommand('copy')
         document.body.removeChild(textArea)
+        trackEvent(TOOL_SHARE, { tool_id: 'incoterm-cbm', method: 'copy_link' })
         setCopiedLink(true)
         setTimeout(() => setCopiedLink(false), 2200)
       } catch {
