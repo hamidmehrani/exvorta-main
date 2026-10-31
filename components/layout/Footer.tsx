@@ -1,6 +1,7 @@
 import React from 'react'
 import { getCachedGlobal } from '@/lib/payload-cache'
 import type { Footer as FooterType, SiteSetting } from '@/payload-types'
+import { buildWhatsAppUrl } from '@/lib/whatsapp'
 import FooterContent from './FooterContent'
 
 interface FooterLinkItem {
@@ -84,11 +85,20 @@ export default async function Footer() {
           href = refValue.slug ? `/${refValue.slug}` : ''
         }
         if (!href || href === '#') return null
+
+        const isWhatsApp = href.includes('wa.me') || Boolean(link.label?.toLowerCase().includes('whatsapp'))
+        if (isWhatsApp) {
+          href = buildWhatsAppUrl({
+            phone: href.includes('wa.me') ? href : undefined,
+            context: { type: 'contact' },
+          })
+        }
+
         return {
           id: item.id,
           label: link.label,
           href,
-          external: link.type === 'custom' && Boolean(link.openInNewTab),
+          external: (link.type === 'custom' && Boolean(link.openInNewTab)) || isWhatsApp,
         }
       })
       .filter((l): l is NonNullable<typeof l> => Boolean(l)),

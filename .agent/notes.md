@@ -1,4 +1,38 @@
-# Agent Notes — TOOL-8: Tool share hooks: WhatsApp share + result permalinks
+# Agent Notes — CONV-01: WhatsApp CTA component + deep links site-wide
+
+- **Card:** `CONV-01`
+- **Assignee:** `exvorta-builder`
+- **Risk Level:** `R1`
+- **Branch:** `card/conv-01-whatsapp`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_931e3b3f`
+
+## Objectives & Scope
+1. Implement clean WhatsApp helper utilities in `lib/whatsapp.ts`:
+   - `formatWhatsAppPhone`: Strips non-digit characters, defaults to `'97148793000'`.
+   - `buildWhatsAppPrefill`: Bilingual contextual prefilled messages for `general`, `service`, `pricing`, `contact`, and `custom` contexts.
+   - `buildWhatsAppUrl`: Generates clean, encoded `wa.me` deep links.
+   - Exported constants `DEFAULT_WHATSAPP_PHONE` and `WHATSAPP_DISMISSED_STORAGE_KEY`.
+2. Unit test suite `lib/whatsapp.test.ts`:
+   - 20 unit tests covering normalization, URL formatting, unicode/Arabic encoding, contextual prefills, and edge cases.
+3. Institutional floating widget `components/ui/WhatsAppFloat.tsx`:
+   - Design tokens: `bg-obsidian/95`, `border-rule-dark`, `text-cream`, `shadow-2xl`.
+   - Position: `bottom-6 end-6 z-40` with logical RTL flip.
+   - Live pulse indicator (`bg-emerald-500` ping) with localized label ("Trade Desk Active" / "مكتب التداول نشط").
+   - Dismissal: Subtle `X` button with `localStorage.setItem('exv_wa_dismissed', 'true')` and SSR-safe `useEffect` check.
+   - Telemetry: Dispatches `trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICKED, { location: 'floating_widget', page: window.location.pathname })`.
+4. Reusable inline deep-link component `components/ui/WhatsAppLink.tsx`:
+   - Provides accessible anchor with automated click telemetry.
+5. Inline deep links site-wide:
+   - `components/blocks/ContactFormBlock.tsx`: Added WhatsApp Trade Desk direct channel with `contact` prefill and click telemetry.
+   - `app/(frontend)/pricing/pricing-data.ts` & `page.tsx`: Added WhatsApp Trade Desk direct channel with pricing context, Enterprise package WhatsApp CTA, and Commercial Dispatch CTA.
+   - `components/layout/Footer.tsx` & `FooterContent.tsx`: Auto-formats WhatsApp links using `buildWhatsAppUrl` and wires `whatsapp_clicked` telemetry.
+   - `components/layout/DeferredWidgets.tsx`: Correctly wires `WhatsAppFloat` with CMS configuration.
+6. Documentation & Contracts:
+   - Documented Section 8 (WhatsApp Integration & Deep Link Contract) in `docs/CONTRACTS.md`.
+
+---
+
+# Previous Notes — TOOL-8: Tool share hooks: WhatsApp share + result permalinks
 
 - **Card:** `TOOL-8` (Task `t_43f32f3b`)
 - **Assignee:** `exvorta-builder`

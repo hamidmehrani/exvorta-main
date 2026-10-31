@@ -6,6 +6,7 @@ import Link from '@/components/ui/AppLink'
 import Image from 'next/image'
 import type { FooterColumn } from './Footer'
 import ExvortaLogo from '@/components/brand/ExvortaLogo'
+import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics'
 
 /**
  * Site footer. Suppressed on embedded routes (e.g. /rfq/embed).
@@ -57,21 +58,33 @@ export default function FooterContent({ columns, brand = { name: 'EXVORTA', logo
                   <span className="h-1 w-1 rotate-45 bg-emerald" aria-hidden />
                   {column.title}
                 </h2>
-                <ul className="border-t border-rule">
-                  {column.links.map((link) => (
-                    <li key={link.id || link.href} className="border-b border-rule">
-                      <Link
-                        href={link.href}
-                        className="group flex min-h-[48px] items-center justify-between gap-3 text-base text-obsidian/75 transition-colors duration-300 hover:text-obsidian"
-                        target={link.external ? '_blank' : undefined}
-                        rel={link.external ? 'noopener noreferrer' : undefined}
-                      >
-                        {link.label}
-                        <span aria-hidden className="font-mono text-xs text-emerald opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100">→</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="border-t border-rule">
+                    {column.links.map((link) => {
+                      const isWhatsApp = link.href.includes('wa.me')
+                      return (
+                        <li key={link.id || link.href} className="border-b border-rule">
+                          <Link
+                            href={link.href}
+                            className="group flex min-h-[48px] items-center justify-between gap-3 text-base text-obsidian/75 transition-colors duration-300 hover:text-obsidian"
+                            target={link.external ? '_blank' : undefined}
+                            rel={link.external ? 'noopener noreferrer' : undefined}
+                            onClick={
+                              isWhatsApp
+                                ? () =>
+                                    trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICKED, {
+                                      location: 'footer',
+                                      page: typeof window !== 'undefined' ? window.location.pathname : '',
+                                    })
+                                : undefined
+                            }
+                          >
+                            {link.label}
+                            <span aria-hidden className="font-mono text-xs text-emerald opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100">→</span>
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
               </div>
             ))}
           </nav>

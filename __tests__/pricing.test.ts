@@ -40,6 +40,8 @@ describe('Pricing route data & commercial contracts', () => {
     expect(enterprise.id).toBe('enterprise')
     expect(enterprise.price).toBe('Custom')
     expect(enterprise.cta.href).toBe('/contact')
+    expect(enterprise.whatsappCta?.href).toContain('wa.me')
+    expect(enterprise.whatsappCta?.href).toContain('Enterprise')
   })
 
   it('defines modular add-ons including Arabic RTL and container quoting', () => {
@@ -74,6 +76,9 @@ describe('Pricing route data & commercial contracts', () => {
       expect(faq.answer).toBeTruthy()
     })
     expect(DIRECT_CHANNELS.length).toBeGreaterThanOrEqual(3)
+    const waChannel = DIRECT_CHANNELS.find((ch) => ch.label.toLowerCase().includes('whatsapp'))
+    expect(waChannel).toBeDefined()
+    expect(waChannel?.href).toContain('wa.me')
   })
 
   it('registers /pricing in sitemap STATIC_ROUTES with priority 0.8', () => {

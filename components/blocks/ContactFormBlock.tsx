@@ -1,14 +1,30 @@
+'use client'
+
 import React from 'react'
 import { AnimatedSection, Reveal, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 import ContactForm from '@/components/forms/ContactForm'
+import { buildWhatsAppUrl } from '@/lib/whatsapp'
+import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics'
 
 export interface ContactFormBlockProps {
   blockType?: string
   title?: string
   subtitle?: string
+  enableWhatsApp?: boolean | null
+  contactPhone?: string | null
 }
 
-export const ContactFormBlock: React.FC<ContactFormBlockProps> = ({ title, subtitle }) => {
+export const ContactFormBlock: React.FC<ContactFormBlockProps> = ({
+  title,
+  subtitle,
+  enableWhatsApp = true,
+  contactPhone,
+}) => {
+  const whatsappUrl = buildWhatsAppUrl({
+    phone: contactPhone,
+    context: { type: 'contact' },
+  })
+
   return (
     <AnimatedSection className="w-full bg-cream pt-[var(--header-h)]">
       <div className="mx-auto flex min-h-[calc(100vh-var(--header-h))] w-full flex-col border-b border-rule md:flex-row">
@@ -50,15 +66,35 @@ export const ContactFormBlock: React.FC<ContactFormBlockProps> = ({ title, subti
                         <span className="text-[11px] text-muted-dark">Direct systems architecture triage within 24h</span>
                       </div>
                     </li>
+                    {enableWhatsApp !== false && (
+                      <li className="flex items-start gap-4 border-b border-rule-dark py-3.5">
+                        <span className="text-success font-semibold">02.</span>
+                        <div className="flex flex-col gap-0.5">
+                          <a
+                            href={whatsappUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() =>
+                              trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICKED, { location: 'contact_page' })
+                            }
+                            className="group inline-flex items-center gap-1.5 text-white font-medium hover:text-success transition-colors"
+                          >
+                            <span>WhatsApp Trade Desk</span>
+                            <span className="font-mono text-[10px] text-success transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true">↗</span>
+                          </a>
+                          <span className="text-[11px] text-muted-dark">Direct desk inquiry with senior engineering lead</span>
+                        </div>
+                      </li>
+                    )}
                     <li className="flex items-start gap-4 border-b border-rule-dark py-3.5">
-                      <span className="text-success font-semibold">02.</span>
+                      <span className="text-success font-semibold">03.</span>
                       <div className="flex flex-col gap-0.5">
                         <span className="text-white font-medium">Dubai, UAE — Global Reach</span>
                         <span className="text-[11px] text-muted-dark">Operating across UAE, EU, and global trade corridors</span>
                       </div>
                     </li>
                     <li className="flex items-start gap-4 border-b border-rule-dark py-3.5">
-                      <span className="text-success font-semibold">03.</span>
+                      <span className="text-success font-semibold">04.</span>
                       <div className="flex flex-col gap-0.5">
                         <span className="text-white font-medium">Zero-Intermediary Guarantee</span>
                         <span className="text-[11px] text-muted-dark">All scopes evaluated directly by senior engineers</span>

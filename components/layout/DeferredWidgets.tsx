@@ -34,15 +34,19 @@ export default function DeferredWidgets({ cookieConfig, whatsappConfig, umamiCon
     return null
   }
 
-  const waReady = Boolean(whatsappConfig?.enableWidget && whatsappConfig?.phoneNumber)
+  const waReady = Boolean(
+    whatsappConfig &&
+    whatsappConfig.enableWidget !== false &&
+    (whatsappConfig.enableWidget || whatsappConfig.phoneNumber)
+  )
 
   return (
     <>
       {cookieConfig?.enable && <CookieBanner config={cookieConfig} />}
       {waReady && (
         <WhatsAppFloat
-          phoneNumber={whatsappConfig?.phoneNumber || ''}
-          message={whatsappConfig?.defaultMessage || ''}
+          phoneNumber={whatsappConfig?.phoneNumber}
+          message={whatsappConfig?.defaultMessage}
         />
       )}
       {showUmami && umamiConfig && <Script src={umamiConfig.scriptUrl} data-website-id={umamiConfig.websiteId} strategy="lazyOnload" />}

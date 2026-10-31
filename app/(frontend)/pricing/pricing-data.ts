@@ -1,3 +1,5 @@
+import { buildWhatsAppUrl } from '@/lib/whatsapp'
+
 export interface PricingPackage {
   id: string
   tier: string
@@ -12,6 +14,10 @@ export interface PricingPackage {
   description: string
   deliverables: string[]
   cta: {
+    label: string
+    href: string
+  }
+  whatsappCta?: {
     label: string
     href: string
   }
@@ -70,6 +76,7 @@ export interface DirectChannel {
   index: string
   label: string
   value: string
+  href?: string
 }
 
 export const PRICING_PACKAGES: readonly PricingPackage[] = [
@@ -144,6 +151,10 @@ export const PRICING_PACKAGES: readonly PricingPackage[] = [
     cta: {
       label: '[ DIRECT CONTACT ]',
       href: '/contact',
+    },
+    whatsappCta: {
+      label: '[ WHATSAPP DESK ]',
+      href: buildWhatsAppUrl({ context: { type: 'pricing', tier: 'Enterprise' } }),
     },
   },
 ] as const
@@ -272,14 +283,21 @@ export const DIRECT_CHANNELS: readonly DirectChannel[] = [
     index: '01.',
     label: 'Inquiries',
     value: 'hello@exvorta.com',
+    href: 'mailto:hello@exvorta.com',
   },
   {
     index: '02.',
+    label: 'Trade Desk WhatsApp',
+    value: '+971 4 879 3000 (Instant Desk)',
+    href: buildWhatsAppUrl({ context: { type: 'pricing', tier: 'Custom' } }),
+  },
+  {
+    index: '03.',
     label: 'Headquarters',
     value: 'Dubai, UAE — Global Reach',
   },
   {
-    index: '03.',
+    index: '04.',
     label: 'Response SLA',
     value: '< 24 Hours Guaranteed',
   },

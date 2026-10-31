@@ -221,5 +221,31 @@ All client-side user interactions tracked via `trackEvent` (`lib/analytics.ts`) 
 | `rfq_submitted` | `RFQ_SUBMITTED` | `{ industry?: string }` | Dispatched on successful multi-step RFQ submission. |
 | `waitlist_joined` | `WAITLIST_JOINED` | `{ source?: string }` | Dispatched on product waitlist registration. |
 | `contact_form_submitted` | `CONTACT_FORM_SUBMITTED` | `{ intent?: string }` | Dispatched on enterprise contact submission. |
-| `whatsapp_clicked` | `WHATSAPP_CLICKED` | `{ location?: string }` | Dispatched on clicking floating WhatsApp widget or contact anchor. |
+| `whatsapp_clicked` | `WHATSAPP_CLICKED` | `{ location?: string, page?: string }` | Dispatched on clicking floating WhatsApp widget or contextual inline contact anchor. |
 | `cta_clicked` | `CTA_CLICKED` | `{ target?: string }` | Dispatched on primary marketing call-to-action interactions. |
+
+---
+
+## 8. WhatsApp Integration & Deep Link Contract
+
+### Overview
+The institutional WhatsApp integration connects cross-border buyers and enterprise exporters directly to the Exvorta Trade Desk (`+971 4 879 3000`). It provides a persistent, accessible, floating widget along with contextual inline deep links across pricing, contact, and site-wide navigation.
+
+### Helper Exports (`lib/whatsapp.ts`)
+- **`DEFAULT_WHATSAPP_PHONE = '97148793000'`**: Fallback desk telephone number in E.164 digits-only format.
+- **`WHATSAPP_DISMISSED_STORAGE_KEY = 'exv_wa_dismissed'`**: LocalStorage key used to persist dismissal of the floating widget.
+- **`formatWhatsAppPhone(phone?: string | null): string`**: Strips non-digit characters (`+`, spaces, dashes, parentheses), falling back to `DEFAULT_WHATSAPP_PHONE` on empty or invalid inputs.
+- **`buildWhatsAppPrefill(context: WhatsAppPrefillContext): string`**: Constructs localized bilingual (EN/AR) prefill inquiry messages for `general`, `service`, `pricing`, `contact`, and `custom` contexts.
+- **`buildWhatsAppUrl(options: BuildWhatsAppUrlOptions): string`**: Builds clean `https://wa.me/{digits}?text={encoded}` URLs (omitting `?text=` query parameter if no message is present).
+
+### Floating Widget (`components/ui/WhatsAppFloat.tsx`)
+- **Position:** Fixed at `bottom-6 end-6 z-40` with logical CSS supporting LTR and RTL directions.
+- **Design Tokens:** Institutional dark aesthetic using `bg-obsidian/95`, `border-rule-dark`, `text-cream`, `shadow-2xl`.
+- **Live Status Indicator:** Emerald pulse animation (`bg-emerald-500` with ping animation) with localized label (`Trade Desk Active` in English, `مكتب التداول نشط` in Arabic).
+- **Dismissal Mechanism:** Subtle dismiss button with `aria-label="Dismiss WhatsApp widget"`. Persists `'true'` in `localStorage.setItem('exv_wa_dismissed', 'true')`. SSR-safe hydration check inside `useEffect`.
+- **Telemetry:** Dispatches `trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICKED, { location: 'floating_widget', page: window.location.pathname })`.
+
+### Inline Deep Links (`components/ui/WhatsAppLink.tsx`)
+- Used on `/contact` (`location: 'contact_page'`), `/pricing` (`location: 'pricing_page'`), and footer links (`location: 'footer'`).
+- Always dispatches Umami event `whatsapp_clicked` with contextual `location` payload without collecting any personal data.
+

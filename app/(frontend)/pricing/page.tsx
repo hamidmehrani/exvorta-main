@@ -6,6 +6,7 @@ import { AnimatedSection, Reveal, StaggerContainer, StaggerItem } from '@/compon
 import { Container } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import FAQJsonLd from '@/components/seo/FAQJsonLd'
+import WhatsAppLink from '@/components/ui/WhatsAppLink'
 import {
   PRICING_PACKAGES,
   ADD_ONS,
@@ -175,7 +176,7 @@ export default function PricingPage() {
                       ))}
                     </ul>
 
-                    <div className="mt-8 pt-6 border-t border-rule-dark">
+                    <div className="mt-8 pt-6 border-t border-rule-dark flex flex-col gap-2.5">
                       <Link
                         href={pkg.cta.href}
                         className={`w-full min-h-[44px] ${
@@ -184,6 +185,16 @@ export default function PricingPage() {
                       >
                         {pkg.cta.label}
                       </Link>
+                      {pkg.whatsappCta && (
+                        <WhatsAppLink
+                          href={pkg.whatsappCta.href}
+                          location="pricing_page"
+                          className="btn-ghost w-full min-h-[44px] text-xs font-mono text-emerald hover:text-white border-rule-dark text-center flex items-center justify-center gap-1.5"
+                        >
+                          <span>{pkg.whatsappCta.label}</span>
+                          <span className="text-[10px]" aria-hidden="true">↗</span>
+                        </WhatsAppLink>
+                      )}
                     </div>
                   </div>
                 </StaggerItem>
@@ -437,7 +448,22 @@ export default function PricingPage() {
                         <span className="text-success font-medium">{ch.index}</span>
                         <div>
                           <div className="text-xs uppercase text-muted-dark">{ch.label}</div>
-                          <span className="text-white">{ch.value}</span>
+                          {ch.href && ch.href.includes('wa.me') ? (
+                            <WhatsAppLink
+                              href={ch.href}
+                              location="pricing_page"
+                              className="group inline-flex items-center gap-1.5 text-white transition-colors hover:text-success"
+                            >
+                              <span>{ch.value}</span>
+                              <span className="text-xs text-success transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true">↗</span>
+                            </WhatsAppLink>
+                          ) : ch.href ? (
+                            <a href={ch.href} className="text-white transition-colors hover:text-success">
+                              {ch.value}
+                            </a>
+                          ) : (
+                            <span className="text-white">{ch.value}</span>
+                          )}
                         </div>
                       </li>
                     ))}
@@ -472,6 +498,14 @@ export default function PricingPage() {
                       >
                         [ DIRECT CONTACT ]
                       </Link>
+                      <WhatsAppLink
+                        context={{ type: 'pricing', tier: 'Custom' }}
+                        location="pricing_page"
+                        className="btn-ghost min-h-[48px] px-6 py-4 font-semibold flex-1 text-center text-emerald hover:text-white flex items-center justify-center gap-1.5"
+                      >
+                        <span>[ WHATSAPP DESK ]</span>
+                        <span className="text-xs" aria-hidden="true">↗</span>
+                      </WhatsAppLink>
                     </div>
                   </div>
                 </div>
