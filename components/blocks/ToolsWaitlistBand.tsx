@@ -43,11 +43,12 @@ export function ToolsWaitlistBand({ className = '' }: ToolsWaitlistBandProps) {
 
   return (
     <section
+      id="tools-waitlist"
       aria-labelledby="tools-waitlist-heading"
-      className={`w-full bg-obsidian text-paper border border-white/10 py-16 md:py-24 ${className}`}
+      className={`w-full bg-obsidian text-paper border-t border-hairline-dark py-16 md:py-24 ${className}`}
     >
       <Container>
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-3xl mx-auto text-center border border-hairline-dark bg-sidebar/60 p-8 md:p-12 rounded-[4px]">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-emerald mb-3">
             [ REGULATORY &amp; MODULE DISPATCH ]
           </p>
@@ -63,7 +64,7 @@ export function ToolsWaitlistBand({ className = '' }: ToolsWaitlistBandProps) {
 
           {status === 'success' ? (
             <div
-              className="inline-flex items-center justify-center border border-emerald/40 bg-emerald/10 px-6 py-4 font-mono text-xs uppercase tracking-widest text-emerald"
+              className="inline-flex items-center justify-center border border-emerald/40 bg-emerald/10 px-6 py-4 font-mono text-xs uppercase tracking-widest text-emerald rounded-[4px]"
               role="status"
               aria-live="polite"
             >
@@ -86,13 +87,13 @@ export function ToolsWaitlistBand({ className = '' }: ToolsWaitlistBandProps) {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="trade.ops@enterprise.com"
                     disabled={isPending}
-                    className="w-full bg-white/5 border border-white/20 px-4 py-3 font-mono text-xs text-paper placeholder:text-sand/40 focus:outline-none focus:border-emerald transition-colors"
+                    className="w-full bg-white/5 border border-hairline-dark px-4 py-3 font-mono text-xs text-paper placeholder:text-sand/40 focus:outline-none focus:border-emerald transition-colors rounded-[4px]"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="bg-paper text-obsidian px-6 py-3 font-mono text-xs uppercase tracking-widest font-semibold hover:bg-cream transition-colors disabled:opacity-50 text-center"
+                  className="bg-paper text-obsidian px-6 py-3 font-mono text-xs uppercase tracking-widest font-semibold hover:bg-cream transition-colors disabled:opacity-50 text-center rounded-[4px]"
                 >
                   {isPending ? '[ SUBMITTING... ]' : '[ REQUEST ACCESS ]'}
                 </button>
@@ -103,6 +104,10 @@ export function ToolsWaitlistBand({ className = '' }: ToolsWaitlistBandProps) {
                   {errorMessage}
                 </p>
               )}
+
+              <p className="mt-4 font-mono text-[11px] text-muted-dark text-center">
+                No marketing spam. Unsubscribe at any time. Corporate domain verification enforced.
+              </p>
             </form>
           )}
         </div>

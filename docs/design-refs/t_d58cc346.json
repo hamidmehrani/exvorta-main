@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "slice": "t_d58cc346",
+  "references": [
+    {
+      "id": "740fcbdb-37d0-42f8-ab52-a93a38df8ccb",
+      "kind": "screen",
+      "app_name": "Cofounder",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/740fcbdb-37d0-42f8-ab52-a93a38df8ccb",
+      "used_for": "app/(frontend)/tools/page.tsx",
+      "selected_by": "judge",
+      "score": 10.0,
+      "note": "Two-column tool card showroom grid with status badges, category tags, descriptions, and primary CTA buttons"
+    },
+    {
+      "id": "e8923409-b85c-475e-ad3b-999e667bc85a",
+      "kind": "screen",
+      "app_name": "Semrush",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/e8923409-b85c-475e-ad3b-999e667bc85a",
+      "used_for": "app/(frontend)/tools/page.tsx",
+      "selected_by": "judge",
+      "score": 8.0,
+      "note": "Why-free transparency architecture cards with agency trust signals and zero-paywall clarity"
+    },
+    {
+      "id": "69d68978-6f26-4c99-8f6b-8d003abd53b3",
+      "kind": "screen",
+      "app_name": "Shopify",
+      "platform": "web",
+      "mobbin_url": "https://mobbin.com/screens/69d68978-6f26-4c99-8f6b-8d003abd53b3",
+      "used_for": "components/blocks/ToolsWaitlistBand.tsx",
+      "selected_by": "judge",
+      "score": 9.0,
+      "note": "Boxed developer lead-gen email capture band with clear value proposition and privacy assurance"
+    }
+  ]
+}

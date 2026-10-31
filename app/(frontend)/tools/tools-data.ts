@@ -11,6 +11,7 @@ export interface ToolItem {
   actionLabel: string
   applicationCategory: string
   operatingSystem: string
+  tags?: readonly string[]
 }
 
 export const TOOLS_CATALOG: readonly ToolItem[] = [
@@ -28,6 +29,7 @@ export const TOOLS_CATALOG: readonly ToolItem[] = [
     actionLabel: '[ LAUNCH CALCULATOR -> ]',
     applicationCategory: 'LogisticsApplication',
     operatingSystem: 'All',
+    tags: ['Incoterms 2020', 'CBM Volume', 'Container Load', 'Chargeable Weight'],
   },
   {
     id: 'docs-generator',
@@ -41,6 +43,7 @@ export const TOOLS_CATALOG: readonly ToolItem[] = [
     actionLabel: '[ LAUNCH GENERATOR -> ]',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
+    tags: ['Commercial Invoice', 'Packing List', 'CMR Consignment', 'Browser PDF'],
   },
   {
     id: 'rfq-builder',
@@ -54,6 +57,7 @@ export const TOOLS_CATALOG: readonly ToolItem[] = [
     actionLabel: '[ OPEN SPEC BUILDER -> ]',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
+    tags: ['Procurement Cart', 'Spec Compilation', 'B2B Tenders', 'Instant Export'],
   },
   {
     id: 'hs-converter',
@@ -67,6 +71,7 @@ export const TOOLS_CATALOG: readonly ToolItem[] = [
     actionLabel: '[ NOTIFY ON LAUNCH -> ]',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
+    tags: ['GCC 12-Digit HS', 'Tariff Schedules', 'Duty Calculator', 'Customs Clearance'],
   },
   {
     id: 'readiness-checker',
@@ -80,6 +85,7 @@ export const TOOLS_CATALOG: readonly ToolItem[] = [
     actionLabel: '[ NOTIFY ON LAUNCH -> ]',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
+    tags: ['Egypt ACID', 'KSA SABER', 'Pre-Shipment Audit', 'Regulatory Checklist'],
   },
   {
     id: 'einvoicing',
@@ -93,6 +99,7 @@ export const TOOLS_CATALOG: readonly ToolItem[] = [
     actionLabel: '[ NOTIFY ON LAUNCH -> ]',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
+    tags: ['UAE PINT-AE', 'Peppol Matrix', 'B2B Compliance', 'Mandate 2026'],
   },
 ] as const
 
