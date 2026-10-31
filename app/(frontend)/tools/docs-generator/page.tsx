@@ -21,6 +21,7 @@ import {
   createDefaultDoc,
 } from '@/lib/tools/docgen';
 import { submitWaitlist } from '@/actions/submitWaitlist';
+import { TurnstileWidget, type TurnstileWidgetRef } from '@/components/forms/TurnstileWidget';
 
 // Default sensible demo data populated on top of createDefaultDoc
 const INITIAL_DEMO_DATA: Partial<ExportDocData> = {
@@ -112,6 +113,8 @@ export default function DocsGeneratorPage() {
   const [captureName, setCaptureName] = useState('');
   const [captureStatus, setCaptureStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [captureError, setCaptureError] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState<string>();
+  const turnstileRef = React.useRef<TurnstileWidgetRef>(null);
   const [isCapturing, startCaptureTransition] = useTransition();
 
   const totals = calculateDocTotals(doc.items, doc.options);
@@ -230,6 +233,7 @@ export default function DocsGeneratorPage() {
           email: captureEmail.trim(),
           source: 'Waitlist',
           company: captureName.trim() || undefined,
+          turnstileToken,
           payload: {
             source: 'Docs-Generator',
             name: captureName.trim(),
@@ -247,10 +251,14 @@ export default function DocsGeneratorPage() {
         } else {
           setCaptureStatus('error');
           setCaptureError(result.error || 'Failed to submit. Please try again.');
+          turnstileRef.current?.reset();
+          setTurnstileToken(undefined);
         }
       } catch {
         setCaptureStatus('error');
         setCaptureError('An unexpected network error occurred.');
+        turnstileRef.current?.reset();
+        setTurnstileToken(undefined);
       }
     });
   };
@@ -1760,6 +1768,15 @@ export default function DocsGeneratorPage() {
                         onChange={(e) => setCaptureEmail(e.target.value)}
                         placeholder="operations@example.com"
                         className="w-full bg-cream border border-rule px-3 py-2 text-xs font-mono text-obsidian rounded focus:outline-none focus:border-obsidian"
+                      />
+                    </div>
+
+                    <div className="flex justify-center py-1">
+                      <TurnstileWidget
+                        ref={turnstileRef}
+                        onSuccess={setTurnstileToken}
+                        onExpire={() => setTurnstileToken(undefined)}
+                        theme="light"
                       />
                     </div>
 

@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useRef, useActionState, useEffect } from 'react'
+import React, { useRef, useActionState, useEffect, useState } from 'react'
 import { useFormStatus } from 'react-dom'
-import { Turnstile } from '@marsidev/react-turnstile'
+import { TurnstileWidget, type TurnstileWidgetRef } from '@/components/forms/TurnstileWidget'
 import { submitLeadAction } from '@/actions/submitLead'
 
 export const PARTNER_CATEGORY_OPTIONS = [
@@ -44,12 +44,23 @@ export interface PartnerApplicationFormProps {
 export function PartnerApplicationForm({ className = '' }: PartnerApplicationFormProps) {
   const [state, formAction] = useActionState(submitLeadAction, { success: false, error: '' })
   const formRef = useRef<HTMLFormElement>(null)
+  const turnstileRef = useRef<TurnstileWidgetRef>(null)
+  const [turnstileToken, setTurnstileToken] = useState<string>()
 
   useEffect(() => {
     if (state.success) {
       formRef.current?.reset()
+      turnstileRef.current?.reset()
+      setTurnstileToken(undefined)
     }
   }, [state.success])
+
+  useEffect(() => {
+    if (state.error) {
+      turnstileRef.current?.reset()
+      setTurnstileToken(undefined)
+    }
+  }, [state.error])
 
   return (
     <form
@@ -186,12 +197,15 @@ export function PartnerApplicationForm({ className = '' }: PartnerApplicationFor
         />
       </div>
 
-      {/* Optional Turnstile Captcha */}
-      {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
-        <div className="my-2">
-          <Turnstile siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} />
-        </div>
-      )}
+      {/* Turnstile Captcha */}
+      <div className="my-2">
+        <TurnstileWidget
+          ref={turnstileRef}
+          onSuccess={setTurnstileToken}
+          onExpire={() => setTurnstileToken(undefined)}
+        />
+        <input type="hidden" name="turnstileToken" value={turnstileToken || ''} />
+      </div>
 
       {/* Submit Button */}
       <SubmitButton />

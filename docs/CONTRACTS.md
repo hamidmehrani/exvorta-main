@@ -223,3 +223,53 @@ All client-side user interactions tracked via `trackEvent` (`lib/analytics.ts`) 
 | `contact_form_submitted` | `CONTACT_FORM_SUBMITTED` | `{ intent?: string }` | Dispatched on enterprise contact submission. |
 | `whatsapp_clicked` | `WHATSAPP_CLICKED` | `{ location?: string }` | Dispatched on clicking floating WhatsApp widget or contact anchor. |
 | `cta_clicked` | `CTA_CLICKED` | `{ target?: string }` | Dispatched on primary marketing call-to-action interactions. |
+
+---
+
+## 8. Bot Protection & Cloudflare Turnstile Security Contract (CONV-02)
+
+All public submission forms across Exvorta are hardened against spam and bot abuse using Cloudflare Turnstile via `@marsidev/react-turnstile` without degrading conversion or accessibility.
+
+### 1. Form Integration & Client Component Contract
+- **Component Primitives:** All user-facing forms must use `components/forms/TurnstileWidget.tsx`.
+- **Props Interface:**
+  - `onSuccess: (token: string) => void`
+  - `onError?: (error?: Error | string) => void`
+  - `onExpire?: () => void`
+  - `theme?: 'auto' | 'light' | 'dark'` (default: `'dark'`)
+  - `className?: string`
+  - `id?: string`
+- **Imperative Reset:** `TurnstileWidget` exports `TurnstileWidgetRef` with `reset(): void` to clear stale tokens on failed submissions.
+- **Accessibility & CLS:** Uses `role="alert"` and `aria-live="polite"` to announce challenge expiration or network blockages without layout shifts (`min-h-[65px]`).
+- **Protected Forms Catalog:**
+  1. `components/forms/ContactForm.tsx` (Enterprise contact brief)
+  2. `components/forms/RFQForm.tsx` (Interactive proposal request)
+  3. `app/(frontend)/rfq/embed/page.tsx` (Embedded catalog RFQ widget)
+  4. `components/blocks/WaitlistClientForm.tsx` (Product waitlist)
+  5. `components/blocks/WeeklyBriefingForm.tsx` (Insights newsletter)
+  6. `components/blocks/RoadmapBlock.tsx` (Roadmap early access)
+  7. `components/blocks/ToolsWaitlistBand.tsx` (Regulatory release advisory)
+  8. `app/(frontend)/partners/PartnerApplicationForm.tsx` (Channel partner application)
+  9. `app/(frontend)/tools/docs-generator/page.tsx` (Document dispatch modal)
+  10. `app/(frontend)/tools/uae-einvoicing/UaeEinvoicingCalculator.tsx` & `ar/UaeEinvoicingCalculatorAr.tsx` (Assessment lead capture)
+
+### 2. Verification Protocol (`lib/rate-limit.ts`)
+- **Server Verification Function:** `verifyTurnstile(token: string | undefined, ip?: string): Promise<boolean>`
+- **Timeout Protection:** Cloudflare siteverify endpoint is queried with a strict 5-second abort signal (`AbortSignal.timeout(5000)`) preventing stalled server action executions.
+- **Network Resilience:** Network timeouts or failures fail closed (`return false`) and report to telemetry (`reportError`) without crashing server actions.
+- **Error Contract:** Failed validations return a standardized user-friendly response:
+  `{ success: false, error: 'Security verification failed. Please refresh and try again.' }`
+
+### 3. Environment Variables & Testing Protocol
+| Variable | Environment | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Production / Preview | Yes | Public Cloudflare Turnstile site key. Unset in dev renders graceful placeholder. |
+| `TURNSTILE_SECRET_KEY` | Production | Yes | Cloudflare secret key for server-side siteverify API call. |
+| `ALLOW_TEST_TURNSTILE_KEY` | Test / CI | No | Set to `'true'` to permit Cloudflare dummy test keys (`1x...` and `2x...`). |
+| `SKIP_TURNSTILE_IN_DEV` | Local Dev | No | Set to `'true'` to bypass verification during local offline development. |
+
+#### Cloudflare Official Test Keys
+- **Always Pass Sitekey:** `1x00000000000000000000AA`
+- **Always Pass Secret:** `1x0000000000000000000000000000000AA`
+- **Always Fail Secret:** `2x0000000000000000000000000000000AA`
+- **Dummy Pass Token:** `XXXX.DUMMY.TOKEN.XXXX` or `test-token`

@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { AnimatedSection, Reveal, StaggerContainer, StaggerItem } from '../ui/Reveal';
 import { Container } from '../ui/Container';
 import { SectionHeading } from '../ui/SectionHeading';
 import { submitLead } from '@/actions/submitLead';
+import { TurnstileWidget, type TurnstileWidgetRef } from '@/components/forms/TurnstileWidget';
 
 const PHASES = [
   {
@@ -29,6 +30,8 @@ export function RoadmapBlock(props: any) {
   const [email, setEmail] = useState('');
   const [waitlistState, setWaitlistState] = useState<'idle' | 'pending' | 'done' | 'error'>('idle');
   const [waitlistError, setWaitlistError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string>();
+  const turnstileRef = useRef<TurnstileWidgetRef>(null);
 
   const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,6 +42,7 @@ export function RoadmapBlock(props: any) {
       email,
       botField: undefined,
       collection: 'waitlist',
+      turnstileToken,
     });
     if (res.success) {
       setWaitlistState('done');
@@ -46,6 +50,8 @@ export function RoadmapBlock(props: any) {
     } else {
       setWaitlistState('error');
       setWaitlistError(res.error || 'Submission failed');
+      turnstileRef.current?.reset();
+      setTurnstileToken(undefined);
     }
   };
 
@@ -141,25 +147,34 @@ export function RoadmapBlock(props: any) {
                   <span className="font-mono text-label uppercase text-obsidian">[ YOU ARE ON THE LIST — CHECK YOUR INBOX ]</span>
                 </div>
               ) : (
-                <form onSubmit={handleWaitlistSubmit} className="flex flex-col gap-4 sm:flex-row">
-                  <label htmlFor="roadmap-waitlist-email" className="sr-only">Corporate email</label>
-                  <input
-                    id="roadmap-waitlist-email"
-                    className="field flex-1"
-                    placeholder="Enter official corporate email..."
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={waitlistState === 'pending'}
-                  />
-                  <button
-                    type="submit"
-                    disabled={waitlistState === 'pending'}
-                    className="btn-primary min-h-[52px] whitespace-nowrap px-10 py-4 disabled:opacity-60"
-                  >
-                    {waitlistState === 'pending' ? '[ SUBMITTING... ]' : '[ REQUEST EARLY ACCESS ]'}
-                  </button>
+                <form onSubmit={handleWaitlistSubmit} className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-4 sm:flex-row">
+                    <label htmlFor="roadmap-waitlist-email" className="sr-only">Corporate email</label>
+                    <input
+                      id="roadmap-waitlist-email"
+                      className="field flex-1"
+                      placeholder="Enter official corporate email..."
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={waitlistState === 'pending'}
+                    />
+                    <button
+                      type="submit"
+                      disabled={waitlistState === 'pending'}
+                      className="btn-primary min-h-[52px] whitespace-nowrap px-10 py-4 disabled:opacity-60"
+                    >
+                      {waitlistState === 'pending' ? '[ SUBMITTING... ]' : '[ REQUEST EARLY ACCESS ]'}
+                    </button>
+                  </div>
+                  <div className="flex justify-center">
+                    <TurnstileWidget
+                      ref={turnstileRef}
+                      onSuccess={setTurnstileToken}
+                      onExpire={() => setTurnstileToken(undefined)}
+                    />
+                  </div>
                 </form>
               )}
               {waitlistError && (

@@ -41,9 +41,12 @@ export async function submitRFQ(formData: {
       process.env.NODE_ENV !== 'production' && process.env.SKIP_TURNSTILE_IN_DEV === 'true'
 
     if (!skipTurnstile) {
-      const ok = await verifyTurnstile(formData.turnstileToken)
+      const ok = await verifyTurnstile(formData.turnstileToken, ip)
       if (!ok) {
-        return { success: false, error: 'Invalid security token.' }
+        return {
+          success: false,
+          error: 'Security verification failed. Please refresh and try again.',
+        }
       }
     }
 

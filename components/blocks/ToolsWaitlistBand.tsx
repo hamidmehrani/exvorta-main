@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useState, useTransition } from 'react'
+import React, { useRef, useState, useTransition } from 'react'
 import { submitWaitlist } from '@/actions/submitWaitlist'
 import Container from '@/components/ui/Container'
+import { TurnstileWidget, type TurnstileWidgetRef } from '@/components/forms/TurnstileWidget'
 
 export interface ToolsWaitlistBandProps {
   className?: string
@@ -10,6 +11,8 @@ export interface ToolsWaitlistBandProps {
 
 export function ToolsWaitlistBand({ className = '' }: ToolsWaitlistBandProps) {
   const [email, setEmail] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState<string>()
+  const turnstileRef = useRef<TurnstileWidgetRef>(null)
   const [isPending, startTransition] = useTransition()
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
@@ -26,6 +29,7 @@ export function ToolsWaitlistBand({ className = '' }: ToolsWaitlistBandProps) {
           source: 'Tools Hub',
           email: trimmed,
           collection: 'waitlist',
+          turnstileToken,
         })
         if (res.success) {
           setStatus('success')
@@ -33,10 +37,14 @@ export function ToolsWaitlistBand({ className = '' }: ToolsWaitlistBandProps) {
         } else {
           setStatus('error')
           setErrorMessage(res.error || 'Failed to submit. Please try again.')
+          turnstileRef.current?.reset()
+          setTurnstileToken(undefined)
         }
       } catch {
         setStatus('error')
         setErrorMessage('An unexpected error occurred. Please try again.')
+        turnstileRef.current?.reset()
+        setTurnstileToken(undefined)
       }
     })
   }
@@ -96,6 +104,14 @@ export function ToolsWaitlistBand({ className = '' }: ToolsWaitlistBandProps) {
                 >
                   {isPending ? '[ SUBMITTING... ]' : '[ REQUEST ACCESS ]'}
                 </button>
+              </div>
+
+              <div className="flex justify-center mt-3">
+                <TurnstileWidget
+                  ref={turnstileRef}
+                  onSuccess={setTurnstileToken}
+                  onExpire={() => setTurnstileToken(undefined)}
+                />
               </div>
 
               {status === 'error' && errorMessage && (

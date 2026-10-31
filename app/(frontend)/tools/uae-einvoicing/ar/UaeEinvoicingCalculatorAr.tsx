@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useMemo, useCallback, useTransition } from 'react'
+import React, { useState, useEffect, useMemo, useCallback, useTransition, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import {
   DEFAULT_ASSESSMENT_INPUT,
@@ -15,6 +15,7 @@ import {
   type CriticalGap,
 } from '@/lib/tools/einv-readiness'
 import { submitWaitlist } from '@/actions/submitWaitlist'
+import { TurnstileWidget, type TurnstileWidgetRef } from '@/components/forms/TurnstileWidget'
 
 interface EntityOptionAr {
   value: EntityType
@@ -322,6 +323,8 @@ export function UaeEinvoicingCalculatorAr() {
   const [botField, setBotField] = useState('')
   const [captureStatus, setCaptureStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [captureError, setCaptureError] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState<string>()
+  const turnstileRef = useRef<TurnstileWidgetRef>(null)
   const [isCapturing, startCaptureTransition] = useTransition()
 
   // URL state synchronization
@@ -430,6 +433,7 @@ export function UaeEinvoicingCalculatorAr() {
           source: 'Waitlist',
           company: captureCompany.trim() || undefined,
           botField: botField.trim() || undefined,
+          turnstileToken,
           payload: {
             source: 'UAE-EInvoicing-Tool-AR',
             score: result.score,
@@ -448,10 +452,14 @@ export function UaeEinvoicingCalculatorAr() {
         } else {
           setCaptureStatus('error')
           setCaptureError(res.error || 'تعذر حفظ التقييم. يرجى إعادة المحاولة.')
+          turnstileRef.current?.reset()
+          setTurnstileToken(undefined)
         }
       } catch {
         setCaptureStatus('error')
         setCaptureError('حدث خطأ في الاتصال بالشبكة. يرجى المحاولة لاحقاً.')
+        turnstileRef.current?.reset()
+        setTurnstileToken(undefined)
       }
     })
   }
@@ -1324,6 +1332,15 @@ export function UaeEinvoicingCalculatorAr() {
                 {captureError}
               </div>
             )}
+
+            <div className="my-2">
+              <TurnstileWidget
+                ref={turnstileRef}
+                onSuccess={setTurnstileToken}
+                onExpire={() => setTurnstileToken(undefined)}
+                theme="light"
+              />
+            </div>
 
             {captureStatus === 'success' && (
               <div className="p-4 text-xs bg-emerald/10 border border-emerald/30 text-emerald rounded-[4px]">

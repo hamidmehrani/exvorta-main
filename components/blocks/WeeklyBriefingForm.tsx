@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { m as motion, AnimatePresence } from 'framer-motion'
 import { AnimatedButton } from '@/components/ui/Reveal'
 import { submitWaitlist } from '@/actions/submitWaitlist'
 import { EASE_OUT } from '@/components/ui/Reveal'
+import { TurnstileWidget, type TurnstileWidgetRef } from '@/components/forms/TurnstileWidget'
 
 /**
  * WeeklyBriefingForm — newsletter capture for the Insights archive.
@@ -14,18 +15,27 @@ export function WeeklyBriefingForm() {
   const [email, setEmail] = useState('')
   const [state, setState] = useState<'idle' | 'pending' | 'done' | 'error'>('idle')
   const [error, setError] = useState<string | null>(null)
+  const [turnstileToken, setTurnstileToken] = useState<string>()
+  const turnstileRef = useRef<TurnstileWidgetRef>(null)
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setState('pending')
     setError(null)
-    const res = await submitWaitlist({ source: 'Waitlist', email, collection: 'waitlist' })
+    const res = await submitWaitlist({
+      source: 'WeeklyBriefing',
+      email,
+      collection: 'waitlist',
+      turnstileToken,
+    })
     if (res.success) {
       setState('done')
       setEmail('')
     } else {
       setState('error')
       setError(res.error || 'Submission failed')
+      turnstileRef.current?.reset()
+      setTurnstileToken(undefined)
     }
   }
 
@@ -47,27 +57,38 @@ export function WeeklyBriefingForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="w-full flex flex-col sm:flex-row gap-4">
-      <label htmlFor="weekly-briefing-email" className="sr-only">
-        Corporate email address
-      </label>
-      <input
-        id="weekly-briefing-email"
-        type="email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        disabled={state === 'pending'}
-        placeholder="CORPORATE EMAIL ADDRESS..."
-        className="flex-grow bg-white/[0.03] border border-white/10 px-6 py-5 text-white placeholder:text-white/30 font-mono text-xs tracking-widest outline-none focus:border-white/40 text-center sm:text-left disabled:opacity-50"
-      />
-      <AnimatedButton
-        type="submit"
-        disabled={state === 'pending'}
-        className="bg-white text-black px-8 py-5 text-[11px] uppercase tracking-[0.2em] font-mono hover:bg-gray-200 disabled:opacity-50"
-      >
-        {state === 'pending' ? '[ SUBMITTING… ]' : '[ SUBSCRIBE ]'}
-      </AnimatedButton>
+    <form onSubmit={onSubmit} className="w-full flex flex-col gap-4">
+      <div className="flex flex-col sm:flex-row gap-4">
+        <label htmlFor="weekly-briefing-email" className="sr-only">
+          Corporate email address
+        </label>
+        <input
+          id="weekly-briefing-email"
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={state === 'pending'}
+          placeholder="CORPORATE EMAIL ADDRESS..."
+          className="flex-grow bg-white/[0.03] border border-white/10 px-6 py-5 text-white placeholder:text-white/30 font-mono text-xs tracking-widest outline-none focus:border-white/40 text-center sm:text-left disabled:opacity-50"
+        />
+        <AnimatedButton
+          type="submit"
+          disabled={state === 'pending'}
+          className="bg-white text-black px-8 py-5 text-[11px] uppercase tracking-[0.2em] font-mono hover:bg-gray-200 disabled:opacity-50"
+        >
+          {state === 'pending' ? '[ SUBMITTING… ]' : '[ SUBSCRIBE ]'}
+        </AnimatedButton>
+      </div>
+
+      <div className="flex justify-center">
+        <TurnstileWidget
+          ref={turnstileRef}
+          onSuccess={setTurnstileToken}
+          onExpire={() => setTurnstileToken(undefined)}
+        />
+      </div>
+
       <AnimatePresence>
         {error && (
           <motion.p
@@ -76,7 +97,7 @@ export function WeeklyBriefingForm() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: EASE_OUT }}
             role="alert"
-            className="sm:absolute sm:mt-20 text-red-400 font-mono text-[11px] tracking-widest uppercase w-full text-center"
+            className="text-red-400 font-mono text-[11px] tracking-widest uppercase w-full text-center"
           >
             {error}
           </motion.p>

@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { submitWaitlist } from '@/actions/submitWaitlist'
-import { Turnstile } from '@marsidev/react-turnstile'
+import { TurnstileWidget, type TurnstileWidgetRef } from '@/components/forms/TurnstileWidget'
 import { m, AnimatePresence } from 'framer-motion'
 import { EASE_OUT } from '@/components/ui/Reveal'
 import { MagneticButton } from '@/components/ui/MagneticButton'
@@ -19,6 +19,7 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [turnstileToken, setTurnstileToken] = useState<string>()
+  const turnstileRef = useRef<TurnstileWidgetRef>(null)
   const [isValid, setIsValid] = useState(false)
   const [email, setEmail] = useState('')
 
@@ -61,9 +62,13 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
         setSuccess(true)
       } else {
         setError(result.error || 'Something went wrong')
+        turnstileRef.current?.reset()
+        setTurnstileToken(undefined)
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred')
+      turnstileRef.current?.reset()
+      setTurnstileToken(undefined)
     } finally {
       setIsPending(false)
     }
@@ -90,15 +95,13 @@ export function WaitlistClientForm({ placeholder, buttonText, source }: Props) {
       <form onSubmit={onSubmit} className="flex flex-col gap-6 rounded-none relative">
         <input type="hidden" name="source" value={source || 'Waitlist'} />
         <input type="hidden" name="bot-field" />
-        {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
-          <div className="flex justify-center">
-            <Turnstile
-              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-              onSuccess={(token) => setTurnstileToken(token)}
-              onExpire={() => setTurnstileToken(undefined)}
-            />
-          </div>
-        )}
+        <div className="flex justify-center">
+          <TurnstileWidget
+            ref={turnstileRef}
+            onSuccess={setTurnstileToken}
+            onExpire={() => setTurnstileToken(undefined)}
+          />
+        </div>
         
         <AnimatePresence mode="wait">
           {success ? (

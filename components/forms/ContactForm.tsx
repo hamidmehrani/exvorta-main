@@ -2,7 +2,7 @@
 
 import React, { useRef, useActionState, useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { Turnstile } from '@marsidev/react-turnstile'
+import { TurnstileWidget, type TurnstileWidgetRef } from '@/components/forms/TurnstileWidget'
 import { submitLeadAction } from '@/actions/submitLead'
 import { useFormStatus } from 'react-dom'
 
@@ -60,6 +60,8 @@ function SubmitButton() {
 export default function ContactForm() {
   const [state, formAction] = useActionState(submitLeadAction, { success: false, error: '' })
   const formRef = useRef<HTMLFormElement>(null)
+  const turnstileRef = useRef<TurnstileWidgetRef>(null)
+  const [turnstileToken, setTurnstileToken] = useState<string>()
   const [formKey, setFormKey] = useState(0)
   const [dismissedKey, setDismissedKey] = useState<unknown>(null)
 
@@ -103,6 +105,13 @@ export default function ContactForm() {
     })
   }, [referenceCode])
 
+  useEffect(() => {
+    if (state.error) {
+      turnstileRef.current?.reset()
+      setTurnstileToken(undefined)
+    }
+  }, [state.error])
+
   const handleReset = () => {
     setDismissedKey(state)
     setFormKey((prev) => prev + 1)
@@ -111,6 +120,8 @@ export default function ContactForm() {
     setReferenceCode('')
     setSubmissionTime('')
     setSelectedCallPreference(CALL_PREFERENCE_OPTIONS[0])
+    turnstileRef.current?.reset()
+    setTurnstileToken(undefined)
   }
 
   const validateField = (name: string, value: string): string => {
@@ -834,11 +845,13 @@ export default function ContactForm() {
         </div>
 
         {/* Turnstile Security Check */}
-        {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
-          <div className="mt-6">
-            <Turnstile siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} />
-          </div>
-        )}
+        <div className="mt-6">
+          <TurnstileWidget
+            ref={turnstileRef}
+            onSuccess={setTurnstileToken}
+            onExpire={() => setTurnstileToken(undefined)}
+          />
+        </div>
 
         {/* Submit Button */}
         <div className="mt-6">

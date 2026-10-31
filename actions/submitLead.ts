@@ -6,7 +6,7 @@ import { checkRateLimit, verifyTurnstile } from '@/lib/rate-limit'
 import { reportError } from '@/lib/error-reporting'
 
 export interface LeadSubmission {
-  source: 'Waitlist' | 'RFQ' | 'Tools Hub'
+  source: 'Waitlist' | 'RFQ' | 'Tools Hub' | 'WeeklyBriefing'
   email: string
   company?: string
   payload?: Record<string, unknown>
@@ -41,9 +41,12 @@ export async function submitLead(data: LeadSubmission) {
     process.env.NODE_ENV !== 'production' && process.env.SKIP_TURNSTILE_IN_DEV === 'true'
 
   if (!skipTurnstile) {
-    const ok = await verifyTurnstile(data.turnstileToken)
+    const ok = await verifyTurnstile(data.turnstileToken, ip)
     if (!ok) {
-      return { success: false, error: 'Invalid security token.' }
+      return {
+        success: false,
+        error: 'Security verification failed. Please refresh and try again.',
+      }
     }
   }
 
@@ -61,7 +64,7 @@ export async function submitLead(data: LeadSubmission) {
     return { success: false, error: 'Company name is too long.' }
   }
 
-  if (!data.source || !['Waitlist', 'RFQ', 'Tools Hub'].includes(data.source)) {
+  if (!data.source || !['Waitlist', 'RFQ', 'Tools Hub', 'WeeklyBriefing'].includes(data.source)) {
     return { success: false, error: 'Invalid lead source.' }
   }
 
@@ -89,12 +92,17 @@ export async function submitLeadAction(prevState: unknown, formData: FormData) {
   const email = formData.get('email') as string
   const company = (formData.get('company') as string | undefined)?.trim() || undefined
   const botField = formData.get('bot-field') as string | undefined
-  const turnstileToken = formData.get('cf-turnstile-response') as string | undefined
+  const turnstileToken =
+    (formData.get('cf-turnstile-response') as string | undefined) ||
+    (formData.get('turnstileToken') as string | undefined)
 
   const entries = Array.from(formData.entries())
   const extraData: Record<string, string> = {}
   for (const [key, value] of entries) {
-    if (!['source', 'email', 'company', 'bot-field', 'cf-turnstile-response'].includes(key) && !key.startsWith('$')) {
+    if (
+      !['source', 'email', 'company', 'bot-field', 'cf-turnstile-response', 'turnstileToken'].includes(key) &&
+      !key.startsWith('$')
+    ) {
       extraData[key] = value.toString()
     }
   }

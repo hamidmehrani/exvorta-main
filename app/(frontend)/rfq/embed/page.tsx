@@ -3,7 +3,7 @@
 import React, { Suspense, useEffect, useState, useCallback, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { submitRFQ } from '@/app/(frontend)/actions/submitRFQ'
-import { Turnstile } from '@marsidev/react-turnstile'
+import { TurnstileWidget, type TurnstileWidgetRef } from '@/components/forms/TurnstileWidget'
 
 interface Product {
   id: string
@@ -39,6 +39,7 @@ function RFQEmbedWidget() {
   const [notes, setNotes] = useState('')
   const [botField, setBotField] = useState('')
   const [turnstileToken, setTurnstileToken] = useState<string>()
+  const turnstileRef = useRef<TurnstileWidgetRef>(null)
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -253,9 +254,13 @@ function RFQEmbedWidget() {
         setSuccess(true)
       } else {
         setError(res.error || 'Failed to submit quote request.')
+        turnstileRef.current?.reset()
+        setTurnstileToken(undefined)
       }
     } catch {
       setError('An unexpected network error occurred. Please try again.')
+      turnstileRef.current?.reset()
+      setTurnstileToken(undefined)
     } finally {
       setIsSubmitting(false)
       reportHeight()
@@ -265,6 +270,8 @@ function RFQEmbedWidget() {
   const handleReset = () => {
     setSuccess(false)
     setError(null)
+    turnstileRef.current?.reset()
+    setTurnstileToken(undefined)
     if (catalog) {
       const initialQty: Record<string, number> = {}
       catalog.products.forEach(p => {
@@ -604,16 +611,14 @@ function RFQEmbedWidget() {
             </div>
           </section>
 
-          {/* Turnstile verification if configured */}
-          {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
-            <div className="flex justify-center pt-2">
-              <Turnstile
-                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-                onSuccess={setTurnstileToken}
-                onExpire={() => setTurnstileToken(undefined)}
-              />
-            </div>
-          )}
+          {/* Turnstile verification */}
+          <div className="flex justify-center pt-2">
+            <TurnstileWidget
+              ref={turnstileRef}
+              onSuccess={setTurnstileToken}
+              onExpire={() => setTurnstileToken(undefined)}
+            />
+          </div>
 
           {/* Error Message Alert */}
           {error && (

@@ -12,7 +12,7 @@ vi.mock('@/lib/payload', () => ({
 vi.mock('@/lib/rate-limit', () => ({
   checkRateLimit: vi.fn().mockResolvedValue({ allowed: true }),
   verifyTurnstile: vi.fn().mockImplementation(async (token?: string) => {
-    if (token === 'invalid-token') return false
+    if (token === 'invalid-token' || !token) return false
     return true
   }),
 }))
@@ -86,6 +86,7 @@ describe('submitLead and submitLeadAction (Contact brief submission)', () => {
     const formData = new FormData()
     formData.append('email', 'not-a-valid-email')
     formData.append('company', 'Trade Co')
+    formData.append('cf-turnstile-response', 'valid-turnstile-token')
 
     const result = await submitLeadAction(null, formData)
 
@@ -103,7 +104,20 @@ describe('submitLead and submitLeadAction (Contact brief submission)', () => {
     const result = await submitLeadAction(null, formData)
 
     expect(result.success).toBe(false)
-    expect(result.error).toBe('Invalid security token.')
+    expect(result.error).toBe('Security verification failed. Please refresh and try again.')
+    expect(mockCreate).not.toHaveBeenCalled()
+  })
+
+  it('rejects missing Turnstile security token', async () => {
+    const formData = new FormData()
+    formData.append('email', 'valid@buyer.com')
+    formData.append('company', 'Buyer FZCO')
+    // Missing cf-turnstile-response
+
+    const result = await submitLeadAction(null, formData)
+
+    expect(result.success).toBe(false)
+    expect(result.error).toBe('Security verification failed. Please refresh and try again.')
     expect(mockCreate).not.toHaveBeenCalled()
   })
 
@@ -117,6 +131,7 @@ describe('submitLead and submitLeadAction (Contact brief submission)', () => {
     formData.append('timeline', 'Immediate (< 1 month)')
     formData.append('callPreference', 'Introductory Architecture Call (30-minute direct scoping session)')
     formData.append('message', 'Multi-tenant ERP integration required for cross-border machinery distribution.')
+    formData.append('cf-turnstile-response', 'valid-turnstile-token')
 
     const result = await submitLeadAction(null, formData)
 

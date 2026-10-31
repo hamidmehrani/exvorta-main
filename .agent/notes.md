@@ -1,3 +1,47 @@
+# Agent Notes — CONV-02: Turnstile on all public forms
+
+- **Card:** `CONV-02` (Task `t_2665f59e`)
+- **Assignee:** `exvorta-builder`
+- **Risk Level:** `R2`
+- **Branch:** `card/conv-02-turnstile`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_2665f59e`
+
+## Objectives & Scope
+1. Reusable Accessible Turnstile Widget (`components/forms/TurnstileWidget.tsx`):
+   - Design-system aligned wrapper around `@marsidev/react-turnstile` with dark theme default (`theme="dark"`).
+   - Imperative ref handle (`TurnstileWidgetRef`) providing `reset()` method to clear state on failed submissions.
+   - Accessible feedback announcements with `role="alert"` and `aria-live="polite"` on expiration or network blockages.
+   - Prevents layout shift (CLS) with `min-h-[65px]`.
+   - Graceful degradation: renders dev indicator in non-prod when site key is unset, or null in production.
+2. Form Wiring Across All 10 Public Submission Forms:
+   - `components/forms/ContactForm.tsx`: Standardized with `TurnstileWidget`, resets widget on error, handles token pass-through.
+   - `components/forms/RFQForm.tsx` & `app/(frontend)/rfq/embed/page.tsx`: Standardized with `TurnstileWidget`, token state, and reset on submission error.
+   - `components/blocks/WaitlistClientForm.tsx`: Standardized with `TurnstileWidget`, passes `turnstileToken` to `submitWaitlist`.
+   - `components/blocks/WeeklyBriefingForm.tsx`: Wired `TurnstileWidget`, passes `turnstileToken` to `submitWaitlist` with `source: 'WeeklyBriefing'`.
+   - `components/blocks/RoadmapBlock.tsx`: Wired `TurnstileWidget`, passes `turnstileToken` to `submitLead`.
+   - `components/blocks/ToolsWaitlistBand.tsx`: Wired `TurnstileWidget`, passes `turnstileToken` to `submitWaitlist`.
+   - `app/(frontend)/partners/PartnerApplicationForm.tsx`: Standardized with `TurnstileWidget`, resets on submission error.
+   - `app/(frontend)/tools/docs-generator/page.tsx`: Wired `TurnstileWidget` in document email dispatch modal.
+   - `app/(frontend)/tools/uae-einvoicing/UaeEinvoicingCalculator.tsx` & `ar/UaeEinvoicingCalculatorAr.tsx`: Wired `TurnstileWidget` in EN/AR readiness assessment lead capture.
+3. Server Action & Verification Hardening (`lib/rate-limit.ts`):
+   - `verifyTurnstile(token: string | undefined, ip?: string)`:
+     - Cloudflare test key support when `ALLOW_TEST_TURNSTILE_KEY === 'true'` (passes for `1x...` test secret with `XXXX.DUMMY.TOKEN.XXXX` / `test-token`; blocks for `2x...` fail secret).
+     - Graceful dev bypass when `SKIP_TURNSTILE_IN_DEV === 'true'` or placeholder secret.
+     - Production validation with Cloudflare siteverify API and 5-second timeout (`AbortSignal.timeout(5000)`).
+     - Fail closed (`false`) on network aborts or errors with telemetry reporting.
+     - Consistent error response across `submitLead.ts` and `submitRFQ.ts`: `{ success: false, error: 'Security verification failed. Please refresh and try again.' }`.
+4. Documentation & Contracts:
+   - Updated `docs/CONTRACTS.md` with Section 8: Bot Protection & Cloudflare Turnstile Security Contract.
+   - Updated `.env.example` with documented Turnstile variables and Cloudflare dummy test keys.
+5. Unit Tests:
+   - Created `__tests__/turnstile.test.ts` with 11 comprehensive tests for `verifyTurnstile`.
+   - Updated `__tests__/contact-lead.test.ts` to test server action rejection on invalid and missing tokens.
+   - Full test suite passes: 16 test files, 210 tests passed.
+   - TypeScript check clean (`tsc --noEmit`).
+   - Factory gate passes: `CARD_RISK=R2 bash scripts/agent/gate.sh` -> `GATE OK`.
+
+---
+
 # Agent Notes — TOOL-8: Tool share hooks: WhatsApp share + result permalinks
 
 - **Card:** `TOOL-8` (Task `t_43f32f3b`)

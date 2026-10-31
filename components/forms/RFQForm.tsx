@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { StaggerContainer, StaggerItem, EASE_OUT } from '@/components/ui/Reveal'
 import { m, AnimatePresence } from 'framer-motion'
 import { submitRFQ } from '@/app/(frontend)/actions/submitRFQ'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { MonoLabel } from '@/components/ui/MonoLabel'
 import { Hairline } from '@/components/ui/Hairline'
-import { Turnstile } from '@marsidev/react-turnstile'
+import { TurnstileWidget, type TurnstileWidgetRef } from '@/components/forms/TurnstileWidget'
 
 const InputWrapper = ({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) => (
   <StaggerItem className="relative w-full group">
@@ -20,6 +20,7 @@ export default function RFQForm() {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [turnstileToken, setTurnstileToken] = useState<string>()
+  const turnstileRef = useRef<TurnstileWidgetRef>(null)
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -51,9 +52,13 @@ export default function RFQForm() {
         setSuccess(true)
       } else {
         setError(res.error || 'Submission failed')
+        turnstileRef.current?.reset()
+        setTurnstileToken(undefined)
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred')
+      turnstileRef.current?.reset()
+      setTurnstileToken(undefined)
     } finally {
       setIsPending(false)
     }
@@ -114,15 +119,6 @@ export default function RFQForm() {
           tabIndex={-1}
         />
       </div>
-      {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
-        <div className="flex justify-center">
-          <Turnstile
-            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-            onSuccess={setTurnstileToken}
-            onExpire={() => setTurnstileToken(undefined)}
-          />
-        </div>
-      )}
 
       <StaggerContainer delayChildren={0.1} staggerChildren={0.05} className="space-y-8">
         <div className="mb-8 flex items-center gap-4 text-xs tracking-widest text-black uppercase">
@@ -199,7 +195,13 @@ export default function RFQForm() {
         </div>
       </StaggerContainer>
 
-      <StaggerItem className="pt-8">
+      <StaggerItem className="pt-8 flex flex-col items-center">
+        <TurnstileWidget
+          ref={turnstileRef}
+          onSuccess={setTurnstileToken}
+          onExpire={() => setTurnstileToken(undefined)}
+          className="mb-6 w-full"
+        />
         <MagneticButton fullWidth>
           <button 
             type="submit" 
