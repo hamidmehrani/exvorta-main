@@ -1,31 +1,24 @@
-# Agent Notes — CONV-03: Resend transactional flows: confirmations that set expectations
+# Agent Notes — CONV-07: Scroll CTAs + sticky quote bar (tasteful)
 
-- **Card:** `CONV-03` (Task `t_f075a6ea`)
+- **Card:** `CONV-07` (Task `t_492a86c5`)
 - **Assignee:** `exvorta-builder`
-- **Risk Level:** `R0`
-- **Branch:** `card/conv-03-resend`
-- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_f075a6ea`
+- **Risk Level:** `R1`
+- **Branch:** `card/conv-07-ctas`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_492a86c5`
 
 ## Objectives & Scope
-1. Implement and standardize all transactional email automation hooks via Resend across Exvorta:
-   - Leads / General contact: `payload/collections/Leads/hooks/sendLeadEmails.ts`
-   - FormSubmissions / RFQ proposals: `payload/collections/FormSubmissions/hooks/sendRFQEmails.ts`
-   - Waitlist / Early access: `payload/collections/Waitlist/hooks/sendWaitlistEmails.ts` (registered in `payload/collections/Waitlist.ts`)
-2. Dual-Format Delivery Contract:
-   - Provide high-fidelity, responsive HTML templates matching Institutional Elite design guidelines (#FAFAF8, #0D0D0D, #E5E5E0, serif and monospace typography, DIFC Dubai UAE address).
-   - Provide structured, professional plain-text fallback for every email stream.
-3. Realistic Institutional Copy:
-   - Replace arbitrary or fake delivery SLA guarantees with authentic institutional copy setting measured expectations.
-4. Header & Routing Discipline:
-   - Client acknowledgments: `to: doc.email`, `replyTo: ownerEmail` (`OWNER_EMAIL || ADMIN_EMAIL || operations@<domain>`).
-   - Admin internal alerts: `to: adminEmail`, `replyTo: doc.email` (so operations can reply directly to the customer).
-5. Resilient Error Handling & Graceful Degradation:
-   - If `ADMIN_EMAIL` is missing or placeholder, skip internal alert gracefully via `reportWarning` without throwing or aborting client confirmation.
-   - Isolated try/catch blocks for client and admin email dispatches.
-   - Any API or transport errors logged cleanly to `lib/error-reporting` via `reportError`.
-6. Unit Testing & Verification:
-   - `__tests__/send-lead-emails.test.ts` (13 tests)
-   - `__tests__/send-rfq-emails.test.ts` (13 tests)
-   - `__tests__/send-waitlist-emails.test.ts` (14 tests)
-   - Full Vitest suite: 18 test files, 238 passed.
-   - Documentation updated in `docs/CONTRACTS.md`.
+1. Implement tasteful scroll-triggered CTAs and a sticky quote bar across key conversion routes adhering to `design-system.md` and analytics contracts (`docs/CONTRACTS.md`).
+2. Components created:
+   - `components/ui/SectionCtaBand.tsx`: Scroll-triggered / in-page CTA section featuring institutional typography, subtle micro-accents, responsive action buttons (`/rfq`, `/contact`), and Umami analytics tracking (`cta_click`).
+   - `components/ui/StickyQuoteBar.tsx`: Tasteful bottom-docked sticky proposal and quote bar. Appears smoothly after scrolling past 300px, includes dismiss button with persistent localStorage dismissal (`exvorta_sticky_quote_dismissed_<key>`), mobile-safe padding avoiding floating widgets, and Umami tracking (`sticky_quote_click`, `sticky_quote_dismiss`).
+3. Integration:
+   - Integrated `SectionCtaBand` and `StickyQuoteBar` into `/pricing` (`app/(frontend)/pricing/page.tsx`).
+4. Analytics & Contracts:
+   - Updated `lib/analytics.ts` to include `cta_click` in `UmamiEventMap`.
+   - Updated `docs/CONTRACTS.md` with Section CTA and Sticky Quote Bar specifications, tracking contracts, and dismissal persistence behaviors.
+5. Verification:
+   - `__tests__/section-cta.test.ts` (unit tests for SectionCtaBand component and click tracking).
+   - `__tests__/sticky-quote-bar.test.ts` (unit tests for StickyQuoteBar visibility, scroll handling, dismiss state, and localStorage persistence).
+   - `__tests__/pricing.test.ts` (updated pricing route render tests).
+   - Full Vitest suite passing (294 tests).
+   - `CARD_RISK=R1 bash scripts/agent/gate.sh` passes with `GATE OK`.

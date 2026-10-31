@@ -45,6 +45,7 @@ export const ANALYTICS_EVENTS = {
   // Engagement
   WHATSAPP_CLICKED: 'whatsapp_clicked',
   CTA_CLICKED: 'cta_clicked',
+  QUOTE_BAR_DISMISSED: 'quote_bar_dismissed',
   NEWSLETTER_SUBSCRIBED: 'newsletter_subscribed',
   TOOL_SHARE: 'tool_share',
 } as const

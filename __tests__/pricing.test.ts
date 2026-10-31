@@ -1,4 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
+import React from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 
 vi.mock('@/lib/payload-cache', () => ({
   getCachedSitemapCollection: vi.fn().mockResolvedValue([]),
@@ -18,6 +20,7 @@ import {
   DIRECT_CHANNELS,
 } from '@/app/(frontend)/pricing/pricing-data'
 import { STATIC_ROUTES } from '@/app/sitemap'
+import PricingPage from '@/app/(frontend)/pricing/page'
 
 describe('Pricing route data & commercial contracts', () => {
   it('defines 3 distinct commercial tiers with required deliverables', () => {
@@ -81,5 +84,14 @@ describe('Pricing route data & commercial contracts', () => {
     expect(pricingRoute).toBeDefined()
     expect(pricingRoute?.priority).toBe(0.8)
     expect(pricingRoute?.changeFrequency).toBe('weekly')
+  })
+
+  it('renders SectionCtaBand and StickyQuoteBar for conversion optimization (CONV-07)', () => {
+    const html = renderToStaticMarkup(React.createElement(PricingPage))
+    expect(html).toContain('id="pricing-bottom-cta"')
+    expect(html).toContain('Institutional Export Architecture')
+    expect(html).toContain('Fixed-scope delivery. Confirm architecture within 24h.')
+    expect(html).toContain('[ REQUEST SCOPE ]')
+    expect(html).toContain('aria-label="Quote action bar"')
   })
 })

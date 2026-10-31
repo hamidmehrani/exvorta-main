@@ -5,6 +5,8 @@ import { generateMeta } from '@/utils/generateMeta'
 import { AnimatedSection, Reveal, StaggerContainer, StaggerItem } from '@/components/ui/Reveal'
 import { Container } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { SectionCtaBand } from '@/components/ui/SectionCtaBand'
+import { StickyQuoteBar } from '@/components/ui/StickyQuoteBar'
 import FAQJsonLd from '@/components/seo/FAQJsonLd'
 import {
   PRICING_PACKAGES,
@@ -490,6 +492,18 @@ export default function PricingPage() {
           </div>
         </Container>
       </AnimatedSection>
+
+      {/* ── 08. Closing Section CTA Band ── */}
+      <SectionCtaBand id="pricing-bottom-cta" trackingTarget="pricing_bottom_cta" />
+
+      {/* ── Sticky Proposal & Quote Bar ── */}
+      <StickyQuoteBar
+        storageKey="pricing"
+        title="Institutional Export Architecture"
+        subtitle="Fixed-scope delivery. Confirm architecture within 24h."
+        ctaHref="/rfq"
+        ctaText="[ REQUEST SCOPE ]"
+      />
     </div>
   )
 }

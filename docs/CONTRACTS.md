@@ -52,6 +52,8 @@ Every route under `app/(frontend)` is audited below. All frontend pages are rend
 - **`Container`** (`components/ui/Container.tsx`): Consistent max-width container (`max-w-7xl`, responsive padding `px-4 sm:px-6 lg:px-8`).
 - **`AppLink`** (`components/ui/AppLink.tsx`): Internal route navigation wrapper ensuring consistent routing and prefetching.
 - **`MonoLabel` & `Hairline`** (`components/ui/MonoLabel.tsx`, `Hairline.tsx`): Monospace metadata badges and 1px tokenized boundary dividers (`border-border`).
+- **`SectionCtaBand`** (`components/ui/SectionCtaBand.tsx`): High-converting institutional section CTA band featuring crosshair corner accents, tokenized tones (`dark`, `surface`, `light`), primary/secondary action buttons, and automatic `cta_clicked` analytics dispatch.
+- **`StickyQuoteBar`** (`components/ui/StickyQuoteBar.tsx`): Tasteful, zero-CLS fixed bottom proposal/quote bar. Appears smoothly after scroll threshold (`scrollThreshold`), dismissible with persistence in `localStorage`, live status indicator, and dispatches `quote_bar_dismissed` and `cta_clicked` events.
 
 ---
 
@@ -228,4 +230,5 @@ All client-side user interactions tracked via `trackEvent` (`lib/analytics.ts`) 
 | `waitlist_joined` | `WAITLIST_JOINED` | `{ source?: string }` | Dispatched on product waitlist registration. |
 | `contact_form_submitted` | `CONTACT_FORM_SUBMITTED` | `{ intent?: string }` | Dispatched on enterprise contact submission. |
 | `whatsapp_clicked` | `WHATSAPP_CLICKED` | `{ location?: string }` | Dispatched on clicking floating WhatsApp widget or contact anchor. |
-| `cta_clicked` | `CTA_CLICKED` | `{ target?: string }` | Dispatched on primary marketing call-to-action interactions. |
+| `cta_clicked` | `CTA_CLICKED` | `{ target?: string, href?: string, label?: string, page?: string, action?: string }` | Dispatched on primary/secondary marketing call-to-action interactions across CTA bands and sticky bars. |
+| `quote_bar_dismissed` | `QUOTE_BAR_DISMISSED` | `{ target: string }` | Dispatched when the user dismisses the sticky proposal/quote bar (persisted to localStorage). |
