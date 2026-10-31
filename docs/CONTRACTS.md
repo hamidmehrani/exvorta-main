@@ -206,3 +206,20 @@ To maximize indexing coverage across search engines and AI answer engines, the `
 - **Roadmap Tools:** Must route to notification / waitlist capture with query parameters (`/waitlist?tool=<slug>`).
 - **Zero Paywalls:** All public trade utilities are deterministic, client-side or static, and free of billing gates.
 - **Lead Capture:** The page email capture band integrates via `submitWaitlist` with `{ source: 'Tools Hub', collection: 'waitlist' }`.
+
+---
+
+## 7. Telemetry & Analytics Contract (Umami Event Taxonomy)
+
+All client-side user interactions tracked via `trackEvent` (`lib/analytics.ts`) conform to a strict zero-PII privacy guarantee under UAE PDPL Article 6 and cookieless telemetry standards. Payloads never include personal names, email addresses, phone numbers, IP addresses, or sensitive client commercial terms.
+
+### Event Taxonomy
+
+| Event Name | Constant (`ANALYTICS_EVENTS`) | Payload Schema | Description |
+| :--- | :--- | :--- | :--- |
+| `tool_share` | `TOOL_SHARE` | `{ tool: string, method: 'whatsapp' \| 'copy_link' }` | Dispatched when a trade tool result or document is shared via WhatsApp deep-link or copied to clipboard permalink (zero PII). |
+| `rfq_submitted` | `RFQ_SUBMITTED` | `{ industry?: string }` | Dispatched on successful multi-step RFQ submission. |
+| `waitlist_joined` | `WAITLIST_JOINED` | `{ source?: string }` | Dispatched on product waitlist registration. |
+| `contact_form_submitted` | `CONTACT_FORM_SUBMITTED` | `{ intent?: string }` | Dispatched on enterprise contact submission. |
+| `whatsapp_clicked` | `WHATSAPP_CLICKED` | `{ location?: string }` | Dispatched on clicking floating WhatsApp widget or contact anchor. |
+| `cta_clicked` | `CTA_CLICKED` | `{ target?: string }` | Dispatched on primary marketing call-to-action interactions. |

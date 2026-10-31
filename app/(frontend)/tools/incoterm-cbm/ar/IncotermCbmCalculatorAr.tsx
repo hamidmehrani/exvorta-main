@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { ToolShareBand } from '@/components/tools/ToolShareBand'
+import { formatIncotermShareText } from '@/lib/tools/share'
 import {
   INCOTERMS,
   listIncoterms,
@@ -237,20 +239,29 @@ export function IncotermCbmCalculatorAr() {
   const [transportMode, setTransportMode] = useState<TransportMode>(initialMode)
   const [cargoItems, setCargoItems] = useState<ExtendedCargoItem[]>(initialItems)
   const [weightUnit, setWeightUnit] = useState<'kg' | 'lb'>('kg')
-  const [copiedLink, setCopiedLink] = useState(false)
   const [copiedReport, setCopiedReport] = useState(false)
+
+  const currentQuery = useMemo(() => serializeToolState({
+    incoterm: selectedCode,
+    transportMode,
+    items: cargoItems,
+  }), [selectedCode, transportMode, cargoItems])
+
+  const [currentPermalink, setCurrentPermalink] = useState('')
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const fullUrl = `${window.location.origin}${window.location.pathname}${currentQuery ? `?${currentQuery}` : ''}`
+      setCurrentPermalink(fullUrl)
+    }
+  }, [currentQuery])
 
   // Reactive URL query parameter synchronization
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const query = serializeToolState({
-      incoterm: selectedCode,
-      transportMode,
-      items: cargoItems,
-    })
-    const newPath = query ? `${window.location.pathname}?${query}` : window.location.pathname
+    const newPath = currentQuery ? `${window.location.pathname}?${currentQuery}` : window.location.pathname
     window.history.replaceState(null, '', newPath)
-  }, [selectedCode, transportMode, cargoItems])
+  }, [currentQuery])
 
   // Calculations
   const incotermDef = useMemo(() => INCOTERMS[selectedCode] || INCOTERMS.FOB, [selectedCode])
@@ -270,6 +281,18 @@ export function IncotermCbmCalculatorAr() {
   const containerResult = useMemo(() => {
     return estimateContainerFit(cbmResult.totalCbm, cbmResult.totalWeightKg)
   }, [cbmResult.totalCbm, cbmResult.totalWeightKg])
+
+  const shareText = useMemo(() => {
+    const permalink = currentPermalink || (typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}${currentQuery ? `?${currentQuery}` : ''}` : '')
+    return formatIncotermShareText({
+      incoterm: selectedCode,
+      cbm: cbmResult.totalCbm,
+      weightKg: cbmResult.totalWeightKg,
+      containerFit: containerResult.isLclRecommended ? 'شحن جزئي (LCL)' : containerResult.primarySuggestion,
+      permalink,
+      lang: 'ar',
+    })
+  }, [selectedCode, cbmResult.totalCbm, cbmResult.totalWeightKg, containerResult, currentPermalink, currentQuery])
 
   // Cargo Item Management
   const handleAddItem = useCallback(() => {
@@ -306,38 +329,6 @@ export function IncotermCbmCalculatorAr() {
   const handleGlobalUnitChange = useCallback((unit: 'cm' | 'in') => {
     setCargoItems(prev => prev.map(item => ({ ...item, unit })))
   }, [])
-
-  // Link copy
-  const handleCopyLink = useCallback(async () => {
-    if (typeof window === 'undefined') return
-    const query = serializeToolState({
-      incoterm: selectedCode,
-      transportMode,
-      items: cargoItems,
-    })
-    const fullUrl = `${window.location.origin}${window.location.pathname}${query ? `?${query}` : ''}`
-    try {
-      await navigator.clipboard.writeText(fullUrl)
-      setCopiedLink(true)
-      setTimeout(() => setCopiedLink(false), 2200)
-    } catch {
-      try {
-        const textArea = document.createElement('textarea')
-        textArea.value = fullUrl
-        textArea.style.position = 'fixed'
-        textArea.style.opacity = '0'
-        document.body.appendChild(textArea)
-        textArea.focus()
-        textArea.select()
-        document.execCommand('copy')
-        document.body.removeChild(textArea)
-        setCopiedLink(true)
-        setTimeout(() => setCopiedLink(false), 2200)
-      } catch {
-        // clipboard fallback
-      }
-    }
-  }, [selectedCode, transportMode, cargoItems])
 
   // Reset
   const handleReset = useCallback(() => {
@@ -452,20 +443,13 @@ export function IncotermCbmCalculatorAr() {
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={handleCopyLink}
-              className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider px-3.5 py-2 border border-rule bg-surface text-obsidian hover:border-obsidian transition-colors rounded-[4px] cursor-pointer"
-              aria-label={copiedLink ? 'تم نسخ الرابط إلى الحافظة' : 'نسخ رابط الإعدادات المباشر'}
-            >
-              <span
-                className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                  copiedLink ? 'bg-emerald shadow-[0_0_6px_var(--color-emerald)]' : 'bg-muted'
-                }`}
-                aria-hidden="true"
-              />
-              <span>{copiedLink ? '[ تم النسخ! ]' : '[ نسخ رابط الإعدادات ]'}</span>
-            </button>
+            <ToolShareBand
+              tool="incoterm-cbm"
+              title="مشاركة"
+              shareText={shareText}
+              permalinkUrl={currentPermalink}
+              lang="ar"
+            />
             <button
               type="button"
               onClick={handleReset}

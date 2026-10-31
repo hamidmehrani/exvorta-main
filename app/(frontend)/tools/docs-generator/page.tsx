@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState, useTransition } from 'react';
+import React, { useState, useTransition, useEffect, useMemo } from 'react';
+import { ToolShareBand } from '@/components/tools/ToolShareBand';
+import { formatDocGenShareText } from '@/lib/tools/share';
 import {
   type DocType,
   type DocLang,
@@ -116,6 +118,28 @@ export default function DocsGeneratorPage() {
   const visible = getVisibleFields(doc.docType);
 
   const t = (key: Parameters<typeof getTranslation>[0]) => getTranslation(key, lang);
+
+  const [currentUrl, setCurrentUrl] = useState('');
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentUrl(window.location.href);
+    }
+  }, []);
+
+  const shareText = useMemo(() => {
+    const permalink = currentUrl || (typeof window !== 'undefined' ? window.location.href : '');
+    const docTypeLabel = doc.docType === 'commercial-invoice'
+      ? t('commercialInvoiceTitle')
+      : doc.docType === 'packing-list'
+      ? t('packingListTitle')
+      : t('cmrTitle');
+    return formatDocGenShareText({
+      docType: docTypeLabel,
+      docNumber: doc.docNumber,
+      permalink,
+      lang,
+    });
+  }, [doc.docType, doc.docNumber, lang, currentUrl]);
 
   // Field change handlers
   const updateDoc = <K extends keyof ExportDocData>(field: K, value: ExportDocData[K]) => {
@@ -277,7 +301,15 @@ export default function DocsGeneratorPage() {
             </div>
 
             {/* Quick Actions Bar */}
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <ToolShareBand
+                tool="docs-generator"
+                title={lang === 'ar' ? 'مشاركة' : 'Share'}
+                shareText={shareText}
+                permalinkUrl={currentUrl}
+                lang={lang}
+              />
+
               <button
                 type="button"
                 onClick={handlePrint}

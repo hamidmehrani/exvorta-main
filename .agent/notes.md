@@ -1,4 +1,43 @@
-# Agent Notes — TOOL-6 UAE e-invoicing (PINT-AE) readiness assessment
+# Agent Notes — TOOL-8: Tool share hooks: WhatsApp share + result permalinks
+
+- **Card:** `TOOL-8` (Task `t_43f32f3b`)
+- **Assignee:** `exvorta-builder`
+- **Risk Level:** `R1`
+- **Branch:** `card/tool-8-share`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_43f32f3b`
+
+## Objectives & Scope
+1. Implement WhatsApp deep-link sharing and result permalinks for Exvorta interactive trade tools:
+   - English Incoterm & CBM Calculator (`/tools/incoterm-cbm`)
+   - Arabic Incoterm & CBM Calculator (`/tools/incoterm-cbm/ar`)
+   - Document Generator (`/tools/docs-generator`)
+2. Pure logic share helpers in `lib/tools/share.ts`:
+   - `buildWhatsAppShareUrl(text: string): string` -> `https://wa.me/?text=${encodeURIComponent(text)}`
+   - `formatIncotermShareText(params: IncotermShareParams): string` (bilingual EN & AR)
+   - `formatDocGenShareText(params: DocGenShareParams): string` (bilingual EN & AR)
+   - `formatGenericToolShareText(params: GenericToolShareParams): string` (bilingual EN & AR)
+   - Guarantees zero PII, zero tokens, zero user private details in URL query parameters.
+3. Standardized, design-system compliant client component `components/tools/ToolShareBand.tsx`:
+   - Tokenized UI: `font-mono text-xs uppercase tracking-wider`, `border-rule`, `hover:bg-cream`, `focus-visible:ring-obsidian`, `rounded-[4px]`.
+   - Copy Link button with clipboard write, fallback textarea copy, and live polite feedback announcement (`aria-live="polite"`).
+   - WhatsApp share anchor with `target="_blank" rel="noopener noreferrer"` and official green icon.
+   - Umami event tracking dispatch: `trackEvent(ANALYTICS_EVENTS.TOOL_SHARE, { tool, method: 'copy_link' | 'whatsapp' })`.
+   - Full RTL and logical property support (`dir={isAr ? 'rtl' : 'ltr'}`).
+4. Tool UI integrations:
+   - Replaced custom copy link buttons in `IncotermCbmCalculator.tsx` and `IncotermCbmCalculatorAr.tsx` with unified `ToolShareBand`.
+   - Added `ToolShareBand` to action bar in `app/(frontend)/tools/docs-generator/page.tsx`.
+5. Telemetry & Analytics Contract:
+   - Added `TOOL_SHARE: 'tool_share'` in `lib/analytics.ts`.
+   - Documented event schema and zero-PII privacy guarantee in `docs/CONTRACTS.md`.
+6. Unit tests:
+   - 17 unit tests in `lib/tools/share.test.ts` testing URL generation, Arabic percent encoding, optional parameter omission, and zero PII.
+   - All tests passing in test suite.
+   - TypeScript check clean (`tsc --noEmit`).
+   - Factory gate passes (`GATE OK`).
+
+---
+
+# Previous Notes — TOOL-6 UAE e-invoicing (PINT-AE) readiness assessment
 
 - **Card:** `TOOL-6` (Task `t_81913841`)
 - **Assignee:** `exvorta-builder`

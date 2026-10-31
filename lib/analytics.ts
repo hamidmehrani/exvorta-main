@@ -46,6 +46,7 @@ export const ANALYTICS_EVENTS = {
   WHATSAPP_CLICKED: 'whatsapp_clicked',
   CTA_CLICKED: 'cta_clicked',
   NEWSLETTER_SUBSCRIBED: 'newsletter_subscribed',
+  TOOL_SHARE: 'tool_share',
 } as const
 
 export type AnalyticsEvent = (typeof ANALYTICS_EVENTS)[keyof typeof ANALYTICS_EVENTS]
