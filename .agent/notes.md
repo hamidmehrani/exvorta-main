@@ -1,31 +1,28 @@
-# Agent Notes — CONV-03: Resend transactional flows: confirmations that set expectations
+# Agent Notes — CONV-10: Newsletter signup + archive page
 
-- **Card:** `CONV-03` (Task `t_f075a6ea`)
+- **Card:** `CONV-10` (Task `t_615bfcf7`)
 - **Assignee:** `exvorta-builder`
 - **Risk Level:** `R0`
-- **Branch:** `card/conv-03-resend`
-- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_f075a6ea`
+- **Branch:** `card/conv-10-newsletter`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_615bfcf7`
 
 ## Objectives & Scope
-1. Implement and standardize all transactional email automation hooks via Resend across Exvorta:
-   - Leads / General contact: `payload/collections/Leads/hooks/sendLeadEmails.ts`
-   - FormSubmissions / RFQ proposals: `payload/collections/FormSubmissions/hooks/sendRFQEmails.ts`
-   - Waitlist / Early access: `payload/collections/Waitlist/hooks/sendWaitlistEmails.ts` (registered in `payload/collections/Waitlist.ts`)
-2. Dual-Format Delivery Contract:
-   - Provide high-fidelity, responsive HTML templates matching Institutional Elite design guidelines (#FAFAF8, #0D0D0D, #E5E5E0, serif and monospace typography, DIFC Dubai UAE address).
-   - Provide structured, professional plain-text fallback for every email stream.
-3. Realistic Institutional Copy:
-   - Replace arbitrary or fake delivery SLA guarantees with authentic institutional copy setting measured expectations.
-4. Header & Routing Discipline:
-   - Client acknowledgments: `to: doc.email`, `replyTo: ownerEmail` (`OWNER_EMAIL || ADMIN_EMAIL || operations@<domain>`).
-   - Admin internal alerts: `to: adminEmail`, `replyTo: doc.email` (so operations can reply directly to the customer).
-5. Resilient Error Handling & Graceful Degradation:
-   - If `ADMIN_EMAIL` is missing or placeholder, skip internal alert gracefully via `reportWarning` without throwing or aborting client confirmation.
-   - Isolated try/catch blocks for client and admin email dispatches.
-   - Any API or transport errors logged cleanly to `lib/error-reporting` via `reportError`.
-6. Unit Testing & Verification:
-   - `__tests__/send-lead-emails.test.ts` (13 tests)
-   - `__tests__/send-rfq-emails.test.ts` (13 tests)
-   - `__tests__/send-waitlist-emails.test.ts` (14 tests)
-   - Full Vitest suite: 18 test files, 238 passed.
-   - Documentation updated in `docs/CONTRACTS.md`.
+1. **Lead & Waitlist Action Updates:**
+   - Extended `actions/submitLead.ts` to allow `source: 'Newsletter'` in `LeadSubmission` and validate it.
+   - Verified `actions/submitWaitlist.ts` supports `{ source: 'Newsletter', email, collection: 'waitlist' }`.
+   - Updated `components/blocks/WeeklyBriefingForm.tsx` to submit with `source: 'Newsletter'`.
+2. **Email Hook (`payload/collections/Waitlist/hooks/sendWaitlistEmails.ts`):**
+   - Implemented tailored subject: `Exvorta Executive Briefing — Subscription Confirmed` when `doc.source === 'Newsletter'`.
+   - Tailored executive briefing confirmation HTML and plain-text templates matching Institutional Elite design guidelines (#FAFAF8, #0D0D0D, #E5E5E0, monospace metadata, DIFC Dubai signature).
+   - Preserved 100% backward compatibility for waitlist submissions (`doc.source === 'Waitlist'`).
+3. **Frontend Components & Route:**
+   - `components/blocks/NewsletterSignup.tsx`: Client form component hooked to `submitWaitlist` with honeypot botField, aria labels, state feedback, and responsive layout.
+   - `components/blocks/NewsletterArchive.tsx`: Archive display component with honest empty-state, cadence indicators, topics overview, and post cards when CMS posts are present.
+   - `app/(frontend)/newsletter/page.tsx`: Route for the weekly briefing archive + signup with standard OpenGraph and Twitter metadata.
+4. **Metadata & Site Configuration:**
+   - Updated `app/sitemap.ts` to include `/newsletter` in `STATIC_ROUTES` (priority 0.8, changeFrequency 'weekly').
+   - Updated `docs/CONTRACTS.md` with `/newsletter` route and data contract.
+5. **Testing & Verification:**
+   - Unit tests covering `submitLead` with `source: 'Newsletter'`, newsletter email template generation (`__tests__/send-waitlist-emails.test.ts`), and component/page behavior (`__tests__/newsletter.test.tsx`).
+   - All 289 vitest tests passing (21 test suites).
+   - `tsc --noEmit` clean, `eslint` clean, `scripts/agent/gate.sh` passed with `GATE OK`.

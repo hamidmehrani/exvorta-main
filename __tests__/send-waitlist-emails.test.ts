@@ -130,6 +130,71 @@ describe('sendWaitlistEmails transactional hook & templates', () => {
       expect(html).toContain('$50M+')
       expect(html).toContain(`mailto:${sampleDoc.email}`)
     })
+
+    it('buildWaitlistConfirmationText returns newsletter copy when doc.source is Newsletter or Weekly Briefing', () => {
+      const newsletterDoc: WaitlistEmailDoc = {
+        id: 'N-101',
+        email: 'briefing@macro-fund.ae',
+        source: 'Newsletter',
+      }
+      const text = buildWaitlistConfirmationText(newsletterDoc)
+      expect(text).toContain('EXVORTA // EXECUTIVE BRIEFING')
+      expect(text).toContain('REF #N-101')
+      expect(text).toContain('Executive Briefing Subscription Confirmed.')
+      expect(text).toContain('weekly executive dispatch')
+      expect(text).toContain('GCC trade compliance')
+      expect(text).toContain('cross-border settlement architectures')
+      expect(text).toContain('CHANNEL: Newsletter')
+      expect(text).toContain('RECIPIENT: briefing@macro-fund.ae')
+      expect(text).toContain('FREQUENCY: Weekly Dispatches (Thursday 08:00 GST)')
+      expect(text).toContain('STATUS: ACTIVE SUBSCRIBER')
+      expect(text).toContain('— Exvorta Operations Desk')
+      expect(text).toContain('Dubai International Financial Centre (DIFC) · Dubai, UAE')
+
+      const weeklyBriefingDoc: WaitlistEmailDoc = {
+        id: 'N-102',
+        email: 'analyst@sovereign.qa',
+        source: 'Weekly Briefing',
+      }
+      const wbText = buildWaitlistConfirmationText(weeklyBriefingDoc)
+      expect(wbText).toContain('EXVORTA // EXECUTIVE BRIEFING')
+      expect(wbText).toContain('REF #N-102')
+      expect(wbText).toContain('CHANNEL: Weekly Briefing')
+      expect(wbText).toContain('STATUS: ACTIVE SUBSCRIBER')
+    })
+
+    it('buildWaitlistConfirmationHtml returns newsletter HTML when doc.source is Newsletter or Weekly Briefing', () => {
+      const newsletterDoc: WaitlistEmailDoc = {
+        id: 'N-103',
+        email: 'briefing@macro-fund.ae',
+        source: 'Newsletter',
+      }
+      const html = buildWaitlistConfirmationHtml(newsletterDoc)
+      expect(html).toContain('EXVORTA // EXECUTIVE BRIEFING')
+      expect(html).toContain('REF #N-103')
+      expect(html).toContain('Executive Briefing Confirmed.')
+      expect(html).toContain('weekly dispatches')
+      expect(html).toContain('CHANNEL: Newsletter')
+      expect(html).toContain('RECIPIENT: briefing@macro-fund.ae')
+      expect(html).toContain('CADENCE: WEEKLY DISPATCH (THU 08:00 GST)')
+      expect(html).toContain('STATUS: ACTIVE SUBSCRIBER')
+      expect(html).toContain('background-color:#FAFAF8')
+      expect(html).toContain('background:#0D0D0D')
+      expect(html).toContain('border:1px solid #E5E5E0')
+      expect(html).toContain('font-family:Georgia,Cambria,serif')
+      expect(html).toContain("font-family:'Courier New',Courier,monospace")
+      expect(html).toContain('Dubai International Financial Centre (DIFC) · Dubai, UAE')
+
+      const weeklyBriefingDoc: WaitlistEmailDoc = {
+        email: 'analyst@sovereign.qa',
+        source: 'Weekly Briefing',
+      }
+      const wbHtml = buildWaitlistConfirmationHtml(weeklyBriefingDoc)
+      expect(wbHtml).toContain('EXVORTA // EXECUTIVE BRIEFING')
+      expect(wbHtml).toContain('REF #BRIEFING')
+      expect(wbHtml).toContain('CHANNEL: Weekly Briefing')
+      expect(wbHtml).toContain('STATUS: ACTIVE SUBSCRIBER')
+    })
   })
 
   describe('Hook execution & guards', () => {
@@ -238,6 +303,54 @@ describe('sendWaitlistEmails transactional hook & templates', () => {
         subject: '[Waitlist] subscriber@fund.ae — Private Tier 1',
         text: expect.stringContaining('New Waitlist Registration: subscriber@fund.ae'),
         html: expect.stringContaining('New Waitlist Registration: subscriber@fund.ae'),
+      })
+    })
+
+    it('sends newsletter confirmation and admin notification with appropriate subjects when doc.source is Newsletter', async () => {
+      process.env.ENABLE_WAITLIST_EMAILS = 'true'
+      process.env.RESEND_API_KEY = 're_test_key'
+      process.env.ADMIN_EMAIL = 'admin@exvorta.com'
+      process.env.OWNER_EMAIL = 'owner@exvorta.com'
+      process.env.EMAIL_FROM_DOMAIN = 'mail.exvorta.com'
+
+      mockSend.mockResolvedValue({ data: { id: 'msg-n-1' }, error: null })
+
+      const doc: WaitlistEmailDoc = {
+        id: 'N-500',
+        email: 'macro@family-office.sa',
+        source: 'Newsletter',
+      }
+
+      await sendWaitlistEmails({
+        doc,
+        operation: 'create',
+        req: {} as any,
+        previousDoc: doc,
+        collection: {} as any,
+        context: {},
+        data: {},
+      })
+
+      expect(mockSend).toHaveBeenCalledTimes(2)
+
+      // 1. Subscriber confirmation for newsletter
+      expect(mockSend).toHaveBeenNthCalledWith(1, {
+        from: 'Exvorta <hello@mail.exvorta.com>',
+        to: 'macro@family-office.sa',
+        replyTo: 'owner@exvorta.com',
+        subject: 'Exvorta Executive Briefing — Subscription Confirmed',
+        text: expect.stringContaining('Executive Briefing Subscription Confirmed.'),
+        html: expect.stringContaining('Executive Briefing Confirmed.'),
+      })
+
+      // 2. Admin notification for newsletter
+      expect(mockSend).toHaveBeenNthCalledWith(2, {
+        from: 'Exvorta OS <system@mail.exvorta.com>',
+        to: 'admin@exvorta.com',
+        replyTo: 'macro@family-office.sa',
+        subject: '[Newsletter] macro@family-office.sa — Newsletter',
+        text: expect.stringContaining('EXVORTA OS // NEWSLETTER INTAKE'),
+        html: expect.stringContaining('EXVORTA OS // NEWSLETTER INTAKE'),
       })
     })
 

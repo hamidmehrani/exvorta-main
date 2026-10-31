@@ -22,6 +22,30 @@ const isPlaceholder = (val: string | undefined): boolean => {
 }
 
 export function buildWaitlistConfirmationText(doc: WaitlistEmailDoc): string {
+  if (doc.source === 'Newsletter' || doc.source === 'Weekly Briefing') {
+    const ref = doc.id ? `REF #${doc.id}` : 'REF #BRIEFING'
+    return [
+      'EXVORTA // EXECUTIVE BRIEFING',
+      ref,
+      '------------------------------------------------------------',
+      'Executive Briefing Subscription Confirmed.',
+      '',
+      'Thank you for subscribing to the Exvorta Executive Briefing.',
+      '',
+      'You will receive our weekly executive dispatch covering GCC trade compliance, cross-border settlement architectures, and tariff updates directly to your inbox.',
+      '',
+      `CHANNEL: ${doc.source || 'Executive Briefing'}`,
+      `RECIPIENT: ${doc.email || 'Subscriber'}`,
+      'FREQUENCY: Weekly Dispatches (Thursday 08:00 GST)',
+      'STATUS: ACTIVE SUBSCRIBER',
+      '',
+      '— Exvorta Operations Desk',
+      'Dubai International Financial Centre (DIFC) · Dubai, UAE',
+      '------------------------------------------------------------',
+      '© 2026 EXVORTA GLOBAL ARCHITECTURES. ALL RIGHTS RESERVED.',
+    ].join('\n')
+  }
+
   const ref = doc.id ? `REF #${doc.id}` : 'REF #WAITLIST'
   return [
     'EXVORTA // PRIVATE ACCESS',
@@ -45,6 +69,80 @@ export function buildWaitlistConfirmationText(doc: WaitlistEmailDoc): string {
 }
 
 export function buildWaitlistConfirmationHtml(doc: WaitlistEmailDoc): string {
+  if (doc.source === 'Newsletter' || doc.source === 'Weekly Briefing') {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive Briefing Confirmed — Exvorta</title>
+  <style>
+    @media only screen and (max-width: 600px) {
+      .container { width: 100% !important; }
+      .inner-card { padding: 24px 18px !important; }
+      .headline { font-size: 24px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background-color:#FAFAF8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#0D0D0D;-webkit-font-smoothing:antialiased;">
+  <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#FAFAF8;padding:32px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" class="container" style="max-width:600px;width:100%;border-collapse:collapse;background:#FFFFFF;border:1px solid #E5E5E0;">
+          <tr>
+            <td style="padding:28px 32px 20px;border-bottom:1px solid #E5E5E0;background:#0D0D0D;">
+              <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td>
+                    <span style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:0.25em;color:#A3A3A3;text-transform:uppercase;">EXVORTA // EXECUTIVE BRIEFING</span>
+                  </td>
+                  <td align="right">
+                    <span style="font-family:'Courier New',Courier,monospace;font-size:10px;color:#737373;">REF #${doc.id || 'BRIEFING'}</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="inner-card" style="padding:36px 32px;">
+              <h1 class="headline" style="margin:0 0 16px;font-family:Georgia,Cambria,serif;font-size:26px;font-weight:600;color:#0D0D0D;line-height:1.2;">
+                Executive Briefing Confirmed.
+              </h1>
+              <p style="margin:0 0 16px;font-size:14px;line-height:1.7;color:#404040;">
+                Thank you for subscribing to the Exvorta Executive Briefing.
+              </p>
+              <p style="margin:0 0 24px;font-size:14px;line-height:1.7;color:#404040;">
+                You will receive our weekly dispatches covering GCC trade compliance, cross-border settlement architectures, and supply chain infrastructure directly to your inbox.
+              </p>
+              <div style="background:#FAFAF8;border-left:2px solid #0D0D0D;padding:16px;margin:24px 0;">
+                <p style="margin:0;font-family:'Courier New',Courier,monospace;font-size:11px;color:#525252;line-height:1.6;">
+                  CHANNEL: ${doc.source || 'Executive Briefing'}<br>
+                  RECIPIENT: ${doc.email || 'Subscriber'}<br>
+                  CADENCE: WEEKLY DISPATCH (THU 08:00 GST)<br>
+                  STATUS: ACTIVE SUBSCRIBER
+                </p>
+              </div>
+              <p style="margin:28px 0 0;font-size:13px;color:#737373;line-height:1.5;">
+                — Exvorta Operations Desk<br>
+                Dubai International Financial Centre (DIFC) · Dubai, UAE
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:18px 32px;background:#F5F5F0;border-top:1px solid #E5E5E0;text-align:center;">
+              <p style="margin:0;font-family:'Courier New',Courier,monospace;font-size:10px;letter-spacing:0.15em;color:#737373;text-transform:uppercase;">
+                © 2026 EXVORTA GLOBAL ARCHITECTURES. ALL RIGHTS RESERVED.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`
+  }
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,16 +216,17 @@ export function buildWaitlistConfirmationHtml(doc: WaitlistEmailDoc): string {
 }
 
 export function buildWaitlistAdminNotificationText(doc: WaitlistEmailDoc, identifier: string): string {
-  const ref = doc.id ? `REF #${doc.id}` : 'REF #WAITLIST'
+  const isNewsletter = doc.source === 'Newsletter' || doc.source === 'Weekly Briefing'
+  const ref = doc.id ? `REF #${doc.id}` : (isNewsletter ? 'REF #BRIEFING' : 'REF #WAITLIST')
   const lines = [
-    'EXVORTA OS // WAITLIST INTAKE',
+    isNewsletter ? 'EXVORTA OS // NEWSLETTER INTAKE' : 'EXVORTA OS // WAITLIST INTAKE',
     ref,
     '------------------------------------------------------------',
-    `New Waitlist Registration: ${identifier}`,
+    isNewsletter ? `New Executive Briefing Subscription: ${identifier}` : `New Waitlist Registration: ${identifier}`,
     '',
     `ID: ${doc.id || 'N/A'}`,
     `Email: ${doc.email || '—'}`,
-    `Source / Cohort: ${doc.source || 'Standard'}`,
+    `Source / Cohort: ${doc.source || (isNewsletter ? 'Newsletter' : 'Standard')}`,
   ]
 
   if (doc.payload && typeof doc.payload === 'object') {
@@ -140,7 +239,7 @@ export function buildWaitlistAdminNotificationText(doc: WaitlistEmailDoc, identi
   lines.push(
     '',
     `Target: ${identifier}`,
-    'Status: Queued for private access cohort review',
+    isNewsletter ? 'Status: Active executive briefing subscription' : 'Status: Queued for private access cohort review',
     '------------------------------------------------------------',
     '© 2026 EXVORTA GLOBAL ARCHITECTURES. ALL RIGHTS RESERVED.'
   )
@@ -152,6 +251,7 @@ export function buildWaitlistAdminNotificationHtml(
   doc: WaitlistEmailDoc,
   identifier: string
 ): string {
+  const isNewsletter = doc.source === 'Newsletter' || doc.source === 'Weekly Briefing'
   const row = (label: string, value?: string | null) =>
     `<tr><th style="text-align:left;background:#FAFAF8;padding:10px 14px;font-size:11px;font-family:'Courier New',Courier,monospace;border:1px solid #E5E5E0;color:#525252;width:35%;text-transform:uppercase;letter-spacing:0.05em;">${label}</th><td style="padding:10px 14px;font-size:13px;border:1px solid #E5E5E0;color:#0D0D0D;">${value || '—'}</td></tr>`
 
@@ -170,7 +270,7 @@ export function buildWaitlistAdminNotificationHtml(
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Waitlist Registration — Exvorta OS</title>
+  <title>${isNewsletter ? 'New Newsletter Subscription' : 'New Waitlist Registration'} — Exvorta OS</title>
   <style>
     @media only screen and (max-width: 600px) {
       .container { width: 100% !important; }
@@ -189,10 +289,10 @@ export function buildWaitlistAdminNotificationHtml(
               <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td>
-                    <span style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:0.25em;color:#A3A3A3;text-transform:uppercase;">EXVORTA OS // WAITLIST INTAKE</span>
+                    <span style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:0.25em;color:#A3A3A3;text-transform:uppercase;">${isNewsletter ? 'EXVORTA OS // NEWSLETTER INTAKE' : 'EXVORTA OS // WAITLIST INTAKE'}</span>
                   </td>
                   <td align="right">
-                    <span style="font-family:'Courier New',Courier,monospace;font-size:10px;color:#737373;">REF #${doc.id || 'WAITLIST'}</span>
+                    <span style="font-family:'Courier New',Courier,monospace;font-size:10px;color:#737373;">REF #${doc.id || (isNewsletter ? 'BRIEFING' : 'WAITLIST')}</span>
                   </td>
                 </tr>
               </table>
@@ -201,16 +301,16 @@ export function buildWaitlistAdminNotificationHtml(
           <tr>
             <td class="inner-card" style="padding:36px 32px;">
               <h1 class="headline" style="margin:0 0 20px;font-family:Georgia,Cambria,serif;font-size:24px;font-weight:600;color:#0D0D0D;line-height:1.2;">
-                New Waitlist Registration: ${identifier}
+                ${isNewsletter ? `New Executive Briefing Subscription: ${identifier}` : `New Waitlist Registration: ${identifier}`}
               </h1>
               <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin-bottom:24px;">
-                ${row('Registration ID', String(doc.id || 'N/A'))}
+                ${row(isNewsletter ? 'Subscription ID' : 'Registration ID', String(doc.id || 'N/A'))}
                 ${row('Email', emailValue)}
-                ${row('Source / Cohort', doc.source || 'Standard')}
+                ${row(isNewsletter ? 'Channel / Source' : 'Source / Cohort', doc.source || (isNewsletter ? 'Newsletter' : 'Standard'))}
                 ${payloadRows}
               </table>
               <p style="margin:16px 0 0;font-family:'Courier New',Courier,monospace;font-size:11px;color:#737373;line-height:1.6;">
-                Target: ${identifier} · Queued for private access cohort review
+                Target: ${identifier} · ${isNewsletter ? 'Active executive briefing subscription' : 'Queued for private access cohort review'}
               </p>
             </td>
           </tr>
@@ -256,6 +356,8 @@ export const sendWaitlistEmails: CollectionAfterChangeHook = async ({ doc, opera
   const identifier = doc.email || 'Anonymous'
   const resend = new Resend(apiKey)
 
+  const isNewsletter = doc.source === 'Newsletter' || doc.source === 'Weekly Briefing'
+
   try {
     // 1. Subscriber confirmation
     if (doc.email) {
@@ -264,7 +366,9 @@ export const sendWaitlistEmails: CollectionAfterChangeHook = async ({ doc, opera
           from: `Exvorta <hello@${fromDomain}>`,
           to: doc.email,
           replyTo: ownerEmail,
-          subject: 'Exvorta Private Access — Waitlist Confirmed',
+          subject: isNewsletter
+            ? 'Exvorta Executive Briefing — Subscription Confirmed'
+            : 'Exvorta Private Access — Waitlist Confirmed',
           text: buildWaitlistConfirmationText(doc),
           html: buildWaitlistConfirmationHtml(doc),
         })
@@ -291,7 +395,9 @@ export const sendWaitlistEmails: CollectionAfterChangeHook = async ({ doc, opera
           from: `Exvorta OS <system@${fromDomain}>`,
           to: adminEmail,
           ...(doc.email ? { replyTo: doc.email } : {}),
-          subject: `[Waitlist] ${doc.email} — ${doc.source || 'Standard'}`,
+          subject: isNewsletter
+            ? `[Newsletter] ${doc.email} — ${doc.source || 'Newsletter'}`
+            : `[Waitlist] ${doc.email} — ${doc.source || 'Direct'}`,
           text: buildWaitlistAdminNotificationText(doc, identifier),
           html: buildWaitlistAdminNotificationHtml(doc, identifier),
         })

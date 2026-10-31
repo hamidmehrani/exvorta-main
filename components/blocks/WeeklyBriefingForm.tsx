@@ -19,7 +19,7 @@ export function WeeklyBriefingForm() {
     e.preventDefault()
     setState('pending')
     setError(null)
-    const res = await submitWaitlist({ source: 'Waitlist', email, collection: 'waitlist' })
+    const res = await submitWaitlist({ source: 'Newsletter', email, collection: 'waitlist' })
     if (res.success) {
       setState('done')
       setEmail('')
