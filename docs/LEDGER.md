@@ -44,3 +44,4 @@
 | 2026-10-31 | t_503c9cd1 | 8dc09c7e | R0 | TOOL-10 Calculator result card: printable/shareable summary |
 | 2026-10-31 | t_f075a6ea | 379658a6 | R1 | - |
 | 2026-10-31 | t_492a86c5 | a6b5b2a3 | R1 | CONV-07: Scroll CTAs + sticky quote bar (tasteful) |
+| 2026-10-31 | t_e5f2a76b | dd9be4a1 | R1 | CONV-04 /concierge 24-hour freight audit intake pipeline & audit framework |
