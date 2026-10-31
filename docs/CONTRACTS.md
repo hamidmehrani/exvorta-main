@@ -83,10 +83,16 @@ Every builder and orchestrator card must adhere strictly to these conventions:
 
 ### 3. Email & Lead Capture Convention
 - **Single Path Rule:** All lead capture, waitlist subscriptions, and contact submissions MUST route through the existing server actions:
-  - General inquiries / enterprise contact: `actions/submitLead.ts`
-  - Early access / product waitlist: `actions/submitWaitlist.ts`
-  - Interactive proposal submissions: `app/(frontend)/actions/submitRFQ.ts`
+  - General inquiries / enterprise contact: `actions/submitLead.ts` (collection hook `sendLeadEmails.ts`)
+  - Early access / product waitlist: `actions/submitWaitlist.ts` (collection hook `sendWaitlistEmails.ts`)
+  - Interactive proposal submissions: `app/(frontend)/actions/submitRFQ.ts` (collection hook `sendRFQEmails.ts`)
 - **NEVER** introduce a secondary email service, ad-hoc API route, or alternative Resend client. All lead interactions must consolidate through these sanctioned actions.
+- **Dual-Format Delivery Contract:** Every transactional email must transmit both `html` and a clean `text` plain-text fallback.
+- **Routing & Reply-To Headers:**
+  - Client confirmations (`to: doc.email`): `replyTo: ownerEmail` (`OWNER_EMAIL || ADMIN_EMAIL || operations@<domain>`), ensuring replies reach agency operators.
+  - Internal notifications (`to: adminEmail`): `replyTo: doc.email`, allowing operators to reply directly to the customer.
+- **Graceful Failure & Omission Contract:** If `ADMIN_EMAIL` is omitted or unconfigured, internal notifications are skipped with `reportWarning` without throwing or aborting client-facing confirmations. Individual send failures must be isolated in independent try/catch blocks reporting to `lib/error-reporting`.
+- **Institutional Elite Copy & Design:** Email templates must employ Institutional Elite design tokens (`#FAFAF8`, `#FFFFFF`, `#0D0D0D`, `#E5E5E0`, Georgia / Courier New typography, DIFC Dubai UAE address) and realistic copy setting measured expectations without fake delivery SLA promises.
 
 ### 4. Design System Compliance
 - Follow `design-system.md` and page-specific specifications in `Exvorta designs/<page>/`.

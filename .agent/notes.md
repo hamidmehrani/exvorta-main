@@ -1,106 +1,31 @@
-# Agent Notes — TOOL-10: Calculator result card: printable/shareable summary
+# Agent Notes — CONV-03: Resend transactional flows: confirmations that set expectations
 
-- **Card:** `TOOL-10` (Task `t_503c9cd1`)
+- **Card:** `CONV-03` (Task `t_f075a6ea`)
 - **Assignee:** `exvorta-builder`
 - **Risk Level:** `R0`
-- **Branch:** `card/tool-10-result-card`
-- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_503c9cd1`
+- **Branch:** `card/conv-03-resend`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_f075a6ea`
 
 ## Objectives & Scope
-1. Standardized result card component (`components/tools/ToolResultCard.tsx`):
-   - Print-optimized CSS (`@media print` rules, clean A4 page layout, hiding interactive action controls during print, high contrast monochrome output).
-   - Standardized branded header: "EXVORTA // OFFICIAL RESULT DOSSIER" / "إكسفورتا // ملف النتائج الرسمي", reference ID, title, subtitle, status banner.
-   - Structured metrics grid with highlight capabilities and unit conversions.
-   - Actions toolbar: Copy formatted summary, Download as PNG (canvas-based), Print A4 dossier, Share via WhatsApp.
-   - Branded footer with "Issued via Exvorta • exvorta.com" / "صادر عبر إكسفورتا • exvorta.com" link and compliance disclaimer.
-   - Full RTL support for Arabic calculator pages (`isAr` prop).
-2. Pure formatting & canvas export engines:
-   - `lib/tools/summary.ts`: pure TypeScript summary text builder (`buildIncotermCbmSummary`, `formatSummaryForClipboard`) with localized EN/AR output.
-   - `lib/tools/canvas-export.ts`: browser HTML5 canvas exporter (`exportCardAsPng`) generating high-DPI 2x Retina branded PNG cards with zero external dependencies.
-3. Comprehensive Vitest suite:
-   - `lib/tools/summary.test.ts`: 15 tests covering English/Arabic formatting, metric lines, LCL/FCL recommendations, disclaimer inclusion.
-   - `lib/tools/canvas-export.test.ts`: 7 tests covering canvas drawing routines, Retina 2x scale, font styling, status badges.
-   - Full repository suite passing (17 test files, 239 tests).
-4. Tool UI integrations:
-   - `app/(frontend)/tools/incoterm-cbm/IncotermCbmCalculator.tsx`: Section D integrated with live Incoterm parameters and PNG/text export.
-   - `app/(frontend)/tools/incoterm-cbm/ar/IncotermCbmCalculatorAr.tsx`: Section D integrated with Arabic localization and RTL support.
-
-## Verification Checklist
-- [x] Run worktree setup (`bash scripts/agent/worktree-setup.sh`).
-- [x] Post plan to Kanban board (`kanban_comment`).
-- [x] Unit tests passing (`pnpm exec vitest run lib/tools/summary.test.ts lib/tools/canvas-export.test.ts` -> 22 passed, full suite 239 passed).
-- [x] TypeScript compiler clean (`pnpm exec tsc --noEmit` -> 0 errors).
-- [x] ESLint clean (`pnpm exec eslint app/\(frontend\)/tools/incoterm-cbm/` -> 0 errors).
-- [ ] Factory gate passes (`CARD_RISK=R0 bash scripts/agent/gate.sh` -> GATE OK).
-
----
-
-# Agent Notes — TOOL-8: Tool share hooks: WhatsApp share + result permalinks
-
-- **Card:** `TOOL-8` (Task `t_43f32f3b`)
-- **Assignee:** `exvorta-builder`
-- **Risk Level:** `R1`
-- **Branch:** `card/tool-8-share`
-- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_43f32f3b`
-
-## Objectives & Scope
-1. Implement WhatsApp deep-link sharing and result permalinks for Exvorta interactive trade tools:
-   - English Incoterm & CBM Calculator (`/tools/incoterm-cbm`)
-   - Arabic Incoterm & CBM Calculator (`/tools/incoterm-cbm/ar`)
-   - Document Generator (`/tools/docs-generator`)
-2. Pure logic share helpers in `lib/tools/share.ts`:
-   - `buildWhatsAppShareUrl(text: string): string` -> `https://wa.me/?text=${encodeURIComponent(text)}`
-   - `formatIncotermShareText(params: IncotermShareParams): string` (bilingual EN & AR)
-   - `formatDocGenShareText(params: DocGenShareParams): string` (bilingual EN & AR)
-   - `formatGenericToolShareText(params: GenericToolShareParams): string` (bilingual EN & AR)
-   - Guarantees zero PII, zero tokens, zero user private details in URL query parameters.
-3. Standardized, design-system compliant client component `components/tools/ToolShareBand.tsx`:
-   - Tokenized UI: `font-mono text-xs uppercase tracking-wider`, `border-rule`, `hover:bg-cream`, `focus-visible:ring-obsidian`, `rounded-[4px]`.
-   - Copy Link button with clipboard write, fallback textarea copy, and live polite feedback announcement (`aria-live="polite"`).
-   - WhatsApp share anchor with `target="_blank" rel="noopener noreferrer"` and official green icon.
-   - Umami event tracking dispatch: `trackEvent(ANALYTICS_EVENTS.TOOL_SHARE, { tool, method: 'copy_link' | 'whatsapp' })`.
-   - Full RTL and logical property support (`dir={isAr ? 'rtl' : 'ltr'}`).
-4. Tool UI integrations:
-   - Replaced custom copy link buttons in `IncotermCbmCalculator.tsx` and `IncotermCbmCalculatorAr.tsx` with unified `ToolShareBand`.
-   - Added `ToolShareBand` to action bar in `app/(frontend)/tools/docs-generator/page.tsx`.
-5. Telemetry & Analytics Contract:
-   - Added `TOOL_SHARE: 'tool_share'` in `lib/analytics.ts`.
-   - Documented event schema and zero-PII privacy guarantee in `docs/CONTRACTS.md`.
-6. Unit tests:
-   - 17 unit tests in `lib/tools/share.test.ts` testing URL generation, Arabic percent encoding, optional parameter omission, and zero PII.
-   - All tests passing in test suite.
-   - TypeScript check clean (`tsc --noEmit`).
-   - Factory gate passes (`GATE OK`).
-
----
-
-# Previous Notes — TOOL-6 UAE e-invoicing (PINT-AE) readiness assessment
-
-- **Card:** `TOOL-6` (Task `t_81913841`)
-- **Assignee:** `exvorta-builder`
-- **Risk Level:** `R0`
-- **Branch:** `card/tool-6-einv-readiness`
-- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_81913841`
-
-## Objectives & Scope
-1. Implement Pure Calculation Engine & Tests (`lib/tools/einv-readiness.ts`, `lib/tools/einv-readiness.test.ts`):
-   - Strict compliance with `docs/research/regulatory-facts.md` (Decree-Law No. 16/17 of 2024, Cabinet Decision No. 106/2025, MD 243 & 244/2025, MR 66/2026).
-   - Pure functions: `calculateReadinessScore`, `determinePhaseAndDeadline`, `getASPChecklist`, `evaluateReadiness`, `serializeAssessmentInput`, `deserializeAssessmentInput`.
-   - 15 comprehensive unit tests covering phase thresholds (Phase 1 >50M July 2026, Phase 2 >10M Jan 2027, etc.), score calculation, technical checklists, permalink serialization, and edge cases.
-2. English & Arabic Assessment Routes & Interactive Calculators:
-   - `app/(frontend)/tools/uae-einvoicing/page.tsx`: English server component with institutional metadata, JSON-LD `SoftwareApplication` schema, and fallback skeleton.
-   - `app/(frontend)/tools/uae-einvoicing/UaeEinvoicingCalculator.tsx`: Interactive client questionnaire, live score meter, deadline timer, ASP evaluation, and lead capture.
-   - `app/(frontend)/tools/uae-einvoicing/ar/page.tsx`: Arabic RTL mirror route with full localization and bidirectional `hreflang` alternates.
-   - `app/(frontend)/tools/uae-einvoicing/ar/UaeEinvoicingCalculatorAr.tsx`: Arabic client component with full RTL translations and technical guidance.
-3. Sitemap & Contracts:
-   - Registered `/tools/uae-einvoicing` and `/tools/uae-einvoicing/ar` in `app/sitemap.ts`.
-   - Updated `docs/CONTRACTS.md` with the new tool routes and hreflang pairings.
-
-## Verification Checklist
-- [x] Run worktree setup (`bash scripts/agent/worktree-setup.sh`).
-- [x] Post plan to Kanban board (`kanban_comment`).
-- [x] Brief Antigravity worker via `agy-pool` with `gemini-3.8-flash-high`.
-- [x] Unit tests passing (`pnpm exec vitest run lib/tools/einv-readiness.test.ts` -> 15 passed, full suite 180 passed).
-- [x] TypeScript compiler clean (`pnpm exec tsc --noEmit` -> 0 errors).
-- [x] ESLint clean (`pnpm lint` -> 0 errors).
-- [x] Factory gate passes (`CARD_RISK=R0 bash scripts/agent/gate.sh` -> GATE OK).
+1. Implement and standardize all transactional email automation hooks via Resend across Exvorta:
+   - Leads / General contact: `payload/collections/Leads/hooks/sendLeadEmails.ts`
+   - FormSubmissions / RFQ proposals: `payload/collections/FormSubmissions/hooks/sendRFQEmails.ts`
+   - Waitlist / Early access: `payload/collections/Waitlist/hooks/sendWaitlistEmails.ts` (registered in `payload/collections/Waitlist.ts`)
+2. Dual-Format Delivery Contract:
+   - Provide high-fidelity, responsive HTML templates matching Institutional Elite design guidelines (#FAFAF8, #0D0D0D, #E5E5E0, serif and monospace typography, DIFC Dubai UAE address).
+   - Provide structured, professional plain-text fallback for every email stream.
+3. Realistic Institutional Copy:
+   - Replace arbitrary or fake delivery SLA guarantees with authentic institutional copy setting measured expectations.
+4. Header & Routing Discipline:
+   - Client acknowledgments: `to: doc.email`, `replyTo: ownerEmail` (`OWNER_EMAIL || ADMIN_EMAIL || operations@<domain>`).
+   - Admin internal alerts: `to: adminEmail`, `replyTo: doc.email` (so operations can reply directly to the customer).
+5. Resilient Error Handling & Graceful Degradation:
+   - If `ADMIN_EMAIL` is missing or placeholder, skip internal alert gracefully via `reportWarning` without throwing or aborting client confirmation.
+   - Isolated try/catch blocks for client and admin email dispatches.
+   - Any API or transport errors logged cleanly to `lib/error-reporting` via `reportError`.
+6. Unit Testing & Verification:
+   - `__tests__/send-lead-emails.test.ts` (13 tests)
+   - `__tests__/send-rfq-emails.test.ts` (13 tests)
+   - `__tests__/send-waitlist-emails.test.ts` (14 tests)
+   - Full Vitest suite: 18 test files, 238 passed.
+   - Documentation updated in `docs/CONTRACTS.md`.
