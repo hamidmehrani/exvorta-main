@@ -1,3 +1,40 @@
+# Agent Notes — TOOL-10: Calculator result card: printable/shareable summary
+
+- **Card:** `TOOL-10` (Task `t_503c9cd1`)
+- **Assignee:** `exvorta-builder`
+- **Risk Level:** `R0`
+- **Branch:** `card/tool-10-result-card`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_503c9cd1`
+
+## Objectives & Scope
+1. Standardized result card component (`components/tools/ToolResultCard.tsx`):
+   - Print-optimized CSS (`@media print` rules, clean A4 page layout, hiding interactive action controls during print, high contrast monochrome output).
+   - Standardized branded header: "EXVORTA // OFFICIAL RESULT DOSSIER" / "إكسفورتا // ملف النتائج الرسمي", reference ID, title, subtitle, status banner.
+   - Structured metrics grid with highlight capabilities and unit conversions.
+   - Actions toolbar: Copy formatted summary, Download as PNG (canvas-based), Print A4 dossier, Share via WhatsApp.
+   - Branded footer with "Issued via Exvorta • exvorta.com" / "صادر عبر إكسفورتا • exvorta.com" link and compliance disclaimer.
+   - Full RTL support for Arabic calculator pages (`isAr` prop).
+2. Pure formatting & canvas export engines:
+   - `lib/tools/summary.ts`: pure TypeScript summary text builder (`buildIncotermCbmSummary`, `formatSummaryForClipboard`) with localized EN/AR output.
+   - `lib/tools/canvas-export.ts`: browser HTML5 canvas exporter (`exportCardAsPng`) generating high-DPI 2x Retina branded PNG cards with zero external dependencies.
+3. Comprehensive Vitest suite:
+   - `lib/tools/summary.test.ts`: 15 tests covering English/Arabic formatting, metric lines, LCL/FCL recommendations, disclaimer inclusion.
+   - `lib/tools/canvas-export.test.ts`: 7 tests covering canvas drawing routines, Retina 2x scale, font styling, status badges.
+   - Full repository suite passing (17 test files, 239 tests).
+4. Tool UI integrations:
+   - `app/(frontend)/tools/incoterm-cbm/IncotermCbmCalculator.tsx`: Section D integrated with live Incoterm parameters and PNG/text export.
+   - `app/(frontend)/tools/incoterm-cbm/ar/IncotermCbmCalculatorAr.tsx`: Section D integrated with Arabic localization and RTL support.
+
+## Verification Checklist
+- [x] Run worktree setup (`bash scripts/agent/worktree-setup.sh`).
+- [x] Post plan to Kanban board (`kanban_comment`).
+- [x] Unit tests passing (`pnpm exec vitest run lib/tools/summary.test.ts lib/tools/canvas-export.test.ts` -> 22 passed, full suite 239 passed).
+- [x] TypeScript compiler clean (`pnpm exec tsc --noEmit` -> 0 errors).
+- [x] ESLint clean (`pnpm exec eslint app/\(frontend\)/tools/incoterm-cbm/` -> 0 errors).
+- [ ] Factory gate passes (`CARD_RISK=R0 bash scripts/agent/gate.sh` -> GATE OK).
+
+---
+
 # Agent Notes — TOOL-8: Tool share hooks: WhatsApp share + result permalinks
 
 - **Card:** `TOOL-8` (Task `t_43f32f3b`)

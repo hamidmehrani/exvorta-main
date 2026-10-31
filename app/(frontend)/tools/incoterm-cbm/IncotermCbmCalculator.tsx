@@ -3,7 +3,10 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ToolShareBand } from '@/components/tools/ToolShareBand'
+import { ToolResultCard } from '@/components/tools/ToolResultCard'
 import { formatIncotermShareText } from '@/lib/tools/share'
+import { buildIncotermCbmSummary } from '@/lib/tools/summary'
+import { exportCardAsPng } from '@/lib/tools/canvas-export'
 import {
   INCOTERMS,
   listIncoterms,
@@ -117,6 +120,66 @@ export function IncotermCbmCalculator() {
       lang: 'en',
     })
   }, [selectedCode, cbmResult.totalCbm, cbmResult.totalWeightKg, containerResult, currentPermalink, currentQuery])
+
+  const summary = useMemo(() => {
+    return buildIncotermCbmSummary({
+      incoterm: selectedCode,
+      incotermName: incotermDef.name,
+      transportMode: incotermDef.category === 'sea_inland_waterway' ? 'sea-waterway' : 'any-mode',
+      totalPieces: cbmResult.totalPieces,
+      totalCbm: cbmResult.totalCbm,
+      totalWeightKg: cbmResult.totalWeightKg,
+      volumetricWeightKg: chargeableResult.volumetricWeightKg,
+      chargeableWeightKg: chargeableResult.chargeableWeightKg,
+      chargeableBasis: chargeableResult.chargeableBasis,
+      recommendation: {
+        isLclRecommended: containerResult.isLclRecommended,
+        primarySuggestion: containerResult.primarySuggestion,
+        optimalSummary: containerResult.optimalCombination.summary,
+      },
+      referenceId: `INC-${selectedCode}-${cbmResult.totalPieces}`,
+      lang: 'en',
+    })
+  }, [selectedCode, incotermDef, cbmResult, chargeableResult, containerResult])
+
+  const handleExportPng = useCallback(async () => {
+    await exportCardAsPng({
+      filename: `exvorta-incoterm-${selectedCode.toLowerCase()}-${cbmResult.totalPieces}pcs.png`,
+      badge: 'EXVORTA // CARGO & INCOTERMS DOSSIER',
+      title: `${selectedCode} • ${incotermDef.name}`,
+      subtitle: `International Trade & Cargo Calculation Dossier — Mode: ${transportMode.toUpperCase()}`,
+      referenceId: `INC-${selectedCode}-${cbmResult.totalPieces}`,
+      metrics: [
+        { label: 'Incoterm Rule', value: selectedCode, sub: incotermDef.name },
+        { label: 'Total Volume (CBM)', value: `${cbmResult.totalCbm.toFixed(3)} m³`, sub: `${cbmResult.totalPieces} pieces` },
+        {
+          label: 'Chargeable Weight',
+          value: `${chargeableResult.chargeableWeightKg.toFixed(1)} kg`,
+          sub: chargeableResult.chargeableBasis === 'volumetric' ? 'Volumetric applies' : 'Actual weight applies',
+          highlight: true,
+        },
+        {
+          label: 'Equipment Allocation',
+          value: containerResult.isLclRecommended ? 'LCL Consolidation' : containerResult.primarySuggestion,
+          sub: containerResult.optimalCombination.summary,
+        },
+      ],
+      statusBanner: {
+        title: containerResult.isLclRecommended ? 'LCL Consolidation Recommended' : `FCL Allocation: ${containerResult.primarySuggestion}`,
+        text: containerResult.isLclRecommended
+          ? `Total volume of ${cbmResult.totalCbm.toFixed(3)} m³ is below the 15 m³ FCL threshold. LCL consolidation provides lower freight costs.`
+          : `Cargo utilizes dedicated equipment efficiently: ${containerResult.optimalCombination.summary}.`,
+        variant: containerResult.isLclRecommended ? 'warning' : 'emerald',
+      },
+      notes: [
+        `Risk Transfer Point: Risk transfers from seller to buyer per ICC Incoterms 2020 rules for ${selectedCode}.`,
+        `Delivery Point: Delivery occurs when cargo is made available according to ${selectedCode} stipulations.`,
+        `Insurance Obligation: ${selectedCode === 'CIF' ? 'Seller must procure minimum Marine Insurance (Institute Cargo Clauses C).' : selectedCode === 'CIP' ? 'Seller must procure maximum All-Risks Insurance (Institute Cargo Clauses A).' : 'Neither party is obligated by rule to procure cargo insurance; commercial transit cover is strongly recommended.'}`,
+        'ISO Benchmark Disclaimer: Standard container capacities (20ft: 28 CBM, 40ft: 58 CBM, 40HC: 68 CBM) are indicative guidelines subject to packaging geometry and weight limits.',
+      ],
+      lang: 'en',
+    })
+  }, [selectedCode, incotermDef, transportMode, cbmResult, chargeableResult, containerResult])
 
   // Cargo Item Management
   const handleAddItem = useCallback(() => {
@@ -750,6 +813,69 @@ export function IncotermCbmCalculator() {
             </p>
           </div>
         </div>
+      </section>
+
+      {/* SECTION D: Official Result Dossier & Actions (TOOL-10) */}
+      <section className="container-site mb-16" aria-labelledby="section-dossier-title">
+        <div className="mb-4">
+          <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-1">
+            Section D // Official Dossier
+          </div>
+          <h2 id="section-dossier-title" className="font-sans text-xl font-semibold text-white">
+            Calculation Dossier &amp; Shareable Summary
+          </h2>
+          <p className="font-mono text-xs text-muted-dark mt-1">
+            Standardized, printable, and shareable compliance dossier with full calculation breakdown.
+          </p>
+        </div>
+
+        <ToolResultCard
+          badge="EXVORTA // CARGO & INCOTERMS DOSSIER"
+          referenceId={`INC-${selectedCode}-${cbmResult.totalPieces}`}
+          title={`${selectedCode} • ${incotermDef.name}`}
+          subtitle={`International Trade & Cargo Calculation Dossier — Mode: ${transportMode.toUpperCase()}`}
+          statusBanner={{
+            title: containerResult.isLclRecommended
+              ? 'LCL Consolidation Recommended'
+              : `FCL Allocation: ${containerResult.primarySuggestion}`,
+            description: containerResult.optimalCombination.summary,
+            badge: containerResult.isLclRecommended ? 'CONSOLIDATION' : 'DEDICATED CONTAINER',
+            variant: containerResult.isLclRecommended ? 'amber' : 'emerald',
+          }}
+          metrics={[
+            {
+              label: 'Incoterm 2020 Rule',
+              value: selectedCode,
+              sub: incotermDef.category === 'sea_inland_waterway' ? 'Sea & Inland Waterway' : 'Any Transport Mode',
+            },
+            {
+              label: 'Total Volume (CBM)',
+              value: `${cbmResult.totalCbm.toFixed(3)} m³`,
+              sub: `${cbmResult.totalPieces} cargo units`,
+              highlight: true,
+            },
+            {
+              label: 'Chargeable Weight',
+              value: `${chargeableResult.chargeableWeightKg.toFixed(1)} kg`,
+              sub: chargeableResult.chargeableBasis === 'volumetric' ? 'Volumetric applies' : 'Actual gross weight applies',
+            },
+            {
+              label: 'Equipment Allocation',
+              value: containerResult.isLclRecommended ? 'LCL Consolidation' : `FCL: ${containerResult.primarySuggestion}`,
+              sub: `${containerResult.optimalCombination.totalContainers} container(s) total`,
+            },
+          ]}
+          summaryText={summary.plain}
+          whatsappText={summary.whatsapp}
+          onExportPng={handleExportPng}
+          onPrint={() => window.print()}
+          notes={[
+            `Risk Transfer: Risk transfers from seller to buyer per ICC Incoterms 2020 rules for ${selectedCode}.`,
+            `Delivery Obligation: Delivery occurs when cargo is made available according to ${selectedCode} stipulations.`,
+            `Insurance: ${selectedCode === 'CIF' ? 'Seller must procure minimum Marine Insurance (Clauses C).' : selectedCode === 'CIP' ? 'Seller must procure maximum All-Risks Insurance (Clauses A).' : 'Neither party is obligated by rule to procure cargo insurance; commercial transit cover is strongly recommended.'}`,
+            'ISO Benchmark Disclaimer: Standard container capacities (20ft: 28 CBM, 40ft: 58 CBM, 40HC: 68 CBM) are indicative guidelines subject to packaging geometry and weight limits.',
+          ]}
+        />
       </section>
     </div>
   )

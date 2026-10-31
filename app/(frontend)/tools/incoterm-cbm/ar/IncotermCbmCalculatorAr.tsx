@@ -3,7 +3,10 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ToolShareBand } from '@/components/tools/ToolShareBand'
+import { ToolResultCard } from '@/components/tools/ToolResultCard'
 import { formatIncotermShareText } from '@/lib/tools/share'
+import { buildIncotermCbmSummary } from '@/lib/tools/summary'
+import { exportCardAsPng } from '@/lib/tools/canvas-export'
 import {
   INCOTERMS,
   listIncoterms,
@@ -239,7 +242,6 @@ export function IncotermCbmCalculatorAr() {
   const [transportMode, setTransportMode] = useState<TransportMode>(initialMode)
   const [cargoItems, setCargoItems] = useState<ExtendedCargoItem[]>(initialItems)
   const [weightUnit, setWeightUnit] = useState<'kg' | 'lb'>('kg')
-  const [copiedReport, setCopiedReport] = useState(false)
 
   const currentQuery = useMemo(() => serializeToolState({
     incoterm: selectedCode,
@@ -342,69 +344,82 @@ export function IncotermCbmCalculatorAr() {
     }
   }, [])
 
-  // Formatted report string in Arabic
-  const reportSummaryText = useMemo(() => {
-    const modeLabel = transportMode === 'sea'
-      ? 'شحن بحري (LCL)'
-      : transportMode === 'air'
-        ? 'شحن جوي'
-        : 'شحن سريع / كوريير'
-
-    const basisLabel = chargeableResult.chargeableBasis === 'volumetric'
-      ? 'الوزن الحجمي معتمد'
-      : 'الوزن الفعلي معتمد'
-
-    const containerRec = containerResult.isLclRecommended
-      ? 'يوصى بالشحن الجزئي (LCL - Less than Container Load)'
-      : `حاوية كاملة (FCL): ${containerResult.optimalCombination.summary}`
-
-    return [
-      '=== تقرير الشحنة وتقدير الحجم — إكسفورتا (Exvorta) ===',
-      `• شرط التجارة الدولية (Incoterms 2020): ${selectedCode} — ${incotermAr.nameAr}`,
-      `• وسيلة الشحن والنقل: ${modeLabel}`,
-      `• إجمالي عدد الطرود: ${cbmResult.totalPieces}`,
-      `• إجمالي الحجم (CBM): ${cbmResult.totalCbm.toFixed(3)} m³`,
-      `• الوزن الإجمالي الفعلي: ${cbmResult.totalWeightKg.toFixed(1)} kg`,
-      `• الوزن الحجمي: ${chargeableResult.volumetricWeightKg.toFixed(1)} kg`,
-      `• الوزن الخاضع للرسوم: ${chargeableResult.chargeableWeightKg.toFixed(1)} kg (${basisLabel})`,
-      `• نقطة انتقال المخاطر: ${incotermAr.riskTransferAr}`,
-      `• توصية الحاويات: ${containerRec}`,
-      '',
-      'صادر عبر إكسفورتا • Issued via Exvorta',
-    ].join('\n')
+  // Standardized summary dossier via TOOL-10 engine
+  const summary = useMemo(() => {
+    return buildIncotermCbmSummary({
+      incoterm: selectedCode,
+      incotermName: incotermAr.nameAr,
+      transportMode: incotermDef.category === 'sea_inland_waterway' ? 'sea-waterway' : 'any-mode',
+      totalPieces: cbmResult.totalPieces,
+      totalCbm: cbmResult.totalCbm,
+      totalWeightKg: cbmResult.totalWeightKg,
+      volumetricWeightKg: chargeableResult.volumetricWeightKg,
+      chargeableWeightKg: chargeableResult.chargeableWeightKg,
+      chargeableBasis: chargeableResult.chargeableBasis,
+      recommendation: {
+        isLclRecommended: containerResult.isLclRecommended,
+        primarySuggestion: containerResult.isLclRecommended
+          ? 'الشحن الجزئي LCL أكثر جدوى اقتصادية'
+          : containerResult.primarySuggestion,
+        optimalSummary: containerResult.optimalCombination.summary,
+      },
+      referenceId: `INC-AR-${selectedCode}-${cbmResult.totalPieces}`,
+      lang: 'ar',
+    })
   }, [
     selectedCode,
     incotermAr,
-    transportMode,
+    incotermDef,
     cbmResult,
     chargeableResult,
     containerResult,
   ])
 
-  // Copy report handler
-  const handleCopyReport = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(reportSummaryText)
-      setCopiedReport(true)
-      setTimeout(() => setCopiedReport(false), 2500)
-    } catch {
-      try {
-        const textArea = document.createElement('textarea')
-        textArea.value = reportSummaryText
-        textArea.style.position = 'fixed'
-        textArea.style.opacity = '0'
-        document.body.appendChild(textArea)
-        textArea.focus()
-        textArea.select()
-        document.execCommand('copy')
-        document.body.removeChild(textArea)
-        setCopiedReport(true)
-        setTimeout(() => setCopiedReport(false), 2500)
-      } catch {
-        // clipboard fallback
-      }
-    }
-  }, [reportSummaryText])
+  // Canvas PNG export handler (TOOL-10)
+  const handleExportPng = useCallback(async () => {
+    return exportCardAsPng({
+      title: `${selectedCode} • ${incotermAr.nameAr}`,
+      subtitle: `ملف الامتثال وحسابات الشحن — النمط: ${transportMode.toUpperCase()}`,
+      badge: 'إكسفورتا // ملف الشحن وشروط التجارة',
+      referenceId: `INC-AR-${selectedCode}-${cbmResult.totalPieces}`,
+      metrics: [
+        {
+          label: 'شرط التجارة (Incoterm)',
+          value: selectedCode,
+          sub: incotermDef.category === 'sea_inland_waterway' ? 'النقل البحري والنهري' : 'كافة وسائط النقل',
+        },
+        {
+          label: 'إجمالي الحجم (CBM)',
+          value: `${cbmResult.totalCbm.toFixed(3)} m³`,
+          sub: `${cbmResult.totalPieces} طرد شحن`,
+          highlight: true,
+        },
+        {
+          label: 'الوزن الخاضع للرسوم',
+          value: `${chargeableResult.chargeableWeightKg.toFixed(1)} kg`,
+          sub: chargeableResult.chargeableBasis === 'volumetric' ? 'اعتماد الوزن الحجمي' : 'اعتماد الوزن الفعلي',
+        },
+        {
+          label: 'توزيع الحاويات',
+          value: containerResult.isLclRecommended ? 'شحن جزئي LCL' : containerResult.primarySuggestion,
+          sub: `${containerResult.optimalCombination.totalContainers} حاوية إجمالاً`,
+        },
+      ],
+      statusBanner: {
+        title: containerResult.isLclRecommended
+          ? 'يوصى بالشحن الجزئي (LCL)'
+          : `توزيع الحاويات: ${containerResult.primarySuggestion}`,
+        text: containerResult.optimalCombination.summary,
+        variant: containerResult.isLclRecommended ? 'warning' : 'emerald',
+      },
+      notes: [
+        `انتقال المخاطر: ${incotermAr.riskTransferAr}`,
+        `التزام التأمين: ${selectedCode === 'CIF' ? 'البائع ملزم بتأمين بحري بحد أدنى (شروط C).' : selectedCode === 'CIP' ? 'البائع ملزم بتأمين شامل ضد جميع الأخطار (شروط A).' : 'لا يلزم أي من الطرفين قانوناً بالتأمين، ويوصى بتغطية تأمينية تجارية.'}`,
+        'معايير السعة استرشادية وتخضع لطريقة التنضيد وأبعاد الطرود والحدود التشغيلية.',
+      ],
+      filename: `exvorta-incoterm-${selectedCode.toLowerCase()}-cargo.png`,
+    })
+  }, [selectedCode, incotermAr, transportMode, cbmResult, chargeableResult, containerResult, incotermDef])
 
   const renderPartyBadge = (party: Party) => {
     if (party === 'seller') {
@@ -1153,39 +1168,67 @@ export function IncotermCbmCalculatorAr() {
         </div>
       </section>
 
-      {/* SECTION D: Share & Export Summary Report */}
-      <section className="container-site" aria-labelledby="section-report-title">
-        <div className="frame border border-rule bg-surface p-6 md:p-10">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-rule">
-            <div>
-              <h3 id="section-report-title" className="font-serif text-lg font-semibold text-obsidian">
-                تصدير ومشاركة تقرير الشحنة
-              </h3>
-              <p className="text-sm text-muted font-light mt-1">
-                انسخ ملخص بيانات الشحنة، وشروط التجارة المعتمدة، ومقاييس CBM لمشاركتها مع فريقك أو وكيل الشحن.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={handleCopyReport}
-              className="inline-flex items-center justify-center gap-2 font-mono text-xs uppercase tracking-wider px-4 py-2.5 bg-obsidian text-white hover:bg-obsidian/90 transition-colors rounded-[4px] cursor-pointer"
-            >
-              <span
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  copiedReport ? 'bg-emerald shadow-[0_0_6px_var(--color-emerald)]' : 'bg-white/40'
-                }`}
-                aria-hidden="true"
-              />
-              <span>{copiedReport ? 'تم نسخ التقرير إلى الحافظة!' : 'نسخ تقرير الشحنة'}</span>
-            </button>
+      {/* SECTION D: Official Result Dossier & Actions (TOOL-10) */}
+      <section className="container-site mb-16" aria-labelledby="section-report-title">
+        <div className="mb-4">
+          <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-1">
+            القسم الرابع // ملف الامتثال الرسمي
           </div>
-
-          <div className="mt-6 p-4 bg-surface-2 border border-rule rounded-[4px]">
-            <pre className="font-mono text-xs text-obsidian whitespace-pre-wrap leading-relaxed">
-              {reportSummaryText}
-            </pre>
-          </div>
+          <h2 id="section-report-title" className="font-sans text-xl font-semibold text-white">
+            ملف النتائج والملخص القابل للمشاركة
+          </h2>
+          <p className="font-mono text-xs text-muted-dark mt-1">
+            ملف معتمد وقابل للطباعة والمشاركة الفورية متضمناً تفاصيل الحسابات وشروط الشحن التجاري.
+          </p>
         </div>
+
+        <ToolResultCard
+          badge="إكسفورتا // ملف الشحن وشروط التجارة"
+          referenceId={`INC-AR-${selectedCode}-${cbmResult.totalPieces}`}
+          title={`${selectedCode} • ${incotermAr.nameAr}`}
+          subtitle={`ملف الامتثال وحسابات الشحن — النمط: ${transportMode.toUpperCase()}`}
+          lang="ar"
+          statusBanner={{
+            title: containerResult.isLclRecommended
+              ? 'يوصى بالشحن الجزئي (LCL)'
+              : `توزيع الحاويات: ${containerResult.primarySuggestion}`,
+            description: containerResult.optimalCombination.summary,
+            badge: containerResult.isLclRecommended ? 'تجميع LCL' : 'حاوية مخصصة FCL',
+            variant: containerResult.isLclRecommended ? 'amber' : 'emerald',
+          }}
+          metrics={[
+            {
+              label: 'شرط التجارة (Incoterm 2020)',
+              value: selectedCode,
+              sub: incotermDef.category === 'sea_inland_waterway' ? 'النقل البحري والنهري' : 'كافة وسائط النقل',
+            },
+            {
+              label: 'إجمالي الحجم (CBM)',
+              value: `${cbmResult.totalCbm.toFixed(3)} m³`,
+              sub: `${cbmResult.totalPieces} طرد شحن`,
+              highlight: true,
+            },
+            {
+              label: 'الوزن الخاضع للرسوم',
+              value: `${chargeableResult.chargeableWeightKg.toFixed(1)} kg`,
+              sub: chargeableResult.chargeableBasis === 'volumetric' ? 'اعتماد الوزن الحجمي' : 'اعتماد الوزن الفعلي',
+            },
+            {
+              label: 'توزيع الحاويات والمعدات',
+              value: containerResult.isLclRecommended ? 'شحن جزئي LCL' : containerResult.primarySuggestion,
+              sub: `${containerResult.optimalCombination.totalContainers} حاوية إجمالاً`,
+            },
+          ]}
+          summaryText={summary.plain}
+          whatsappText={summary.whatsapp}
+          onExportPng={handleExportPng}
+          onPrint={() => window.print()}
+          notes={[
+            `انتقال المخاطر: ${incotermAr.riskTransferAr}`,
+            `التزام التأمين: ${selectedCode === 'CIF' ? 'البائع ملزم بتأمين بحري بحد أدنى (شروط C).' : selectedCode === 'CIP' ? 'البائع ملزم بتأمين شامل ضد جميع الأخطار (شروط A).' : 'لا يلزم أي من الطرفين قانوناً بالتأمين، ويوصى بتغطية تأمينية تجارية.'}`,
+            'معايير السعة استرشادية وتخضع لطريقة التنضيد وأبعاد الطرود والحدود التشغيلية.',
+          ]}
+        />
       </section>
 
       {/* Footer Attribution Badge */}
