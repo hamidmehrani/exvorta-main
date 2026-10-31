@@ -1,3 +1,27 @@
+# Agent Notes — INS-08: CBAM for MENA steel & aluminium exporters
+
+- **Card:** `INS-08` (Task `t_1eaed7c2`)
+- **Assignee:** `exvorta-researcher`
+- **Risk Level:** `R0`
+- **Branch:** `card/ins-08`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_1eaed7c2`
+
+## Objectives & Scope
+1. Conduct deep-dive regulatory and market research on the EU Carbon Border Adjustment Mechanism (Regulation (EU) 2023/956, Implementing Regulation (EU) 2023/1773, and amending Regulation (EU) 2025/2083) for Middle East steel and aluminium exporters (UAE, Saudi Arabia, Bahrain, Oman, Egypt).
+2. Author comprehensive research document `docs/research/t_1eaed7c2-cbam-mena-steel-aluminium.md` (and canonical alias `docs/research/INS-08-cbam-mena-steel-aluminium.md`) complying strictly with the `exvorta-researcher` protocol:
+   - Question & Method (search sources, exclusion criteria).
+   - Findings table with strict classification labels (`VERIFIED`, `UNVERIFIED`, `ASSUMPTION`), primary EUR-Lex / official sources, and 2026-10-31 verification dates.
+   - Core regulatory details: HS Chapters 72, 73, 76; transitional vs definitive timelines; Annex II direct vs indirect emissions asymmetry (steel Scope 1 only vs aluminium Scope 1 + 2); 50-tonne importer mass threshold; accredited MRV verifiers; actual installation data vs default value penalties; free allocation phase-out (2026–2034).
+   - Industrial positioning: MENA gas DRI-EAF structural low-emissions advantage vs EU coal blast furnaces; low-carbon aluminium requirements (EGA solar CelestiAL, Egyptalum hydro, Alba power transition) and renewable PPA audit requirements.
+   - Strategic product implications for Exvorta tools (CBAM calculator, buyer-facing export pack, verifier checklist, threshold triage).
+   - Open questions for policy and business decision makers (Article 30 indirect emissions review, UK CBAM, renewable PPA proof, data confidentiality).
+3. Verification:
+   - R0 risk evaluation: pure documentation addition (`docs/research/`), zero product or CMS runtime code modified.
+   - Unit tests run clean (`pnpm test` passes).
+   - Gate verification passes: `CARD_RISK=R0 bash scripts/agent/gate.sh` prints `GATE OK`.
+
+---
+
 # Agent Notes — CONV-04: 'Send your last 3 shipments' concierge flow
 
 - **Card:** `CONV-04` (Task `t_e5f2a76b`)
