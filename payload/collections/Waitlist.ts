@@ -1,4 +1,5 @@
 import { CollectionConfig } from 'payload'
+import { sendWaitlistEmails } from './Waitlist/hooks/sendWaitlistEmails'
 
 export const Waitlist: CollectionConfig = {
   slug: 'waitlist',
@@ -6,6 +7,9 @@ export const Waitlist: CollectionConfig = {
     useAsTitle: 'email',
     defaultColumns: ['email', 'source', 'createdAt'],
     group: 'Content',
+  },
+  hooks: {
+    afterChange: [sendWaitlistEmails],
   },
   access: {
     // Server actions use the Local API (overrideAccess: true); REST stays closed.
