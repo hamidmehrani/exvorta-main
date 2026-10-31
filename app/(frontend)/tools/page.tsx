@@ -285,8 +285,9 @@ export default function ToolsHubPage() {
 
           {/* Direct module route indexing for crawler discovery */}
           <span className="sr-only">
-            Direct routes: <AppLink href="/tools/freight-density">Freight Density</AppLink>{' '}
-            <AppLink href="/tools/incoterms-matrix">Incoterms Matrix</AppLink>
+            Direct routes: <AppLink href="/tools/incoterm-cbm">Incoterm &amp; CBM Logistics Calculator</AppLink>{' '}
+            <AppLink href="/tools/docs-generator">Commercial Export Documentation Generator</AppLink>{' '}
+            <AppLink href="/tools/uae-einvoicing">UAE E-Invoicing Assessment</AppLink>
           </span>
         </Container>
       </main>
