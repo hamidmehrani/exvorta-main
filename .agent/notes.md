@@ -1,32 +1,30 @@
-# Agent Notes — PG-07: Partner program page (tax consultants, clearing agents, free-zone setup agencies)
+# Agent Notes — INS-11: From WhatsApp Chaos to an RFQ Cart: A Trading Company Playbook
 
-- **Card:** `PG-07` (Task `t_cfc26138`)
-- **Assignee:** `exvorta-builder`
+- **Card:** `INS-11` (Task `t_d4d67787`)
+- **Assignee:** `exvorta-researcher`
 - **Risk Level:** `R0`
-- **Branch:** `card/pg-07-partners`
-- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_cfc26138`
+- **Branch:** `card/ins-11`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_d4d67787`
 
 ## Objectives & Scope
-1. Implement institutional Channel Partner Program page (`/partners`) targeting key professional intermediaries:
-   - Tax Consultants & Corporate Tax Advisors
-   - Clearing Agents & Customs Brokers
-   - Free-Zone Setup & Company Formation Agencies
-2. Institutional 20% flat revenue share across all Exvorta web platform tiers (Starter $1,500 / $300 share, Growth $3,000 / $600 share, Custom Enterprise $10,000+ / $2,000+ share, Retainers/Add-ons).
-3. Client-side interactive accreditation form (`PartnerApplicationForm.tsx`) using `useActionState`, tokenized design system primitives, honeypot spam detection, and `submitLeadAction` integration.
-4. Server-side page layout (`page.tsx`) with metadata, OpenGraph, JSON-LD schemas (`FAQPage`, `Service`), structured commission ledger, 4-step referral workflow, value stack, and FAQ.
-5. Register `/partners` in `app/sitemap.ts` (`STATIC_ROUTES` priority 0.8, weekly).
-6. Document route contract and submission semantics in `docs/CONTRACTS.md`.
-7. Author comprehensive Vitest test suite (`__tests__/partners.test.ts`) covering partner categories, commission calculations, form rendering, ARIA semantics, and sitemap registration.
+1. Execute research card `INS-11`: "From WhatsApp chaos to an RFQ cart: a trading company playbook".
+2. Follow `exvorta-researcher` facts discipline:
+   - Claims classified as `VERIFIED` (primary/official source + link + access date), `UNVERIFIED` (plausible, needs named confirmer), or `ASSUMPTION`.
+   - Regulatory frameworks cited directly (UAE Federal Decree-Law No. 46 of 2021 on Electronic Transactions and Trust Services, ICC Incoterms 2020 Publication 723E, UN/CEFACT Buy-Ship-Pay RDM v1.0, Saudi ZATCA/FASAH, Egypt Law 15/2004).
+3. Produce comprehensive research document under `docs/research/INS-11-whatsapp-to-rfq-cart.md`:
+   - Question
+   - Method (searched & excluded)
+   - Findings table (`fact | label | source | date`)
+   - Comprehensive Operational Playbook & Trading Systems Analysis
+   - Implications for Exvorta product tools (`/rfq`, `/rfq/embed`, `/for-agencies`, `/tools/incoterm-cbm`)
+   - Open Questions for the Project Owner
+4. Verify gate passes (`CARD_RISK=R0 bash scripts/agent/gate.sh`), push branch (`git push -u origin HEAD`), and hand off via `kanban_request_review`.
 
 ## Verification Checklist
-- [x] Orient worktree and confirm baseline dependencies (`bash scripts/agent/worktree-setup.sh`).
-- [x] Author structured partner data & constants in `app/(frontend)/partners/partners-data.ts`.
-- [x] Build accessible `PartnerApplicationForm` component in `app/(frontend)/partners/PartnerApplicationForm.tsx`.
-- [x] Build institutional `/partners` landing page in `app/(frontend)/partners/page.tsx`.
-- [x] Register `/partners` route in `app/sitemap.ts`.
-- [x] Document route contract in `docs/CONTRACTS.md`.
-- [x] Add comprehensive test coverage in `__tests__/partners.test.ts`.
-- [x] Run full test suite (`pnpm exec vitest run` -> 137 passed).
-- [x] Run TypeScript check (`pnpm exec tsc --noEmit` -> 0 errors).
-- [x] Run linter (`pnpm lint` -> 0 errors).
-- [x] Run factory gate (`CARD_RISK=R0 bash scripts/agent/gate.sh` -> GATE OK).
+- [x] Orient worktree and confirm environment (`scripts/agent/worktree-setup.sh`).
+- [x] Verify existing test harness & lint baseline (`pnpm test`, `pnpm lint`, `pnpm exec tsc --noEmit`).
+- [x] Conduct primary regulatory and standards research (UN/CEFACT, ICC Incoterms 2020, UAE Decree-Law 46/2021).
+- [ ] Author `docs/research/INS-11-whatsapp-to-rfq-cart.md` adhering to researcher protocol.
+- [ ] Run factory gate (`CARD_RISK=R0 bash scripts/agent/gate.sh` -> GATE OK).
+- [ ] Commit artifact and push branch (`git push -u origin HEAD`).
+- [ ] Submit review handoff via `kanban_request_review` ending with `Not verified:` line.
