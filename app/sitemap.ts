@@ -27,6 +27,8 @@ export const STATIC_ROUTES: readonly StaticRouteConfig[] = [
   { path: '/tools/docs-generator', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/tools/incoterm-cbm', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/tools/incoterm-cbm/ar', priority: 0.8, changeFrequency: 'monthly' },
+  { path: '/tools/uae-einvoicing', priority: 0.8, changeFrequency: 'monthly' },
+  { path: '/tools/uae-einvoicing/ar', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/waitlist', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/legal', priority: 0.5, changeFrequency: 'monthly' },
 ] as const

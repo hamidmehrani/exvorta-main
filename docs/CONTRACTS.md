@@ -111,6 +111,7 @@ Every builder and orchestrator card must adhere strictly to these conventions:
   - Trade Tools Index: `/tools` <-> `/tools/ar`
   - Pricing & Engagement: `/pricing` <-> `/pricing/ar`
   - Incoterm & CBM Calculator: `/tools/incoterm-cbm` <-> `/tools/incoterm-cbm/ar`
+  - UAE E-Invoicing (PINT-AE) Readiness Assessment: `/tools/uae-einvoicing` <-> `/tools/uae-einvoicing/ar`
 - **Sitemap Registration:** All deployed static Arabic mirror routes must be registered in `STATIC_ROUTES` within `app/sitemap.ts` alongside their English counterparts, maintaining crawl-directive consistency with `robots.txt` (never indexing disallowed paths like `/admin`, `/login`, or `/api`).
 
 ### 2. Bidirectional Alternates Contract (hreflang)
