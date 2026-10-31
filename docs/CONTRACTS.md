@@ -53,6 +53,31 @@ Every route under `app/(frontend)` is audited below. All frontend pages are rend
 - **`AppLink`** (`components/ui/AppLink.tsx`): Internal route navigation wrapper ensuring consistent routing and prefetching.
 - **`MonoLabel` & `Hairline`** (`components/ui/MonoLabel.tsx`, `Hairline.tsx`): Monospace metadata badges and 1px tokenized boundary dividers (`border-border`).
 
+### Social Proof Module (`components/social-proof/`, `lib/social-proof/`)
+The Social Proof module provides institutional proof-of-execution infrastructure designed for immediate deployment and graceful transition to live client credentials as agreements are signed.
+
+#### Visual Honesty Invariants
+- **Zero Fabrication:** Never display counterfeit corporate logos, trademark infringements, or fabricated executive quotes pretending to be real clients.
+- **Specimen Flagging:** Default configuration (`defaultSocialProofConfig`) flags all entries with `placeholder: true`. Components render visible, unambiguous institutional specimen notices (e.g., `[SLOT RESERVED: ...]`, `[SAMPLE SPECIMEN // PENDING CLIENT SIGN-OFF]`, `[BENCHMARK / TARGET]`).
+- **Progressive Disclosure:** Once verified partner agreements are executed, setting `placeholder: false` and providing `logoUrl` or client credentials automatically switches cards to verified client styling.
+
+#### Data Structures & Configuration (`lib/social-proof/social-proof-data.ts`)
+- `ClientLogoItem`: Represents an institutional partner or client slot (`id`, `name`, `industry`, `tier`, `placeholder`, `placeholderLabel`, `logoUrl`, `websiteUrl`).
+- `MetricCounterItem`: Quantitative operational metrics (`id`, `value`, `prefix`, `suffix`, `label`, `description`, `placeholder`, `placeholderLabel`).
+- `TestimonialItem`: Executive review or specimen endorsement (`id`, `quote`, `authorName`, `authorRole`, `companyName`, `companySector`, `countryOrRegion`, `ratingValue`, `bestRating`, `verifiedTradeVolume`, `placeholder`, `placeholderLabel`).
+- `SocialProofConfig`: Encapsulates `logos`, `counters`, and `testimonials`.
+
+#### Component Architecture
+- **`ClientLogoStrip`** (`components/social-proof/ClientLogoStrip.tsx`): Continuous horizontal marquee using `components/ui/motion/Marquee`. Renders dashed hairline technical cards for reserved slots and grayscale-to-contrast logos for verified partners. Honors `prefers-reduced-motion` and pauses on hover.
+- **`MetricCounters`** (`components/social-proof/MetricCounters.tsx`): Monospace tabular numeral counters animated via `CountUp`, with benchmark target indicators and descriptive subtexts.
+- **`TestimonialCard`** (`components/social-proof/TestimonialCard.tsx`): Institutional quote card featuring author credentials, trade sector, geographical badge, verified trade volume tag, rating indicator, and embedded Schema.org Review structured data.
+- **`SocialProofSection`** (`components/social-proof/SocialProofSection.tsx`): Composite section assembling `SectionHeading`, `MetricCounters`, `TestimonialCard` grid, and `ClientLogoStrip` with embedded Schema.org `AggregateRating` JSON-LD.
+- **Barrel Export** (`components/social-proof/index.ts`): Re-exports all components, config presets, and data helpers.
+
+#### Structured Data (Schema.org Review & AggregateRating)
+- `buildTestimonialJsonLd(item, siteUrl)`: Generates valid Schema.org `Review` object with `itemReviewed: { '@type': 'Organization', name: 'Exvorta' }`, `author`, `reviewRating`, and `reviewBody`.
+- `buildAggregateRatingJsonLd(testimonials, siteUrl)`: Generates valid Schema.org `AggregateRating` calculating average rating and review counts. Gracefully returns `null` if the input is empty or invalid.
+
 ---
 
 ## 3. Architecture Conventions for Future Cards

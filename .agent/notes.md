@@ -1,3 +1,38 @@
+# Agent Notes — CONV-06: Social Proof Components (Logo Strip, Counters, Testimonials)
+
+- **Card:** `CONV-06`
+- **Assignee:** `exvorta-builder`
+- **Risk Level:** `R1`
+- **Branch:** `card/conv-06-proof`
+- **Workspace:** `/home/azureuser/projects/exvorta/.worktrees/t_5d086921`
+
+## Objectives & Scope
+1. Social Proof Data Models & Institutional Defaults (`lib/social-proof/social-proof-data.ts`):
+   - Strict TypeScript interfaces: `ClientLogoItem`, `MetricCounterItem`, `TestimonialItem`, `SocialProofConfig`.
+   - Visual honesty standard: all default items have `placeholder: true`, explicit specimen notices (`[SLOT RESERVED: ...]`, `[SAMPLE SPECIMEN // PENDING CLIENT SIGN-OFF]`, `[BENCHMARK / TARGET]`), and zero fabricated client names or logos.
+   - Pure Schema.org Review structured data generator (`buildTestimonialJsonLd`).
+   - Pure Schema.org AggregateRating structured data generator (`buildAggregateRatingJsonLd`).
+2. Institutional UI Components:
+   - `components/social-proof/ClientLogoStrip.tsx`: Continuous horizontal marquee using `components/ui/motion/Marquee` with pause-on-hover, reduced motion fallback, and dashed hairline technical slot cards.
+   - `components/social-proof/MetricCounters.tsx`: Monospace tabular numeral counters animated via `CountUp`, supporting multi-column grid layouts and benchmark target indicators.
+   - `components/social-proof/TestimonialCard.tsx`: Structured quote card with specimen tags, rating stars, trade volume badge, sector/country tags, and embedded Schema.org Review JSON-LD.
+   - `components/social-proof/SocialProofSection.tsx`: Composite section assembling `SectionHeading`, counters, testimonial grid, and logo marquee with AggregateRating JSON-LD.
+   - `components/social-proof/index.ts`: Barrel export of all components and helpers.
+3. Unit Test Suite (`lib/social-proof/social-proof.test.ts`):
+   - 12 comprehensive unit tests covering barrel exports, default configurations, visual honesty invariants, Schema.org Review generator, Schema.org AggregateRating generator, and edge-case/malformed input handling.
+4. Documentation:
+   - Added Social Proof module contracts to `docs/CONTRACTS.md`.
+   - Updated `.agent/notes.md`.
+
+## Verification Checklist
+- [x] Run worktree setup (`bash scripts/agent/worktree-setup.sh`).
+- [x] Unit tests passing (`pnpm exec vitest run lib/social-proof/social-proof.test.ts` -> 12 passed).
+- [x] TypeScript compiler clean (`pnpm exec tsc --noEmit` -> 0 errors).
+- [x] ESLint clean (`pnpm exec eslint components/social-proof/ lib/social-proof/` -> 0 errors).
+- [x] Factory gate passes (`CARD_RISK=R1 bash scripts/agent/gate.sh` -> GATE OK).
+
+---
+
 # Agent Notes — TOOL-10: Calculator result card: printable/shareable summary
 
 - **Card:** `TOOL-10` (Task `t_503c9cd1`)
