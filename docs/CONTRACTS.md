@@ -232,3 +232,32 @@ All client-side user interactions tracked via `trackEvent` (`lib/analytics.ts`) 
 | `whatsapp_clicked` | `WHATSAPP_CLICKED` | `{ location?: string }` | Dispatched on clicking floating WhatsApp widget or contact anchor. |
 | `cta_clicked` | `CTA_CLICKED` | `{ target?: string, href?: string, label?: string, page?: string, action?: string }` | Dispatched on primary/secondary marketing call-to-action interactions across CTA bands and sticky bars. |
 | `quote_bar_dismissed` | `QUOTE_BAR_DISMISSED` | `{ target: string }` | Dispatched when the user dismisses the sticky proposal/quote bar (persisted to localStorage). |
+
+---
+
+## 8. RFQ Catalog Schema & Tooling Invariants (AGY-02)
+
+Exvorta RFQ widgets (`/rfq/embed`) consume deterministic JSON catalogs representing client product offerings. Catalogs live in `public/rfq-catalogs/<slug>.json` and are built and verified via `scripts/build-rfq-catalog.mjs` and `lib/rfq-catalog-builder.ts`.
+
+### Catalog JSON Specification
+```json
+{
+  "slug": "catalog-slug",
+  "name": "Catalog Display Title",
+  "products": [
+    {
+      "id": "prod-1",
+      "name": "Product Name",
+      "unit": "MT",
+      "moq": 10
+    }
+  ]
+}
+```
+
+### Invariants
+1. **Slug Format:** Lowercase alphanumeric characters, hyphens, and underscores only (`/^[a-z0-9_-]+$/`).
+2. **Product Uniqueness:** Product `id` values must be unique within the catalog (case-insensitive collision check).
+3. **Minimum Order Quantity (MOQ):** Must be a positive, finite number (`> 0`).
+4. **Header Normalization:** The CSV parser automatically maps common ERP header variants (`sku`, `product_id`, `uom`, `min_order`, etc.).
+5. **Zero External Dependencies:** CLI script executes natively via Node.js (`node scripts/build-rfq-catalog.mjs`) with zero npm runtime dependencies.

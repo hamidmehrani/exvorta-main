@@ -35,6 +35,14 @@ const CATALOG_JSON_EXAMPLE = `{
   ]
 }`
 
+const CATALOG_CSV_EXAMPLE = `id,name,unit,moq
+prod-1,Refined Sunflower Oil,MT,20
+prod-2,Organic Wheat Flour,MT,50
+prod-3,"White Cane Sugar, ICUMSA 45",MT,100`
+
+const CATALOG_CLI_COMMAND = `node scripts/build-rfq-catalog.mjs --input client-products.csv --slug client-name`
+
+
 const IFRAME_SNIPPET = `<iframe src="https://exvorta.com/rfq/embed?catalog=<slug>" width="100%" frameborder="0" id="exvorta-rfq-cart" style="border:none;width:100%;min-height:500px;overflow:hidden;"></iframe>`
 
 const RESIZE_SCRIPT_SNIPPET = `window.addEventListener('message', (event) => {
@@ -296,6 +304,122 @@ export default function ForAgenciesPage() {
                 <p className="font-sans text-xs text-muted leading-relaxed pt-1">
                   <strong>Standard Unit Codes:</strong> Recommended commercial units include <code className="font-mono text-[11px]">MT</code> (Metric Ton), <code className="font-mono text-[11px]">KG</code> (Kilogram), <code className="font-mono text-[11px]">BBL</code> (Barrel), <code className="font-mono text-[11px]">DRUM</code>, or <code className="font-mono text-[11px]">FCL</code>.
                 </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ─── Catalog Builder CLI & CSV Ingestion ─────────────────────────────── */}
+          <div className="mt-12 pt-12 border-t border-rule text-start">
+            <div className="max-w-4xl mb-8">
+              <span className="font-mono text-[11px] uppercase tracking-widest text-emerald font-semibold block mb-2">
+                [ Automated Tooling ]
+              </span>
+              <h3 className="font-serif text-xl sm:text-2xl font-semibold text-obsidian">
+                Catalog Builder CLI &amp; CSV Ingestion
+              </h3>
+              <p className="font-sans text-sm text-muted mt-2">
+                Generate, validate, and publish client catalogs directly from spreadsheet exports using the built-in CLI utility.
+                It verifies required headers, enforces SKU uniqueness, normalizes MOQs, and outputs production-ready JSON.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* CSV Snippet & Command */}
+              <div className="lg:col-span-7 space-y-6">
+                {/* CSV Template Box */}
+                <div className="bg-surface border border-rule overflow-hidden">
+                  <div className="px-4 py-3 bg-surface-2 border-b border-rule flex items-center justify-between">
+                    <div className="flex items-center gap-2 font-mono text-xs text-obsidian font-medium">
+                      <span className="text-emerald">●</span>
+                      <span>client-products.csv (Template)</span>
+                    </div>
+                    <CopyButton text={CATALOG_CSV_EXAMPLE} label="Copy CSV" />
+                  </div>
+                  <div dir="ltr" className="p-4 sm:p-6 bg-surface overflow-x-auto text-start">
+                    <pre className="font-mono text-xs leading-relaxed text-obsidian">
+                      <code>{CATALOG_CSV_EXAMPLE}</code>
+                    </pre>
+                  </div>
+                </div>
+
+                {/* CLI Command Box */}
+                <div className="bg-surface border border-rule overflow-hidden">
+                  <div className="px-4 py-3 bg-surface-2 border-b border-rule flex items-center justify-between">
+                    <span className="font-mono text-xs text-obsidian font-medium">Build Command</span>
+                    <CopyButton text={CATALOG_CLI_COMMAND} label="Copy Command" />
+                  </div>
+                  <div dir="ltr" className="p-4 sm:p-6 bg-surface overflow-x-auto text-start">
+                    <pre className="font-mono text-xs leading-relaxed text-obsidian whitespace-pre-wrap break-all">
+                      <code>{CATALOG_CLI_COMMAND}</code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+
+              {/* CLI Flags & Supported Aliases */}
+              <div className="lg:col-span-5 space-y-4 text-start">
+                <div className="bg-surface border border-rule p-5 sm:p-6 space-y-3">
+                  <h4 className="font-mono text-xs uppercase tracking-widest font-semibold text-obsidian border-b border-rule pb-2">
+                    CLI Flags &amp; Options
+                  </h4>
+                  <dl className="space-y-3 text-xs font-sans">
+                    <div>
+                      <dt className="font-mono font-semibold text-obsidian">
+                        -i, --input &lt;path&gt;
+                      </dt>
+                      <dd className="text-muted mt-0.5">
+                        Path to input CSV or JSON spreadsheet file (or passed as positional argument).
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="font-mono font-semibold text-obsidian">
+                        -s, --slug &lt;slug&gt;
+                      </dt>
+                      <dd className="text-muted mt-0.5">
+                        Target catalog slug (alphanumeric, dashes, underscores). Defaults to file name base.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="font-mono font-semibold text-obsidian">
+                        -n, --name &lt;name&gt;
+                      </dt>
+                      <dd className="text-muted mt-0.5">
+                        Catalog display title. Defaults to title-cased slug or row header.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="font-mono font-semibold text-obsidian">
+                        -o, --out &lt;path&gt;
+                      </dt>
+                      <dd className="text-muted mt-0.5">
+                        Custom JSON output path (default: <code className="font-mono text-[11px]">public/rfq-catalogs/&lt;slug&gt;.json</code>).
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="font-mono font-semibold text-obsidian">
+                        -c, --check
+                      </dt>
+                      <dd className="text-muted mt-0.5">
+                        Validates input integrity and reports row errors without writing files to disk.
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+
+                <div className="bg-surface border border-rule p-5 sm:p-6 space-y-2">
+                  <span className="font-mono text-[11px] uppercase tracking-widest text-emerald font-semibold block">
+                    [ Supported CSV Aliases ]
+                  </span>
+                  <p className="font-sans text-xs text-muted leading-relaxed">
+                    The parser auto-recognizes flexible ERP column headers:
+                  </p>
+                  <ul className="text-xs text-muted space-y-1 list-disc list-inside">
+                    <li><strong>ID:</strong> <code className="font-mono text-[11px]">id</code>, <code className="font-mono text-[11px]">sku</code>, <code className="font-mono text-[11px]">product_id</code>, <code className="font-mono text-[11px]">code</code></li>
+                    <li><strong>Name:</strong> <code className="font-mono text-[11px]">name</code>, <code className="font-mono text-[11px]">product_name</code>, <code className="font-mono text-[11px]">product</code>, <code className="font-mono text-[11px]">title</code></li>
+                    <li><strong>Unit:</strong> <code className="font-mono text-[11px]">unit</code>, <code className="font-mono text-[11px]">uom</code>, <code className="font-mono text-[11px]">measure</code></li>
+                    <li><strong>MOQ:</strong> <code className="font-mono text-[11px]">moq</code>, <code className="font-mono text-[11px]">min_order</code>, <code className="font-mono text-[11px]">minimum_order_quantity</code></li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
