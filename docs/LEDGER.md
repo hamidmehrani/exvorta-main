@@ -38,3 +38,4 @@
 | 2026-10-30 | t_cfc26138 | 7f1abdd9 | R0 | PG-07 Partner program page (tax consultants, clearing agents, free-zone setup agencies) |
 | 2026-10-30 | t_532db4e8 | 3f7b2f4a | R1 | PG-08 Contact page upgrade: project brief form + expectations |
 | 2026-10-31 | t_23954506 | 4f693afa | R0 | TOOL-7 Tools hub /tools: index, SEO copy, email capture band |
+| 2026-10-31 | t_81913841 | 7aca30cc | R0 | TOOL-6 UAE e-invoicing (PINT-AE) readiness assessment |
