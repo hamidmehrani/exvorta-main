@@ -23,6 +23,7 @@ export const STATIC_ROUTES: readonly StaticRouteConfig[] = [
   { path: '/contact', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/rfq', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/partners', priority: 0.8, changeFrequency: 'weekly' },
+  { path: '/concierge', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/tools', priority: 0.9, changeFrequency: 'weekly' },
   { path: '/tools/docs-generator', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/tools/incoterm-cbm', priority: 0.8, changeFrequency: 'monthly' },
