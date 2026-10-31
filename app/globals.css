@@ -25,6 +25,7 @@
   --color-obsidian: #0D0D0D;
   --color-charcoal: #1A1A1A;
   --color-sand: #E6E4DD;
+  --color-ink: #0D0D0D;
   --color-primary: #0D0D0D;
   --color-border: rgba(0, 0, 0, 0.05);
   --color-border-dark: rgba(255, 255, 255, 0.1);
@@ -62,6 +63,7 @@
   --color-info: #0066FF;
   --color-info-bg: rgba(0, 102, 255, 0.1);
   --color-danger: #DC2626;
+  --color-critical: #DC2626;
 
   /* Typography */
   --font-sans: var(--font-inter), var(--font-vazirmatn), ui-sans-serif, system-ui, -apple-system, sans-serif;

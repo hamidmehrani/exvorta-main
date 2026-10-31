@@ -12,12 +12,13 @@ export const ContactFormBlock: React.FC<ContactFormBlockProps> = ({ title, subti
   return (
     <AnimatedSection className="w-full bg-cream pt-[var(--header-h)]">
       <div className="mx-auto flex min-h-[calc(100vh-var(--header-h))] w-full flex-col border-b border-rule md:flex-row">
-        {/* Left Column */}
-        <div className="on-dark relative isolate flex w-full flex-col justify-center overflow-hidden bg-obsidian p-8 md:w-[40%] md:p-16 lg:p-24">
+        {/* Left Column (Institutional Elite Dark - Intake Narrative & Channels) */}
+        <div className="on-dark relative isolate flex w-full flex-col justify-between overflow-hidden bg-obsidian p-8 md:w-[40%] md:p-14 lg:p-20 border-b md:border-b-0 md:border-e border-rule-dark">
           <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
             <div className="bg-aura-dark absolute inset-0 opacity-70" />
             <div className="bg-blueprint-grid-dark absolute inset-0" />
           </div>
+
           <div className="relative mx-auto w-full max-w-md">
             <StaggerContainer delayChildren={0.1} staggerChildren={0.12}>
               <StaggerItem>
@@ -25,7 +26,7 @@ export const ContactFormBlock: React.FC<ContactFormBlockProps> = ({ title, subti
                   <span className="eyebrow-index" aria-hidden>
                     <i className="block h-1.5 w-1.5 rotate-45 bg-current" />
                   </span>
-                  Contact
+                  Commercial Intake // Protocol
                 </p>
               </StaggerItem>
               <StaggerItem>
@@ -34,32 +35,55 @@ export const ContactFormBlock: React.FC<ContactFormBlockProps> = ({ title, subti
                 </h1>
               </StaggerItem>
               <StaggerItem>
-                <p className="mb-16 text-lede font-light text-muted-dark">
-                  {subtitle || 'Questions about scope, timelines, or infrastructure? Our team responds within one business day.'}
+                <p className="mb-12 text-lede font-light text-muted-dark leading-relaxed">
+                  {subtitle || 'Submit your operational parameters. Engineering leadership evaluates all incoming briefs directly with zero sales intermediaries.'}
                 </p>
               </StaggerItem>
               <StaggerItem>
-                <div>
-                  <h2 className="eyebrow eyebrow-dark mb-6">Direct Channels</h2>
-                  <ul className="border-t border-rule-dark font-mono text-sm text-white/80">
-                    <li className="flex items-start gap-4 border-b border-rule-dark py-4">
-                      <span className="text-success">01.</span>
-                      <span>hello@exvorta.com</span>
+                <div className="mb-10">
+                  <h2 className="eyebrow eyebrow-dark mb-4">Direct Channels & Presence</h2>
+                  <ul className="border-t border-rule-dark font-mono text-xs text-white/80">
+                    <li className="flex items-start gap-4 border-b border-rule-dark py-3.5">
+                      <span className="text-success font-semibold">01.</span>
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-white font-medium">hello@exvorta.com</span>
+                        <span className="text-[11px] text-muted-dark">Direct systems architecture triage within 24h</span>
+                      </div>
                     </li>
-                    <li className="flex items-start gap-4 border-b border-rule-dark py-4">
-                      <span className="text-success">02.</span>
-                      <span>Dubai, UAE — Global Reach</span>
+                    <li className="flex items-start gap-4 border-b border-rule-dark py-3.5">
+                      <span className="text-success font-semibold">02.</span>
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-white font-medium">Dubai, UAE — Global Reach</span>
+                        <span className="text-[11px] text-muted-dark">Operating across UAE, EU, and global trade corridors</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-4 border-b border-rule-dark py-3.5">
+                      <span className="text-success font-semibold">03.</span>
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-white font-medium">Zero-Intermediary Guarantee</span>
+                        <span className="text-[11px] text-muted-dark">All scopes evaluated directly by senior engineers</span>
+                      </div>
                     </li>
                   </ul>
                 </div>
               </StaggerItem>
             </StaggerContainer>
           </div>
+
+          {/* Bottom Protocol Note */}
+          <div className="relative mx-auto w-full max-w-md pt-8">
+            <div className="rounded-[4px] border-s-2 border-emerald bg-white/[0.04] p-4 text-xs font-mono text-muted-dark">
+              <span className="font-semibold text-white uppercase tracking-wider block mb-1">
+                Security & Data Integrity
+              </span>
+              All submissions are encrypted in transit via TLS 1.3. We enforce strict data confidentiality with zero third-party brokering.
+            </div>
+          </div>
         </div>
 
-        {/* Right Column */}
-        <div className="flex w-full items-center bg-cream p-8 md:w-[60%] md:p-16 lg:p-24">
-          <Reveal delay={0.2} className="mx-auto w-full max-w-2xl">
+        {/* Right Column (Intake Form & Post-Submission Confirmation) */}
+        <div className="flex w-full items-center bg-cream p-6 sm:p-10 md:w-[60%] md:p-14 lg:p-20">
+          <Reveal delay={0.2} className="mx-auto w-full max-w-3xl">
             <ContactForm />
           </Reveal>
         </div>

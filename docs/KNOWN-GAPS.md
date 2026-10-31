@@ -11,3 +11,9 @@
 - **Why**: Structured audience builder with job titles, locations, and fit criteria rules, but lacks an explicit qualification checklist.
 - **Missing**: qualification checklist
 - **Mitigation**: Port audience builder persona criteria into the qualification checklist using `design-system.md` tokens and institutional authority checklist primitives.
+
+## DES-09 (t_e19351dd): Split Layout Institutional Agency Contact Form
+- **Reference**: `bc514fdf-29b6-4977-95cb-86aa967f3483` (Xero, score 6/10)
+- **Why**: Split layout with grouped sections and two-column fields, but is an internal accounting settings form rather than an agency contact form.
+- **Missing**: institutional agency contact form
+- **Mitigation**: Port two-column form field grouping and split layout structure from reference, styling through `design-system.md` institutional tokens (obsidian/cream palette, blueprint monospace badges, serif display headers) and Exvorta's async project brief specifications.

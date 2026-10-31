@@ -106,4 +106,38 @@ describe('submitLead and submitLeadAction (Contact brief submission)', () => {
     expect(result.error).toBe('Invalid security token.')
     expect(mockCreate).not.toHaveBeenCalled()
   })
+
+  it('correctly handles Introductory Architecture Call protocol option in payload', async () => {
+    const formData = new FormData()
+    formData.append('email', 'director@eurotradex.de')
+    formData.append('company', 'EuroTradeX GmbH')
+    formData.append('name', 'Klaus Weber')
+    formData.append('tradeType', 'Industrial Equipment & Machinery')
+    formData.append('budgetBand', '$250,000+')
+    formData.append('timeline', 'Immediate (< 1 month)')
+    formData.append('callPreference', 'Introductory Architecture Call (30-minute direct scoping session)')
+    formData.append('message', 'Multi-tenant ERP integration required for cross-border machinery distribution.')
+
+    const result = await submitLeadAction(null, formData)
+
+    expect(result.success).toBe(true)
+    expect(mockCreate).toHaveBeenCalledTimes(1)
+    expect(mockCreate).toHaveBeenCalledWith({
+      collection: 'leads',
+      data: {
+        source: 'RFQ',
+        email: 'director@eurotradex.de',
+        company: 'EuroTradeX GmbH',
+        status: 'New',
+        payload: {
+          name: 'Klaus Weber',
+          tradeType: 'Industrial Equipment & Machinery',
+          budgetBand: '$250,000+',
+          timeline: 'Immediate (< 1 month)',
+          callPreference: 'Introductory Architecture Call (30-minute direct scoping session)',
+          message: 'Multi-tenant ERP integration required for cross-border machinery distribution.',
+        },
+      },
+    })
+  })
 })
