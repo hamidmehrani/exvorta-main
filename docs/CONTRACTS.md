@@ -22,6 +22,10 @@ Every route under `app/(frontend)` is audited below. All frontend pages are rend
 | `/rfq` | `app/(frontend)/rfq/page.tsx` | Multi-step interactive Request for Proposal (RFQ) wizard allowing global traders to configure trade scope, volume, and service requirements. | **Client-side wizard state**; submits lead and scope parameters via the `submitRFQ` server action (`app/(frontend)/actions/submitRFQ.ts`) via Resend. |
 | `/contact` | `app/(frontend)/contact/page.tsx` | Direct commercial and partnership inquiry portal. | **Static UI** + client contact form; dispatches inquiries to `submitLead` server action (`actions/submitLead.ts`). |
 | `/partners` | `app/(frontend)/partners/page.tsx` | Channel partner program portal (tax consultants, customs clearing agents, free-zone setup agencies). 20% recurring revenue share, commission ledger, referral workflow, and accreditation application form. | **Static UI** + client application form; dispatches partner inquiries to `submitLeadAction` (`actions/submitLead.ts`) with `source: 'RFQ'`, `tag: 'partner'`. |
+| `/tools` | `app/(frontend)/tools/page.tsx` | Institutional trade utilities hub cataloging live export calculators, document generators, and upcoming compliance readiness modules. | **Static layout**; ItemList JSON-LD schema for search engine indexing; client email capture dispatching to `submitWaitlist`. |
+| `/tools/docs-generator` | `app/(frontend)/tools/docs-generator/page.tsx` | Commercial export documentation generator for Commercial Invoices, Packing Lists, and CMR Consignment Notes. | **Client-side interactive state**; deterministic document generation with client PDF export and print formatting; lead capture via `submitWaitlist`. |
+| `/tools/incoterm-cbm` | `app/(frontend)/tools/incoterm-cbm/page.tsx` | Incoterm 2020 risk transfer matrix and multi-cargo volumetric CBM / container fit calculator. | **Client-side calculation engine** (`lib/tools/incoterm-cbm`); deterministic calculations with zero runtime network overhead. |
+| `/tools/incoterm-cbm/ar` | `app/(frontend)/tools/incoterm-cbm/ar/page.tsx` | Arabic localized mirror of the Incoterm & CBM logistics calculator. | **Deterministic static mirror**; Arabic localized calculation engine with RTL layout. |
 | `/waitlist` | `app/(frontend)/waitlist/page.tsx` | Early access registration for upcoming Exvorta trade software modules and tools. | **Static UI** + client email submission form; dispatches to `submitWaitlist` server action (`actions/submitWaitlist.ts`). |
 | `/ecosystem` | `app/(frontend)/ecosystem/page.tsx` | Partner network, freight forwarder ecosystem, and compliance integrations directory. | **Static layout** composed of modular design system primitives and structured partner cards. |
 | `/legal` | `app/(frontend)/legal/page.tsx` | Terms of service, privacy policy, trade data confidentiality terms, and compliance notices. | **Static layout** rendering legal provisions in typography tokens (`font-mono`, `text-muted`, `border-border`). |
@@ -172,3 +176,32 @@ To guarantee high-speed responsiveness across GCC mobile networks and desktop cl
 - **LCP (Largest Contentful Paint):** <= 2.5 seconds on simulated GCC 4G mobile profiles.
 - **CLS (Cumulative Layout Shift):** <= 0.1 across all standard viewport widths.
 - **Asset Transfer Budgets:** Initial HTML document <= 50 KB compressed; critical font payload <= 150 KB.
+
+---
+
+## 6. Tools Hub & ItemList JSON-LD Schema Invariants (TOOL-7)
+
+The Trade Tools Hub (`/tools`) catalogs live and upcoming export utilities for international trade operators.
+
+### 1. ItemList Structured Data Contract
+To maximize indexing coverage across search engines and AI answer engines, the `/tools` index page MUST output a valid schema.org `ItemList` inside a `<script type="application/ld+json">` tag:
+- **Root Object:**
+  - `@context`: `"https://schema.org"`
+  - `@type`: `"ItemList"`
+  - `name`: `"Exvorta Trade Utilities & Export Engineering Tools"`
+- **`itemListElement` Items:**
+  - Array containing an entry for every cataloged tool (both live and roadmap).
+  - Each item MUST specify:
+    - `@type`: `"WebApplication"`
+    - `name`: Exact public tool name
+    - `description`: Formal summary of operational capability
+    - `url`: Canonical or relative tool route (e.g. `/tools/incoterm-cbm`)
+    - `applicationCategory`: Applicable category (e.g. `LogisticsApplication`, `BusinessApplication`)
+    - `operatingSystem`: `"All"`
+    - `offers`: Free public evaluation declaration (`@type: "Offer"`, `price: "0"`, `priceCurrency: "USD"`)
+
+### 2. Catalog Invariants
+- **Live Tools:** Must provide immediate, direct links to active browser utility routes (`/tools/incoterm-cbm`, `/tools/docs-generator`, `/rfq`).
+- **Roadmap Tools:** Must route to notification / waitlist capture with query parameters (`/waitlist?tool=<slug>`).
+- **Zero Paywalls:** All public trade utilities are deterministic, client-side or static, and free of billing gates.
+- **Lead Capture:** The page email capture band integrates via `submitWaitlist` with `{ source: 'Tools Hub', collection: 'waitlist' }`.

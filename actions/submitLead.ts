@@ -6,7 +6,7 @@ import { checkRateLimit, verifyTurnstile } from '@/lib/rate-limit'
 import { reportError } from '@/lib/error-reporting'
 
 export interface LeadSubmission {
-  source: 'Waitlist' | 'RFQ'
+  source: 'Waitlist' | 'RFQ' | 'Tools Hub'
   email: string
   company?: string
   payload?: Record<string, unknown>
@@ -61,7 +61,7 @@ export async function submitLead(data: LeadSubmission) {
     return { success: false, error: 'Company name is too long.' }
   }
 
-  if (!data.source || !['Waitlist', 'RFQ'].includes(data.source)) {
+  if (!data.source || !['Waitlist', 'RFQ', 'Tools Hub'].includes(data.source)) {
     return { success: false, error: 'Invalid lead source.' }
   }
 
